@@ -1,13 +1,16 @@
+import BrowserProductRange from "./homeComponents/BrowserProductRange";
 import Hero from "./homeComponents/Hero";
+import { productCategory } from "../data/productCategory";
+import OurProducts from "./homeComponents/OurProducts";
+import { productCardData } from "../data/productCardData";
 
 export default function page() {
   return (
     <section className="">
       <Hero />
-      <div className="flex flex-col items-center py-6">
-        <h2 className="font-bold text-xl">Browse The Range</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
+      {/* use server pagination here */}
+      <BrowserProductRange data={productCategory} />
+      <OurProducts data={productCardData} />
     </section>
   );
 }
