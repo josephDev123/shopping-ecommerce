@@ -1,5 +1,6 @@
 import { IproductCardTypes } from "@/app/data/productCardData";
 import ProductCard from "../generic/ProductCard";
+import Button from "../generic/Button";
 
 type IOurProducts = {
   data: IproductCardTypes[];
@@ -14,6 +15,10 @@ export default function OurProducts({ data }: IOurProducts) {
           <ProductCard key={item.id} credential={item} />
         ))}
       </div>
+      <Button
+        textContent="Show More"
+        className="mt-8 border border-[#B88E2F] px-5 py-2 font-bold text-[#B88E2F] hover:text-[#ddba6a]"
+      />
     </section>
   );
 }
