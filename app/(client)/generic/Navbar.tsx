@@ -18,7 +18,7 @@ export default function Navbar() {
         <Link href={""} className={`hover:text-gray-500 font-semibold `}>
           Home
         </Link>
-        <Link href={""} className={`hover:text-gray-500 font-semibold `}>
+        <Link href={"/shop"} className={`hover:text-gray-500 font-semibold `}>
           Shop
         </Link>
         <Link href={""} className={`hover:text-gray-500 font-semibold `}>
