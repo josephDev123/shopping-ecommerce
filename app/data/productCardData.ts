@@ -64,4 +64,22 @@ export const productCardData = [
       "Capture life's precious moments with stunning clarity using this high-performance camera. From family gatherings to outdoor adventures, it ensures every memory is preserved in vivid detail.",
     discount: 40,
   },
+  {
+    id: "dhdjdhddjdjdj",
+    img: Images.product4,
+    productname: "Laptop",
+    price: "N20",
+    description:
+      "This sleek and powerful laptop is perfect for work, gaming, and entertainment. With a high-resolution display and fast processor, it ensures smooth performance for all your tasks.",
+    discount: 30,
+  },
+  {
+    id: "skdflksdflskdf",
+    img: Images.product5,
+    productname: "Smartphone",
+    price: "N15",
+    description:
+      "Stay connected with the latest smartphone technology. This device features a stunning display, advanced camera system, and long-lasting battery life.",
+    discount: 20,
+  },
 ];
