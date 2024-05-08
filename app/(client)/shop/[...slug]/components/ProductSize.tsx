@@ -20,3 +20,29 @@ export default function ProductSize({ className }: IProductSize) {
     </div>
   );
 }
+
+interface IProductColor {
+  className: string;
+}
+
+export function ProductColor({ className }: IProductColor) {
+  return (
+    <div className={`${className} flex flex-col space-y-2`}>
+      <h3 className="text-black/80">Color</h3>
+      <div className="flex gap-4">
+        <button
+          type="button"
+          className="p-5 bg-[#816DFA] font-medium rounded-full w-fit"
+        ></button>
+        <button
+          type="button"
+          className="p-5 bg-[#000000] font-medium rounded-full w-fit"
+        ></button>
+        <button
+          type="button"
+          className="p-5 bg-[#B88E2F] font-medium rounded-full w-fit"
+        ></button>
+      </div>
+    </div>
+  );
+}
