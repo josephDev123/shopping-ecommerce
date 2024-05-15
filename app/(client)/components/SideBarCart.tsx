@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Images } from "@/app/Images";
 import { IoIosClose, IoIosCloseCircle } from "react-icons/io";
 import Button from "../generic/Button";
+import { useRouter } from "next/navigation";
 
 interface ISideBarCart {
   closeSideBar: () => void;
@@ -18,6 +19,8 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
       closeSideBar();
     }
   };
+
+  const navigate = useRouter();
 
   return (
     <section
@@ -52,6 +55,10 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
           <hr className="my-4" />
           <div className="flex items-center gap-4">
             <Button
+              onClick={() => {
+                navigate.push("/cart");
+                closeSideBar();
+              }}
               textContent="Cart"
               className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
             />

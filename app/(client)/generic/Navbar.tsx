@@ -21,7 +21,7 @@ export default function Navbar() {
         Ecommerce
       </Link>
       <nav className="flex justify-between gap-10 items-center  text-lg">
-        <Link href={""} className={`hover:text-gray-500 font-semibold `}>
+        <Link href={"/"} className={`hover:text-gray-500 font-semibold `}>
           Home
         </Link>
         <Link href={"/shop"} className={`hover:text-gray-500 font-semibold `}>
