@@ -63,6 +63,10 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
               className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
             />
             <Button
+              onClick={() => {
+                navigate.push("/checkout");
+                closeSideBar();
+              }}
               textContent="Checkout"
               className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
             />

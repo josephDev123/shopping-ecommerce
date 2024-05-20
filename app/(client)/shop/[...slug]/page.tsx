@@ -30,7 +30,7 @@ export default function page() {
           <Link className="inline-flex items-center gap-1" href={"/"}>
             <span className="text-black/50">Home</span> <TbMathGreater />
           </Link>
-          <Link className="inline-flex items-center gap-1" href={"/"}>
+          <Link className="inline-flex items-center gap-1" href={"/shop"}>
             <span className="text-black/50">Shop</span> <TbMathGreater />
           </Link>
           <div className="h-8 w-0.5 bg-black"></div>

@@ -6,10 +6,8 @@ import BiviewList from "@/app/svgComponent/Bi_view-list";
 import { GoHorizontalRule } from "react-icons/go";
 import { productCardData } from "@/app/data/productCardData";
 import ProductCard from "../generic/ProductCard";
-import TrophyIcon from "@/app/svgComponent/TrophyIcon";
-import Guarantee from "@/app/svgComponent/Guarantee";
-import Freeshipping from "@/app/svgComponent/Freeshipping";
-import Customer_support from "@/app/svgComponent/Customer_support";
+import ThingsToEnjoy from "../generic/ThingsToEnjoy";
+import Banner from "../generic/Banner";
 
 export type ILink = {
   name: string;
@@ -22,12 +20,7 @@ export default function page() {
   ];
   return (
     <section className="flex flex-col">
-      <div
-        className={`h-[320px] w-full  flex flex-col justify-center items-center ${bannerImage.bg}`}
-      >
-        <h1 className="text-3xl font-bold mb-1">Shop</h1>
-        <ActiveInLineLink items={links} />
-      </div>
+      <Banner title="Shop" links={links} />
 
       <div className="flex items-center justify-around bg-[#F9F1E7] h-[100px]">
         <div className="flex gap-2 items-center">
@@ -85,38 +78,7 @@ export default function page() {
         </button>
       </div>
 
-      <div className="h-[260px] bg-[#FAF3EA] grid grid-cols-4 items-center mx-auto w-full pl-10">
-        <div className="flex gap-2">
-          <TrophyIcon className="text-red-300" />
-          <div className="flex flex-col">
-            <h3 className="font-bold">High Quality</h3>
-            <p className="text-gray-600">crafted from top materials</p>
-          </div>
-        </div>
-        <div className="flex gap-2">
-          <Guarantee className="text-red-300" />
-          <div className="flex flex-col">
-            <h3 className="font-bold"> Warranty Protection</h3>
-            <p className="text-gray-600">Over 2 years</p>
-          </div>
-        </div>
-
-        <div className="flex gap-2">
-          <Freeshipping className="text-red-300" />
-          <div className="flex flex-col">
-            <h3 className="font-bold">Free Shipping</h3>
-            <p className="text-gray-600">Order over 150 $</p>
-          </div>
-        </div>
-        <div className="flex gap-2">
-          <Customer_support className="text-red-300" />
-
-          <div className="flex flex-col">
-            <h3 className="font-bold">24 / 7 Support</h3>
-            <p className="text-gray-600">Dedicated support</p>
-          </div>
-        </div>
-      </div>
+      <ThingsToEnjoy />
     </section>
   );
 }

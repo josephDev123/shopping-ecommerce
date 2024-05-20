@@ -3,6 +3,10 @@ import ActiveInLineLink from "../shop/component/ActiveInLineLink";
 import bannerImage from "../shop/style/shop.module.css";
 import { Images } from "@/app/Images";
 import { MdDelete } from "react-icons/md";
+import { Butcherman } from "next/font/google";
+import Button from "../generic/Button";
+import ThingsToEnjoy from "../generic/ThingsToEnjoy";
+import Banner from "../generic/Banner";
 
 export default function page() {
   const links = [
@@ -11,12 +15,7 @@ export default function page() {
   ];
   return (
     <section className="flex flex-col">
-      <div
-        className={`h-[320px] w-full  flex flex-col justify-center items-center ${bannerImage.bg}`}
-      >
-        <h1 className="text-3xl font-bold mb-1">Cart</h1>
-        <ActiveInLineLink items={links} />
-      </div>
+      <Banner title="Cart" links={links} />
 
       <div className="flex gap-4 justify-between w-[80%] mx-auto mt-10">
         <table className="w-full">
@@ -52,8 +51,8 @@ export default function page() {
             </tr>
           </tbody>
         </table>
-        <div className="bg-[#F9F1E7] w-[40%] flex flex-col justify-center items-center">
-          <h2 className="font-bold text-xl">Cart Totals</h2>
+        <div className="bg-[#F9F1E7] w-[40%] flex flex-col self-start justify-center items-center py-6">
+          <h2 className="font-bold text-xl mb-8">Cart Totals</h2>
           <div className="flex gap-4 items-start ">
             <p>Subtotal</p>
             <p>Rs. 250,000.00</p>
@@ -63,8 +62,14 @@ export default function page() {
             <p>Total</p>
             <p className="text-lg text-[#B88E2F] font-medium">Rs. 250,000.00</p>
           </div>
+          <Button
+            textContent="Check Out"
+            className="border border-black rounded-md py-2 px-6 mt-4"
+          />
         </div>
       </div>
+
+      <ThingsToEnjoy />
     </section>
   );
 }
