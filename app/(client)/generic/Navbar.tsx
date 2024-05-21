@@ -30,7 +30,10 @@ export default function Navbar() {
         <Link href={""} className={`hover:text-gray-500 font-semibold `}>
           About
         </Link>
-        <Link href={""} className={`hover:text-gray-500 font-semibold `}>
+        <Link
+          href={"/contact"}
+          className={`hover:text-gray-500 font-semibold `}
+        >
           Contact
         </Link>
       </nav>

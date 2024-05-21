@@ -31,7 +31,7 @@ export const SelectInput = ({
       <label htmlFor={labelName} className="mb-2 font-medium">
         {labelName}
       </label>
-      <select name="" id="">
+      <select {...props} name="" id="">
         <option value=""></option>
       </select>
       <span className="text-xs">{errorLabel}</span>
