@@ -1,21 +1,25 @@
 import { RxDashboard } from "react-icons/rx";
-import { MdOutlineAccountBalanceWallet } from "react-icons/md";
-import { GrTransaction } from "react-icons/gr";
-import { RiBillLine } from "react-icons/ri";
-import { GiExpense } from "react-icons/gi";
-import { GoAlert } from "react-icons/go";
-import { CiSettings } from "react-icons/ci";
+import { BsCart3 } from "react-icons/bs";
+import { SlPeople } from "react-icons/sl";
+import { RiCoupon2Line } from "react-icons/ri";
+import { MdOutlineCategory } from "react-icons/md";
+import { AiOutlineTransaction } from "react-icons/ai";
+import { TbBrandSketch } from "react-icons/tb";
 
 export const leftPanelItem = [
-  { icons: <RxDashboard />, text: "Overview", path: "/" },
+  { icons: <RxDashboard />, text: "Dashboard", path: "/" },
   {
-    icons: <MdOutlineAccountBalanceWallet />,
-    text: "Balances",
-    path: "balances",
+    icons: <BsCart3 />,
+    text: "Order Management",
+    path: "order",
   },
-  { icons: <GrTransaction />, text: "Transactions", path: "/transactions" },
-  { icons: <RiBillLine />, text: "Bills", path: "/bills" },
-  { icons: <GiExpense />, text: "Expenses", path: "/expenses" },
-  { icons: <GoAlert />, text: "Goals", path: "/goals" },
-  { icons: <CiSettings />, text: "Settings", path: "/settings" },
+  { icons: <SlPeople />, text: "Customers", path: "/Customers" },
+  { icons: <RiCoupon2Line />, text: "Coupon Code", path: "/coupon " },
+  { icons: <MdOutlineCategory />, text: "Categories", path: "/categories" },
+  {
+    icons: <AiOutlineTransaction />,
+    text: "Transaction",
+    path: "/transaction",
+  },
+  { icons: <TbBrandSketch />, text: "Brand", path: "/brand" },
 ];
