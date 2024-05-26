@@ -10,13 +10,14 @@ export const metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <section className="w-full h-screen flex bg-bg">
+    //bg-bg
+    <section className="w-full h-screen flex">
       {/* left panel */}
       <div className="bg-darkBlack w-[20%] px-2 text-white flex flex-col justify-center items-center">
         <LeftPanel />
       </div>
       {/* right panel */}
-      <div className="w-full h-full flex flex-col">
+      <div className="w-full h-full bg-white flex flex-col">
         <TopNavbar />
         <div className="overflow-y-auto h-full">{children}</div>
       </div>
