@@ -7,7 +7,7 @@ import { AiOutlineTransaction } from "react-icons/ai";
 import { TbBrandSketch } from "react-icons/tb";
 
 export const leftPanelItem = [
-  { icons: <RxDashboard />, text: "Dashboard", path: "/" },
+  { icons: <RxDashboard />, text: "Dashboard", path: "dashboard" },
   {
     icons: <BsCart3 />,
     text: "Order Management",
