@@ -28,6 +28,7 @@ export default function Input({ labelName, errorLabel, ...props }: InputType) {
 }
 
 export const SelectInput = ({
+  data,
   labelName,
   errorLabel,
   ...props
@@ -38,7 +39,9 @@ export const SelectInput = ({
         {labelName}
       </label>
       <select {...props} name="" id="">
-        <option value=""></option>
+        {data.map((item, i) => (
+          <option value={item}>{item}</option>
+        ))}
       </select>
       <span className="text-xs">{errorLabel}</span>
     </section>

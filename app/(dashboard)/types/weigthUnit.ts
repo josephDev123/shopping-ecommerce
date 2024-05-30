@@ -1,0 +1,23 @@
+export const weightUnits = [
+  "Milligram (mg)",
+  "Centigram (cg)",
+  "Decigram (dg)",
+  "Gram (g)",
+  "Decagram (dag)",
+  "Hectogram (hg)",
+  "Kilogram (kg)",
+  "Metric Ton (t)",
+  "Ounce (oz)",
+  "Pound (lb)",
+  // "Stone (st)",
+  // "Short Hundredweight (cwt)",
+  // "Long Hundredweight (cwt)",
+  // "Short Ton",
+  // "Long Ton",
+  // "Carat (ct)",
+  // "Grain (gr)",
+  // "Slug",
+  // "Dram (dr)",
+  // "Troy Ounce (ozt)",
+  // "Troy Pound (lbt)"
+];

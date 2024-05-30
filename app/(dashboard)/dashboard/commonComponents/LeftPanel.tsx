@@ -28,7 +28,7 @@ export default function LeftPanel() {
         <LeftPanelItemCard
           icon={<IoIosAddCircleOutline className="text-lg" />}
           text="Add Products"
-          path="add-products"
+          path="add-product"
         />
 
         <LeftPanelItemCard
