@@ -6,6 +6,7 @@ interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
 interface ISelectType extends React.InputHTMLAttributes<HTMLSelectElement> {
   labelName: string;
   errorLabel?: string;
+  placeholder?: string;
   data: any[];
 }
 
@@ -31,6 +32,7 @@ export const SelectInput = ({
   data,
   labelName,
   errorLabel,
+  placeholder,
   ...props
 }: ISelectType) => {
   return (
@@ -39,6 +41,9 @@ export const SelectInput = ({
         {labelName}
       </label>
       <select {...props} name="" id="">
+        <option disabled value={""}>
+          {placeholder}
+        </option>
         {data.map((item, i) => (
           <option value={item}>{item}</option>
         ))}
