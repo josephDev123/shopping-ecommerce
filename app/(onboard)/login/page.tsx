@@ -25,12 +25,18 @@ export default function Login() {
   } = useForm<loginInferredType>({ resolver: zodResolver(loginInputType) });
   const handleLogin: SubmitHandler<loginInferredType> = async (data) => {
     try {
-      await signIn("credentials", {
+      const result = await signIn("credentials", {
         redirect: false,
         email: data.email,
         password: data.password,
+        callbackUrl: "/",
       });
-      return redirect.replace("/");
+      console.log(result);
+      if (result?.ok && result.status == 200) {
+        redirect.push(result.url!);
+      } else {
+        return errorAlert("something went wrong");
+      }
     } catch (error) {
       return errorAlert("something went wrong");
     }
@@ -87,14 +93,14 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            className="rounded-md p-2 w-full bg-darkGreen text-white"
+            className="rounded-md p-2 w-full bg-darkGreen text-white flex items-center justify-center"
           >
-            Login
+            <p className="w-full">Login</p>
             {isSubmitting && (
-              <FaSpinner className="animate-spin h-8 w-8 self-end" />
+              <FaSpinner className="animate-spin h-8 w-8 ms-auto" />
             )}
           </button>
-          <div className="flex justify-center text-gray-500">
+          <div className="flex justify-center text-gray-500 ">
             or signin with
           </div>
 

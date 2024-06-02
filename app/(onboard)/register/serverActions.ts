@@ -15,9 +15,14 @@ export async function registerAction(data: RegType) {
         password: data.password,
       },
     });
+    // console.log(req);
     return req.data;
   } catch (error: any) {
     const errorObj = error;
-    throw errorObj;
+    console.log(errorObj.response.data);
+    return new Error(errorObj.response.data);
+    // return {
+    //   message: errorObj.response.data.msg,
+    // };
   }
 }
