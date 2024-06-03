@@ -58,7 +58,7 @@ export default function page() {
           />
         </div>
       </div>
-      <div className="my-5">
+      <div className="my-5 h-full">
         <ProductsListTable />
       </div>
     </section>

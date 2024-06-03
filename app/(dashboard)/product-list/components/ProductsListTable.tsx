@@ -1,13 +1,18 @@
+"use client";
+
 import Button from "@/app/(client)/generic/Button";
 import Input from "@/app/(client)/generic/Input";
 import { Images } from "@/app/Images";
 import Image from "next/image";
+import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import ExpandActionModal from "./ExpandActionModal";
 
 export default function ProductsListTable() {
+  const [isOpenAction, setIsOpenAction] = useState(false);
   return (
-    <section className="flex flex-col overflow-x-auto">
-      <table className="table-auto">
+    <section className="flex flex-col h-full overflow-x-auto">
+      <table className="table-auto ">
         <thead>
           <tr className="border-b border-gray-200">
             <th className="flex items-center">
@@ -74,8 +79,16 @@ export default function ProductsListTable() {
                 Published
               </Button>
             </td>
-            <td className="">
-              <BsThreeDotsVertical className="translate-x-6 cursor-pointer" />
+            <td className="relative h-full">
+              <BsThreeDotsVertical
+                onClick={() => setIsOpenAction((prev) => !prev)}
+                className="translate-x-6  text-2xl cursor-pointer hover:bg-gray-200 rounded-full p-1"
+              />
+              {isOpenAction && (
+                <div className="absolute top-14">
+                  <ExpandActionModal />
+                </div>
+              )}
             </td>
           </tr>
         </tbody>
