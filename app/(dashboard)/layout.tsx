@@ -1,7 +1,7 @@
 import "../globals.css";
 import NextAuthSessionProvider from "../nextAuthSessionProvider";
-import LeftPanel from "./dashboard/commonComponents/LeftPanel";
-import TopNavbar from "./dashboard/commonComponents/TopNavbar";
+import LeftPanel from "./commons/LeftPanel";
+import TopNavbar from "./commons/TopNavbar";
 
 export const metadata = {
   title: "JoeFintech",
@@ -11,7 +11,7 @@ export const metadata = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     //bg-bg
-    <section className="w-full h-screen flex">
+    <section className="w-full h-screen flex bg-white">
       {/* left panel */}
       <div className="bg-darkBlack w-[20%] px-2 text-white flex flex-col justify-center items-center">
         <LeftPanel />

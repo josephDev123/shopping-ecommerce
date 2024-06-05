@@ -1,6 +1,6 @@
 import React from "react";
 import LeftPanelItemCard from "./LeftPanelItemCard";
-import { leftPanelItem } from "../data/leftPanelData";
+import { leftPanelItem } from "../dashboard/data/leftPanelData";
 import Link from "next/link";
 import { BiLogOut } from "react-icons/bi";
 import { Images } from "@/app/Images";

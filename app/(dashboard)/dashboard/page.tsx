@@ -1,6 +1,6 @@
 import React from "react";
 import TransactionStat from "./indexComponent/TransactionStat";
-import LineChart, { LineChartsMultiple } from "./commonComponents/LineChart";
+import LineChart, { LineChartsMultiple } from "../commons/LineChart";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ResponsiveContainer } from "recharts";
 
