@@ -13,7 +13,7 @@ export const leftPanelItem = [
     text: "Order Management",
     path: "order",
   },
-  { icons: <SlPeople />, text: "Customers", path: "/Customers" },
+  { icons: <SlPeople />, text: "Customers", path: "/customers" },
   { icons: <RiCoupon2Line />, text: "Coupon Code", path: "/coupon " },
   { icons: <MdOutlineCategory />, text: "Categories", path: "/categories" },
   {

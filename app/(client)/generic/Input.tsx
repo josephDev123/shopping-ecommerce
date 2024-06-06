@@ -1,6 +1,10 @@
+import { ReactNode } from "react";
+
 interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
   labelName: string;
   errorLabel?: string;
+  icon?: ReactNode;
+  wrapperClassName?: string;
 }
 
 interface ISelectType extends React.InputHTMLAttributes<HTMLSelectElement> {
@@ -16,13 +20,23 @@ interface ITextareaInput
   errorLabel?: string;
 }
 
-export default function Input({ labelName, errorLabel, ...props }: InputType) {
+export default function Input({
+  labelName,
+  errorLabel,
+  icon,
+  wrapperClassName,
+  ...props
+}: InputType) {
   return (
     <section className="flex flex-col w-full">
       <label htmlFor={labelName} className="mb-2 font-medium">
         {labelName}
       </label>
-      <input {...props} />
+      <span className={`flex items-center ${wrapperClassName}`}>
+        <input {...props} />
+        {icon}
+      </span>
+
       <span className="text-xs">{errorLabel}</span>
     </section>
   );
