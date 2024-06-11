@@ -55,7 +55,7 @@ export const SelectInput = ({
         {labelName}
       </label>
       <select {...props} name="" id="">
-        <option disabled value={""}>
+        <option disabled selected value={""}>
           {placeholder}
         </option>
         {data.map((item, i) => (

@@ -3,6 +3,7 @@ import { LuUpload } from "react-icons/lu";
 import { GoPlus } from "react-icons/go";
 import { SelectInput } from "@/app/(client)/generic/Input";
 import ProductsListTable from "./components/ProductsListTable";
+import FooterPagination from "../commons/FooterPagination";
 
 export default function page() {
   return (
@@ -61,6 +62,8 @@ export default function page() {
       <div className="my-5 h-full">
         <ProductsListTable />
       </div>
+
+      <FooterPagination />
     </section>
   );
 }

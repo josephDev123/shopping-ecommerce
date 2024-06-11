@@ -19,7 +19,7 @@ export const leftPanelItem = [
   {
     icons: <AiOutlineTransaction />,
     text: "Transaction",
-    path: "/transaction",
+    path: "/transactions",
   },
   { icons: <TbBrandSketch />, text: "Brand", path: "/brand" },
 ];

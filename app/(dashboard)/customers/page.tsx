@@ -5,10 +5,11 @@ import { CiSearch } from "react-icons/ci";
 import { FiEdit } from "react-icons/fi";
 import { CiLock } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";
+import FooterPagination from "../commons/FooterPagination";
 
 export default function page() {
   return (
-    <section className="flex flex-col w-full p-3">
+    <section className="flex flex-col w-full h-full p-3">
       <h2 className="text-2xl font-bold">Customer</h2>
       <Input
         labelName=""
@@ -19,7 +20,7 @@ export default function page() {
         wrapperClassName="border rounded-md p-2 w-fit"
       />
 
-      <div className="flex flex-col overflow-y-auto w-full my-10">
+      <div className="flex flex-col overflow-x-auto w-full h-full my-10">
         <table className="table-auto">
           <thead className="border-b-2">
             <tr className="text-[#8B909A]">
@@ -60,6 +61,8 @@ export default function page() {
           </tbody>
         </table>
       </div>
+
+      <FooterPagination />
     </section>
   );
 }
