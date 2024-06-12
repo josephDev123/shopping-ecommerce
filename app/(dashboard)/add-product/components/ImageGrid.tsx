@@ -43,22 +43,6 @@ export default function ImageGrid() {
         ) : (
           ""
         )}
-
-        {/* <Image
-          src={Images.productCat1}
-          alt="hello"
-          width={200}
-          height={400}
-          className="w-[200px]"
-        />
-        
-        <Image
-          src={Images.productCat2}
-          alt="hello"
-          width={200}
-          height={400}
-          className="w-[200px]"
-        /> */}
       </div>
 
       <input
