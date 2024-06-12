@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { DetailedHTMLProps, InputHTMLAttributes, ReactNode } from "react";
 
-interface InputType extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputType extends InputHTMLAttributes<HTMLInputElement> {
   labelName: string;
   errorLabel?: string;
   icon?: ReactNode;
@@ -37,7 +37,7 @@ export default function Input({
         {icon}
       </span>
 
-      <span className="text-xs">{errorLabel}</span>
+      <span className="text-xs text-red-500">{errorLabel?.toString()}</span>
     </section>
   );
 }
@@ -62,7 +62,7 @@ export const SelectInput = ({
           <option value={item}>{item}</option>
         ))}
       </select>
-      <span className="text-xs">{errorLabel}</span>
+      <span className="text-xs text-red-400">{errorLabel}</span>
     </section>
   );
 };
@@ -78,7 +78,7 @@ export const Textarea = ({
         {labelName}
       </label>
       <textarea {...props}></textarea>
-      <span className="text-xs">{errorLabel}</span>
+      <span className="text-xs text-red-400">{errorLabel}</span>
     </section>
   );
 };
