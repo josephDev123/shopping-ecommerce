@@ -37,6 +37,7 @@ const AddProductSchema = new Schema<AddProductSchemaTypes>({
   productWidth: { type: Number },
 });
 
-export const AddProductModel =
-  models.AddProducts ||
+const AddProductModel =
+  models.AddProduct ||
   model<AddProductSchemaTypes>("AddProduct", AddProductSchema);
+export default AddProductModel;
