@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const ProductFormDataSchema = z.object({
+  id: z.string().optional(),
   productName: z.string(),
   Description: z.string(),
   productCategory: z.string(),
@@ -18,3 +19,5 @@ export const ProductFormDataSchema = z.object({
   productWidth: z.number(),
   //   productImage: z.instanceof(FileList).optional(), // This is the file input type
 });
+
+export type AddProductSchemaTypes = z.infer<typeof ProductFormDataSchema>;

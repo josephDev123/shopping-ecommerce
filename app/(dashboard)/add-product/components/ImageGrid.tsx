@@ -41,7 +41,7 @@ export default function ImageGrid() {
             ))}
           </>
         ) : (
-          ""
+          <p className="text-center">Products image preview</p>
         )}
       </div>
 

@@ -10,15 +10,15 @@ export async function startDb() {
   }
 }
 
-class dbContext {
-  constructor(private readonly db: Schema<UserInterface>) {}
+// class dbContext {
+//   constructor(private readonly db: Schema<UserInterface>) {}
 
-  async connect() {
-    try {
-      await mongoose.connect(process.env.MONGODB_URL as string);
-      console.log("db successful");
-    } catch (error) {
-      console.log("dbs: " + error);
-    }
-  }
-}
+//   async connect() {
+//     try {
+//       await mongoose.connect(process.env.MONGODB_URL as string);
+//       console.log("db successful");
+//     } catch (error) {
+//       console.log("dbs: " + error);
+//     }
+//   }
+// }

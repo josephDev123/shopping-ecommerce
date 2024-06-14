@@ -11,7 +11,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 export default function page() {
-  // const inputData = new FormData();
   type inferProductFormDataType = z.infer<typeof ProductFormDataSchema>;
   const {
     register,
