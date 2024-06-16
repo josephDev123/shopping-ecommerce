@@ -27,7 +27,7 @@ export default function page() {
     event?.preventDefault();
     alert("hello");
   };
-
+  console.log(errors.productImage);
   return (
     <div>
       <form
@@ -163,7 +163,7 @@ export default function page() {
 
           {/* second grid */}
           <div className="flex flex-col space-y-6">
-            <ImageGrid />
+            <ImageGrid error={errors.productImage} />
             <div className="flex flex-col rounded-md space-y-4 p-3 border">
               <h1 className="text-xl font-bold">Shipping and Delivery</h1>
 

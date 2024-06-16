@@ -5,8 +5,12 @@ import Image from "next/image";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useRef } from "react";
 import { useUploadFirebaseToFirebase } from "@/app/hooks/useUploadFileToFirebaseStorage";
+import { FieldError, Merge } from "react-hook-form";
 
-export default function ImageGrid() {
+type ImageGridType = {
+  error: Merge<FieldError, (FieldError | undefined)[]> | undefined;
+};
+export default function ImageGrid({ error }: ImageGridType) {
   const fileRef = useRef<HTMLInputElement>(null);
   const { downloadedUrl, errorMsg, uploadStageStatus, uploadFile } =
     useUploadFirebaseToFirebase();
@@ -52,6 +56,13 @@ export default function ImageGrid() {
         multiple
         onChange={handleOnchangeFile}
       />
+      <span className="text-xs text-red-500">
+        {error &&
+          Object.entries(error).flatMap(
+            ([, message]) => message?.toString() + ", "
+          )}
+      </span>
+
       <div
         onClick={() => fileRef.current?.click()}
         className="flex flex-col justify-center items-center cursor-pointer border-2 border-dashed h-28 py-3"

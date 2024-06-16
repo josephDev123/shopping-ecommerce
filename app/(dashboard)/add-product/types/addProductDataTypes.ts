@@ -17,7 +17,8 @@ export const ProductFormDataSchema = z.object({
   productBreath: z.number(),
   productLength: z.number(),
   productWidth: z.number(),
-  //   productImage: z.instanceof(FileList).optional(), // This is the file input type
+  productImage: z.array(z.instanceof(File)),
+  productImgUrl: z.array(z.string()),
 });
 
 export type AddProductSchemaTypes = z.infer<typeof ProductFormDataSchema>;

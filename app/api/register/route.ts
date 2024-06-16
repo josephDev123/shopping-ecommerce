@@ -6,7 +6,10 @@ import { startDb } from "@/lib/startDb";
 import bcrypt from "bcrypt";
 import { UserRepo } from "../repository/UserRepo";
 import { UserService } from "../service/UserService";
-import { ApiResponseHelper } from "../utils/ApiResponseHelper";
+import {
+  ApiResponseHelper,
+  SuccessApiResponseHelper,
+} from "../utils/ApiResponseHelper";
 // import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
@@ -27,15 +30,6 @@ export async function POST(request: Request) {
           "error",
           400
         );
-        // Response.json(
-        //   {
-        //     msg: "Email already taken",
-        //     name: "",
-        //     operational: true,
-        //     type: "error",
-        //   },
-        //   { status: 400 }
-        // );
       } else if (User.password) {
         const isPasswordTaken = await bcrypt.compare(
           body.password,
@@ -49,35 +43,23 @@ export async function POST(request: Request) {
             "error",
             400
           );
-
-          // Response.json(
-          //   {
-          //     msg: "password already taken",
-          //     name: "",
-          //     operational: true,
-          //     type: "error",
-          //   },
-          //   { status: 400 }
-          // );
         }
       }
     }
-
-    // const userDoc = new UserModel({
-    //   email: body.email,
-    //   password: body.password,
-    //   name: body.name,
-    // });
 
     const UserDoc = await User_service.createService({
       email: body.email,
       password: body.password,
       name: body.name,
     });
-    // console.log(UserDoc);
-    return NextResponse.json(
-      { msg: "user register successful", data: "" },
-      { status: 200 }
+
+    return SuccessApiResponseHelper(
+      "user register successful",
+      "AuthSuccess",
+      true,
+      "success",
+      200,
+      ""
     );
   } catch (error) {
     return NextResponse.json(

@@ -1,8 +1,9 @@
-import { registerType } from "../Types/registerType";
+import { registerType } from "../(onboard)/Types/registerType";
 import axios, { AxiosError } from "axios";
 import z from "zod";
 import { errorAlert } from "@/lib/Alerts";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 type RegType = z.infer<typeof registerType>;
 export async function registerAction(data: RegType) {
@@ -15,14 +16,17 @@ export async function registerAction(data: RegType) {
         password: data.password,
       },
     });
-    // console.log(req);
-    return req.data;
+
+    return {
+      status: "success",
+      msg: req.data.msg,
+    };
   } catch (error: any) {
     const errorObj = error;
-    console.log(errorObj.response.data);
-    return new Error(errorObj.response.data);
-    // return {
-    //   message: errorObj.response.data.msg,
-    // };
+    const errorData = errorObj.response.data;
+    return {
+      status: "error",
+      msg: errorObj.response.data.msg,
+    };
   }
 }

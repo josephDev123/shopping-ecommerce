@@ -10,19 +10,14 @@ import { registerType } from "../Types/registerType";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorAlert } from "@/lib/Alerts";
-import { registerAction } from "./serverActions";
+import { registerAction } from "../../serverActions/RegisterActions";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa6";
 import Link from "next/link";
-import { useFormState } from "react-dom";
 
-const initialState = {
-  message: "",
-};
 export default function Register() {
   const [togglePassword, setTogglePassword] = useState(false);
-  const [state, formAction] = useFormState(registerAction, initialState);
-  // console.log(state);
+
   type RegType = z.infer<typeof registerType>;
   const redirect = useRouter();
   const {
@@ -34,32 +29,13 @@ export default function Register() {
   const handleRegister: SubmitHandler<RegType> = async (data) => {
     try {
       const result = await registerAction(data);
-      // console.log(result);
+      if (result.status === "error") {
+        errorAlert(result.msg);
+      } else {
+        return;
+      }
     } catch (error: any) {
       console.log(error);
-      // if (error.response) {
-      //   // The request was made and the server responded with a status code
-      //   // that falls out of the range of 2xx
-      //   const responseError = error.response.data;
-      //   console.log(responseError);
-
-      //   if (responseError.type === "error" && responseError.operational) {
-      //     return errorAlert(responseError.msg);
-      //   } else {
-      //     return errorAlert("Something went wrong");
-      //   }
-      // } else if (error.request) {
-      //   // The request was made but no response was received
-      //   // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      //   // http.ClientRequest in node.js
-      //   return errorAlert("Something went wrong");
-      //   console.log(error.request);
-      // } else {
-      //   // Something happened in setting up the request that triggered an Error
-      //   return errorAlert("Something went wrong");
-      //   console.log("Error", error.message);
-      // }
-      // console.log(error.config);
     }
   };
   return (
