@@ -17,6 +17,7 @@ export type AddProductSchemaTypes = {
   productBreath?: number;
   productLength?: number;
   productWidth?: number;
+  productImgUrl: string[];
 };
 
 const AddProductSchema = new Schema<AddProductSchemaTypes>({
@@ -35,6 +36,7 @@ const AddProductSchema = new Schema<AddProductSchemaTypes>({
   productBreath: { type: Number },
   productLength: { type: Number },
   productWidth: { type: Number },
+  productImgUrl: { type: [String] },
 });
 
 const AddProductModel =

@@ -3,35 +3,50 @@
 import { Images } from "@/app/Images";
 import Image from "next/image";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useUploadFirebaseToFirebase } from "@/app/hooks/useUploadFileToFirebaseStorage";
-import { FieldError, Merge } from "react-hook-form";
+import {
+  FieldError,
+  Merge,
+  UseFormRegister,
+  FieldValues,
+} from "react-hook-form";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 type ImageGridType = {
   error: Merge<FieldError, (FieldError | undefined)[]> | undefined;
+  setProductImg: (values: string[]) => void;
+  register: UseFormRegister<any>;
 };
-export default function ImageGrid({ error }: ImageGridType) {
+export default function ImageGrid({
+  error,
+  setProductImg,
+  register,
+}: ImageGridType) {
   const fileRef = useRef<HTMLInputElement>(null);
   const { downloadedUrl, errorMsg, uploadStageStatus, uploadFile } =
     useUploadFirebaseToFirebase();
+  setProductImg(downloadedUrl);
 
   const handleOnchangeFile = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileInput = e.target as HTMLInputElement;
     const selectedFile = fileInput.files;
     if (selectedFile) {
       uploadFile("/product", selectedFile);
-      // console.log(downloadedUrl, errorMsg, uploadStageStatus);
     }
   };
-  console.log(downloadedUrl);
+
   return (
     <section className="flex flex-col space-y-3  rounded-md p-3 border">
       <h1 className="font-medium">Product Image</h1>
       <div className="grid grid-cols-2 gap-2 relative h-full object-contain">
         {errorMsg ? (
-          <p>{errorMsg}</p>
+          <p className="text-xs text-red-400">{errorMsg}</p>
         ) : uploadStageStatus ? (
-          <p>{uploadStageStatus}</p>
+          <button className="inline-flex gap-1 w-fit bg-green-400 h-fit rounded-md ">
+            <AiOutlineLoading3Quarters className="animate-spin" />
+            {uploadStageStatus} ...
+          </button>
         ) : downloadedUrl.length > 0 ? (
           <>
             {downloadedUrl.map((link) => (
@@ -50,11 +65,11 @@ export default function ImageGrid({ error }: ImageGridType) {
       </div>
 
       <input
-        ref={fileRef}
         type="file"
         className="hidden"
         multiple
-        onChange={handleOnchangeFile}
+        {...register("productImage", { onChange: handleOnchangeFile })}
+        ref={fileRef}
       />
       <span className="text-xs text-red-500">
         {error &&

@@ -9,8 +9,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ProductFormDataSchema } from "./types/addProductDataTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import axios from "axios";
+import { useState } from "react";
+import { axiosInstance } from "@/app/axiosInstance";
 
 export default function page() {
+  const [productImg, setProductImg] = useState<string[]>([]);
   type inferProductFormDataType = z.infer<typeof ProductFormDataSchema>;
   const {
     register,
@@ -20,14 +24,20 @@ export default function page() {
     resolver: zodResolver(ProductFormDataSchema),
   });
 
-  const handleSubmitAddProduct: SubmitHandler<inferProductFormDataType> = (
-    data,
-    event
-  ) => {
-    event?.preventDefault();
-    alert("hello");
+  const handleSubmitAddProduct: SubmitHandler<
+    inferProductFormDataType
+  > = async (data) => {
+    const payload = {
+      ...data,
+      productImgUrl: productImg,
+    };
+    const res = await axiosInstance({
+      url: "add-products",
+      method: "POST",
+      data: payload,
+    });
   };
-  console.log(errors.productImage);
+
   return (
     <div>
       <form
@@ -163,7 +173,11 @@ export default function page() {
 
           {/* second grid */}
           <div className="flex flex-col space-y-6">
-            <ImageGrid error={errors.productImage} />
+            <ImageGrid
+              register={register}
+              error={errors.productImage}
+              setProductImg={(values: string[]) => setProductImg(values)}
+            />
             <div className="flex flex-col rounded-md space-y-4 p-3 border">
               <h1 className="text-xl font-bold">Shipping and Delivery</h1>
 

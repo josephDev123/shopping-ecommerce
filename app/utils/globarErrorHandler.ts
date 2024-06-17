@@ -1,3 +1,10 @@
+export interface GlobalErrorHandlerType {
+  msg: string;
+  name: string;
+  code: number;
+  operational: boolean;
+}
+
 export class GlobalErrorHandler extends Error {
   code;
   msg;
