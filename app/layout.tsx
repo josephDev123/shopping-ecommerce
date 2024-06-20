@@ -11,7 +11,7 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -20,8 +20,10 @@ export default async function RootLayout({
   return (
     <html lang="en" className={raleway.className}>
       <body>
-        <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
-        <ToastContainer />
+        <main>
+          <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+          <ToastContainer />
+        </main>
       </body>
     </html>
   );

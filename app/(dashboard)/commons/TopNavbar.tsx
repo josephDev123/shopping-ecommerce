@@ -4,10 +4,12 @@ import React from "react";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 
 export default function TopNavbar() {
   const { data: session, status } = useSession();
+
   console.log(session);
   return (
     <section className="w-full p-4 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">

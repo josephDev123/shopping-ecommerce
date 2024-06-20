@@ -23,7 +23,9 @@ export default function DashboardLayout({
       {/* right panel */}
       <div className="w-full h-full bg-white flex flex-col">
         <TopNavbar />
-        <div className="overflow-y-auto h-full">{children}</div>
+        <div>
+          <div className="overflow-y-auto h-full">{children}</div>
+        </div>
       </div>
     </section>
   );

@@ -1,3 +1,5 @@
+"use client";
+
 import { DetailedHTMLProps, InputHTMLAttributes, ReactNode } from "react";
 
 interface InputType extends InputHTMLAttributes<HTMLInputElement> {
@@ -32,10 +34,10 @@ export default function Input({
       <label htmlFor={labelName} className="mb-2 font-medium">
         {labelName}
       </label>
-      <span className={`flex items-center ${wrapperClassName}`}>
-        <input {...props} />
-        {icon}
-      </span>
+      {/* <div className={`flex items-center ${wrapperClassName}`}> */}
+      <input {...props} />
+      {icon}
+      {/* </div> */}
 
       <span className="text-xs text-red-500">{errorLabel?.toString()}</span>
     </section>
@@ -59,7 +61,9 @@ export const SelectInput = ({
           {placeholder}
         </option>
         {data.map((item, i) => (
-          <option value={item}>{item}</option>
+          <option key={i} value={item}>
+            {item}
+          </option>
         ))}
       </select>
       <span className="text-xs text-red-400">{errorLabel}</span>
@@ -67,7 +71,7 @@ export const SelectInput = ({
   );
 };
 
-export const Textarea = ({
+export const TextareaInput = ({
   labelName,
   errorLabel,
   ...props
