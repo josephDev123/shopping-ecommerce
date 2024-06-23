@@ -14,15 +14,17 @@ import {
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 type ImageGridType = {
-  error: Merge<FieldError, (FieldError | undefined)[]> | undefined;
+  // error: Merge<FieldError, (FieldError | undefined)[]> | undefined;
   setProductImg: (values: string[]) => void;
-  register: UseFormRegister<any>;
+  // register: UseFormRegister<any>;
+  // setDefaultSelectedImg: (value: (File | undefined)[]) => void;
 };
 export default function ImageGrid({
-  error,
+  // error,
   setProductImg,
-  register,
-}: ImageGridType) {
+}: // register,
+// setDefaultSelectedImg,
+ImageGridType) {
   const fileRef = useRef<HTMLInputElement>(null);
   const { downloadedUrl, errorMsg, uploadStageStatus, uploadFile } =
     useUploadFirebaseToFirebase();
@@ -31,6 +33,7 @@ export default function ImageGrid({
   const handleOnchangeFile = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileInput = e.target as HTMLInputElement;
     const selectedFile = fileInput.files;
+    // setDefaultSelectedImg(selectedFile);
     if (selectedFile) {
       uploadFile("/product", selectedFile);
     }
@@ -68,14 +71,15 @@ export default function ImageGrid({
         type="file"
         className="hidden"
         multiple
-        {...register("productImage", { onChange: handleOnchangeFile })}
+        onChange={handleOnchangeFile}
+        // {...register("productImage", { onChange: handleOnchangeFile })}
         ref={fileRef}
       />
       <span className="text-xs text-red-500">
-        {error &&
+        {/* {error &&
           Object.entries(error).flatMap(
             ([, message]) => message?.toString() + ", "
-          )}
+          )} */}
       </span>
 
       <div

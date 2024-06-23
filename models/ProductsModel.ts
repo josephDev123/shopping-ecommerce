@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-export type AddProductSchemaTypes = {
+export type ProductSchemaTypes = {
   id?: string;
   productName?: string;
   Description?: string;
@@ -20,7 +20,7 @@ export type AddProductSchemaTypes = {
   productImgUrl: string[];
 };
 
-const AddProductSchema = new Schema<AddProductSchemaTypes>({
+const ProductSchema = new Schema<ProductSchemaTypes>({
   productName: { type: String },
   Description: { type: String },
   productCategory: { type: String },
@@ -39,7 +39,6 @@ const AddProductSchema = new Schema<AddProductSchemaTypes>({
   productImgUrl: { type: [String] },
 });
 
-const AddProductModel =
-  models.AddProduct ||
-  model<AddProductSchemaTypes>("AddProduct", AddProductSchema);
-export default AddProductModel;
+const ProductModel =
+  models.Product || model<ProductSchemaTypes>("Product", ProductSchema);
+export default ProductModel;

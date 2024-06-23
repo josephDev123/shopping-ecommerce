@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 // };
 
 export const axiosInstance = axios.create({
-  baseURL: "https://localhost/api/",
-  timeout: 1000,
+  baseURL: "http://localhost:3000/api/",
+  // timeout: 1000,
   // headers: { "X-USER-Header": `${fetchUser()}` },
 });

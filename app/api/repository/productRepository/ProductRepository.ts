@@ -1,11 +1,11 @@
 import { Model } from "mongoose";
-import { AddProductSchemaTypes } from "@/models/AddProductsModel";
+import { ProductSchemaTypes } from "@/models/ProductsModel";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
-import { ApiResponseHelper } from "../utils/ApiResponseHelper";
+import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
 
-export class AddProductRepository {
-  constructor(private readonly dbContext: Model<AddProductSchemaTypes>) {}
-  async create(addProductInputs: AddProductSchemaTypes) {
+export class ProductRepository {
+  constructor(private readonly dbContext: Model<ProductSchemaTypes>) {}
+  async create(addProductInputs: ProductSchemaTypes) {
     try {
       const newDocument = new this.dbContext(addProductInputs);
       await newDocument.save();

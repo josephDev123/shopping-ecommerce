@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AddProductService } from "../service/addProductService";
-import { AddProductRepository } from "../repository/AddProductRepository";
+import { ProductService } from "../../service/productServices/ProductService";
+import { ProductRepository } from "../../repository/productRepository/ProductRepository";
 import { startDb } from "@/lib/startDb";
-import AddProductModel from "@/models/AddProductsModel";
-import { AddProductSchemaTypes } from "@/models/AddProductsModel";
+import ProductModel from "@/models/ProductsModel";
+import { ProductSchemaTypes } from "@/models/ProductsModel";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,
-} from "../utils/ApiResponseHelper";
+} from "../../utils/ApiResponseHelper";
 import {
   GlobalErrorHandler,
   GlobalErrorHandlerType,
@@ -16,14 +16,12 @@ import {
 export async function POST(req: Request) {
   try {
     await startDb();
-    const AddProductRepositoryImp = new AddProductRepository(AddProductModel);
-    const AddProductServiceImpl = new AddProductService(
-      AddProductRepositoryImp
-    );
+    const AddProductRepositoryImp = new ProductRepository(ProductModel);
+    const AddProductServiceImpl = new ProductService(AddProductRepositoryImp);
 
-    const addProductInputs: AddProductSchemaTypes = await req.json();
+    const addProductInputs: ProductSchemaTypes = await req.json();
     const result = await AddProductServiceImpl.create(addProductInputs);
-    console.log(result);
+    // console.log(result);
     return SuccessApiResponseHelper(
       result?.msg || "",
       result?.name || "",
@@ -35,7 +33,7 @@ export async function POST(req: Request) {
     // return Response.json(result, { status: 200 });
   } catch (error) {
     const errorObj = error as GlobalErrorHandlerType;
-    // console.log(errorObj);
+    console.log(errorObj);
     return ApiResponseHelper(
       errorObj.msg,
       errorObj.name,

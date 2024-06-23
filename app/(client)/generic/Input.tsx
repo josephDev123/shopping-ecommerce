@@ -1,12 +1,15 @@
 "use client";
 
 import { DetailedHTMLProps, InputHTMLAttributes, ReactNode } from "react";
+import { UseFormRegister } from "react-hook-form";
 
 interface InputType extends InputHTMLAttributes<HTMLInputElement> {
   labelName: string;
   errorLabel?: string;
   icon?: ReactNode;
   wrapperClassName?: string;
+  register: UseFormRegister<any>;
+  name: string;
 }
 
 interface ISelectType extends React.InputHTMLAttributes<HTMLSelectElement> {
@@ -14,12 +17,16 @@ interface ISelectType extends React.InputHTMLAttributes<HTMLSelectElement> {
   errorLabel?: string;
   placeholder?: string;
   data: any[];
+  register: UseFormRegister<any>;
+  name: string;
 }
 
 interface ITextareaInput
   extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   labelName: string;
   errorLabel?: string;
+  register: UseFormRegister<any>;
+  name: string;
 }
 
 export default function Input({
@@ -27,6 +34,8 @@ export default function Input({
   errorLabel,
   icon,
   wrapperClassName,
+  register,
+  name,
   ...props
 }: InputType) {
   return (
@@ -34,10 +43,10 @@ export default function Input({
       <label htmlFor={labelName} className="mb-2 font-medium">
         {labelName}
       </label>
-      {/* <div className={`flex items-center ${wrapperClassName}`}> */}
-      <input {...props} />
-      {icon}
-      {/* </div> */}
+      <div className={`flex items-center ${wrapperClassName}`}>
+        <input {...props} {...register(name)} />
+        {icon}
+      </div>
 
       <span className="text-xs text-red-500">{errorLabel?.toString()}</span>
     </section>
@@ -49,6 +58,8 @@ export const SelectInput = ({
   labelName,
   errorLabel,
   placeholder,
+  name,
+  register,
   ...props
 }: ISelectType) => {
   return (
@@ -56,7 +67,7 @@ export const SelectInput = ({
       <label htmlFor={labelName} className="mb-2 font-medium">
         {labelName}
       </label>
-      <select {...props} name="" id="">
+      <select {...props} id="" {...register(name)}>
         <option disabled selected value={""}>
           {placeholder}
         </option>
@@ -74,6 +85,8 @@ export const SelectInput = ({
 export const TextareaInput = ({
   labelName,
   errorLabel,
+  register,
+  name,
   ...props
 }: ITextareaInput) => {
   return (
@@ -81,7 +94,7 @@ export const TextareaInput = ({
       <label htmlFor={labelName} className="mb-2 font-medium">
         {labelName}
       </label>
-      <textarea {...props}></textarea>
+      <textarea {...props} {...register(name)}></textarea>
       <span className="text-xs text-red-400">{errorLabel}</span>
     </section>
   );

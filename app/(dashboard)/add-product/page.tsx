@@ -12,9 +12,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ProductFormDataSchema } from "./types/addProductDataTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
 import { axiosInstance } from "@/app/axiosInstance";
+import { toast } from "react-toastify";
+import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
 
 export default function page() {
   const [productImg, setProductImg] = useState<string[]>([]);
@@ -23,22 +25,40 @@ export default function page() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<inferProductFormDataType>({
     resolver: zodResolver(ProductFormDataSchema),
   });
 
   const handleSubmitAddProduct: SubmitHandler<
     inferProductFormDataType
-  > = async (data) => {
-    const payload = {
-      ...data,
-      productImgUrl: productImg,
-    };
-    const res = await axiosInstance({
-      url: "add-products",
-      method: "POST",
-      data: payload,
-    });
+  > = async (data, e) => {
+    try {
+      if (productImg.length === 0) {
+        toast.error("No product image was deploy. Deploy one or more");
+        return;
+      }
+      const payload = {
+        ...data,
+        productImgUrl: productImg,
+      };
+      const res = await axiosInstance({
+        url: "/product/add-products",
+        method: "POST",
+        data: payload,
+      });
+      // console.log(res.data);
+      toast.success(res.data.msg);
+      setProductImg([]);
+      reset();
+    } catch (error) {
+      const errorObj = error as GlobalErrorHandlerType;
+      if (errorObj.operational) {
+        toast.error(errorObj.msg);
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   };
 
   return (
@@ -60,13 +80,15 @@ export default function page() {
                     errors.productName && String(errors.productName?.message)
                   }
                   className="border p-2 rounded-md"
-                  {...register("productName")}
+                  register={register}
+                  name="productName"
                 />
 
                 <TextareaInput
                   labelName="Description"
                   className="border p-2 rounded-md"
-                  {...register("Description")}
+                  register={register}
+                  name="Description"
                   errorLabel={
                     errors.Description && String(errors.Description?.message)
                   }
@@ -80,7 +102,8 @@ export default function page() {
                     data={marketplaceCategories}
                     labelName="Product Category"
                     className="border p-2 rounded-md"
-                    {...register("productCategory")}
+                    register={register}
+                    name="productCategory"
                     errorLabel={
                       errors.productCategory &&
                       String(errors.productCategory?.message)
@@ -90,7 +113,8 @@ export default function page() {
                   <Input
                     labelName="Product Tag"
                     className="border p-2 rounded-md"
-                    {...register("productTag")}
+                    register={register}
+                    name="productTag"
                     errorLabel={
                       errors.productTag && String(errors.productTag?.message)
                     }
@@ -105,7 +129,8 @@ export default function page() {
                     labelName="Sale Price"
                     className="border p-2 rounded-md"
                     placeholder="$100.00"
-                    {...register("productPrice")}
+                    register={register}
+                    name="productPrice"
                     errorLabel={
                       errors.productPrice &&
                       String(errors.productPrice?.message)
@@ -116,7 +141,8 @@ export default function page() {
                     labelName="Discount"
                     className="border p-2 rounded-md"
                     placeholder="$20.00 or 20%"
-                    {...register("productDiscount")}
+                    register={register}
+                    name="productDiscount"
                     errorLabel={
                       errors.productDiscount &&
                       String(errors.productDiscount?.message)
@@ -130,7 +156,8 @@ export default function page() {
                     labelName="Quantity"
                     className="border p-2 rounded-md"
                     placeholder="10"
-                    {...register("productQuantity")}
+                    register={register}
+                    name="productQuantity"
                     errorLabel={
                       errors.productQuantity &&
                       String(errors.productQuantity?.message)
@@ -141,7 +168,8 @@ export default function page() {
                     labelName="SKU"
                     className="border p-2 rounded-md"
                     placeholder="APL-IPHONE-BLACK-80GB"
-                    {...register("productSKU")}
+                    register={register}
+                    name="productSKU"
                     errorLabel={
                       errors.productSKU && String(errors.productSKU?.message)
                     }
@@ -156,7 +184,8 @@ export default function page() {
                     labelName="size"
                     className="border p-2 rounded-md"
                     placeholder="00"
-                    {...register("productSize")}
+                    register={register}
+                    name="productSize"
                     errorLabel={
                       errors.productSize && String(errors.productSize?.message)
                     }
@@ -178,8 +207,9 @@ export default function page() {
             {/* second grid */}
             <div className="flex flex-col space-y-6">
               <ImageGrid
-                register={register}
-                error={errors.productImage}
+                // register={register}
+                // error={errors.productImage}
+                // setDefaultSelectedImg={setDefaultSelectedImg}
                 setProductImg={(values: string[]) => setProductImg(values)}
               />
               <div className="flex flex-col rounded-md space-y-4 p-3 border">
@@ -191,7 +221,8 @@ export default function page() {
                     labelName="Item Weight"
                     className="border p-2 rounded-md col-span-2"
                     placeholder="10"
-                    {...register("productItemWeight")}
+                    register={register}
+                    name="productItemWeight"
                     errorLabel={
                       errors.productItemWeight &&
                       String(errors.productItemWeight?.message)
@@ -202,7 +233,8 @@ export default function page() {
                     data={weightUnits}
                     labelName="Unit"
                     className="border p-2 rounded-md col-span-2"
-                    {...register("productUnit")}
+                    register={register}
+                    name="productUnit"
                     errorLabel={
                       errors.productUnit && String(errors.productUnit?.message)
                     }
@@ -214,7 +246,8 @@ export default function page() {
                     labelName="Breath"
                     className="border p-2 rounded-md"
                     placeholder="20"
-                    {...register("productBreath")}
+                    register={register}
+                    name="productBreath"
                     errorLabel={
                       errors.productBreath &&
                       String(errors.productBreath?.message)
@@ -228,7 +261,8 @@ export default function page() {
                     labelName="Length"
                     className="border p-2 rounded-md"
                     placeholder="10"
-                    {...register("productLength")}
+                    register={register}
+                    name="productLength"
                     errorLabel={
                       errors.productLength &&
                       String(errors.productLength?.message)
@@ -240,7 +274,8 @@ export default function page() {
                     labelName="Width"
                     className="border p-2 rounded-md"
                     placeholder="10"
-                    {...register("productWidth")}
+                    register={register}
+                    name="productWidth"
                     errorLabel={
                       errors.productWidth &&
                       String(errors.productWidth?.message)
@@ -265,6 +300,7 @@ export default function page() {
             /> */}
 
               <Button
+                disabled={isSubmitting}
                 type="submit"
                 textContent="Publish"
                 className="border rounded-md w-20 p-2 bg-blue-300 hover:bg-blue-400 hover:text-black/80"
