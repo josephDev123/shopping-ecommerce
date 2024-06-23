@@ -21,4 +21,22 @@ export class ProductRepository {
       new GlobalErrorHandler("Add product fails", "UnknownError", "500", true);
     }
   }
+
+  async findByPaginate(page: number) {
+    try {
+      const limit = 5;
+      const skip = page * limit;
+      const result = await this.dbContext.find().skip(skip).limit(limit);
+      return {
+        msg: "get products successful",
+        name: "MongodbSuccess",
+        operational: true,
+        type: "success",
+        status: 200,
+        data: result,
+      };
+    } catch (error) {
+      new GlobalErrorHandler("get product fails", "UnknownError", "500", true);
+    }
+  }
 }

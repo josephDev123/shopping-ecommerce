@@ -47,7 +47,7 @@ export default function page() {
         method: "POST",
         data: payload,
       });
-      // console.log(res.data);
+
       toast.success(res.data.msg);
       setProductImg([]);
       reset();

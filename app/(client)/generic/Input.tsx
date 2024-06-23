@@ -8,7 +8,7 @@ interface InputType extends InputHTMLAttributes<HTMLInputElement> {
   errorLabel?: string;
   icon?: ReactNode;
   wrapperClassName?: string;
-  register: UseFormRegister<any>;
+  register?: UseFormRegister<any>;
   name: string;
 }
 
@@ -17,7 +17,7 @@ interface ISelectType extends React.InputHTMLAttributes<HTMLSelectElement> {
   errorLabel?: string;
   placeholder?: string;
   data: any[];
-  register: UseFormRegister<any>;
+  register?: UseFormRegister<any>;
   name: string;
 }
 
@@ -25,7 +25,7 @@ interface ITextareaInput
   extends React.InputHTMLAttributes<HTMLTextAreaElement> {
   labelName: string;
   errorLabel?: string;
-  register: UseFormRegister<any>;
+  register?: UseFormRegister<any>;
   name: string;
 }
 
@@ -44,7 +44,7 @@ export default function Input({
         {labelName}
       </label>
       <div className={`flex items-center ${wrapperClassName}`}>
-        <input {...props} {...register(name)} />
+        <input {...props} {...(register && { ...register(name) })} />
         {icon}
       </div>
 
@@ -67,7 +67,7 @@ export const SelectInput = ({
       <label htmlFor={labelName} className="mb-2 font-medium">
         {labelName}
       </label>
-      <select {...props} id="" {...register(name)}>
+      <select {...props} id="" {...(register && { ...register(name) })}>
         <option disabled selected value={""}>
           {placeholder}
         </option>
@@ -94,7 +94,7 @@ export const TextareaInput = ({
       <label htmlFor={labelName} className="mb-2 font-medium">
         {labelName}
       </label>
-      <textarea {...props} {...register(name)}></textarea>
+      <textarea {...props} {...(register && { ...register(name) })}></textarea>
       <span className="text-xs text-red-400">{errorLabel}</span>
     </section>
   );

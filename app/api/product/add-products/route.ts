@@ -16,11 +16,11 @@ import {
 export async function POST(req: Request) {
   try {
     await startDb();
-    const AddProductRepositoryImp = new ProductRepository(ProductModel);
-    const AddProductServiceImpl = new ProductService(AddProductRepositoryImp);
+    const ProductRepositoryImp = new ProductRepository(ProductModel);
+    const ProductServiceImpl = new ProductService(ProductRepositoryImp);
 
     const addProductInputs: ProductSchemaTypes = await req.json();
-    const result = await AddProductServiceImpl.create(addProductInputs);
+    const result = await ProductServiceImpl.create(addProductInputs);
     // console.log(result);
     return SuccessApiResponseHelper(
       result?.msg || "",

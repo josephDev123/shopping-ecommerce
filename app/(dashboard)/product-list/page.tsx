@@ -4,6 +4,7 @@ import { GoPlus } from "react-icons/go";
 import { SelectInput } from "@/app/(client)/generic/Input";
 import ProductsListTable from "./components/ProductsListTable";
 import FooterPagination from "../commons/FooterPagination";
+import { register } from "module";
 
 export default function page() {
   return (
@@ -39,12 +40,14 @@ export default function page() {
             Sort By:
           </span>
           <SelectInput
+            name="status"
             data={[]}
             labelName=""
             placeholder="Status"
             className="bg-white border rounded-md p-2 placeholder:text-black outline-none"
           />
           <SelectInput
+            name="category"
             data={[]}
             labelName=""
             placeholder="Category"
@@ -52,6 +55,7 @@ export default function page() {
           />
 
           <SelectInput
+            name="stock"
             data={[]}
             labelName=""
             placeholder="Stock"

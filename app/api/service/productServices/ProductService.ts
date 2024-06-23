@@ -12,4 +12,13 @@ export class ProductService {
       console.log(error);
     }
   }
+
+  async find(page: number) {
+    try {
+      const result = await this.AddProductRepository.findByPaginate(page);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
