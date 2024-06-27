@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <section className="flex flex-col p-16 border-2 border-t">
-      <section className="grid grid-cols-4 w-full">
+      <section className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 w-full">
         <div className="flex flex-col space-y-6">
           <h2 className="font-bold text-2xl">Ecommerce</h2>
           <p className="text-gray-500 font-medium">
@@ -43,7 +43,7 @@ export default function Footer() {
 
         <div className="flex flex-col space-y-6">
           <h2 className="text-gray-400 font-semibold text-xl">Newsletter</h2>
-          <div className="flex gap-2">
+          <div className="lg:flex flex-col gap-2">
             <input
               type="email"
               placeholder="Enter your email address"
@@ -59,7 +59,6 @@ export default function Footer() {
 
       <hr className="mt-16 w-full" />
       <p className="mt-10 font-bold">
-        {" "}
         {new Date().getFullYear()} furino. All rights reverved
       </p>
     </section>
