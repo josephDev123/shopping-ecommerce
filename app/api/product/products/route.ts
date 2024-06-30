@@ -14,17 +14,18 @@ export async function GET(req: Request) {
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     const page = new URL(req.url).searchParams.get("page");
-    console.log(page);
+    // console.log(page);
     const formatPage = Number(page);
 
     const result = await ProductServiceImpl.find(formatPage);
+    // console.log("hello", result);
     return SuccessApiResponseHelper(
       result?.msg || "",
       result?.name || "",
       result?.operational || false,
       result?.type || "",
       result?.status || 0,
-      result?.data || ""
+      result?.data || []
     );
   } catch (error) {
     console.log(error);

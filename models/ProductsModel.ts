@@ -1,7 +1,9 @@
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models, mongo } from "mongoose";
+import UserModel from "./User";
 
 export type ProductSchemaTypes = {
   id?: string;
+  user_id: Schema.Types.ObjectId;
   productName?: string;
   Description?: string;
   productCategory?: string;
@@ -21,6 +23,10 @@ export type ProductSchemaTypes = {
 };
 
 const ProductSchema = new Schema<ProductSchemaTypes>({
+  user_id: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
   productName: { type: String },
   Description: { type: String },
   productCategory: { type: String },

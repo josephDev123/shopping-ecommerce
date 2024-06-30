@@ -7,7 +7,8 @@ export default withAuth(function middleware(req) {}, {
         req.nextUrl.pathname.startsWith(`/dashboard`) ||
         req.nextUrl.pathname.startsWith(`/dashboard/`)
       ) {
-        // if (!token) return false;
+        // console.log(token);
+        if (!token) return false;
       }
       return true;
     },

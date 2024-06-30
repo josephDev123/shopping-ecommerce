@@ -24,7 +24,7 @@ export class ProductRepository {
 
   async findByPaginate(page: number) {
     try {
-      const limit = 5;
+      const limit = 3;
       const skip = page * limit;
       const result = await this.dbContext.find().skip(skip).limit(limit);
       return {

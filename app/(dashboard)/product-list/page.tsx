@@ -1,12 +1,32 @@
+"use client";
+
 import Button from "@/app/(client)/generic/Button";
 import { LuUpload } from "react-icons/lu";
 import { GoPlus } from "react-icons/go";
 import { SelectInput } from "@/app/(client)/generic/Input";
 import ProductsListTable from "./components/ProductsListTable";
 import FooterPagination from "../commons/FooterPagination";
-import { register } from "module";
+import { useFetchApi } from "@/app/hooks/useFetchApiAxios";
+import { z } from "zod";
+import { ProductFormDataSchema } from "../add-product/types/addProductDataTypes";
 
-export default function page() {
+interface pageProps {
+  searchParams: {
+    [key: string]: string | number | string[] | number[] | undefined;
+  };
+}
+
+export default function page({ searchParams }: pageProps) {
+  const paramKey = "page";
+  const paramValue = searchParams.page as string;
+  type productType = z.infer<typeof ProductFormDataSchema>;
+  console.log("product list", paramValue);
+  const { data: productData, status } = useFetchApi(
+    "product/products",
+    paramKey,
+    paramValue
+  );
+  console.log(productData, status);
   return (
     <section className="flex flex-col w-full h-full p-4">
       <div className="flex justify-between items-center">
@@ -64,10 +84,21 @@ export default function page() {
         </div>
       </div>
       <div className="my-5 h-full">
-        <ProductsListTable />
+        {status == "loading" && (
+          <div className="flex justify-center mt-auto">Loading ...</div>
+        )}
+
+        {productData?.length === 0 && (
+          <div className="flex justify-center h-full mt-auto">No data</div>
+        )}
+        {status === "data" && Number(productData?.length) >= 1 && (
+          <div className="h-full">
+            <ProductsListTable data={productData} />
+          </div>
+        )}
       </div>
 
-      <FooterPagination />
+      <FooterPagination pages={productData} searchParam={paramValue} />
     </section>
   );
 }

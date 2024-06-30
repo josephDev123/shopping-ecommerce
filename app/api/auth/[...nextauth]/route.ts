@@ -21,6 +21,28 @@ interface Credential {
   password: string;
 }
 
+interface User {
+  _id: string;
+  email: string;
+  name: string;
+}
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      email: string;
+      name: string;
+    };
+  }
+
+  interface User {
+    id: string;
+    email: string;
+    name: string;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -38,9 +60,14 @@ export const authOptions: NextAuthOptions = {
           const User_service = new UserService(User_Repo);
           // const User = await UserModel.findOne({ email: email });
           const User = await User_service.FindByEmailService(email);
-
+          console.log(User);
           if (User) {
-            return User;
+            // return User;
+            return {
+              id: User._id,
+              email: User.email,
+              name: User.name,
+            };
           } else {
             return null;
           }
@@ -71,13 +98,20 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, user, account }) {
       // Persist the OAuth access_token to the token right after signin
-
+      if (user) {
+        token.id = user.id;
+      }
+      // console.log("JWT Callback:", token);
       return token;
     },
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
+      if (token) {
+        session.user.id = token.id as string;
+      }
+      // console.log("Session Callback:", session);
       return session;
     },
   },

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const ProductFormDataSchema = z.object({
   // id: z.string().optional(),
+  user_id: z.string().optional(),
   productName: z.string().min(1, "Product name is required"),
   Description: z.string().min(1, "Description is required"),
   productCategory: z.string().min(1, "Product category is required"),
@@ -17,7 +18,7 @@ export const ProductFormDataSchema = z.object({
   productLength: z.string().min(1, "Product length is required"),
   productWidth: z.string().min(1, "Product width is required"),
   // productImage: z.instanceof(File).array().optional(),
-  // productImgUrl: z.array(z.string()).optional(),
+  productImgUrl: z.array(z.string()).optional(),
 });
 
 // export type AddProductSchemaTypes = z.infer<typeof ProductFormDataSchema>;

@@ -17,6 +17,7 @@ import { useState } from "react";
 import { axiosInstance } from "@/app/axiosInstance";
 import { toast } from "react-toastify";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
+import { useSession } from "next-auth/react";
 
 export default function page() {
   const [productImg, setProductImg] = useState<string[]>([]);
@@ -30,6 +31,8 @@ export default function page() {
     resolver: zodResolver(ProductFormDataSchema),
   });
 
+  const { data: session } = useSession();
+
   const handleSubmitAddProduct: SubmitHandler<
     inferProductFormDataType
   > = async (data, e) => {
@@ -40,6 +43,7 @@ export default function page() {
       }
       const payload = {
         ...data,
+        user_id: session?.user.id,
         productImgUrl: productImg,
       };
       const res = await axiosInstance({
