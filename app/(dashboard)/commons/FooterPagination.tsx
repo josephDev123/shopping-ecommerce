@@ -7,31 +7,38 @@ import { useRouter } from "next/navigation";
 interface FooterPaginationProps<T> {
   pages: any[] | null;
   searchParam: string;
+  setLimit: (value: string) => void;
 }
 
 export default function FooterPagination<T>({
   searchParam,
   pages,
+  setLimit,
 }: FooterPaginationProps<T>) {
   const navigate = useRouter();
   const itemPerPage = 3;
   const pagesNumber = Math.ceil(Number(pages?.length) / itemPerPage);
   console.log(pagesNumber);
 
+  const limit = [3, 4, 5, 6, 7, 8, 9, 10];
+
   return (
-    <div className="flex justify-between items-center w-full h-full mt-auto">
+    <div className="flex justify-between items-center w-full h-fit mt-auto">
       <div className="flex gap-2 items-center w-full ">
         Showing
         <div>
           <SelectInput
+            onChange={(e) => setLimit(e.target.value)}
             name=""
             placeholder="10"
-            data={[]}
+            data={limit}
             labelName=""
             className="border rounded-md w-12"
           />
         </div>
-        <span className="inline-flex items-center justify-center">of 50</span>
+        <span className="inline-flex items-center justify-center">
+          of {pages?.length}
+        </span>
       </div>
 
       <div className="flex gap-1">

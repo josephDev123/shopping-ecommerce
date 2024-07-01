@@ -11,7 +11,7 @@ export default function TopNavbar() {
   console.log("top nav bar", session);
 
   return (
-    <section className="w-full p-4 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
+    <section className="w-full h-[10%] p-4 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
       <div className="flex justify-between items-center gap-2">
         <p className="text-xl font-bold self-center">{session?.user?.name}</p>
         <MdOutlineKeyboardDoubleArrowRight className="text-slate-400" />

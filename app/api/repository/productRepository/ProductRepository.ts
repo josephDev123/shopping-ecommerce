@@ -22,9 +22,10 @@ export class ProductRepository {
     }
   }
 
-  async findByPaginate(page: number) {
+  async findByPaginateAndFilter<T>(page: number, condition: T) {
     try {
       const limit = 3;
+      const queryCondition = condition;
       const skip = page * limit;
       const result = await this.dbContext.find().skip(skip).limit(limit);
       return {

@@ -20,21 +20,19 @@ export default async function DashboardLayout({
   // console.log("server call", user?.user);
 
   return (
-    //bg-bg
-    // <NextAuthSessionProvider>
-    <section className="w-full h-screen flex bg-white">
+    <section className="w-full h-full flex bg-green-400">
       {/* left panel */}
-      <div className="bg-darkBlack w-[20%] px-2 text-white flex flex-col justify-center items-center">
+
+      <div className="bg-darkBlack w-[20%] h-full px-2 text-white flex flex-col justify-center items-center">
         <LeftPanel />
       </div>
       {/* right panel */}
       <div className="w-full h-full bg-white flex flex-col">
         <TopNavbar />
-        <div>
-          <div className="overflow-y-auto h-full">{children}</div>
+        <div className="h-full overflow-y-auto">
+          <div className=" h-full flex-1">{children}</div>
         </div>
       </div>
     </section>
-    // </NextAuthSessionProvider>
   );
 }

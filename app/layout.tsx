@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={raleway.className}>
       <body>
-        <main>
+        <main className="h-full w-full">
           <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
           <ToastContainer />
         </main>

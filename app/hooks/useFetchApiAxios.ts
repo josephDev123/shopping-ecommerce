@@ -5,11 +5,13 @@ import { axiosInstance } from "../axiosInstance";
 
 type statusType = "idle" | "loading" | "data" | "error";
 
-export function useFetchApi(
+export function useFetchFilterAndPaginateApi(
   url: string,
   //   params: string | string[],
   paramKey: string,
-  paramValue: string
+  paramValue: string,
+  limit?: string,
+  filter?: {}
 ) {
   const [status, setStatus] = useState<statusType>("idle");
   const [data, setData] = useState<[] | null>(null);
@@ -24,6 +26,10 @@ export function useFetchApi(
       const result = await axiosInstance({
         method: "GET",
         url: `${url}?${paramKey}=${paramValue}`,
+        params: {
+          filter: filter,
+          limit: limit,
+        },
       });
       setStatus("data");
       const resultDocument = result.data.data;

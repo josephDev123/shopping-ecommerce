@@ -3,7 +3,7 @@ import UserModel from "./User";
 
 export type ProductSchemaTypes = {
   id?: string;
-  user_id: Schema.Types.ObjectId;
+  user_id?: Schema.Types.ObjectId;
   productName?: string;
   Description?: string;
   productCategory?: string;

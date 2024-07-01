@@ -6,9 +6,10 @@ import { GoPlus } from "react-icons/go";
 import { SelectInput } from "@/app/(client)/generic/Input";
 import ProductsListTable from "./components/ProductsListTable";
 import FooterPagination from "../commons/FooterPagination";
-import { useFetchApi } from "@/app/hooks/useFetchApiAxios";
+import { useFetchFilterAndPaginateApi } from "@/app/hooks/useFetchApiAxios";
 import { z } from "zod";
 import { ProductFormDataSchema } from "../add-product/types/addProductDataTypes";
+import { useState } from "react";
 
 interface pageProps {
   searchParams: {
@@ -17,14 +18,16 @@ interface pageProps {
 }
 
 export default function page({ searchParams }: pageProps) {
+  const [limit, setLimit] = useState("3");
   const paramKey = "page";
   const paramValue = searchParams.page as string;
   type productType = z.infer<typeof ProductFormDataSchema>;
   console.log("product list", paramValue);
-  const { data: productData, status } = useFetchApi(
+  const { data: productData, status } = useFetchFilterAndPaginateApi(
     "product/products",
     paramKey,
-    paramValue
+    paramValue,
+    limit
   );
   console.log(productData, status);
   return (
@@ -92,13 +95,17 @@ export default function page({ searchParams }: pageProps) {
           <div className="flex justify-center h-full mt-auto">No data</div>
         )}
         {status === "data" && Number(productData?.length) >= 1 && (
-          <div className="h-full">
+          <div>
             <ProductsListTable data={productData} />
           </div>
         )}
       </div>
 
-      <FooterPagination pages={productData} searchParam={paramValue} />
+      <FooterPagination
+        pages={productData}
+        searchParam={paramValue}
+        setLimit={(e: string) => setLimit(e)}
+      />
     </section>
   );
 }

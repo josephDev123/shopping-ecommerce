@@ -13,9 +13,12 @@ export class ProductService {
     }
   }
 
-  async find(page: number) {
+  async findByPaginateAndFilter<T>(page: number, condition: T) {
     try {
-      const result = await this.AddProductRepository.findByPaginate(page);
+      const result = await this.AddProductRepository.findByPaginateAndFilter(
+        page,
+        condition
+      );
       return result;
     } catch (error) {
       console.log(error);

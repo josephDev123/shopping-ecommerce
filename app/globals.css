@@ -5,3 +5,17 @@
 html {
   font-family: var("--font-raleway"), sans-serif;
 }
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+} */

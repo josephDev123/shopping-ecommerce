@@ -16,8 +16,12 @@ export async function GET(req: Request) {
     const page = new URL(req.url).searchParams.get("page");
     // console.log(page);
     const formatPage = Number(page);
-
-    const result = await ProductServiceImpl.find(formatPage);
+    // populate this condition
+    const queryCondition = {};
+    const result = await ProductServiceImpl.findByPaginateAndFilter(
+      formatPage,
+      queryCondition
+    );
     // console.log("hello", result);
     return SuccessApiResponseHelper(
       result?.msg || "",
