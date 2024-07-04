@@ -12,23 +12,28 @@ export default function TopNavbar() {
 
   return (
     <section className="w-full h-[10%] p-4 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
-      <div className="flex justify-between items-center gap-2">
-        <p className="text-xl font-bold self-center">{session?.user?.name}</p>
-        <MdOutlineKeyboardDoubleArrowRight className="text-slate-400" />
-        <span className="text-xs text-slate-400">May 5, 2024</span>
+      <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-2">
+        <p className="sm:text-xl text-base font-bold self-center">
+          {session?.user?.name}
+        </p>
+
+        <span className="inline-flex sm:self-center items-center self-start text-xs text-slate-400">
+          <MdOutlineKeyboardDoubleArrowRight className="text-slate-400" />
+          May 5, 2024
+        </span>
       </div>
 
       <div className="flex justify-between gap-4 items-center">
         <IoIosNotifications className="text-xl cursor-pointer" />
-        <span className="relative ">
+        <span className="relative sm:w-auto border rounded-md">
           <input
             type="text"
             name="search"
             id=""
             placeholder="Search here ..."
-            className="p-2 rounded-md outline-none"
+            className="p-2  outline-none min-[425px]:w-auto w-24 sm:placeholder:text-inherit placeholder:text-sm "
           />
-          <CiSearch className="absolute top-3 text-xl right-2" />
+          <CiSearch className="absolute top-3 right-2 sm:text-xl text-sm" />
         </span>
       </div>
     </section>

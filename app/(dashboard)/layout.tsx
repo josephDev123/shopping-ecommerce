@@ -23,7 +23,7 @@ export default async function DashboardLayout({
     <section className="w-full h-full flex bg-green-400">
       {/* left panel */}
 
-      <div className="bg-darkBlack w-[20%] h-full px-2 text-white flex flex-col justify-center items-center">
+      <div className="bg-darkBlack w-[20%] h-full overflow-y-auto px-2 text-white flex flex-col justify-center items-center">
         <LeftPanel />
       </div>
       {/* right panel */}

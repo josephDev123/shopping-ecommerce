@@ -33,6 +33,7 @@ export default function ProductCard({ credential }: IProductCard) {
         alt=""
         height={300}
         width={300}
+        className="w-full object-cover"
         style={{ maxHeight: 300 }}
       />
       <div className=" p-2">

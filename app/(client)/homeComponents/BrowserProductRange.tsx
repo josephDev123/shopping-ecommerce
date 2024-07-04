@@ -13,7 +13,7 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
       <h2 className="font-bold text-xl">Browse The Range</h2>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 
-      <div className="grid grid-cols-3 gap-6 relative w-full mt-8">
+      <div className="grid sm:grid-cols-3 min-[425px]:grid-cols-2 grid-cols-1 gap-6 relative w-full mt-8">
         {data.map((productCategory) => (
           <div
             key={productCategory.id}

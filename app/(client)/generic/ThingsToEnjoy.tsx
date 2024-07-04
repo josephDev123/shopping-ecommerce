@@ -6,7 +6,7 @@ import React from "react";
 
 export default function ThingsToEnjoy() {
   return (
-    <section className="h-[260px] bg-[#FAF3EA] grid grid-cols-4 items-center mx-auto w-full pl-10  mt-10">
+    <section className="min-[425px]:h-[260px] h-[320px] bg-[#FAF3EA] gap-4 grid lg:grid-cols-4 min-[425px]:grid-cols-2 items-center mx-auto w-full min-[425px]:pl-10 pl-5 py-3 mt-10">
       <div className="flex gap-2">
         <TrophyIcon className="text-red-300" />
         <div className="flex flex-col">
