@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { axiosInstance } from "../axiosInstance";
+import { ServerReturnDataTypes } from "../types/serverDataReturnType";
 
 type statusType = "idle" | "loading" | "data" | "error";
 
@@ -14,11 +15,14 @@ export function useFetchFilterAndPaginateApi(
   filter?: {}
 ) {
   const [status, setStatus] = useState<statusType>("idle");
-  const [data, setData] = useState<[] | null>(null);
+  const [data, setData] = useState<any[] | any>([]);
+  const [additionalData, setAdditionalData] = useState<{ totalDoc: number }>({
+    totalDoc: 0,
+  });
 
   useCallback(() => {
     fetchApi();
-  }, [paramKey, paramValue]);
+  }, [paramKey, paramValue, limit]);
 
   const fetchApi = async () => {
     setStatus("loading");
@@ -34,6 +38,7 @@ export function useFetchFilterAndPaginateApi(
       setStatus("data");
       const resultDocument = result.data.data;
       setData(resultDocument);
+      setAdditionalData(result.data.additionalData);
     } catch (error) {
       setStatus("error");
     }
@@ -41,7 +46,7 @@ export function useFetchFilterAndPaginateApi(
 
   useEffect(() => {
     fetchApi();
-  }, [paramKey, paramValue]);
+  }, [paramKey, paramValue, limit]);
 
-  return { status, data };
+  return { status, data, additionalData };
 }

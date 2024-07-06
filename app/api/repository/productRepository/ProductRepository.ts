@@ -22,20 +22,46 @@ export class ProductRepository {
     }
   }
 
-  async findByPaginateAndFilter<T>(page: number, condition: T) {
+  async findByPaginateAndFilter<T>(
+    page: number,
+    itemToShow: string,
+    condition: T
+  ) {
     try {
-      const limit = 3;
+      const limit = Number(itemToShow);
       const queryCondition = condition;
       const skip = page * limit;
       const result = await this.dbContext.find().skip(skip).limit(limit);
+      const totalDoc = await this.dbContext.countDocuments({});
+
+      return {
+        msg: "get product successful",
+        name: "MongodbSuccess",
+        operational: true,
+        type: "success",
+        status: 200,
+        data: result,
+        additionalData: {
+          totalDoc,
+        },
+      };
+    } catch (error) {
+      new GlobalErrorHandler("get product fails", "UnknownError", "500", true);
+    }
+  }
+
+  async findById(id: string) {
+    try {
+      const doc = await this.dbContext.findById(id);
       return {
         msg: "get products successful",
         name: "MongodbSuccess",
         operational: true,
         type: "success",
         status: 200,
-        data: result,
+        data: doc,
       };
+      console.log(doc);
     } catch (error) {
       new GlobalErrorHandler("get product fails", "UnknownError", "500", true);
     }

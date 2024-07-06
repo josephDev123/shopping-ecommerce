@@ -24,7 +24,8 @@ export async function SuccessApiResponseHelper<T>(
   operational: boolean,
   type: string,
   status: number,
-  data: T[]
+  data: T[] | T,
+  additionalData?: any
 ) {
   return NextResponse.json(
     {
@@ -33,6 +34,7 @@ export async function SuccessApiResponseHelper<T>(
       operational: operational,
       type: type,
       data: data,
+      additionalData: additionalData,
     },
     { status: status }
   );

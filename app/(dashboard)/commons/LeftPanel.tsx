@@ -28,13 +28,13 @@ export default function LeftPanel() {
         <LeftPanelItemCard
           icon={<IoIosAddCircleOutline className="text-lg" />}
           text="Add Products"
-          path="add-product"
+          path="/add-product"
         />
 
         <LeftPanelItemCard
           icon={<TbBrandProducthunt className="text-lg" />}
           text="Product List"
-          path="product-list"
+          path="/product-list"
         />
       </div>
       <div className="mt-auto flex flex-col space-y-8 w-full">

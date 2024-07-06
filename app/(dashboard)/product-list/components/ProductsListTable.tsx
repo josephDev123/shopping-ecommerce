@@ -17,7 +17,7 @@ export default function ProductsListTable({ data }: ProductsListTableProps) {
   const [isOpenAction, setIsOpenAction] = useState(false);
   return (
     <section className="flex flex-col h-full overflow-x-auto">
-      <table className="table-auto h-full">
+      <table className="table-auto  h-fit relative">
         <thead>
           <tr className="border-b border-gray-200">
             <th className="flex items-center">
@@ -39,7 +39,7 @@ export default function ProductsListTable({ data }: ProductsListTableProps) {
         </thead>
         <tbody className="odd:border-b border-gray-200">
           {data?.map((item, i) => (
-            <tr key={i}>
+            <tr key={i} className="relative">
               <td>
                 <Input
                   name=""
@@ -84,14 +84,14 @@ export default function ProductsListTable({ data }: ProductsListTableProps) {
                   Published
                 </Button>
               </td>
-              <td className="relative h-full">
+              <td className="">
                 <BsThreeDotsVertical
                   onClick={() => setIsOpenAction((prev) => !prev)}
                   className="translate-x-6  text-2xl cursor-pointer hover:bg-gray-200 rounded-full p-1"
                 />
                 {isOpenAction && (
-                  <div className="absolute top-14">
-                    <ExpandActionModal />
+                  <div className="h-full absolute z-30 top-[60px]">
+                    <ExpandActionModal productId={item._id} />
                   </div>
                 )}
               </td>

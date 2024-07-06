@@ -13,12 +13,26 @@ export class ProductService {
     }
   }
 
-  async findByPaginateAndFilter<T>(page: number, condition: T) {
+  async findByPaginateAndFilter<T>(
+    page: number,
+    itemToShow: string,
+    condition: T
+  ) {
     try {
       const result = await this.AddProductRepository.findByPaginateAndFilter(
         page,
+        itemToShow,
         condition
       );
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async findById(product_id: string) {
+    try {
+      const result = await this.AddProductRepository.findById(product_id);
       return result;
     } catch (error) {
       console.log(error);

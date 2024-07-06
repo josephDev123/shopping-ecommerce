@@ -3,11 +3,16 @@ import { TiEyeOutline } from "react-icons/ti";
 import { RiEdit2Line } from "react-icons/ri";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-export default function ExpandActionModal() {
+interface ExpandActionModalType {
+  productId: string;
+}
+export default function ExpandActionModal({
+  productId,
+}: ExpandActionModalType) {
   return (
     <section className="flex flex-col drop-shadow-md border bg-white p-2 rounded-md space-y-3">
       <Link
-        href={"/view-product"}
+        href={`/view-product/${productId}`}
         className="flex items-center gap-3 font-medium"
       >
         <TiEyeOutline />

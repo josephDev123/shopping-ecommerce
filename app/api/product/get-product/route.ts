@@ -13,26 +13,16 @@ export async function GET(req: Request) {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
-    const page = new URL(req.url).searchParams.get("page");
-    const limit = new URL(req.url).searchParams.get("limit");
-
-    const formatPage = Number(page);
-    // populate this condition
-    const queryCondition = {};
-    const result = await ProductServiceImpl.findByPaginateAndFilter(
-      formatPage,
-      limit!,
-      queryCondition
-    );
-    // console.log("hello", result);
+    const product_id = new URL(req.url).searchParams.get("product_id");
+    const result = await ProductServiceImpl.findById(product_id!);
+    // console.log(result);
     return SuccessApiResponseHelper(
       result?.msg || "",
       result?.name || "",
       result?.operational || false,
       result?.type || "",
       result?.status || 0,
-      result?.data || [],
-      result?.additionalData || {}
+      result?.data || {}
     );
   } catch (error) {
     console.log(error);

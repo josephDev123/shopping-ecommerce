@@ -23,13 +23,18 @@ export default function page({ searchParams }: pageProps) {
   const paramValue = searchParams.page as string;
   type productType = z.infer<typeof ProductFormDataSchema>;
   console.log("product list", paramValue);
-  const { data: productData, status } = useFetchFilterAndPaginateApi(
+  const {
+    data: productData,
+    status,
+    additionalData,
+  } = useFetchFilterAndPaginateApi(
     "product/products",
     paramKey,
     paramValue,
     limit
   );
-  console.log(productData, status);
+
+  console.log(productData, status, additionalData);
   return (
     <section className="flex flex-col w-full h-full p-4">
       <div className="flex justify-between items-center">
@@ -91,20 +96,24 @@ export default function page({ searchParams }: pageProps) {
           <div className="flex justify-center mt-auto">Loading ...</div>
         )}
 
-        {productData?.length === 0 && (
+        {/* {Array.isArray(productData) && productData.length === 0 && (
           <div className="flex justify-center h-full mt-auto">No data</div>
-        )}
-        {status === "data" && Number(productData?.length) >= 1 && (
-          <div>
-            <ProductsListTable data={productData} />
-          </div>
-        )}
+        )} */}
+        {status === "data" &&
+          Array.isArray(productData) &&
+          Number(productData?.length) >= 1 && (
+            <div className="h-full">
+              <ProductsListTable data={productData} />
+            </div>
+          )}
       </div>
 
       <FooterPagination
-        pages={productData}
+        itemToShow={limit}
+        // pages={productData}
         searchParam={paramValue}
         setLimit={(e: string) => setLimit(e)}
+        totalDocs={additionalData.totalDoc}
       />
     </section>
   );

@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 
 export default function TopNavbar() {
   const { data: session, status } = useSession();
-  console.log("top nav bar", session);
+  // console.log("top nav bar", session);
 
   return (
     <section className="w-full h-[10%] p-4 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">

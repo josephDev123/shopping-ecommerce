@@ -5,19 +5,23 @@ import { MdOutlineExpandLess } from "react-icons/md";
 import { useRouter } from "next/navigation";
 
 interface FooterPaginationProps<T> {
-  pages: any[] | null;
+  // pages: any[] | null;
   searchParam: string;
+  itemToShow: string;
   setLimit: (value: string) => void;
+  totalDocs: number;
 }
 
 export default function FooterPagination<T>({
   searchParam,
-  pages,
+  // pages,
+  itemToShow,
   setLimit,
+  totalDocs,
 }: FooterPaginationProps<T>) {
   const navigate = useRouter();
   const itemPerPage = 3;
-  const pagesNumber = Math.ceil(Number(pages?.length) / itemPerPage);
+  const pagesNumber = Math.ceil(Number(totalDocs) / itemPerPage);
   console.log(pagesNumber);
 
   const limit = [3, 4, 5, 6, 7, 8, 9, 10];
@@ -30,14 +34,17 @@ export default function FooterPagination<T>({
           <SelectInput
             onChange={(e) => setLimit(e.target.value)}
             name=""
-            placeholder="10"
+            min={3}
+            max={10}
+            placeholder="3"
+            value={itemToShow}
             data={limit}
             labelName=""
             className="border rounded-md w-12"
           />
         </div>
         <span className="inline-flex items-center justify-center">
-          of {pages?.length}
+          of {totalDocs}
         </span>
       </div>
 
