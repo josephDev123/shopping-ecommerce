@@ -35,7 +35,7 @@ export class ProductRepository {
       const totalDoc = await this.dbContext.countDocuments({});
 
       return {
-        msg: "get product successful",
+        msg: "get products successful",
         name: "MongodbSuccess",
         operational: true,
         type: "success",
@@ -54,7 +54,7 @@ export class ProductRepository {
     try {
       const doc = await this.dbContext.findById(id);
       return {
-        msg: "get products successful",
+        msg: "get product successful",
         name: "MongodbSuccess",
         operational: true,
         type: "success",
@@ -64,6 +64,23 @@ export class ProductRepository {
       console.log(doc);
     } catch (error) {
       new GlobalErrorHandler("get product fails", "UnknownError", "500", true);
+    }
+  }
+  async updateById(id: string, doc: ProductSchemaTypes) {
+    try {
+      const update = await this.dbContext.findByIdAndUpdate(id, doc, {
+        new: true,
+      });
+      return {
+        msg: " product update successful",
+        name: "MongodbSuccess",
+        operational: true,
+        type: "success",
+        status: 200,
+        data: doc,
+      };
+    } catch (error) {
+      console.log(error);
     }
   }
 }

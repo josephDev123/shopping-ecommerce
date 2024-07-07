@@ -38,4 +38,16 @@ export class ProductService {
       console.log(error);
     }
   }
+
+  async updateById(product_id: string, newdoc: ProductSchemaTypes) {
+    try {
+      const result = await this.AddProductRepository.updateById(
+        product_id,
+        newdoc
+      );
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

@@ -1,4 +1,9 @@
-import Input, { SelectInput, Textarea } from "@/app/(client)/generic/Input";
+// "use client";
+
+import Input, {
+  SelectInput,
+  TextareaInput,
+} from "@/app/(client)/generic/Input";
 import { marketplaceCategories } from "../types/CategoryData";
 import ImageGrid from "../add-product/components/ImageGrid";
 import { weightUnits } from "../types/weigthUnit";
@@ -14,12 +19,14 @@ export default function page() {
           <div className="flex flex-col rounded-md space-y-4 p-3 border">
             <h1 className="text-xl font-bold">General Information</h1>
             <Input
+              name=""
               labelName="Product Name"
               errorLabel=""
               className="border p-2 rounded-md"
             />
 
-            <Textarea
+            <TextareaInput
+              name=""
               labelName="Description"
               className="border p-2 rounded-md"
             />
@@ -29,6 +36,7 @@ export default function page() {
             <h1 className="text-xl font-bold">Category</h1>
             <div className="grid grid-cols-2 gap-4">
               <SelectInput
+                name=""
                 data={marketplaceCategories}
                 labelName="Product Name"
                 errorLabel=""
@@ -36,6 +44,7 @@ export default function page() {
               />
 
               <Input
+                name=""
                 labelName="Product Tag"
                 className="border p-2 rounded-md"
               />
@@ -46,12 +55,14 @@ export default function page() {
             <h1 className="text-xl font-bold">Pricing</h1>
             <div className="grid grid-cols-2 gap-4">
               <Input
+                name=""
                 labelName="Sale Price"
                 className="border p-2 rounded-md"
                 placeholder="$100.00"
               />
 
               <Input
+                name=""
                 labelName="Discount"
                 className="border p-2 rounded-md"
                 placeholder="$20.00 or 20%"
@@ -60,6 +71,7 @@ export default function page() {
 
             <div className="grid grid-cols-2 gap-4">
               <Input
+                name=""
                 type="number"
                 labelName="Quantity"
                 className="border p-2 rounded-md"
@@ -67,6 +79,7 @@ export default function page() {
               />
 
               <Input
+                name=""
                 labelName="SKU"
                 className="border p-2 rounded-md"
                 placeholder="APL-IPHONE-BLACK-80GB"
@@ -78,29 +91,32 @@ export default function page() {
             <h1 className="text-xl font-bold">Select your Size</h1>
             <div className="grid grid-cols-2 gap-4">
               <Input
+                name=""
                 labelName="size"
                 className="border p-2 rounded-md"
                 placeholder="00"
               />
 
-              <Input
+              {/* <Input
+                name=""
                 type="color"
                 labelName="color"
                 // className="border p-2 rounded-md"
                 // placeholder="$20.00 or 20%"
-              />
+              /> */}
             </div>
           </div>
         </div>
 
         {/* second grid */}
         <div className="flex flex-col space-y-6">
-          <ImageGrid />
+          {/* <ImageGrid /> */}
           <div className="flex flex-col rounded-md space-y-4 p-3 border">
             <h1 className="text-xl font-bold">Shipping and Delivery</h1>
 
             <div className="grid grid-cols-2 gap-2">
               <Input
+                name=""
                 type="number"
                 labelName="Item Weight"
                 className="border p-2 rounded-md col-span-2"
@@ -108,6 +124,7 @@ export default function page() {
               />
 
               <SelectInput
+                name=""
                 data={weightUnits}
                 labelName="Unit"
                 className="border p-2 rounded-md col-span-2"
@@ -115,6 +132,7 @@ export default function page() {
             </div>
             <div className="grid gap-4">
               <Input
+                name=""
                 type="number"
                 labelName="Breath"
                 className="border p-2 rounded-md"
@@ -124,6 +142,7 @@ export default function page() {
 
             <div className="grid grid-cols-2 gap-4">
               <Input
+                name=""
                 type="number"
                 labelName="Length"
                 className="border p-2 rounded-md"
@@ -131,6 +150,7 @@ export default function page() {
               />
 
               <Input
+                name=""
                 type="number"
                 labelName="Width"
                 className="border p-2 rounded-md"

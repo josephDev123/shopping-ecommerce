@@ -20,7 +20,7 @@ export default function ExpandActionModal({
       </Link>
 
       <Link
-        href={"/edit-product"}
+        href={`/edit-product/${productId}`}
         className="flex items-center gap-3 font-medium"
       >
         <RiEdit2Line />
