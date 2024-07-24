@@ -11,12 +11,10 @@ import { Images } from "@/app/Images";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
 // import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
-// import { stateType } from "@/app/reduxType";
-import { RootState } from "@/app/store";
+import { useAppDispatch, useAppSelector } from "@/app/lib/slices/hooks";
 
 export default function DashboardMobileLeftpanel() {
-  const state = useSelector((state: any) => state);
+  const state = useAppSelector((state) => state);
   console.log(state.leftPanelState);
   return (
     <>
@@ -63,7 +61,7 @@ export default function DashboardMobileLeftpanel() {
               />
 
               <div className="flex gap-3 relative">
-                <Image
+                {/* <Image
                   alt="avatar"
                   src={Images.avatar}
                   width={35}
@@ -71,7 +69,7 @@ export default function DashboardMobileLeftpanel() {
                   // fill
                   loading="lazy"
                   className="bg-white/25 rounded-full"
-                />
+                /> */}
                 <div className="flex flex-col ">
                   <h2 className="text-sm">Joseph Uzuegbu</h2>
                   <Link href={""} className="text-xs">

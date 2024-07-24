@@ -1,20 +1,30 @@
 "use client";
 
-import react from "react";
+import react, { useRef } from "react";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { useSession } from "next-auth/react";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleLeftPanel } from "@/app/slices/leftpanelSlice";
-import { RootState } from "@/app/store";
+import {
+  useAppSelector,
+  useAppDispatch,
+  useAppStore,
+} from "@/app/lib/slices/hooks";
+import { toggleLeftPanel } from "@/app/lib/slices/leftpanelSlice";
 
 export default function TopNavbar() {
   // const { data: session, status } = useSession();
-  const dispatch = useDispatch();
+
+  const store = useAppStore();
+  const initialized = useRef(false);
+  if (!initialized.current) {
+    store.dispatch(toggleLeftPanel());
+    initialized.current = true;
+  }
+  const dispatch = useAppDispatch();
   // console.log("top nav bar", session);
-  const state = useSelector((state: any) => state);
+  const state = useAppSelector((state) => state);
   console.log(state.leftPanelState.value);
 
   return (

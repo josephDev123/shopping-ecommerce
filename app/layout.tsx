@@ -21,12 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={raleway.className}>
       <body>
-        <ReduxProvider>
-          <main className="h-full w-full">
-            <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
-            <ToastContainer />
-          </main>
-        </ReduxProvider>
+        <main className="h-full w-full">
+          <NextAuthSessionProvider>
+            <ReduxProvider>{children}</ReduxProvider>
+          </NextAuthSessionProvider>
+          <ToastContainer />
+        </main>
       </body>
     </html>
   );
