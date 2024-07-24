@@ -4,6 +4,7 @@ import NextAuthSessionProvider from "./nextAuthSessionProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Roboto, Inter, Lato, Raleway } from "next/font/google";
+import ReduxProvider from "./ReduxProvider";
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={raleway.className}>
       <body>
-        <main className="h-full w-full">
-          <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
-          <ToastContainer />
-        </main>
+        <ReduxProvider>
+          <main className="h-full w-full">
+            <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+            <ToastContainer />
+          </main>
+        </ReduxProvider>
       </body>
     </html>
   );
