@@ -5,8 +5,8 @@ import LeftPanel from "./commons/LeftPanel";
 import TopNavbar from "./commons/TopNavbar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]/route";
-import DashboardMobileLeftpanel from "./components/DashboardMobileLeftpanel";
-import ReduxProvider from "../ReduxProvider";
+import DashboardMobileLeftpanel from "./commons/DashboardMobileLeftpanel";
+import StoreProvider from "../StoreProvider";
 
 export const metadata = {
   title: "JoeFintech",
@@ -27,11 +27,13 @@ export default function DashboardLayout({
       <div className="bg-darkBlack w-[20%] h-full overflow-y-auto px-2 text-white md:flex hidden flex-col justify-center items-center">
         <LeftPanel />
       </div>
-      <DashboardMobileLeftpanel />
+      <div>
+        <DashboardMobileLeftpanel />
+      </div>
+
       {/* right panel */}
       <div className="w-full h-full bg-white flex flex-col">
         <TopNavbar />
-
         <div className="h-full overflow-y-auto">
           <div className=" h-full flex-1">{children}</div>
         </div>

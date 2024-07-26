@@ -1,8 +1,8 @@
 "use client";
 
-import react from "react";
+import react, { useRef } from "react";
 import { BiLogOut } from "react-icons/bi";
-import LeftPanelItemCard from "../commons/LeftPanelItemCard";
+import LeftPanelItemCard from "./LeftPanelItemCard";
 import { TbBrandProducthunt } from "react-icons/tb";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import Link from "next/link";
@@ -11,20 +11,35 @@ import { Images } from "@/app/Images";
 import { IoIosClose } from "react-icons/io";
 import Image from "next/image";
 // import { motion } from "framer-motion";
-import { useAppDispatch, useAppSelector } from "@/app/lib/slices/hooks";
+import {
+  useAppDispatch,
+  useAppSelector,
+  useAppStore,
+} from "@/lib/slices/hooks";
+import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
 
 export default function DashboardMobileLeftpanel() {
-  const state = useAppSelector((state) => state);
-  console.log(state.leftPanelState);
+  const state = useAppSelector((state) => state.leftPanelState);
+  const dispatch = useAppDispatch();
+  // const store = useAppStore();
+  // const initialized = useRef(false);
+  // if (!initialized.current) {
+  //   store.dispatch(toggleLeftPanel());
+  //   initialized.current = true;
+  // }
+
   return (
     <>
-      {state.leftPanelState.value && (
+      {state.value && (
         <section
           // animate={""}
           className="fixed inset-0 z-20 md:hidden flex flex-col w-full h-full bg-red-400"
         >
           <div className="w-full min-[425px]:w-[50%] h-full flex flex-col pl-6 pr-2 bg-darkBlack overflow-y-auto text-white ">
-            <IoIosClose className="self-end text-3xl mt-2 hover:bg-gray-200 rounded-full p-1" />
+            <IoIosClose
+              onClick={() => dispatch(toggleLeftPanel())}
+              className="self-end text-3xl mt-2 hover:bg-gray-200 rounded-full p-1"
+            />
             <Link href="/" className="text-2xl font-semibold my-4">
               JoeBank
             </Link>

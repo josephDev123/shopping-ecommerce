@@ -10,19 +10,13 @@ import {
   useAppSelector,
   useAppDispatch,
   useAppStore,
-} from "@/app/lib/slices/hooks";
-import { toggleLeftPanel } from "@/app/lib/slices/leftpanelSlice";
+} from "@/lib/slices/hooks";
+import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
+import HamburgerToggle from "./HamburgerToggle";
 
 export default function TopNavbar() {
   // const { data: session, status } = useSession();
 
-  const store = useAppStore();
-  const initialized = useRef(false);
-  if (!initialized.current) {
-    store.dispatch(toggleLeftPanel());
-    initialized.current = true;
-  }
-  const dispatch = useAppDispatch();
   // console.log("top nav bar", session);
   const state = useAppSelector((state) => state);
   console.log(state.leftPanelState.value);
@@ -52,10 +46,7 @@ export default function TopNavbar() {
           />
           <CiSearch className="absolute top-3 right-2 sm:text-xl text-sm" />
         </span>
-        <RxHamburgerMenu
-          onClick={() => dispatch(toggleLeftPanel())}
-          className="text-3xl hover:bg-gray-200 rounded-full p-1"
-        />
+        <HamburgerToggle />
       </div>
     </section>
   );
