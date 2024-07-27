@@ -1,8 +1,11 @@
+"use client";
+
 import Button from "@/app/(client)/generic/Button";
 import { SelectInput } from "@/app/(client)/generic/Input";
 import React from "react";
 import { MdOutlineExpandLess } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface FooterPaginationProps<T> {
   // pages: any[] | null;
@@ -19,7 +22,7 @@ export default function FooterPagination<T>({
   setLimit,
   totalDocs,
 }: FooterPaginationProps<T>) {
-  const navigate = useRouter();
+  // const navigate = useRouter();
   const itemPerPage = 3;
   const pagesNumber = Math.ceil(Number(totalDocs) / itemPerPage);
   console.log(pagesNumber);
@@ -49,57 +52,66 @@ export default function FooterPagination<T>({
       </div>
 
       <div className="flex gap-1">
-        <Button
-          type="button"
-          disabled={
-            searchParam === "0"
-              ? true
-              : searchParam === undefined
-              ? true
-              : false
-          }
-          onClick={() => navigate.push(`product-list?page=${pagesNumber - 1}`)}
-          textContent=""
-          className={`flex justify-center items-center p-1 rounded-md bg-gray-300 w-8 h-6 ${
-            searchParam === "0"
-              ? "cursor-not-allowed"
-              : searchParam === undefined
-              ? "cursor-not-allowed"
-              : "cursor-pointer"
-          }`}
-        >
-          <MdOutlineExpandLess className="-rotate-90" />
-        </Button>
-
-        {Array.from({ length: pagesNumber }, (page, i) => (
+        <Link href={`product-list?page=${pagesNumber - 1}`}>
           <Button
-            key={i}
-            onClick={() => navigate.push(`product-list?page=${i + 1}`)}
+            type="button"
+            disabled={
+              searchParam === "0"
+                ? true
+                : searchParam === undefined
+                ? true
+                : false
+            }
+            // onClick={() => navigate.push(`product-list?page=${pagesNumber - 1}`)}
             textContent=""
-            className="flex justify-center items-center p-1 rounded-md bg-blue-800 text-white w-8 h-6"
+            className={`flex justify-center items-center p-1 rounded-md bg-gray-300 w-8 h-6 ${
+              searchParam === "0"
+                ? "cursor-not-allowed"
+                : searchParam === undefined
+                ? "cursor-not-allowed"
+                : "cursor-pointer"
+            }`}
           >
-            {i + 1}
+            <MdOutlineExpandLess className="-rotate-90" />
           </Button>
+        </Link>
+        {Array.from({ length: pagesNumber }, (page, i) => (
+          <Link href={`product-list?page=${i + 1}`}>
+            <Button
+              key={i}
+              // onClick={() => navigate.push(`product-list?page=${i + 1}`)}
+              textContent=""
+              className="flex justify-center items-center p-1 rounded-md bg-blue-800 text-white w-8 h-6"
+            >
+              {i + 1}
+            </Button>
+          </Link>
         ))}
 
-        <Button
-          disabled={searchParam === String(pagesNumber) ? true : false}
-          onClick={() => {
-            navigate.push(
-              `product-list?page=${
-                searchParam === undefined ? 0 + 1 : searchParam
-              }`
-            );
-          }}
-          textContent=""
-          className={`flex justify-center items-center p-1 rounded-md bg-gray-300 w-8 h-6  ${
-            searchParam === String(pagesNumber)
-              ? "cursor-not-allowed"
-              : "cursor-pointer"
+        <Link
+          href={`product-list?page=${
+            searchParam === undefined ? 0 + 1 : searchParam
           }`}
         >
-          <MdOutlineExpandLess className="rotate-90" />
-        </Button>
+          <Button
+            disabled={searchParam === String(pagesNumber) ? true : false}
+            // onClick={() => {
+            //   navigate.push(
+            //     `product-list?page=${
+            //       searchParam === undefined ? 0 + 1 : searchParam
+            //     }`
+            //   );
+            // }}
+            textContent=""
+            className={`flex justify-center items-center p-1 rounded-md bg-gray-300 w-8 h-6  ${
+              searchParam === String(pagesNumber)
+                ? "cursor-not-allowed"
+                : "cursor-pointer"
+            }`}
+          >
+            <MdOutlineExpandLess className="rotate-90" />
+          </Button>
+        </Link>
       </div>
     </div>
   );

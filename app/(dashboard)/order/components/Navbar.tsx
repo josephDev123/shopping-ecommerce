@@ -1,17 +1,16 @@
-"use client";
-
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function Navbar() {
-  const searchParam = useSearchParams().get("status");
-
+interface OrderPageNavProps {
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+export default function Navbar({ searchParams }: OrderPageNavProps) {
   return (
     <div className="flex gap-8  text-lg border-b">
       <Link
         href={"/order?status=pending"}
         className={`${
-          searchParam === "pending" && "border-b-4 border-blue-600"
+          searchParams.status === "pending" && "border-b-4 border-blue-600"
         }`}
       >
         Pending
@@ -19,7 +18,7 @@ export default function Navbar() {
       <Link
         href={"/order?status=confirmed"}
         className={`${
-          searchParam === "confirmed" && "border-b-4 border-blue-600"
+          searchParams.status === "confirmed" && "border-b-4 border-blue-600"
         }`}
       >
         Confirmed
@@ -27,7 +26,7 @@ export default function Navbar() {
       <Link
         href={"/order?status=processing"}
         className={`${
-          searchParam === "processing" && "border-b-4 border-blue-600"
+          searchParams.status === "processing" && "border-b-4 border-blue-600"
         }`}
       >
         Processing
@@ -35,7 +34,7 @@ export default function Navbar() {
       <Link
         href={"/order?status=picked"}
         className={`${
-          searchParam === "picked" && "border-b-4 border-blue-600"
+          searchParams.status === "picked" && "border-b-4 border-blue-600"
         }`}
       >
         Picked
@@ -43,7 +42,7 @@ export default function Navbar() {
       <Link
         href={"/order?status=shipped"}
         className={`${
-          searchParam === "shipped" && "border-b-4 border-blue-600"
+          searchParams.status === "shipped" && "border-b-4 border-blue-600"
         }`}
       >
         Shipped
@@ -51,7 +50,7 @@ export default function Navbar() {
       <Link
         href={"/order?status=delivered"}
         className={`${
-          searchParam === "delivered" && "border-b-4 border-blue-600"
+          searchParams.status === "delivered" && "border-b-4 border-blue-600"
         }`}
       >
         Delivered
@@ -59,7 +58,7 @@ export default function Navbar() {
       <Link
         href={"/order?status=cancelled"}
         className={`${
-          searchParam === "cancelled" && "border-b-4 border-blue-600"
+          searchParams.status === "cancelled" && "border-b-4 border-blue-600"
         }`}
       >
         Cancelled
