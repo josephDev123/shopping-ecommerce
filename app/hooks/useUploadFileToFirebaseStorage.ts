@@ -1,9 +1,15 @@
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storageDb } from "../firebaseConfig";
 import { useState } from "react";
-
+export type returnUploadedImagePattern = {
+  url: string;
+  path: string;
+};
 export function useUploadFirebaseToFirebase() {
-  const [downloadedUrl, setdownloadedUrl] = useState<string[]>([]);
+  const [downloadedUrl, setdownloadedUrl] = useState<
+    returnUploadedImagePattern[]
+  >([]);
+
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [uploadStageStatus, setUploadStageStatus] = useState<string | null>(
     null
@@ -16,13 +22,13 @@ export function useUploadFirebaseToFirebase() {
       contentType: "image/jpeg",
     };
     const timestamp = Date.now();
-    // const filename = `${file.name}-${timestamp}`;
-    // Upload file and metadata to the object 'images/mountains.jpg'
 
     for (let i = 0; i < file.length; i++) {
+      const filePathName = `${pathname}/${file[i].name}-${timestamp}`;
       const storageRef = ref(
         storageDb,
-        `${pathname}/ ${file[i].name}-${timestamp}`
+        // `${pathname}/ ${file[i].name}-${timestamp}`
+        filePathName
       );
       const uploadTask = uploadBytesResumable(storageRef, file[i], metadata);
 
@@ -69,7 +75,10 @@ export function useUploadFirebaseToFirebase() {
           // Upload completed successfully, now we can get the download URL
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log("File available at", downloadURL);
-            setdownloadedUrl((prev) => [...prev, downloadURL]);
+            setdownloadedUrl((prev) => [
+              ...prev,
+              { url: downloadURL, path: filePathName },
+            ]);
             setUploadStageStatus(null);
             setErrorMsg(null);
           });
@@ -78,5 +87,12 @@ export function useUploadFirebaseToFirebase() {
     }
   };
 
-  return { downloadedUrl, errorMsg, uploadStageStatus, uploadFile };
+  return {
+    downloadedUrl,
+    setdownloadedUrl,
+    // FileStorageRef,
+    errorMsg,
+    uploadStageStatus,
+    uploadFile,
+  };
 }

@@ -1,6 +1,12 @@
 import mongoose, { Schema, model, models, mongo } from "mongoose";
 import UserModel from "./User";
+import { url } from "inspector";
+import path from "path";
 
+type uploadImgPattern = {
+  url: string;
+  path: string;
+};
 export type ProductSchemaTypes = {
   id?: string;
   user_id?: Schema.Types.ObjectId;
@@ -19,7 +25,7 @@ export type ProductSchemaTypes = {
   productBreath?: number;
   productLength?: number;
   productWidth?: number;
-  productImgUrl: string[];
+  productImgUrl: uploadImgPattern[];
 };
 
 const ProductSchema = new Schema<ProductSchemaTypes>({
@@ -42,7 +48,12 @@ const ProductSchema = new Schema<ProductSchemaTypes>({
   productBreath: { type: Number },
   productLength: { type: Number },
   productWidth: { type: Number },
-  productImgUrl: { type: [String] },
+  productImgUrl: [
+    {
+      url: { type: String, required: true },
+      path: { type: String, required: true },
+    },
+  ],
 });
 
 const ProductModel =

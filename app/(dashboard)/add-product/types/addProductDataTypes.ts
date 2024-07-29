@@ -18,7 +18,15 @@ export const ProductFormDataSchema = z.object({
   productLength: z.string().min(1, "Product length is required"),
   productWidth: z.string().min(1, "Product width is required"),
   // productImage: z.instanceof(File).array().optional(),
-  productImgUrl: z.array(z.string()).optional(),
+  // productImgUrl: z.array(z.string()).optional(),
+  productImgUrl: z
+    .array(
+      z.object({
+        url: z.string().url().optional(), // Validates that the url, if present, is a string and a valid URL
+        path: z.string().optional(), // Validates that the path, if present, is a string
+      })
+    )
+    .optional(),
 });
 
 // export type AddProductSchemaTypes = z.infer<typeof ProductFormDataSchema>;

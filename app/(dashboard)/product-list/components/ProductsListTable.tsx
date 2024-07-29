@@ -15,6 +15,7 @@ interface ProductsListTableProps {
 }
 export default function ProductsListTable({ data }: ProductsListTableProps) {
   const [isOpenAction, setIsOpenAction] = useState(false);
+  console.log(data);
   return (
     <section className="flex flex-col h-full overflow-x-auto">
       <table className="table-auto  h-fit relative">
@@ -50,7 +51,7 @@ export default function ProductsListTable({ data }: ProductsListTableProps) {
               </td>
               <td className="flex justify-center gap-3">
                 <img
-                  src={item.productImgUrl[0] as string}
+                  src={item.productImgUrl[0].url as string}
                   alt="product image"
                   className="object-contain"
                   height={40}

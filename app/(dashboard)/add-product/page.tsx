@@ -18,9 +18,14 @@ import { axiosInstance } from "@/app/axiosInstance";
 import { toast } from "react-toastify";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
 import { useSession } from "next-auth/react";
+import { returnUploadedImagePattern } from "@/app/hooks/useUploadFileToFirebaseStorage";
 
 export default function page() {
-  const [productImg, setProductImg] = useState<string[]>([]);
+  const [productImg, setProductImg] = useState<returnUploadedImagePattern[]>(
+    []
+  );
+
+  console.log(productImg);
   type inferProductFormDataType = z.infer<typeof ProductFormDataSchema>;
   const {
     register,
@@ -32,13 +37,14 @@ export default function page() {
   });
 
   const { data: session } = useSession();
-
+  console.log(errors);
   const handleSubmitAddProduct: SubmitHandler<
     inferProductFormDataType
   > = async (data, e) => {
     try {
       if (productImg.length === 0) {
         toast.error("No product image was deploy. Deploy one or more");
+        console.log("oops");
         return;
       }
       const payload = {
@@ -46,6 +52,7 @@ export default function page() {
         user_id: session?.user.id,
         productImgUrl: productImg,
       };
+      console.log(payload, data);
       const res = await axiosInstance({
         url: "/product/add-products",
         method: "POST",
@@ -210,12 +217,7 @@ export default function page() {
 
             {/* second grid */}
             <div className="flex flex-col space-y-6">
-              <ImageGrid
-                // register={register}
-                // error={errors.productImage}
-                // setDefaultSelectedImg={setDefaultSelectedImg}
-                setProductImg={(values: string[]) => setProductImg(values)}
-              />
+              <ImageGrid setProductImg={(values) => setProductImg(values)} />
               <div className="flex flex-col rounded-md space-y-4 p-3 border">
                 <h1 className="text-xl font-bold">Shipping and Delivery</h1>
 

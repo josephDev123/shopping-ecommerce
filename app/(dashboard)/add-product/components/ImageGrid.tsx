@@ -4,32 +4,29 @@ import { Images } from "@/app/Images";
 import Image from "next/image";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useEffect, useRef } from "react";
-import { useUploadFirebaseToFirebase } from "@/app/hooks/useUploadFileToFirebaseStorage";
 import {
-  FieldError,
-  Merge,
-  UseFormRegister,
-  FieldValues,
-} from "react-hook-form";
+  returnUploadedImagePattern,
+  useUploadFirebaseToFirebase,
+} from "@/app/hooks/useUploadFileToFirebaseStorage";
+
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { IoIosClose } from "react-icons/io";
+import { deleteFileOnFirebase } from "@/app/utils/deletefirebasefile";
 
 type ImageGridType = {
-  // error: Merge<FieldError, (FieldError | undefined)[]> | undefined;
-  setProductImg: (values: string[]) => void;
-  // register: UseFormRegister<any>;
-  // setDefaultSelectedImg: (value: (File | undefined)[]) => void;
+  setProductImg: (values: returnUploadedImagePattern[]) => void;
 };
-export default function ImageGrid({
-  // error,
-  setProductImg,
-}: // register,
-// setDefaultSelectedImg,
-ImageGridType) {
+export default function ImageGrid({ setProductImg }: ImageGridType) {
   const fileRef = useRef<HTMLInputElement>(null);
-  const { downloadedUrl, errorMsg, uploadStageStatus, uploadFile } =
-    useUploadFirebaseToFirebase();
+  const {
+    downloadedUrl,
+    setdownloadedUrl,
+    errorMsg,
+    uploadStageStatus,
+    uploadFile,
+  } = useUploadFirebaseToFirebase();
   setProductImg(downloadedUrl);
-
+  console.log(downloadedUrl);
   const handleOnchangeFile = function (e: React.ChangeEvent<HTMLInputElement>) {
     const fileInput = e.target as HTMLInputElement;
     const selectedFile = fileInput.files;
@@ -38,6 +35,16 @@ ImageGridType) {
       uploadFile("/product", selectedFile);
     }
   };
+
+  async function handleFileDelete(path: string) {
+    try {
+      const response = await deleteFileOnFirebase(path);
+      setProductImg(downloadedUrl.filter((img) => img.path !== path));
+      setdownloadedUrl(downloadedUrl.filter((img) => img.path !== path));
+    } catch (error) {
+      throw error;
+    }
+  }
 
   return (
     <section className="flex flex-col space-y-3  rounded-md p-3 border">
@@ -52,18 +59,24 @@ ImageGridType) {
           </button>
         ) : downloadedUrl.length > 0 ? (
           <>
-            {downloadedUrl.map((link) => (
-              <img
-                src={link}
-                alt="product image"
-                width={200}
-                height={400}
-                className="w-[200px]"
-              />
+            {downloadedUrl.map((link, i) => (
+              <div className="relative">
+                <img
+                  src={link.url}
+                  alt="product image"
+                  width={200}
+                  height={400}
+                  className="w-[200px]"
+                />
+                <IoIosClose
+                  onClick={() => handleFileDelete(link.path)}
+                  className="absolute top-0.5 right-0.5 cursor-pointer text-2xl  text-red-500 hover:text-red-300 rounded-full p-0.5 "
+                />
+              </div>
             ))}
           </>
         ) : (
-          <p className="text-center">Products image preview</p>
+          <p className="text-sm">Products image preview</p>
         )}
       </div>
 
