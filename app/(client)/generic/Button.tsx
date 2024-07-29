@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 
 interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {

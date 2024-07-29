@@ -23,7 +23,7 @@ export default function Navbar() {
         Ecommerce
       </Link>
 
-      <nav className="md:flex hidden justify-between gap-10 items-center text-lg">
+      <nav className="md:flex hidden justify-between lg:gap-10 gap-5 items-center text-lg">
         <Link href={"/"} className={`hover:text-gray-500 font-semibold `}>
           Home
         </Link>

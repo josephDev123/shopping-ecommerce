@@ -2,7 +2,7 @@ import Banner from "../generic/Banner";
 import { MdLocationPin } from "react-icons/md";
 import { IoIosCall } from "react-icons/io";
 import { MdAccessTimeFilled } from "react-icons/md";
-import Input, { Textarea } from "../generic/Input";
+import Input, { TextareaInput } from "../generic/Input";
 import Button from "../generic/Button";
 
 export default function page() {
@@ -56,6 +56,7 @@ export default function page() {
         {/* second div */}
         <form method="post" className="flex flex-col  space-y-4">
           <Input
+            name=""
             type="text"
             labelName="Your name"
             errorLabel=""
@@ -64,6 +65,7 @@ export default function page() {
           />
 
           <Input
+            name=""
             type="email"
             labelName="Email address"
             errorLabel=""
@@ -72,6 +74,7 @@ export default function page() {
           />
 
           <Input
+            name=""
             type="text"
             labelName="Subject"
             errorLabel=""
@@ -79,7 +82,8 @@ export default function page() {
             placeholder="This is an optional"
           />
 
-          <Textarea
+          <TextareaInput
+            name=""
             labelName="Message"
             errorLabel=""
             className="border p-3 outline-none"

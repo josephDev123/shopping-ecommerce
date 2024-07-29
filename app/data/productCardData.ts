@@ -1,12 +1,29 @@
 import { Images } from "../Images";
 
+type ProductImage = {
+  url: string;
+  path: string;
+  _id: string;
+};
+
 export type IproductCardTypes = {
-  id: string;
-  img: string;
-  productname: string;
-  price: string;
-  description: string;
-  discount: number;
+  _id: string;
+  user_id: string;
+  productName: string;
+  Description: string;
+  productCategory: string;
+  productTag: string;
+  productPrice: string;
+  productDiscount: string;
+  productQuantity: number;
+  productSKU: string;
+  productSize: string;
+  productItemWeight: number;
+  productUnit: string;
+  productBreath: number;
+  productLength: number;
+  productWidth: number;
+  productImgUrl: ProductImage[];
 };
 
 export const productCardData = [

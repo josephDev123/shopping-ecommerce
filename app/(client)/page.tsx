@@ -10,7 +10,7 @@ export default function page() {
       <Hero />
       {/* use server pagination here */}
       <BrowserProductRange data={productCategory} />
-      <OurProducts data={productCardData} />
+      <OurProducts />
     </section>
   );
 }

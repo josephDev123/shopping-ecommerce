@@ -11,13 +11,14 @@ type IProductCard = {
 
 export default function ProductCard({ credential }: IProductCard) {
   const discountedPrice =
-    Number(credential.price.slice(1)) * (1 - Number(credential.discount) / 100);
+    Number(credential.productPrice.slice(1)) *
+    (1 - Number(credential.productDiscount) / 100);
 
   const navigate = useRouter();
   return (
     <section className="flex flex-col bg-[#F4F5F7] relative cursor-pointer group">
       <div
-        onClick={() => navigate.push(`/shop/${credential.id}`)}
+        onClick={() => navigate.push(`/shop/${credential._id}`)}
         className=" flex-col justify-center items-center absolute top-0 w-full h-full bg-gray-50/50 group-hover:flex hidden"
       >
         <Button
@@ -26,10 +27,10 @@ export default function ProductCard({ credential }: IProductCard) {
         />
       </div>
       <span className="bg-[#E97171] rounded-full flex flex-col h-fit justify-center items-center absolute right-6 top-8 p-1 text-white ">
-        {credential.discount}%
+        {credential.productDiscount}%
       </span>
-      <Image
-        src={credential.img}
+      <img
+        src={credential.productImgUrl[0].url}
         alt=""
         height={300}
         width={300}
@@ -37,10 +38,10 @@ export default function ProductCard({ credential }: IProductCard) {
         style={{ maxHeight: 300 }}
       />
       <div className=" p-2">
-        <p className="font-bold">{credential.productname}</p>
-        <p className="truncate">{credential.description}</p>
+        <p className="font-bold">{credential.productName}</p>
+        <p className="truncate">{credential.Description}</p>
         <span className="flex justify-between items-center">
-          <p className="font-bold">{credential.price}</p>
+          <p className="font-bold">{credential.productPrice}</p>
           <p className="">{discountedPrice.toFixed(2)}</p>
         </span>
       </div>
