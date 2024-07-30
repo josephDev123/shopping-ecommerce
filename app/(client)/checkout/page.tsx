@@ -19,12 +19,14 @@ export default function page() {
           <div className="flex flex-col space-y-4 w-full">
             <div className="flex gap-4 w-full">
               <Input
+                name=""
                 type="text"
                 labelName="First Name"
                 errorLabel=""
                 className="rounded-md border p-4 outline-none"
               />
               <Input
+                name=""
                 type="text"
                 labelName="Last Name"
                 errorLabel=""
@@ -33,6 +35,7 @@ export default function page() {
             </div>
 
             <Input
+              name=""
               type="text"
               labelName="Company Name (Optional)"
               errorLabel=""
@@ -40,6 +43,7 @@ export default function page() {
             />
 
             <SelectInput
+              name=""
               labelName="Country / Region"
               errorLabel=""
               data={[]}
@@ -47,6 +51,7 @@ export default function page() {
             />
 
             <Input
+              name=""
               type="text"
               labelName="Street address"
               errorLabel=""
@@ -54,6 +59,7 @@ export default function page() {
             />
 
             <Input
+              name=""
               type="text"
               labelName="Town / City"
               errorLabel=""
@@ -61,6 +67,7 @@ export default function page() {
             />
 
             <Input
+              name=""
               type="text"
               labelName="Province"
               errorLabel=""
@@ -68,6 +75,7 @@ export default function page() {
             />
 
             <SelectInput
+              name=""
               labelName="Province"
               errorLabel=""
               data={[]}
@@ -75,12 +83,14 @@ export default function page() {
             />
 
             <Input
+              name=""
               type="number"
               labelName="ZIP code"
               errorLabel=""
               className="rounded-md border p-4 outline-none"
             />
             <Input
+              name=""
               type="number"
               labelName="Phone"
               errorLabel=""
@@ -88,12 +98,14 @@ export default function page() {
             />
 
             <Input
+              name=""
               type="text"
               labelName="Email address"
               errorLabel=""
               className="rounded-md border p-4 outline-none"
             />
             <Input
+              name=""
               type="text"
               labelName="Additional information"
               placeholder="Additional information"

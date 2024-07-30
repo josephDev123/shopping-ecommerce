@@ -175,7 +175,8 @@ export default function page() {
         <h2 className="font-bold text-2xl mb-10">Related Products</h2>
         <div className="grid grid-cols-4 gap-4 w-[80%] mx-auto ">
           {productCardData.map((product, i) => (
-            <ProductCard key={i} credential={product} />
+            // <ProductCard key={i} credential={product} />
+            <></>
           ))}
         </div>
         <Button

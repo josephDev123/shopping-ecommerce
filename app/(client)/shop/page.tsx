@@ -62,7 +62,8 @@ export default function page() {
 
       <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 my-14 w-[80%] mx-auto">
         {productCardData.map((item, i) => (
-          <ProductCard key={i} credential={item} />
+          // <ProductCard key={i} credential={item} />
+          <></>
         ))}
       </div>
 

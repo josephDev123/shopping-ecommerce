@@ -13,7 +13,8 @@ export async function GET(req: Request) {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
-    const product_id = new URL(req.url).searchParams.get("product_id");
+    // const product_id = new URL(req.url).searchParams.get("product_id");
+    const product_id = "4";
     const newDoc = (await req.json()) as ProductSchemaTypes;
     const result = await ProductServiceImpl.updateById(product_id!, newDoc);
     // console.log(result);

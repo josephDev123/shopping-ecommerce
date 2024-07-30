@@ -4,7 +4,7 @@ import NextAuthSessionProvider from "../nextAuthSessionProvider";
 import LeftPanel from "./commons/LeftPanel";
 import TopNavbar from "./commons/TopNavbar";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+// import { authOptions } from "../api/auth/[...nextauth]/route";
 import DashboardMobileLeftpanel from "./commons/DashboardMobileLeftpanel";
 import StoreProvider from "../StoreProvider";
 

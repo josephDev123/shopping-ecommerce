@@ -11,6 +11,7 @@ export default function page() {
       <div className="flex justify-between  items-center w-full">
         <div className="flex gap-2">
           <Input
+            name=""
             labelName=""
             placeholder="Search"
             icon={<CiSearch className="text-xl" />}
@@ -20,6 +21,7 @@ export default function page() {
           />
 
           <SelectInput
+            name=""
             data={[]}
             placeholder="Status"
             labelName=""
@@ -29,6 +31,7 @@ export default function page() {
 
         <div>
           <SelectInput
+            name=""
             data={[]}
             placeholder="Filter by Range"
             labelName=""
@@ -84,7 +87,7 @@ export default function page() {
         </table>
       </div>
 
-      <FooterPagination />
+      {/* <FooterPagination /> */}
     </section>
   );
 }

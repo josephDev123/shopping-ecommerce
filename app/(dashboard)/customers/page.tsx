@@ -12,6 +12,7 @@ export default function page() {
     <section className="flex flex-col w-full h-full p-3">
       <h2 className="text-2xl font-bold">Customer</h2>
       <Input
+        name=""
         labelName=""
         placeholder="Search"
         icon={<CiSearch className="text-xl" />}
@@ -62,7 +63,7 @@ export default function page() {
         </table>
       </div>
 
-      <FooterPagination />
+      {/* <FooterPagination /> */}
     </section>
   );
 }
