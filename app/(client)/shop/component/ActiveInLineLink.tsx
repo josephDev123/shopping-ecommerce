@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { LiaGreaterThanSolid } from "react-icons/lia";
-import { ILink } from "../page";
+import { ILink } from "../(page)/page";
 import { usePathname } from "next/navigation";
 
 interface IActiveInLineLink {
