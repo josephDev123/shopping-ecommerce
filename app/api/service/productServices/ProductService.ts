@@ -3,10 +3,10 @@ import { ProductRepository } from "../../repository/productRepository/ProductRep
 import { ProductSchemaTypes } from "@/models/ProductsModel";
 
 export class ProductService {
-  constructor(private readonly AddProductRepository: ProductRepository) {}
+  constructor(private readonly ProductRepository: ProductRepository) {}
   async create(addProductInputs: ProductSchemaTypes) {
     try {
-      const result = await this.AddProductRepository.create(addProductInputs);
+      const result = await this.ProductRepository.create(addProductInputs);
       return result;
     } catch (error) {
       console.log(error);
@@ -19,7 +19,7 @@ export class ProductService {
     condition: T
   ) {
     try {
-      const result = await this.AddProductRepository.findByPaginateAndFilter(
+      const result = await this.ProductRepository.findByPaginateAndFilter(
         page,
         itemToShow,
         condition
@@ -32,7 +32,7 @@ export class ProductService {
 
   async findById(product_id: string) {
     try {
-      const result = await this.AddProductRepository.findById(product_id);
+      const result = await this.ProductRepository.findById(product_id);
       return result;
     } catch (error) {
       console.log(error);
@@ -41,11 +41,31 @@ export class ProductService {
 
   async updateById(product_id: string, newdoc: ProductSchemaTypes) {
     try {
-      const result = await this.AddProductRepository.updateById(
+      const result = await this.ProductRepository.updateById(
         product_id,
         newdoc
       );
       return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async categories() {
+    try {
+      const response = await this.ProductRepository.categories();
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async category(query: string) {
+    try {
+      const response = await this.ProductRepository.category(query);
+      console.log(response);
+      return response;
     } catch (error) {
       console.log(error);
     }

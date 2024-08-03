@@ -2,6 +2,7 @@ import { Model } from "mongoose";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
+import { match } from "assert";
 
 export class ProductRepository {
   constructor(private readonly dbContext: Model<ProductSchemaTypes>) {}
@@ -78,6 +79,98 @@ export class ProductRepository {
         type: "success",
         status: 200,
         data: doc,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async categories() {
+    try {
+      // Aggregation pipeline to group products by category
+      const groupedProducts = await this.dbContext.aggregate([
+        {
+          $group: {
+            _id: "$productCategory",
+            products: {
+              $push: {
+                id: "$_id",
+                productName: "$productName",
+                Description: "$Description",
+                productTag: "$productTag",
+                productPrice: "$productPrice",
+                productDiscount: "$productDiscount",
+                productQuantity: "$productQuantity",
+                productSKU: "$productSKU",
+                productSize: "$productSize",
+                productColor: "$productColor",
+                productItemWeight: "$productItemWeight",
+                productUnit: "$productUnit",
+                productBreath: "$productBreath",
+                productLength: "$productLength",
+                productWidth: "$productWidth",
+                productImgUrl: "$productImgUrl",
+              },
+            },
+          },
+        },
+      ]);
+
+      return {
+        msg: " product category successful",
+        name: "MongodbSuccess",
+        operational: true,
+        type: "success",
+        status: 200,
+        data: groupedProducts,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async category(query: string) {
+    try {
+      // Aggregation pipeline to group products by category
+      const groupedProduct = await this.dbContext.aggregate([
+        {
+          $group: {
+            _id: "$productCategory",
+            products: {
+              $push: {
+                id: "$_id",
+                productName: "$productName",
+                Description: "$Description",
+                productTag: "$productTag",
+                productPrice: "$productPrice",
+                productDiscount: "$productDiscount",
+                productQuantity: "$productQuantity",
+                productSKU: "$productSKU",
+                productSize: "$productSize",
+                productColor: "$productColor",
+                productItemWeight: "$productItemWeight",
+                productUnit: "$productUnit",
+                productBreath: "$productBreath",
+                productLength: "$productLength",
+                productWidth: "$productWidth",
+                productImgUrl: "$productImgUrl",
+              },
+            },
+          },
+        },
+        {
+          $match: {
+            _id: query,
+          },
+        },
+      ]);
+
+      return {
+        msg: " product category successful",
+        name: "MongodbSuccess",
+        operational: true,
+        type: "success",
+        status: 200,
+        data: groupedProduct,
       };
     } catch (error) {
       console.log(error);
