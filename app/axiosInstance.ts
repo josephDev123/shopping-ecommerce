@@ -10,7 +10,7 @@ import { getSession } from "next-auth/react";
 
 export const axiosInstance = axios.create({
   // baseURL: "http://localhost:3000/api/",
-  baseURL: process.env.NEXT_PUBLIC_NEXTAUTH_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASEURL,
   // timeout: 1000,
   // headers: { "X-USER-Header": `${fetchUser()}` },
 });
