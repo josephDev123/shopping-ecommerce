@@ -16,7 +16,7 @@ export default function OurProducts() {
     status,
     data: productData,
     additionalData,
-  } = useFetchFilterAndPaginateApi("/api/product/products", "", "", "8");
+  } = useFetchFilterAndPaginateApi("api/product/products", "", "", "8");
   console.log(status, productData, additionalData);
   return (
     <section className="flex flex-col justify-center items-center my-8 w-[80%] mx-auto">
