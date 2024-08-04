@@ -9,17 +9,17 @@ export async function GET(req: NextRequest) {
     await startDb();
     const OrderReposInit = new OrderRepository(OrderModel);
     const OrderServiceInit = new OrderService(OrderReposInit);
-    const searchParams = req.nextUrl.searchParams;
+    // const searchParams = req.nextUrl.searchParams;
 
-    const id = searchParams.get("id") as string;
-    const filterByDate = searchParams.get("date") as string;
-    const page = Number(searchParams.get("page"));
+    // const id = searchParams.get("id") as string;
+    // const filterByDate = searchParams.get("date") as string;
+    // const page = Number(searchParams.get("page"));
 
-    const response = await OrderServiceInit.findByPaginate(
-      id,
-      filterByDate,
-      page
-    );
+    // const response = await OrderServiceInit.findByPaginate(
+    //   id,
+    //   filterByDate,
+    //   page
+    // );
 
     return NextResponse.json({ greeting: "hello world" }, { status: 200 });
   } catch (error) {

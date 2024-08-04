@@ -13,9 +13,9 @@ export interface OrderPageProps {
 export default function page({ searchParams }: OrderPageProps) {
   return (
     <section className="flex flex-col p-2 h-full">
-      <h1 className="font-bold text-xl my-2">Order Management</h1>
+      {/* <h1 className="font-bold text-xl my-2">Order Management</h1>
       <Navbar searchParams={searchParams} />
-      <OrderPageMainWrapper />
+      <OrderPageMainWrapper /> */}
     </section>
   );
 }

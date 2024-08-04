@@ -3,11 +3,12 @@ import { ProductService } from "../../service/productServices/ProductService";
 import { ProductRepository } from "../../repository/productRepository/ProductRepository";
 import ProductModel from "@/models/ProductsModel";
 import { NextResponse } from "next/server";
+import { startDb } from "@/lib/startDb";
 
 export async function GET(res: Request) {
   try {
-    const productModelImpl = ProductModel;
-    const productRepoImpl = new ProductRepository(productModelImpl);
+    await startDb();
+    const productRepoImpl = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(productRepoImpl);
     const response = await ProductServiceImpl.categories();
 
