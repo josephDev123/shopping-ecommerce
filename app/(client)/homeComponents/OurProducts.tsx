@@ -5,6 +5,7 @@ import ProductCard from "../generic/ProductCard";
 import Button from "../generic/Button";
 import { useRouter } from "next/navigation";
 import { useFetchFilterAndPaginateApi } from "@/app/hooks/useFetchApiAxios";
+import ProductCardLoading from "../generic/ProductLoading";
 
 // type IOurProducts = {
 //   data: IproductCardTypes[];
@@ -17,7 +18,7 @@ export default function OurProducts() {
     data: productData,
     additionalData,
   } = useFetchFilterAndPaginateApi("api/product/products", "", "", "8");
-  console.log(status, productData, additionalData);
+  // console.log(status, productData, additionalData);
   return (
     <section className="flex flex-col justify-center items-center my-8 w-[80%] mx-auto">
       <h1 className="font-bold text-2xl mb-4"> Our Products</h1>
@@ -25,9 +26,9 @@ export default function OurProducts() {
         {status === "error" && (
           <small className="text-sm text-red-400">Something went wrong</small>
         )}
-        {status === "loading" && (
-          <small className="text-sm text-red-400">Loading ...</small>
-        )}
+        {status === "loading" &&
+          Array.from({ length: 4 }, (_, index) => <ProductCardLoading />)}
+
         {productData.length < 0 && (
           <small className="text-sm text-red-400">No data</small>
         )}

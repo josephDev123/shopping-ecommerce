@@ -37,7 +37,7 @@ export default function ProductCard({ credential }: IProductCard) {
         className="w-full object-cover"
         style={{ maxHeight: 300 }}
       />
-      <div className=" p-2">
+      <div className="mt-auto p-2">
         <p className="font-bold">{credential.productName}</p>
         <p className="truncate">{credential.Description}</p>
         <span className="flex justify-between items-center">

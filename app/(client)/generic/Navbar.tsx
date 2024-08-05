@@ -52,8 +52,8 @@ export default function Navbar() {
           <FiSearch className="hover:bg-slate-200 p-1 cursor-pointer rounded-full absolute top-1 left-1 group-hover:hidden" />
         </div>
 
-        <FaRegUser className="hover:bg-slate-200 p-1 cursor-pointer rounded-full" />
-        <AiOutlineLike className="hover:bg-slate-200 p-1 cursor-pointer rounded-full " />
+        <FaRegUser className="hover:bg-slate-200 p-1 cursor-pointer rounded-full min-[425px]:block hidden" />
+        <AiOutlineLike className="hover:bg-slate-200 p-1 cursor-pointer rounded-full min-[425px]:block hidden" />
         <span className="flex gap-1 relative">
           <RxHamburgerMenu
             onClick={() => setIsMobileNavbarOpen((prev) => !prev)}
