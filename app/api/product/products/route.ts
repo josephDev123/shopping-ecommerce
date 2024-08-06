@@ -7,7 +7,9 @@ import {
   SuccessApiResponseHelper,
 } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
+import { isDynamicServerError } from "next/dist/client/components/hooks-server-context";
 
+export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
   try {
     await startDb();
@@ -35,6 +37,9 @@ export async function GET(req: Request) {
       result?.additionalData || {}
     );
   } catch (error) {
+    // if (isDynamicServerError(error)) {
+    //   throw error;
+    // }
     console.log(error);
     const errorObj = error as GlobalErrorHandlerType;
     console.log(errorObj);
@@ -43,7 +48,7 @@ export async function GET(req: Request) {
       errorObj.name,
       errorObj.operational,
       "error",
-      errorObj.code
+      errorObj.code || 400
     );
   }
 }
