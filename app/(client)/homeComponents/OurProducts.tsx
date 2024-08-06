@@ -29,11 +29,11 @@ export default function OurProducts() {
         {status === "loading" &&
           Array.from({ length: 4 }, (_, index) => <ProductCardLoading />)}
 
-        {productData.length < 0 && (
+        {productData?.length < 0 && (
           <small className="text-sm text-red-400">No data</small>
         )}
 
-        {productData.length > 0 && (
+        {productData?.length > 0 && (
           <>
             {productData.map((item: IproductCardTypes) => (
               <ProductCard key={item._id} credential={item} />

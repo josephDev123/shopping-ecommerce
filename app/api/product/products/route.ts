@@ -30,7 +30,7 @@ export async function GET(req: Request) {
       result?.name || "",
       result?.operational || false,
       result?.type || "",
-      result?.status || 0,
+      result?.status || 200,
       result?.data || [],
       result?.additionalData || {}
     );
