@@ -15,7 +15,7 @@ interface pageProps {
 // ${process.env.SERVER_BASEURL}
 export default async function Page({ params }: pageProps) {
   const response = await fetch(
-    `${process.env.SERVER_BASEURL}/api/product/get-product?product_id=${params.slug[0]}`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug[0]}`
   );
 
   if (!response.ok) {
