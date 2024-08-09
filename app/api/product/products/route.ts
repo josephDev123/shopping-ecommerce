@@ -37,9 +37,6 @@ export async function GET(req: Request) {
       result?.additionalData || {}
     );
   } catch (error) {
-    // if (isDynamicServerError(error)) {
-    //   throw error;
-    // }
     console.log(error);
     const errorObj = error as GlobalErrorHandlerType;
     console.log(errorObj);

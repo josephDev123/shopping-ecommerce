@@ -16,13 +16,13 @@ export async function GET(req: Request) {
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     const product_id = new URL(req.url).searchParams.get("product_id");
     const result = await ProductServiceImpl.findById(product_id!);
-    // console.log(result);
+    console.log(product_id);
     return SuccessApiResponseHelper(
       result?.msg || "",
       result?.name || "",
       result?.operational || false,
       result?.type || "",
-      result?.status || 0,
+      result?.status || 200,
       result?.data || {}
     );
   } catch (error) {

@@ -38,7 +38,7 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
             {productCategory.map((item: ProductCategoryType, i: number) => (
               <div
                 key={i}
-                className="flex flex-col justify-center items-center space-y-3"
+                className="flex flex-col justify-start items-start space-y-3 "
               >
                 <Image
                   src={item.products[0].productImgUrl[0].url}
@@ -46,11 +46,12 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
                   objectFit="contain"
                   width={100}
                   height={100}
+                  className="max-h-[250px] object-cover"
                   placeholder="blur"
                   blurDataURL="blur"
                   style={{ width: "100%", height: "auto" }}
                 />
-                <p className="font-bold">{item._id}</p>
+                <p className="font-bold ">{item._id}</p>
               </div>
             ))}
           </>
