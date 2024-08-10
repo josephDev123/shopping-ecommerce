@@ -4,7 +4,7 @@ interface ProductImgUrl {
   _id: string;
 }
 
-interface ProductData {
+export interface ProductDataType {
   _id: string;
   user_id: string;
   productName: string;
@@ -30,5 +30,5 @@ export interface ProductResponseType {
   name: string;
   operational: boolean;
   type: string;
-  data: ProductData;
+  data: ProductDataType | ProductDataType[];
 }

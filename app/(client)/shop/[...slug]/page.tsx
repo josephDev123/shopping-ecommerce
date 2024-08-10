@@ -27,10 +27,9 @@ export default async function Page({ params }: pageProps) {
 
   return (
     <section className="flex flex-col w-full h-full">
-      {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
       <ShopHeading data={result} />
       <ShopItemPreview data={result} />
-      <ShopDetailSection />
+      <ShopDetailSection data={result} />
       <hr />
 
       <hr className="py-6" />

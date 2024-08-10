@@ -1,10 +1,10 @@
-interface ProductImgUrl {
+type ProductImage = {
   url: string;
   path: string;
   _id: string;
-}
+};
 
-interface Product {
+type Product = {
   id: string;
   productName: string;
   Description: string;
@@ -19,10 +19,18 @@ interface Product {
   productBreath: number;
   productLength: number;
   productWidth: number;
-  productImgUrl: ProductImgUrl[];
-}
+  productImgUrl: ProductImage[];
+};
 
-export interface ProductCategoryType {
+export type CategoryType = {
   _id: string;
   products: Product[];
-}
+};
+
+export type ApiProductResponseType = {
+  msg: string;
+  name: string;
+  operational: boolean;
+  type: string;
+  data: CategoryType[];
+};

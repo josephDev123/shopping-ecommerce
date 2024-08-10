@@ -6,6 +6,8 @@ interface ShopHeadingProps {
   data: ProductResponseType;
 }
 export default function ShopHeading({ data }: ShopHeadingProps) {
+  const productDataArray = Array.isArray(data.data) ? data.data : [data.data];
+  const product = productDataArray[0];
   return (
     <div className="bg-[#F9F1E7] flex flex-col">
       <div className="flex items-center justify-start py-6 w-[80%] gap-3 mx-auto">
@@ -16,7 +18,7 @@ export default function ShopHeading({ data }: ShopHeadingProps) {
           <span className="text-black/50">Shop</span> <TbMathGreater />
         </Link>
         <div className="h-8 w-0.5 bg-black"></div>
-        <span className="font-bold">{data.data.productName}</span>
+        <span className="font-bold">{product.productName}</span>
       </div>
     </div>
   );
