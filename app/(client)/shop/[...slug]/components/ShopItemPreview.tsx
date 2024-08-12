@@ -19,14 +19,15 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
   const product = productDataArray[0];
 
   return (
-    <div className="grid grid-cols-2 gap-8 w-[80%] mx-auto my-10">
+    <div className="grid sm:grid-cols-2 grid-cols-1 gap-8 w-[80%] mx-auto my-10">
       {/* first grid */}
-      <div className="flex gap-6">
+      <div className="flex lg:flex-row flex-col justify-start gap-6">
         {/* FIRST */}
-        <div className="flex flex-col h-full gap-6 w-[100px]">
+        <div className="flex flex-col gap-6 w-[100px]">
           {product.productImgUrl.map((img, i) => (
             <Link
               key={i}
+              style={{ objectPosition: "top" }}
               href={`/shop/1?imgurl=${img.url}`}
               className="bg-green-400 w-[100px] rounded-md h-[100px] block relative"
             >
@@ -36,7 +37,15 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
         </div>
         {/* SECOND */}
         <Link href={`/shop/1`} className="w-full h-[400px] block relative">
-          <Image src={product.productImgUrl[0].url} fill sizes="" alt="" />
+          <Image
+            style={{ objectPosition: "top" }}
+            src={product.productImgUrl[0].url}
+            fill
+            sizes=""
+            alt=""
+            objectFit="contain"
+            className="h-"
+          />
         </Link>
       </div>
       {/* second grid */}

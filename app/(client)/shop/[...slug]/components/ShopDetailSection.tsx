@@ -15,7 +15,7 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
   const product = productDataArray[0];
   return (
     <div className="flex flex-col w-full h-full">
-      <div className="flex justify-center items-center gap-8 py-10">
+      <div className="flex sm;flex-row flex-col justify-center sm:items-center items-start gap-8 py-10 px-4">
         <h3
           className={`text-lg cursor-pointer ${
             expand === "description" && "font-bold"
