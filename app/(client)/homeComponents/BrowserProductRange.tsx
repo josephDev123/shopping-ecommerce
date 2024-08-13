@@ -11,12 +11,6 @@ type IBrowserProductRange = {
 };
 
 export default function BrowserProductRange({ data }: IBrowserProductRange) {
-  // const {
-  //   status,
-  //   data: productCategory,
-  //   additionalData,
-  // } = useFetchFilterAndPaginateApi("api/category/categories", "", "", "8");
-  // console.log(status, productCategory, additionalData);
   return (
     <section className="flex flex-col items-center py-6 w-[80%] mx-auto">
       <h2 className="font-bold text-xl">Browse The Range</h2>

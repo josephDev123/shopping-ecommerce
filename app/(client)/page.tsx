@@ -42,15 +42,9 @@ export default async function page() {
 
   return (
     <section className="">
-      {/* <pre>{JSON.stringify(products)}</pre> */}
       <Hero />
-      {/* use server pagination here */}
-      <Suspense fallback="loading ...">
-        <BrowserProductRange data={category} />
-      </Suspense>
-      <Suspense fallback="loading ...">
-        <OurProducts data={products} />
-      </Suspense>
+      <BrowserProductRange data={category} />
+      <OurProducts data={products} />
     </section>
   );
 }

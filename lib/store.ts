@@ -1,11 +1,25 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import LeftPanelToggleSliceReducer from "./slices/leftpanelSlice";
+import cartsReducer from "./slices/addToCartSlice";
+import { storage } from "./slices/persistStorage";
+import { persistReducer } from "redux-persist";
+
+const productsPersistConfig = {
+  key: "carts",
+  storage,
+  whitelist: ["cartState"],
+};
+
+const persistedReducer = persistReducer(productsPersistConfig, cartsReducer);
+
+const rootReducer = combineReducers({
+  leftPanelState: LeftPanelToggleSliceReducer,
+  cartState: cartsReducer,
+});
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {
-      leftPanelState: LeftPanelToggleSliceReducer,
-    },
+    reducer: rootReducer,
   });
 };
 

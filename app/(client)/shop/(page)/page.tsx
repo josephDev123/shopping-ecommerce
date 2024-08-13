@@ -1,15 +1,10 @@
 import FilterIcons from "@/app/svgComponent/FilterIcons";
-import ActiveInLineLink from "../component/ActiveInLineLink";
-import bannerImage from "./style/shop.module.css";
 import { PiDotsSixBold } from "react-icons/pi";
 import BiviewList from "@/app/svgComponent/Bi_view-list";
 import { GoHorizontalRule } from "react-icons/go";
-import { productCardData } from "@/app/data/productCardData";
-import ProductCard from "../../generic/ProductCard";
 import ThingsToEnjoy from "../../generic/ThingsToEnjoy";
 import Banner from "../../generic/Banner";
 import ProductListSection from "./components/ProductListSection";
-import Link from "next/link";
 
 export type ILink = {
   name: string;

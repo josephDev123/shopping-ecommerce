@@ -10,6 +10,7 @@ import { Images } from "@/app/Images";
 import Link from "next/link";
 import Button from "@/app/(client)/generic/Button";
 import { ProductResponseType } from "@/app/types/productsType";
+import { useState } from "react";
 
 interface ShopItemPreviewProps {
   data: ProductResponseType;
@@ -17,13 +18,14 @@ interface ShopItemPreviewProps {
 export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
   const productDataArray = Array.isArray(data.data) ? data.data : [data.data];
   const product = productDataArray[0];
+  const [cartNo, setCartNo] = useState(0);
 
   return (
     <div className="grid sm:grid-cols-2 grid-cols-1 gap-8 w-[80%] mx-auto my-10">
       {/* first grid */}
       <div className="flex lg:flex-row flex-col justify-start gap-6">
         {/* FIRST */}
-        <div className="flex flex-col gap-6 w-[100px]">
+        <div className="flex lg:flex-col gap-6 lg:w-[100px] w-full">
           {product.productImgUrl.map((img, i) => (
             <Link
               key={i}
@@ -36,9 +38,9 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
           ))}
         </div>
         {/* SECOND */}
-        <Link href={`/shop/1`} className="w-full h-[400px] block relative">
+        <Link href={`/shop/1`} className="w-full h-[400px] block  relative">
           <Image
-            style={{ objectPosition: "top" }}
+            style={{ objectPosition: "top left" }}
             src={product.productImgUrl[0].url}
             fill
             sizes=""
@@ -61,21 +63,21 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
 
         <ProductSize className="mt-3" size={product.productSize} />
         <ProductColor className="mt-3" />
-        <div className="flex items-center mt-4 gap-3">
-          <div className="flex border rounded-md p-2 w-[15%] justify-between">
-            <span className="cursor-pointer text-xl">-</span>
-            <span className="">1</span>
-            <span className="cursor-pointer text-xl">+</span>
+        <div className="flex min-[375px]:flex-row flex-col items-center mt-4 gap-3  w-full">
+          <div className="flex border rounded-md p-1.5 min-w-[25%] w-full justify-between">
+            <button className="cursor-pointer text-xl w-full">-</button>
+            <button className=" w-full">1</button>
+            <button className="cursor-pointer text-xl w-full">+</button>
           </div>
 
           <Button
             textContent="Add to Cart"
-            className="border rounded-md p-2 font-medium hover:bg-gray-100"
+            className="border rounded-md p-2  w-full font-medium hover:bg-gray-100"
           />
 
           <Button
             textContent="Compare"
-            className="border rounded-md p-2 font-medium hover:bg-gray-100"
+            className="border rounded-md p-2 w-full font-medium hover:bg-gray-100"
           />
         </div>
 
