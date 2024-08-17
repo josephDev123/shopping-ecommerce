@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useFetchFilterAndPaginateApi } from "@/app/hooks/useFetchApiAxios";
 import ProductCardLoading from "../generic/ProductLoading";
 import { ProductDataType, ProductResponseType } from "@/app/types/productsType";
+import { useAppSelector } from "@/lib/slices/hooks";
 
 type IOurProducts = {
   data: ProductResponseType;
@@ -14,6 +15,8 @@ type IOurProducts = {
 
 export default function OurProducts({ data }: IOurProducts) {
   const navigate = useRouter();
+  const getCarts = useAppSelector((state) => state.cartState.carts);
+  console.log(getCarts);
   // const {
   //   status,
   //   data: productData,
@@ -23,6 +26,7 @@ export default function OurProducts({ data }: IOurProducts) {
   return (
     <section className="flex flex-col justify-center items-center my-8 w-[80%] mx-auto">
       <h1 className="font-bold text-2xl mb-4"> Our Products</h1>
+
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
         {data.type === "error" && (
           <small className="text-sm text-red-400">Something went wrong</small>

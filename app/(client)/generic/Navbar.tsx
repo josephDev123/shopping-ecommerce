@@ -9,6 +9,7 @@ import SideBarCart from "../components/SideBarCart";
 import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import MobileNavBar from "./MobileNavBar";
+import { useAppSelector } from "@/lib/slices/hooks";
 
 export default function Navbar() {
   const [isSideBarCartOpen, setSideBarCartOpen] = useState(false);
@@ -17,6 +18,8 @@ export default function Navbar() {
   const handleOpenSideCart = () => {
     setSideBarCartOpen(true);
   };
+
+  const getCarts = useAppSelector((state) => state.cartState.carts);
   return (
     <section className="flex justify-between items-center py-6 w-full sm:px-6 px-1">
       <Link href={"/"} className="text-lg font-semibold">
@@ -59,10 +62,20 @@ export default function Navbar() {
             onClick={() => setIsMobileNavbarOpen((prev) => !prev)}
             className="hover:bg-slate-200 p-1 cursor-pointer rounded-full md:hidden block"
           />
-          <MdOutlineShoppingCart
-            onClick={handleOpenSideCart}
-            className="hover:bg-slate-200 p-1 cursor-pointer rounded-full"
-          />
+          <span className="relative flex ">
+            <span
+              className={`${
+                getCarts.length > 0 && "animate-ping"
+              }  absolute top-0.5 right-0.5  inline-flex h-2 w-2 rounded-full bg-sky-400 opacity-75 text-red-600`}
+            >
+              {getCarts.length > 0 ? getCarts.length : ""}
+            </span>
+            {/* <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span> */}
+            <MdOutlineShoppingCart
+              onClick={handleOpenSideCart}
+              className="hover:bg-slate-200 p-1  cursor-pointer rounded-full"
+            />
+          </span>
 
           {isMobileNavbarOpen && (
             <MobileNavBar
