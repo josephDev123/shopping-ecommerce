@@ -25,13 +25,14 @@ export class ProductRepository {
 
   async findByPaginateAndFilter<T>(
     page: number,
-    itemToShow: string,
+    itemToShow: number,
     condition: T
   ) {
     try {
       const limit = Number(itemToShow);
       const queryCondition = condition;
-      const skip = page * limit;
+      const skip = (page - 1) * limit;
+      console.log(limit);
       const result = await this.dbContext.find().skip(skip).limit(limit);
       const totalDoc = await this.dbContext.countDocuments({});
 

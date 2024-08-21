@@ -6,19 +6,26 @@ import ThingsToEnjoy from "../../generic/ThingsToEnjoy";
 import Banner from "../../generic/Banner";
 import ProductListSection from "./components/ProductListSection";
 import { ProductDataType } from "@/app/types/productsType";
+import { Suspense } from "react";
 
 export type ILink = {
   name: string;
   url: string;
 };
-export default async function page() {
+export default async function page({
+  searchParams,
+}: {
+  searchParams: { page: number; limit: number };
+}) {
   const links = [
     { name: "Home", url: "/" },
     { name: "Shop", url: "/shop" },
   ];
-
+  const page = searchParams.page === undefined ? 1 : searchParams.page;
+  const limit = searchParams.limit === undefined ? 4 : searchParams.limit;
+  // console.log(page, limit);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products?limit=8&page=2`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products?page=${page}`
   );
 
   if (!response.ok) {
@@ -27,7 +34,7 @@ export default async function page() {
     return <div>Error fetching data</div>;
   }
 
-  const result: ProductDataType[] = await response.json();
+  const result = await response.json();
 
   return (
     <section className="flex flex-col">
@@ -70,8 +77,10 @@ export default async function page() {
           </div>
         </div>
       </div>
-      {JSON.stringify(result)}
-      <ProductListSection data={result} />
+      {/* {JSON.stringify(result.data)} */}
+      {/* <Suspense fallback="loading ..."> */}
+      <ProductListSection data={result.data} />
+      {/* </Suspense> */}
 
       <ThingsToEnjoy />
     </section>

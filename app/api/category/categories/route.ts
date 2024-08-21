@@ -17,7 +17,7 @@ export async function GET(res: Request) {
       String(response?.name),
       Boolean(response?.operational),
       String(response?.type),
-      Number(response?.status),
+      Number(response?.status) ?? 200,
       response?.data
     );
   } catch (error) {

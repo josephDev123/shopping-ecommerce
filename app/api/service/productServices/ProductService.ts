@@ -15,7 +15,7 @@ export class ProductService {
 
   async findByPaginateAndFilter<T>(
     page: number,
-    itemToShow: string,
+    itemToShow: number,
     condition: T
   ) {
     try {
