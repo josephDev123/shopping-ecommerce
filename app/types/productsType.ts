@@ -7,6 +7,7 @@ interface ProductImgUrl {
 export interface ProductDataType {
   _id: string;
   user_id: string;
+  qty?: string;
   productName: string;
   Description: string;
   productCategory: string;

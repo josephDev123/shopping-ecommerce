@@ -11,6 +11,9 @@ import Link from "next/link";
 import Button from "@/app/(client)/generic/Button";
 import { ProductResponseType } from "@/app/types/productsType";
 import { useState } from "react";
+import { useAppDispatch } from "@/lib/slices/hooks";
+import { useSession } from "next-auth/react";
+import { setCart } from "@/lib/slices/addToCartSlice";
 
 interface ShopItemPreviewProps {
   data: ProductResponseType;
@@ -19,6 +22,31 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
   const productDataArray = Array.isArray(data.data) ? data.data : [data.data];
   const product = productDataArray[0];
   const [cartNo, setCartNo] = useState(0);
+  const [qty, setQty] = useState(1);
+
+  const { data: session } = useSession();
+  const dispatch = useAppDispatch();
+
+  const handleDecrement = () => {
+    if (qty === 1) {
+      return;
+    }
+    setQty((prev) => prev - 1);
+  };
+
+  const handleIncrement = () => {
+    setQty((prev) => prev + 1);
+  };
+
+  const handleAddToCart = () => {
+    const CartData = {
+      qty: qty,
+      buyerEmail: session?.user.email,
+      buyer_name: session?.user.name,
+      ...product,
+    };
+    dispatch(setCart(CartData));
+  };
 
   return (
     <div className="grid sm:grid-cols-2 grid-cols-1 gap-8 w-[80%] mx-auto my-10">
@@ -45,8 +73,7 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
             fill
             sizes=""
             alt=""
-            objectFit="contain"
-            className="h-"
+            className="object-contain"
           />
         </Link>
       </div>
@@ -65,12 +92,23 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
         <ProductColor className="mt-3" />
         <div className="flex min-[375px]:flex-row flex-col items-center mt-4 gap-3  w-full">
           <div className="flex border rounded-md p-1.5 min-w-[25%] w-full justify-between">
-            <button className="cursor-pointer text-xl w-full">-</button>
-            <button className=" w-full">1</button>
-            <button className="cursor-pointer text-xl w-full">+</button>
+            <button
+              onClick={handleDecrement}
+              className="cursor-pointer text-xl w-full"
+            >
+              -
+            </button>
+            <button className=" w-full">{qty}</button>
+            <button
+              onClick={handleIncrement}
+              className="cursor-pointer text-xl w-full"
+            >
+              +
+            </button>
           </div>
 
           <Button
+            onClick={handleAddToCart}
             textContent="Add to Cart"
             className="border rounded-md p-2  w-full font-medium hover:bg-gray-100"
           />

@@ -5,16 +5,30 @@ import { GoHorizontalRule } from "react-icons/go";
 import ThingsToEnjoy from "../../generic/ThingsToEnjoy";
 import Banner from "../../generic/Banner";
 import ProductListSection from "./components/ProductListSection";
+import { ProductDataType } from "@/app/types/productsType";
 
 export type ILink = {
   name: string;
   url: string;
 };
-export default function page() {
+export default async function page() {
   const links = [
     { name: "Home", url: "/" },
     { name: "Shop", url: "/shop" },
   ];
+
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products?limit=8&page=2`
+  );
+
+  if (!response.ok) {
+    // Handle errors
+    console.error("Failed to fetch data:", response.statusText);
+    return <div>Error fetching data</div>;
+  }
+
+  const result: ProductDataType[] = await response.json();
+
   return (
     <section className="flex flex-col">
       <Banner title="Shop" links={links} />
@@ -56,8 +70,8 @@ export default function page() {
           </div>
         </div>
       </div>
-
-      <ProductListSection />
+      {JSON.stringify(result)}
+      <ProductListSection data={result} />
 
       <ThingsToEnjoy />
     </section>

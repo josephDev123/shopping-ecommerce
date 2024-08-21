@@ -24,6 +24,7 @@ export default function ProductCard({ credential }: IProductCard) {
 
   const handleAddToCart = (product: ProductDataType) => {
     const CartData = {
+      qty: 1,
       buyerEmail: data?.user.email,
       buyer_name: data?.user.name,
       ...product,
@@ -49,7 +50,7 @@ export default function ProductCard({ credential }: IProductCard) {
       <span className="bg-[#E97171] rounded-full flex flex-col h-fit justify-center items-center absolute right-6 top-8 p-1 text-white ">
         {credential.productDiscount}%
       </span>
-      <img
+      <Image
         src={credential.productImgUrl[0].url}
         alt=""
         height={300}
