@@ -3,12 +3,14 @@
 import React from "react";
 import { MdDelete } from "react-icons/md";
 import Button from "../../generic/Button";
-import { useAppSelector } from "@/lib/slices/hooks";
+import { useAppSelector, useAppDispatch } from "@/lib/slices/hooks";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { deleteCart } from "@/lib/slices/addToCartSlice";
 
 export default function CartsDetailSection() {
   const getCarts = useAppSelector((state) => state.cartState.carts);
+  const dispatch = useAppDispatch();
   const navigate = useRouter();
   const handleDiscount = (cartDiscount: string, cartPrice: string) => {
     const originalPrice = Number(cartPrice);
@@ -33,48 +35,57 @@ export default function CartsDetailSection() {
   const subtotal = totalPrice - discountCalc;
 
   return (
-    <div className="flex gap-4 justify-between w-[80%] mx-auto mt-10">
-      <table className="w-full">
-        <thead className="bg-[#F9F1E7]">
-          <tr className="">
-            <th className="py-4 text-left pl-2">img</th>
-            <th className="py-4 text-left">Product</th>
-            <th className="py-4 text-left">Price</th>
-            <th className="py-4 text-left">Quantity</th>
-            <th className="py-4 text-left">subtotal</th>
-            <th className="py-4 text-left">delete</th>
-          </tr>
-        </thead>
-        <tbody className="w-full">
-          {getCarts.length === 0 ? (
-            <p>No Data</p>
-          ) : (
-            getCarts.map((cart, i) => (
-              <tr key={i} className="">
-                <td className="pl-2">
-                  <Image
-                    src={cart.productImgUrl[0].url}
-                    alt=""
-                    width={100}
-                    height={100}
-                    className="h-[105px] w-[105px] object-contain"
-                  />
-                </td>
-                <td className="py-4">{cart.productName}</td>
-                <td className="py-4">{cart.productPrice}</td>
-                <td className="py-4">{cart?.qty}</td>
-                <td className="py-4">
-                  {handleDiscount(cart.productDiscount, cart.productPrice)}
-                </td>
-                <td className="py-4">
-                  <MdDelete className="cursor-pointer hover:text-red-500" />
-                </td>
+    <div className="grid grid-cols-4 gap-4  3xl:w-[80%] w-[90%] mx-auto mt-10">
+      {/* {JSON.stringify(getCarts)} */}
+      <div className="w-full h-full lg:col-span-3 col-span-full overflow-x-auto">
+        <table className="w-full ">
+          <thead className="bg-[#F9F1E7] w-full">
+            <tr className="w-full">
+              <th className="min-w-[100px] py-4 text-left pl-2">img</th>
+              <th className="min-w-[100px] py-4 text-left pl-2">Product</th>
+              <th className="min-w-[100px] py-4 text-left pl-2">Price</th>
+              <th className="min-w-[100px] py-4 text-left pl-2">Quantity</th>
+              <th className="min-w-[100px] py-4 text-left pl-2">subtotal</th>
+              <th className="min-w-[100px] py-4 text-left pl-2">delete</th>
+            </tr>
+          </thead>
+
+          <tbody className="w-full">
+            {getCarts.length === 0 ? (
+              <tr className="h-full w-full ">
+                <td className="">No Data</td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-      <div className="bg-[#F9F1E7] w-[40%] flex flex-col self-start justify-center items-center py-6">
+            ) : (
+              getCarts.map((cart, i) => (
+                <tr key={i} className="w-full">
+                  <td className="pl-2">
+                    <Image
+                      src={cart.productImgUrl[0].url}
+                      alt=""
+                      width={100}
+                      height={100}
+                      className="h-[105px] w-[105px] object-contain"
+                    />
+                  </td>
+                  <td className="py-4 pl-2">{cart.productName}</td>
+                  <td className="py-4 pl-2">{cart.productPrice}</td>
+                  <td className="py-4 pl-2">{cart?.qty}</td>
+                  <td className="py-4 pl-2">
+                    {handleDiscount(cart.productDiscount, cart.productPrice)}
+                  </td>
+                  <td className="py-4">
+                    <MdDelete
+                      className="cursor-pointer hover:text-red-500"
+                      onClick={() => dispatch(deleteCart(cart._id))}
+                    />
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+      <div className="bg-[#F9F1E7] lg:col-span-1 md:col-span-2 col-span-full flex flex-col self-start justify-center items-center py-6">
         <h2 className="font-bold text-xl mb-8">Cart Totals</h2>
         <div className="flex gap-4 items-start ">
           <p>Subtotal</p>

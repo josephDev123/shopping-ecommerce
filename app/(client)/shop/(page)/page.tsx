@@ -39,7 +39,6 @@ export default async function page({
   return (
     <section className="flex flex-col">
       <Banner title="Shop" links={links} />
-      {/* h-[100px] */}
       <div className="flex sm:flex-row gap-2 flex-col sm:items-center justify-around bg-[#F9F1E7] h-fit py-1 px-2">
         <div className="flex md:flex-row sm:flex-col flex-row gap-2 items-start justify-start sm:order-1 order-2 min-[375px]:text-base text-sm">
           <span className="flex  items-center">
@@ -77,9 +76,12 @@ export default async function page({
           </div>
         </div>
       </div>
-      {/* {JSON.stringify(result.data)} */}
+      {/* {JSON.stringify(result.additionalData)} */}
       {/* <Suspense fallback="loading ..."> */}
-      <ProductListSection data={result.data} />
+      <ProductListSection
+        data={result.data}
+        itemsNumber={result.additionalData.totalDoc}
+      />
       {/* </Suspense> */}
 
       <ThingsToEnjoy />
