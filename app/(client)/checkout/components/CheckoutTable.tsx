@@ -1,113 +1,210 @@
 "use client";
 
-import React from "react";
+import React, { FormEventHandler, useRef } from "react";
 import Button from "../../generic/Button";
 import { GoDotFill } from "react-icons/go";
 import Input, { SelectInput } from "../../generic/Input";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { checkoutSchema } from "@/app/zod-schema/checkoutSchema";
+import { z } from "zod";
+import { useAppSelector } from "@/lib/slices/hooks";
 
 export default function CheckoutTable() {
+  type CheckoutFormDataType = z.infer<typeof checkoutSchema>;
+  const getCarts = useAppSelector((state) => state.cartState.carts);
+  const discount = getCarts.reduce((acc, currentValue) => {
+    return (acc = +currentValue.productDiscount);
+  }, 0);
+
+  const subtotal = getCarts.reduce((acc, currentValue) => {
+    const qty = currentValue ? currentValue?.qty : 1;
+    const result = (acc = +currentValue.productPrice);
+    return result * Number(qty);
+  }, 0);
+
+  const discountCalc = (subtotal * discount) / 100;
+  const total = subtotal - discountCalc;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CheckoutFormDataType>({
+    resolver: zodResolver(checkoutSchema),
+  });
+
+  console.log(errors);
+  const handleCheckout: SubmitHandler<CheckoutFormDataType> = async (data) => {
+    console.log(data);
+  };
   return (
     <form
-      action=""
-      method="post"
+      onSubmit={handleSubmit(handleCheckout)}
       className="mt-4 grid lg:grid-cols-2 grid-cols-1 gap-10"
     >
       <div className="flex flex-col space-y-4 w-full">
         <div className="flex sm:flex-row flex-col gap-4 w-full">
-          <Input
-            name=""
-            type="text"
-            labelName="First Name"
-            errorLabel=""
-            className="rounded-md border p-4 outline-none w-full"
-          />
-          <Input
-            name=""
-            type="text"
-            labelName="Last Name"
-            errorLabel=""
-            className="rounded-md border p-4 outline-none w-full"
-          />
+          <div className="flex flex-col w-full">
+            <Input
+              type="text"
+              labelName="First Name"
+              errorLabel=""
+              className="rounded-md border p-4 outline-none w-full"
+              register={register}
+              name="firstName"
+            />
+            <small className="text-red-400">
+              {errors && errors.firstName?.message}
+            </small>
+          </div>
+
+          <div className="flex flex-col w-full">
+            <Input
+              type="text"
+              labelName="Last Name"
+              errorLabel=""
+              register={register}
+              name="lastName"
+              className="rounded-md border p-4 outline-none w-full"
+            />
+            <small className="text-red-400">
+              {errors && errors.lastName?.message}
+            </small>
+          </div>
         </div>
 
-        <Input
-          name=""
-          type="text"
-          labelName="Company Name (Optional)"
-          errorLabel=""
-          className="rounded-md border p-4 outline-none w-full"
-        />
+        <div className="w-full">
+          <Input
+            type="text"
+            labelName="Company Name (Optional)"
+            errorLabel=""
+            register={register}
+            name="companyName"
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.companyName?.message}
+          </small>
+        </div>
 
-        <SelectInput
-          name=""
-          labelName="Country / Region"
+        <div className="w-full">
+          <SelectInput
+            register={register}
+            name="country"
+            labelName="Country / Region"
+            errorLabel=""
+            data={["Nigeria", "Ghana", "Togo"]}
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.country?.message}
+          </small>
+        </div>
+
+        <div className="w-full">
+          <Input
+            register={register}
+            name="streetAddress"
+            type="text"
+            labelName="Street address"
+            errorLabel=""
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.streetAddress?.message}
+          </small>
+        </div>
+
+        <div>
+          <Input
+            register={register}
+            name="townCity"
+            type="text"
+            labelName="Town / City"
+            errorLabel=""
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.townCity?.message}
+          </small>
+        </div>
+        <div>
+          <Input
+            register={register}
+            name="province"
+            type="text"
+            labelName="Province"
+            errorLabel=""
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.province?.message}
+          </small>
+        </div>
+
+        {/* <SelectInput
+         {...register("provic")}
+          labelName="Province"
           errorLabel=""
           data={[]}
           className="rounded-md border p-4 outline-none w-full"
-        />
+        /> */}
+        <div>
+          <Input
+            register={register}
+            name="zipCode"
+            type="number"
+            labelName="ZIP code"
+            errorLabel=""
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.zipCode?.message}
+          </small>
+        </div>
 
-        <Input
-          name=""
-          type="text"
-          labelName="Street address"
-          errorLabel=""
-          className="rounded-md border p-4 outline-none w-full"
-        />
+        <div>
+          <Input
+            register={register}
+            name="phone"
+            type="number"
+            labelName="Phone"
+            errorLabel=""
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.phone?.message}
+          </small>
+        </div>
 
-        <Input
-          name=""
-          type="text"
-          labelName="Town / City"
-          errorLabel=""
-          className="rounded-md border p-4 outline-none w-full"
-        />
+        <div>
+          <Input
+            register={register}
+            name="email"
+            type="text"
+            labelName="Email address"
+            errorLabel=""
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.email?.message}
+          </small>
+        </div>
 
-        <Input
-          name=""
-          type="text"
-          labelName="Province"
-          errorLabel=""
-          className="rounded-md border p-4 outline-none w-full"
-        />
-
-        <SelectInput
-          name=""
-          labelName="Province"
-          errorLabel=""
-          data={[]}
-          className="rounded-md border p-4 outline-none w-full"
-        />
-
-        <Input
-          name=""
-          type="number"
-          labelName="ZIP code"
-          errorLabel=""
-          className="rounded-md border p-4 outline-none w-full"
-        />
-        <Input
-          name=""
-          type="number"
-          labelName="Phone"
-          errorLabel=""
-          className="rounded-md border p-4 outline-none w-full"
-        />
-
-        <Input
-          name=""
-          type="text"
-          labelName="Email address"
-          errorLabel=""
-          className="rounded-md border p-4 outline-none w-full"
-        />
-        <Input
-          name=""
-          type="text"
-          labelName="Additional information"
-          placeholder="Additional information"
-          errorLabel=""
-          className="rounded-md border p-4 outline-none w-full"
-        />
+        <div>
+          <Input
+            register={register}
+            name="additionalInfo"
+            type="text"
+            labelName="Additional information"
+            placeholder="Additional information"
+            errorLabel=""
+            className="rounded-md border p-4 outline-none w-full"
+          />
+          <small className="text-red-400">
+            {errors && errors.additionalInfo?.message}
+          </small>
+        </div>
       </div>
 
       <div className="flex flex-col w-full">
@@ -119,20 +216,25 @@ export default function CheckoutTable() {
             </tr>
           </thead>
           <tbody className="space-y-6">
-            <tr>
-              <td>Asgaard sofa * 2</td>
-              <td>Rs. 250,000.00</td>
-            </tr>
+            {getCarts.map((cart, i) => (
+              <tr key={i}>
+                <td>
+                  {cart.productName} * {cart.qty}
+                </td>
+                <td>
+                  <td>{Number(cart.productPrice) * Number(cart.qty)}</td>
+                </td>
+              </tr>
+            ))}
+
             <tr>
               <td className="font-medium">Subtotal</td>
-              <td>Rs. 250,000.00</td>
+              <td>{subtotal}</td>
             </tr>
 
             <tr>
               <td className="font-medium">Total</td>
-              <td className="text-[#B88E2F] text-lg font-bold">
-                Rs. 250,000.00
-              </td>
+              <td className="text-[#B88E2F] text-lg font-bold">{total}</td>
             </tr>
           </tbody>
         </table>
@@ -150,11 +252,21 @@ export default function CheckoutTable() {
           </p>
 
           <div className="flex items-center gap-2 mt-4">
-            <input type="radio" name="" id="" />
+            <input
+              type="radio"
+              id=""
+              value="Direct Bank Transfer"
+              {...register("paymentMethod")}
+            />
             <p>Direct Bank Transfer</p>
           </div>
           <div className="flex items-center gap-2">
-            <input type="radio" name="" id="" />
+            <input
+              type="radio"
+              id=""
+              value="Cash On Delivery"
+              {...register("paymentMethod")}
+            />
             <p>Cash On Delivery</p>
           </div>
         </div>
@@ -165,6 +277,7 @@ export default function CheckoutTable() {
         </p>
 
         <Button
+          type="submit"
           textContent="Place order"
           className="p-3 mx-auto border-2 border-black mt-4 rounded-md font-semibold min-[375]:w-80 w-full text-xl"
         />

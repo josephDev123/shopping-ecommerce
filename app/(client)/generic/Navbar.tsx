@@ -10,10 +10,12 @@ import { useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import MobileNavBar from "./MobileNavBar";
 import { useAppSelector } from "@/lib/slices/hooks";
+import SearchModal from "./SearchModal";
 
 export default function Navbar() {
   const [isSideBarCartOpen, setSideBarCartOpen] = useState(false);
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const pathname = usePathname();
   const handleOpenSideCart = () => {
     setSideBarCartOpen(true);
@@ -43,17 +45,12 @@ export default function Navbar() {
           Contact
         </Link>
       </nav>
-
-      <nav className="flex gap-2 md:gap-5 lg:gap-10 text-3xl ">
-        <div className="flex relative group">
-          <input
-            type="search"
-            name=""
-            id=""
-            className="group-hover:border outline-none w-10 group-hover:w-36"
-          />
-          <FiSearch className="hover:bg-slate-200 p-1 cursor-pointer rounded-full absolute top-1 left-1 group-hover:hidden" />
-        </div>
+      {/* md:gap-5 lg:gap-10 */}
+      <nav className="flex gap-2  text-3xl ">
+        <FiSearch
+          onClick={() => setIsSearchModalOpen((prev) => !prev)}
+          className="hover:bg-slate-200 p-1 cursor-pointer rounded-full"
+        />
 
         <FaRegUser className="hover:bg-slate-200 p-1 cursor-pointer rounded-full min-[425px]:block hidden" />
         <AiOutlineLike className="hover:bg-slate-200 p-1 cursor-pointer rounded-full min-[425px]:block hidden" />
@@ -87,6 +84,11 @@ export default function Navbar() {
       {isSideBarCartOpen && (
         <SideBarCart closeSideBar={() => setSideBarCartOpen(false)} />
       )}
+
+      <SearchModal
+        closeModal={() => setIsSearchModalOpen(false)}
+        isOpen={isSearchModalOpen}
+      />
     </section>
   );
 }
