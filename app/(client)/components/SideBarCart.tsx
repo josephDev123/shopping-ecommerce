@@ -1,6 +1,5 @@
 "use client";
 
-import { MouseEvent, MouseEventHandler } from "react";
 import { IoCartOutline } from "react-icons/io5";
 import Image from "next/image";
 import { Images } from "@/app/Images";
@@ -30,7 +29,7 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
       onClick={handleCloseSideBarOverlay}
       className="fixed inset-0 z-50 flex flex-col w-full h-full bg-transparent/15"
     >
-      <div className="flex flex-col min-[425px]:w-[400px] w-full bg-white self-end p-5">
+      <div className="flex flex-col sm:w-[400px] w-full bg-white self-end p-5">
         <div className="flex items-center justify-between">
           <h2 className="font-bold">Shopping Cart</h2>
           <IoCartOutline />
