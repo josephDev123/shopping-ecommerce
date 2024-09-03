@@ -2,8 +2,7 @@
 
 import { IoCartOutline } from "react-icons/io5";
 import Image from "next/image";
-import { Images } from "@/app/Images";
-import { IoIosClose, IoIosCloseCircle } from "react-icons/io";
+import { IoIosClose } from "react-icons/io";
 import Button from "../generic/Button";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/lib/slices/hooks";

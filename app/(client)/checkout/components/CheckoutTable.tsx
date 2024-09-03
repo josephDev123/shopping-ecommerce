@@ -9,9 +9,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { checkoutSchema } from "@/app/zod-schema/checkoutSchema";
 import { z } from "zod";
 import { useAppSelector } from "@/lib/slices/hooks";
+import axios from "axios";
+import { generateUniquePaymentID } from "@/app/utils/randomCharacters";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function CheckoutTable() {
+  const { data: user } = useSession();
   type CheckoutFormDataType = z.infer<typeof checkoutSchema>;
+  const navigate = useRouter();
   const getCarts = useAppSelector((state) => state.cartState.carts);
   const discount = getCarts.reduce((acc, currentValue) => {
     return (acc = +currentValue.productDiscount);
@@ -33,8 +39,52 @@ export default function CheckoutTable() {
     resolver: zodResolver(checkoutSchema),
   });
 
-  console.log(errors);
+  // console.log(errors);
   const handleCheckout: SubmitHandler<CheckoutFormDataType> = async (data) => {
+    try {
+      if (data.paymentMethod === "Direct Bank Transfer") {
+        const response = await axios.post(
+          "https://api.flutterwave.com/v3/payments",
+          {
+            tx_ref: generateUniquePaymentID("user123"),
+            amount: total,
+            currency: "NGN",
+            redirect_url: "https://localhost:3000/success",
+            customer: {
+              email: data.email,
+              name: data.firstName + " " + data.lastName,
+              phonenumber: data.phone,
+              companyName: data.companyName,
+              country: data.country,
+              address: data.streetAddress,
+              town: data.townCity,
+              province: data.province,
+              zipCode: data.zipCode,
+              additionalInfo: data.additionalInfo,
+            },
+            customizations: {
+              title: "Shopping Standard Payment",
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const result = await response.data;
+        if (result.status === "success") {
+          return navigate.push(result.data.link);
+        }
+      } else {
+        alert("payment method not Supported");
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+    }
     console.log(data);
   };
   return (
