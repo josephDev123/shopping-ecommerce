@@ -68,7 +68,7 @@ export default function CheckoutTable() {
           },
           {
             headers: {
-              Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}`,
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_FLUTTERWAVE_SECRET_KEY}`,
               "Content-Type": "application/json",
             },
           }
