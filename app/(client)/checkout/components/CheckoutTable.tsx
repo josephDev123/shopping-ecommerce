@@ -43,9 +43,14 @@ export default function CheckoutTable() {
   const handleCheckout: SubmitHandler<CheckoutFormDataType> = async (data) => {
     try {
       if (data.paymentMethod === "Direct Bank Transfer") {
-        const response = await axios.post(
-          "https://api.flutterwave.com/v3/payments",
-          {
+        const response = await axios({
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_FLUTTERWAVE_SECRET_KEY}`,
+            "Content-Type": "application/json",
+          },
+          url: "https://api.flutterwave.com/v3/payments",
+          method: "POST",
+          data: {
             tx_ref: generateUniquePaymentID("user123"),
             amount: total,
             currency: "NGN",
@@ -66,13 +71,7 @@ export default function CheckoutTable() {
               title: "Shopping Standard Payment",
             },
           },
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_FLUTTERWAVE_SECRET_KEY}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        });
 
         const result = await response.data;
         if (result.status === "success") {
