@@ -45,12 +45,11 @@ export default function CheckoutTable() {
       if (data.paymentMethod === "Direct Bank Transfer") {
         const response = await axios({
           headers: {
-            Authorization: `Bearer FLWSECK_TEST-1567c6be33b47c4a55e819a6876cadfd-X`,
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_FLUTTERWAVE_SECRET_KEY}`,
             // "Content-Type": "application/json",
           },
-          method: "post",
           url: "https://api.flutterwave.com/v3/payments",
-
+          method: "post",
           data: {
             tx_ref: generateUniquePaymentID("user123"),
             amount: total,
