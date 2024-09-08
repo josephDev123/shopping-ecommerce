@@ -15,7 +15,7 @@ export class PaymentService {
           tx_ref: data.tx_ref,
           amount: data.amount,
           currency: data.currency,
-          redirect_url: "http://localhost:3000/checkout-outcome",
+          redirect_url: `${process.env.NEXT_PUBLIC_BASEURL}/checkout-outcome`,
           customer: {
             email: data.customer.email,
             name: data.customer.name,
