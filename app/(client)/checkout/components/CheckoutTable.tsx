@@ -13,6 +13,7 @@ import axios from "axios";
 import { generateUniquePaymentID } from "@/app/utils/randomCharacters";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/app/axiosInstance";
 
 export default function CheckoutTable() {
   const { data: user } = useSession();
@@ -43,12 +44,8 @@ export default function CheckoutTable() {
   const handleCheckout: SubmitHandler<CheckoutFormDataType> = async (data) => {
     try {
       if (data.paymentMethod === "Direct Bank Transfer") {
-        const response = await axios({
-          headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_FLUTTERWAVE_SECRET_KEY}`,
-            // "Content-Type": "application/json",
-          },
-          url: "https://api.flutterwave.com/v3/payments",
+        const response = await axiosInstance({
+          url: "api/checkout",
           method: "post",
           data: {
             tx_ref: generateUniquePaymentID("user123"),
@@ -73,9 +70,10 @@ export default function CheckoutTable() {
           },
         });
 
-        const result = await response.data;
+        const result = await response.data.message;
+        console.log(result);
         if (result.status === "success") {
-          return navigate.push(result.data.link);
+          return (window.location.href = result.data.link);
         }
       } else {
         alert("payment method not Supported");
@@ -84,7 +82,6 @@ export default function CheckoutTable() {
     } catch (err) {
       console.error(err);
     }
-    console.log(data);
   };
   return (
     <form
