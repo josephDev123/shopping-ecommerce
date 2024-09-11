@@ -1,5 +1,4 @@
 import FailedOrder from "./components/FailedOrder";
-import MainPage from "./components/MainPage";
 import SuccessOrder from "./components/SuccessOrder";
 
 export default async function page({
@@ -9,9 +8,6 @@ export default async function page({
 }) {
   return (
     <section className="flex flex-col h-full w-full">
-      {/* {JSON.stringify(searchParams)} */}
-      <MainPage />
-
       {searchParams.status === "failed" && <FailedOrder />}
       {searchParams.status === "successful" && <SuccessOrder />}
     </section>
