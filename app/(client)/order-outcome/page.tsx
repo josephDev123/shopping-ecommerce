@@ -1,7 +1,7 @@
 import FailedOrder from "./components/FailedOrder";
 import SuccessOrder from "./components/SuccessOrder";
 
-export default async function page({
+export default function page({
   searchParams,
 }: {
   searchParams: { status: string; tx_ref: string; transaction_id: string };
