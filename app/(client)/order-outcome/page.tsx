@@ -1,3 +1,5 @@
+"use  client";
+
 import FailedOrder from "./components/FailedOrder";
 import SuccessOrder from "./components/SuccessOrder";
 
@@ -9,7 +11,9 @@ export default function page({
   return (
     <section className="flex flex-col h-full w-full">
       {searchParams.status === "failed" && <FailedOrder />}
-      {searchParams.status === "successful" && <SuccessOrder />}
+      {searchParams.status === "successful" && (
+        <SuccessOrder queryParam={searchParams} />
+      )}
     </section>
   );
 }
