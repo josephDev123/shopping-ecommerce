@@ -32,7 +32,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
     }
   }
 
-  console.log(status, queryParam);
+  // console.log(status, queryParam);
 
   useEffect(() => {
     verifyOrderSuccess();

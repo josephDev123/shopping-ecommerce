@@ -1,3 +1,5 @@
+import { ProductDataType } from "./productsType";
+
 export type PaymentDataType = {
   tx_ref: string; // Result of generateUniquePaymentID
   amount: number; // total amount
@@ -15,6 +17,7 @@ export type PaymentDataType = {
     zipCode: string;
     additionalInfo: string;
   };
+  item: string[];
   customizations: {
     title: string; // customization title
   };

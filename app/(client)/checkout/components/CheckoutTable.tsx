@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEventHandler, useRef } from "react";
+import React, { FormEventHandler, useRef, useState } from "react";
 import Button from "../../generic/Button";
 import { GoDotFill } from "react-icons/go";
 import Input, { SelectInput } from "../../generic/Input";
@@ -17,9 +17,13 @@ import { axiosInstance } from "@/app/axiosInstance";
 
 export default function CheckoutTable() {
   const { data: user } = useSession();
+
+  const [name, setName] = useState(user?.user.name.split(" "));
+  const [email, setEmail] = useState(user?.user.email);
   type CheckoutFormDataType = z.infer<typeof checkoutSchema>;
   const navigate = useRouter();
   const getCarts = useAppSelector((state) => state.cartState.carts);
+  console.log(getCarts);
   const discount = getCarts.reduce((acc, currentValue) => {
     return (acc = +currentValue.productDiscount);
   }, 0);
@@ -52,7 +56,7 @@ export default function CheckoutTable() {
             amount: total,
             currency: "NGN",
             redirect_url: "http://localhost:3000/success",
-            customer: {
+            customer_billing: {
               email: data.email,
               name: data.firstName + " " + data.lastName,
               phonenumber: data.phone,
@@ -64,6 +68,7 @@ export default function CheckoutTable() {
               zipCode: data.zipCode,
               additionalInfo: data.additionalInfo,
             },
+            item: getCarts.map((product) => product._id),
             customizations: {
               title: "Shopping Standard Payment",
             },
@@ -88,6 +93,7 @@ export default function CheckoutTable() {
       onSubmit={handleSubmit(handleCheckout)}
       className="mt-4 grid lg:grid-cols-2 grid-cols-1 gap-10"
     >
+      {/* {JSON.stringify(name)} */}
       <div className="flex flex-col space-y-4 w-full">
         <div className="flex sm:flex-row flex-col gap-4 w-full">
           <div className="flex flex-col w-full">
@@ -98,6 +104,7 @@ export default function CheckoutTable() {
               className="rounded-md border p-4 outline-none w-full"
               register={register}
               name="firstName"
+              defaultValue={name && name[0]}
             />
             <small className="text-red-400">
               {errors && errors.firstName?.message}
@@ -111,6 +118,7 @@ export default function CheckoutTable() {
               errorLabel=""
               register={register}
               name="lastName"
+              defaultValue={name && name[1] && name[1]}
               className="rounded-md border p-4 outline-none w-full"
             />
             <small className="text-red-400">
@@ -230,6 +238,7 @@ export default function CheckoutTable() {
             type="text"
             labelName="Email address"
             errorLabel=""
+            defaultValue={email}
             className="rounded-md border p-4 outline-none w-full"
           />
           <small className="text-red-400">
