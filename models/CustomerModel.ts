@@ -36,6 +36,6 @@ const customerSchema = new Schema<CustomerType>({
   ordersId: [{ type: Schema.Types.ObjectId, ref: "Order" }],
 });
 
-const OrderModel =
+const Customer =
   models.Customer || model<CustomerType>("Customer", customerSchema);
-export default OrderModel;
+export default Customer;

@@ -5,7 +5,7 @@ export type PaymentDataType = {
   amount: number; // total amount
   currency: string; // fixed currency
   redirect_url: string; // redirect URL after payment
-  customer: {
+  customer_billing: {
     email: string;
     name: string;
     phonenumber: string;
@@ -16,6 +16,7 @@ export type PaymentDataType = {
     province: string;
     zipCode: string;
     additionalInfo: string;
+    paymentMethod: string;
   };
   item: string[];
   customizations: {

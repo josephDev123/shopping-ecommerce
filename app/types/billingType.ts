@@ -1,5 +1,4 @@
 export type BillingDataType = {
-  tx_ref: string;
   amount: number;
   currency: string;
   customer: {

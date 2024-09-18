@@ -4,9 +4,11 @@ import { NextResponse } from "next/server";
 import { paymentRepository } from "../repository/paymentRepository";
 import { PaymentService } from "../service/PaymentService";
 import OrderModel from "@/models/OrderModel";
+import { startDb } from "@/lib/startDb";
 
 export async function POST(req: Request) {
   try {
+    await startDb();
     const payload = await req.json();
     const paymentRepo = new paymentRepository(OrderModel);
     const paymentService = new PaymentService(paymentRepo);

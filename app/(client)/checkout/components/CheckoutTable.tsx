@@ -14,6 +14,7 @@ import { generateUniquePaymentID } from "@/app/utils/randomCharacters";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/axiosInstance";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function CheckoutTable() {
   const { data: user } = useSession();
@@ -39,7 +40,7 @@ export default function CheckoutTable() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting, isLoading },
   } = useForm<CheckoutFormDataType>({
     resolver: zodResolver(checkoutSchema),
   });
@@ -67,6 +68,7 @@ export default function CheckoutTable() {
               province: data.province,
               zipCode: data.zipCode,
               additionalInfo: data.additionalInfo,
+              paymentMethod: data.paymentMethod,
             },
             item: getCarts.map((product) => product._id),
             customizations: {
@@ -332,10 +334,16 @@ export default function CheckoutTable() {
         </p>
 
         <Button
+          disabled={isSubmitting}
           type="submit"
           textContent="Place order"
-          className="p-3 mx-auto border-2 border-black mt-4 rounded-md font-semibold min-[375]:w-80 w-full text-xl"
-        />
+          className="p-3 flex items-center gap-4 justify-center mx-auto border-2 border-black mt-4 rounded-md font-semibold min-[375]:w-80 w-full text-xl"
+        >
+          {isSubmitting ||
+            (isLoading && (
+              <AiOutlineLoading3Quarters className="animate-spin items-end" />
+            ))}
+        </Button>
       </div>
     </form>
   );

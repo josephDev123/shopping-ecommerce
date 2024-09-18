@@ -1,14 +1,6 @@
 import { BillingDataType } from "@/app/types/billingType";
 import { Schema, model, models } from "mongoose";
 
-// type Item = {
-//   productId: string;
-//   name: string;
-//   quantity: number;
-//   price: number;
-//   total: number;
-// };
-
 const customerSchema = new Schema({
   email: { type: String, required: true },
   name: { type: String, required: true },
@@ -23,38 +15,36 @@ const customerSchema = new Schema({
 });
 
 const billingDataSchema = new Schema<BillingDataType>({
-  tx_ref: { type: String, required: true },
   amount: { type: Number, required: true },
   currency: { type: String, required: true },
-  customer: { type: customerSchema, required: true },
+  customer: customerSchema,
 });
 
 type Payment = {
-  method: string;
-  transactionId: string;
+  paymentMethod: string;
   amount: number;
   currency: string;
-  status: "Pending | success";
+  status: "Pending | Success | Fail";
 };
 
 export interface OrderType extends Document {
-  _id: string;
+  tx_ref: string;
   items: string[];
   payment: Payment;
   billing: BillingDataType;
 }
 
 const orderSchema = new Schema<OrderType>({
+  tx_ref: { type: String, required: true },
   items: [String],
   payment: {
-    method: { type: String, required: true },
-    transactionId: { type: String, required: true },
+    paymentMethod: { type: String },
     amount: { type: Number, required: true },
     currency: { type: String, required: true },
-    status: { type: String, required: true },
+    status: { type: String, default: "Pending" },
   },
   billing: billingDataSchema,
 });
 
-const OrderModel = models.Product || model<OrderType>("Order", orderSchema);
+const OrderModel = models.Order || model<OrderType>("Order", orderSchema);
 export default OrderModel;

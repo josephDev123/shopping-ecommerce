@@ -1,5 +1,4 @@
 import { PaymentDataType } from "@/app/types/flutterwaverRequestDataType";
-import { PaymentService } from "../service/PaymentService";
 import { FlutterwaveHostedLinkResponse } from "@/app/types/flutterwaveSuccessRedirectType";
 import axios from "axios";
 import { Model } from "mongoose";
@@ -15,53 +14,53 @@ export class paymentRepository {
           Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}`,
         },
         url: "https://api.flutterwave.com/v3/payments",
-        method: "post",
+        method: "POST",
         data: {
           tx_ref: data.tx_ref,
           amount: data.amount,
           currency: data.currency,
           redirect_url: `${process.env.NEXT_PUBLIC_BASEURL}/checkout-outcome`,
           customer: {
-            email: data.customer.email,
-            name: data.customer.name,
-            phonenumber: data.customer.phonenumber,
-            companyName: data.customer.companyName,
-            country: data.customer.country,
-            address: data.customer.address,
-            town: data.customer.town,
-            province: data.customer.province,
-            zipCode: data.customer.zipCode,
-            additionalInfo: data.customer.additionalInfo,
+            email: data.customer_billing.email,
+            name: data.customer_billing.name,
+            phonenumber: data.customer_billing.phonenumber,
+            companyName: data.customer_billing.companyName,
+            country: data.customer_billing.country,
+            address: data.customer_billing.address,
+            town: data.customer_billing.town,
+            province: data.customer_billing.province,
+            zipCode: data.customer_billing.zipCode,
+            additionalInfo: data.customer_billing.additionalInfo,
           },
           customizations: {
             title: data.customizations.title,
           },
         },
       });
+      console.log(data);
       const order = new this.OrderModel({
+        tx_ref: data.tx_ref,
         items: data.item,
         payment: {
-          method: "",
-          transactionId: data.tx_ref,
+          method: data.customer_billing.paymentMethod,
           amount: data.amount,
           currency: data.currency,
           status: "Pending",
         },
         billing: {
-          tx_ref: data.tx_ref,
           amount: data.amount,
           currency: data.currency,
           customer: {
-            email: data.customer.email,
-            name: data.customer.name,
-            phonenumber: data.customer.phonenumber,
-            companyName: data.customer.companyName,
-            country: data.customer.country,
-            address: data.customer.address,
-            town: data.customer.town,
-            province: data.customer.province,
-            zipCode: data.customer.zipCode,
-            additionalInfo: data.customer.additionalInfo,
+            email: data.customer_billing.email,
+            name: data.customer_billing.name,
+            phonenumber: data.customer_billing.phonenumber,
+            companyName: data.customer_billing.companyName,
+            country: data.customer_billing.country,
+            address: data.customer_billing.address,
+            town: data.customer_billing.town,
+            province: data.customer_billing.province,
+            zipCode: data.customer_billing.zipCode,
+            additionalInfo: data.customer_billing.additionalInfo,
           },
         },
       });
@@ -73,9 +72,4 @@ export class paymentRepository {
       console.log(error);
     }
   }
-
-  // async create(data: PaymentDataType) {
-  //   const checkout = await this.paymentService.FlutterCheckout(data);
-  //   return checkout;
-  // }
 }
