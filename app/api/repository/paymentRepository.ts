@@ -19,7 +19,7 @@ export class paymentRepository {
           tx_ref: data.tx_ref,
           amount: data.amount,
           currency: data.currency,
-          redirect_url: `${process.env.NEXT_PUBLIC_BASEURL}/checkout-outcome`,
+          redirect_url: `${process.env.NEXT_PUBLIC_BASEURL}/order-outcome`,
           customer: {
             email: data.customer_billing.email,
             name: data.customer_billing.name,
@@ -50,18 +50,18 @@ export class paymentRepository {
         billing: {
           amount: data.amount,
           currency: data.currency,
-          customer: {
-            email: data.customer_billing.email,
-            name: data.customer_billing.name,
-            phonenumber: data.customer_billing.phonenumber,
-            companyName: data.customer_billing.companyName,
-            country: data.customer_billing.country,
-            address: data.customer_billing.address,
-            town: data.customer_billing.town,
-            province: data.customer_billing.province,
-            zipCode: data.customer_billing.zipCode,
-            additionalInfo: data.customer_billing.additionalInfo,
-          },
+        },
+        customer: {
+          email: data.customer_billing.email,
+          name: data.customer_billing.name,
+          phonenumber: data.customer_billing.phonenumber,
+          companyName: data.customer_billing.companyName,
+          country: data.customer_billing.country,
+          address: data.customer_billing.address,
+          town: data.customer_billing.town,
+          province: data.customer_billing.province,
+          zipCode: data.customer_billing.zipCode,
+          additionalInfo: data.customer_billing.additionalInfo,
         },
       });
       await order.save();

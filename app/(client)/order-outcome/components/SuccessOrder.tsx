@@ -2,16 +2,24 @@
 
 import { axiosInstance } from "@/app/axiosInstance";
 import { Images } from "@/app/Images";
+import { transactionOutcomeType } from "@/app/types/transactionOutcomeType";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import moment from "moment";
 
 type SuccessOrderProps = {
   queryParam: { status: string; tx_ref: string; transaction_id: string };
 };
 export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
+  const [outcomeTransaction, setOutcomeTransaction] =
+    useState<transactionOutcomeType>(null!);
   const [status, setStatus] = useState<
     "idle" | "success" | "error" | "loading"
   >("idle");
+
+  const query = useSearchParams();
+  console.log(outcomeTransaction);
 
   async function verifyOrderSuccess() {
     setStatus("loading");
@@ -25,7 +33,8 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
           transaction_id: queryParam.transaction_id,
         },
       });
-      const data = await req.data;
+      const data: transactionOutcomeType = await req.data.message.data;
+      setOutcomeTransaction(data);
       setStatus("success");
     } catch (error) {
       setStatus("error");
@@ -41,7 +50,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
   return (
     <>
       {status === "loading" ? (
-        <div className="h-full w-full">Loading ...</div>
+        <div className=" w-full h-28 p-3">Loading ...</div>
       ) : status === "error" ? (
         <div className="h-full w-full">Something went wrong</div>
       ) : status === "success" ? (
@@ -63,32 +72,31 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
               <table className="table-fixed">
                 <tr className="">
                   <td className="font-bold">Name</td>
-                  <td className="px-4">Joe Doe</td>
+                  <td className="px-4">{outcomeTransaction?.customer?.name}</td>
                 </tr>
                 <tr>
                   <td className="font-bold">Address</td>
                   <td className="px-4">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Porro deleniti, illum fugit necessitatibus eaque
-                    reprehenderit neque ab accusamus amet tempora non.
-                    Reprehenderit, neque? Unde corporis officia quis assumenda
-                    in. Aperiam!
+                    {outcomeTransaction.customer?.address}
                   </td>
                 </tr>
                 <tr>
                   <td className="font-bold">Phone</td>
-                  <td className="px-4">+ 123 082338737</td>
+                  <td className="px-4">
+                    {outcomeTransaction.customer?.phonenumber}
+                  </td>
                 </tr>
                 <tr>
                   <td className="font-bold">Email</td>
-                  <td className="px-4">JoeDoe@gmail.com</td>
+                  <td className="px-4">{outcomeTransaction.customer?.email}</td>
                 </tr>
               </table>
             </div>
 
             <button
               type="button"
-              className="p-3 rounded-full bg-red-400 hover:bg-red-500 font-medium text-white w-60"
+              disabled
+              className="p-3 rounded-full cursor-not-allowed bg-red-400 hover:bg-red-500 font-medium text-white w-60"
             >
               Track Your Order
             </button>
@@ -101,12 +109,16 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
               <div className="grid sm:grid-cols-3 grid-cols-1 gap-3">
                 <div className="flex  flex-col leading-tight  p-3 sm:border-r-2  border-gray-500">
                   <h1 className="text-gray-700">Date</h1>
-                  <p className="font-semibold">02 may 2024</p>
+                  <p className="font-semibold">
+                    {moment(String(outcomeTransaction.createdAt)).format(
+                      "DD MMM YYYY"
+                    )}
+                  </p>
                 </div>
                 <p className="bg-gray-500 w-full h-[0.5px] mb-3 sm:hidden block"></p>
                 <div className="flex  flex-col leading-tight  p-3 sm:border-r-2  border-gray-500">
                   <h1 className="text-gray-700">Order Number</h1>
-                  <p className="font-semibold">02-2867222828</p>
+                  <p className="font-semibold">{outcomeTransaction.tx_ref}</p>
                 </div>
                 <p className="bg-gray-500 w-full h-[0.5px] mb-3 sm:hidden block"></p>
                 <div className="flex  flex-col leading-tight  p-3 ">
@@ -142,11 +154,17 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
                   <tbody>
                     <tr className="flex justify-between">
                       <td>Sub Total</td>
-                      <td>$100.00</td>
+                      <td>
+                        {outcomeTransaction.payment.currency}{" "}
+                        {outcomeTransaction.payment.amount}
+                      </td>
                     </tr>
                     <tr className="flex justify-between">
                       <td>Shipping</td>
-                      <td>$10.00</td>
+                      <td>
+                        {outcomeTransaction.payment.currency}{" "}
+                        {outcomeTransaction.payment.amount}
+                      </td>
                     </tr>
                     <tr className="flex justify-between">
                       <td>Tax</td>
@@ -160,7 +178,10 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
 
               <div className="p-3 flex items-center justify-between">
                 <span className="text-xl font-bold">Order Total</span>{" "}
-                <span className="text-xl font-bold">$1000.00</span>
+                <span className="text-xl font-bold">
+                  {outcomeTransaction.payment.currency}{" "}
+                  {outcomeTransaction.payment.amount}
+                </span>
               </div>
             </div>
           </div>
