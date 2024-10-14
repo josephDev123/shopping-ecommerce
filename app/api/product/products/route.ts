@@ -15,9 +15,9 @@ export async function GET(req: Request) {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
-    const page = new URL(req.url).searchParams.get("page");
+    const page = new URL(req.url).searchParams.get("page") || 0;
     const limit = new URL(req.url).searchParams.get("limit");
-    // console.log(page, limit);
+    console.log(page, limit);
     const formatPage = Number(page);
     const formatLimit = Number(limit);
     // populate this condition
@@ -27,7 +27,7 @@ export async function GET(req: Request) {
       formatLimit,
       queryCondition
     );
-    // console.log("hello", result);
+    console.log("hello", result);
     return SuccessApiResponseHelper(
       result?.msg || "",
       result?.name || "",

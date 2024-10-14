@@ -14,7 +14,11 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
   return (
     <section className="flex flex-col items-center py-6 w-[80%] mx-auto">
       <h2 className="font-bold text-xl">Browse The Range</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p className="text-center max-w-[70%]">
+        Explore our diverse selection of products, carefully curated to meet
+        your needs. Whether you're looking for the latest trends or timeless
+        classics, we have something for everyone.
+      </p>
 
       <div className="grid sm:grid-cols-3 min-[425px]:grid-cols-2 grid-cols-1 gap-6 relative w-full mt-8">
         {data.type === "error" && (

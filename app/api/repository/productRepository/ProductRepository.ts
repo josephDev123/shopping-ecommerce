@@ -32,7 +32,7 @@ export class ProductRepository {
       const limit = Number(itemToShow);
       const queryCondition = condition;
       const skip = (page - 1) * limit;
-      console.log(limit);
+      console.log("from", limit);
       const result = await this.dbContext.find().skip(skip).limit(limit);
       const totalDoc = await this.dbContext.countDocuments({});
 

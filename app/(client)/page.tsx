@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import BrowserProductRange from "./homeComponents/BrowserProductRange";
 import Hero from "./homeComponents/Hero";
 import OurProducts from "./homeComponents/OurProducts";
@@ -19,7 +18,8 @@ async function getCategory() {
 
 async function getProduct() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products?limit=8`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products`
+    // ?limit=4
   );
 
   if (!response.ok) {
@@ -39,6 +39,8 @@ export default async function page() {
     categoryResult,
     productsResult,
   ]);
+
+  console.log(categoryResult, productsResult);
 
   return (
     <section className="">
