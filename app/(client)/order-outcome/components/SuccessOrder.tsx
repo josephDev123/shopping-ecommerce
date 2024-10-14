@@ -8,17 +8,23 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 
-type SuccessOrderProps = {
-  queryParam: { status: string; tx_ref: string; transaction_id: string };
-};
-export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
+// type SuccessOrderProps = {
+//   queryParam: { status: string; tx_ref: string; transaction_id: string };
+// };
+
+// { queryParam }: SuccessOrderProps
+export default function SuccessOrder() {
+  const searchParams = useSearchParams();
+  const statuse = searchParams.get("status");
+  const tx_ref = searchParams.get("tx_ref");
+  const transaction_id = searchParams.get("transaction_id");
+
   const [outcomeTransaction, setOutcomeTransaction] =
     useState<transactionOutcomeType>(null!);
   const [status, setStatus] = useState<
     "idle" | "success" | "error" | "loading"
   >("idle");
 
-  const query = useSearchParams();
   console.log(outcomeTransaction);
 
   async function verifyOrderSuccess() {
@@ -28,9 +34,12 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
         method: "get",
         url: "api/verify-order",
         params: {
-          status: queryParam.status,
-          tx_ref: queryParam.tx_ref,
-          transaction_id: queryParam.transaction_id,
+          // status: queryParam.status,
+          // tx_ref: queryParam.tx_ref,
+          // transaction_id: queryParam.transaction_id,
+          status: statuse,
+          tx_ref: tx_ref,
+          transaction_id: transaction_id,
         },
       });
       const data: transactionOutcomeType = await req.data.message.data;
@@ -50,9 +59,13 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
   return (
     <>
       {status === "loading" ? (
-        <div className=" w-full h-28 p-3">Loading ...</div>
+        <div className=" w-full h-56 flex flex-col items-center justify-center p-3">
+          Loading ...
+        </div>
       ) : status === "error" ? (
-        <div className="h-full w-full">Something went wrong</div>
+        <div className="w-full h-56 flex flex-col items-center justify-center p-3">
+          Something went wrong
+        </div>
       ) : status === "success" ? (
         <section className="p-6 grid lg:grid-cols-2 grid-cols-1 gap-6 2xl:w-[70%]  w-full mx-auto">
           <div className="flex flex-col space-y-6">
