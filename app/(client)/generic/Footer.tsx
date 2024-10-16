@@ -7,17 +7,17 @@ export default function Footer() {
         <div className="flex flex-col space-y-6">
           <h2 className="font-bold text-2xl">Ecommerce</h2>
           <p className="text-gray-500 font-medium">
-            400 University Drive Suite 200 Coral Gables, <br />
-            FL 33134 USA
+            Abeokuta, Eleweran, <br />
+            Ogun state, Nigeria
           </p>
         </div>
 
         <div className="flex flex-col space-y-6">
           <h2 className="text-gray-400 font-semibold text-xl">Link</h2>
-          <Link href={""} className="font-bold text-lg">
+          <Link href={"/"} className="font-bold text-lg">
             Home
           </Link>
-          <Link href={""} className="font-bold text-lg">
+          <Link href={"/shop"} className="font-bold text-lg">
             Shop
           </Link>
           <Link href={""} className="font-bold text-lg">

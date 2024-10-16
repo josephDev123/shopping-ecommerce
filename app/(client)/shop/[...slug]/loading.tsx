@@ -1,5 +1,5 @@
 import React from "react";
-import Loader from "../components/Loader";
+import Loader from "../../components/Loader";
 
 export default function Loading() {
   <section className="w-full h-screen flex flex-col justify-center items-center">

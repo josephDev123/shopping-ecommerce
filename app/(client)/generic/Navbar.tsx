@@ -55,24 +55,25 @@ export default function Navbar() {
         <FaRegUser className="hover:bg-slate-200 p-1 cursor-pointer rounded-full min-[425px]:block hidden" />
         <AiOutlineLike className="hover:bg-slate-200 p-1 cursor-pointer rounded-full min-[425px]:block hidden" />
         <span className="flex gap-1 relative">
-          <RxHamburgerMenu
-            onClick={() => setIsMobileNavbarOpen((prev) => !prev)}
-            className="hover:bg-slate-200 p-1 cursor-pointer rounded-full md:hidden block"
-          />
-          <span className="relative flex ">
+          <span
+            className="relative flex cursor-pointer"
+            onClick={handleOpenSideCart}
+          >
             <span
               className={`${
                 getCarts.length > 0 && "animate-ping"
-              }  absolute top-0.5 right-0.5  inline-flex h-2 w-2 rounded-full bg-sky-400 opacity-75 text-red-600`}
+              }  absolute top-0.5 right-0.5 text-base  inline-flex h-2 w-2 rounded-full bg-sky-400 opacity-75 text-red-600`}
             >
               {getCarts.length > 0 ? getCarts.length : ""}
             </span>
             {/* <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span> */}
-            <MdOutlineShoppingCart
-              onClick={handleOpenSideCart}
-              className="hover:bg-slate-200 p-1  cursor-pointer rounded-full"
-            />
+            <MdOutlineShoppingCart className="hover:bg-slate-200 p-1   rounded-full" />
           </span>
+
+          <RxHamburgerMenu
+            onClick={() => setIsMobileNavbarOpen((prev) => !prev)}
+            className="hover:bg-slate-200 p-1 cursor-pointer rounded-full md:hidden block"
+          />
 
           {isMobileNavbarOpen && (
             <MobileNavBar

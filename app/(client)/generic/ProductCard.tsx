@@ -32,7 +32,7 @@ export default function ProductCard({ credential }: IProductCard) {
     dispatch(setCart(CartData));
   };
   return (
-    <section className="flex flex-col bg-[#F4F5F7] relative cursor-pointer group">
+    <section className="flex flex-col bg-[#F4F5F7] relative cursor-pointer group rounded-lg">
       {/* <pre>{JSON.stringify(data)}</pre> */}
       <div
         onClick={() => navigate.push(`/shop/${credential._id}`)}
@@ -55,7 +55,7 @@ export default function ProductCard({ credential }: IProductCard) {
         alt=""
         height={300}
         width={300}
-        className="w-full object-cover"
+        className="w-full object-cover rounded-t-lg"
         style={{ maxHeight: 300 }}
       />
       <div className="mt-auto p-2">

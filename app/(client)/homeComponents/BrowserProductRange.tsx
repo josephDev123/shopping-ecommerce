@@ -14,7 +14,7 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
   return (
     <section className="flex flex-col items-center py-6 w-[80%] mx-auto">
       <h2 className="font-bold text-xl">Browse The Range</h2>
-      <p className="text-center max-w-[70%]">
+      <p className="text-center sm:max-w-[70%] w-full">
         Explore our diverse selection of products, carefully curated to meet
         your needs. Whether you're looking for the latest trends or timeless
         classics, we have something for everyone.
@@ -36,7 +36,7 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
             {data.data.map((item: CategoryType, i: number) => (
               <div
                 key={i}
-                className="flex flex-col justify-start items-start space-y-3 "
+                className="flex flex-col justify-start items-start space-y-3 rounded-lg border overflow-hidden"
               >
                 <Image
                   src={item.products[0].productImgUrl[0].url}
@@ -44,12 +44,15 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
                   objectFit="contain"
                   width={100}
                   height={100}
-                  className="max-h-[250px] object-cover"
+                  className="max-h-[250px] object-cover "
                   placeholder="blur"
                   blurDataURL="blur"
-                  style={{ width: "100%", height: "auto" }}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                  }}
                 />
-                <p className="font-bold ">{item._id}</p>
+                <p className="font-bold p-2">{item._id}</p>
               </div>
             ))}
           </>
