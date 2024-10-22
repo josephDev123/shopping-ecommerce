@@ -13,8 +13,8 @@ import {
   REGISTER,
 } from "redux-persist";
 
-const productsPersistConfig = {
-  key: "carts",
+const persistConfig = {
+  key: "root",
   storage,
   whitelist: ["cartState"],
 };
@@ -24,11 +24,11 @@ const rootReducer = combineReducers({
   cartState: cartsReducer,
 });
 
-const persistedReducer = persistReducer(productsPersistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const makeStore = () => {
   return configureStore({
-    reducer: rootReducer,
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: {
@@ -38,7 +38,7 @@ export const makeStore = () => {
   });
 };
 
-// export let persistor = persistStore(makeStore());
+export let persistor = persistStore(makeStore());
 
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore["getState"]>;
