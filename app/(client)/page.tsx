@@ -3,44 +3,53 @@ import Hero from "./homeComponents/Hero";
 import OurProducts from "./homeComponents/OurProducts";
 
 async function getCategory() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/category/categories?limit=8`
-  );
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASEURL}/api/category/categories?limit=8`
+    );
 
-  if (!response.ok) {
-    // Handle errors
-    console.error("Failed to fetch data:", response.statusText);
-    return <div>Error fetching data</div>;
+    if (!response.ok) {
+      // Handle errors
+      console.error("Failed to fetch data:", response.statusText);
+      // return <div>Error fetching data</div>;
+      throw new Error(`Failed to fetch data:  ${response.statusText}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    // throw new Error(`Failed to fetch data:  ${error}`);
   }
-
-  return response.json();
 }
 
-async function getProduct() {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products`
-    // ?limit=4
-  );
+async function getPaginateProducts() {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?limit=3`
+    );
 
-  if (!response.ok) {
-    // Handle errors
-    console.error("Failed to fetch data:", response.statusText);
-    return <div>Error fetching data</div>;
+    if (!response.ok) {
+      // console.error("Failed to fetch data:", response.statusText);
+      throw new Error(`Failed to fetch data:, ${response.statusText}`);
+      // return <div>Error fetching data</div>;
+    }
+    // console.log(response.status);
+    return response.json();
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
   }
-
-  return response.json();
 }
 
 export default async function page() {
   const categoryResult = getCategory();
-  const productsResult = getProduct();
+  const paginateProductsResult = getPaginateProducts();
 
   const [category, products] = await Promise.all([
     categoryResult,
-    productsResult,
+    paginateProductsResult,
   ]);
 
-  console.log(categoryResult, productsResult);
+  console.log(categoryResult, paginateProductsResult);
 
   return (
     <section className="">

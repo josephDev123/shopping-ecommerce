@@ -16,13 +16,8 @@ type IOurProducts = {
 export default function OurProducts({ data }: IOurProducts) {
   const navigate = useRouter();
   const getCarts = useAppSelector((state) => state.cartState.carts);
-  console.log(getCarts);
-  // const {
-  //   status,
-  //   data: productData,
-  //   additionalData,
-  // } = useFetchFilterAndPaginateApi("api/product/products", "", "", "8");
-  // console.log(status, productData, additionalData);
+  // console.log(getCarts);
+
   return (
     <section className="flex flex-col justify-center items-center my-8 w-[80%] mx-auto">
       <h1 className="font-bold text-2xl mb-4"> Our Products</h1>

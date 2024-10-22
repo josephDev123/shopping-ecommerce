@@ -2,6 +2,7 @@
 
 import React, { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import { authOptions } from "./api/auth/[...nextauth]/route";
 
 type sessionProviderProps = {
@@ -11,5 +12,10 @@ type sessionProviderProps = {
 export default async function NextAuthSessionProvider({
   children,
 }: sessionProviderProps) {
-  return <SessionProvider>{children}</SessionProvider>;
+  const queryClient = new QueryClient();
+  return (
+    <SessionProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </SessionProvider>
+  );
 }

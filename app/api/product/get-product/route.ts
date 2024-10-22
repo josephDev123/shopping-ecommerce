@@ -16,7 +16,7 @@ export async function GET(req: Request) {
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     const product_id = new URL(req.url).searchParams.get("product_id");
     const result = await ProductServiceImpl.findById(product_id!);
-    console.log(product_id);
+    // console.log(product_id);
     return SuccessApiResponseHelper(
       result?.msg || "",
       result?.name || "",
@@ -28,7 +28,7 @@ export async function GET(req: Request) {
   } catch (error) {
     console.log(error);
     const errorObj = error as GlobalErrorHandlerType;
-    console.log(errorObj);
+    // console.log(errorObj);
     return ApiResponseHelper(
       errorObj.msg,
       errorObj.name,

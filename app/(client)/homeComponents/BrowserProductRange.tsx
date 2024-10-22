@@ -41,7 +41,7 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
                 <Image
                   src={item.products[0].productImgUrl[0].url}
                   alt=""
-                  objectFit="contain"
+                  // objectFit="contain"
                   width={100}
                   height={100}
                   className="max-h-[250px] object-cover "

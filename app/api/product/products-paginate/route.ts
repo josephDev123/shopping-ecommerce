@@ -17,9 +17,10 @@ export async function GET(req: Request) {
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     const page = new URL(req.url).searchParams.get("page") || 0;
     const limit = new URL(req.url).searchParams.get("limit");
-    console.log(page, limit);
+
     const formatPage = Number(page);
     const formatLimit = Number(limit);
+    console.log(formatPage, formatLimit);
     // populate this condition
     const queryCondition = {};
     const result = await ProductServiceImpl.findByPaginateAndFilter(

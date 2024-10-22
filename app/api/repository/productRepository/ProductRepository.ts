@@ -23,6 +23,22 @@ export class ProductRepository {
     }
   }
 
+  async find() {
+    try {
+      const result = await this.dbContext.find();
+      return {
+        msg: "get products successful",
+        name: "MongodbSuccess",
+        operational: true,
+        type: "success",
+        status: 200,
+        data: result,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async findByPaginateAndFilter<T>(
     page: number,
     itemToShow: number,
@@ -32,12 +48,12 @@ export class ProductRepository {
       const limit = Number(itemToShow);
       const queryCondition = condition;
       const skip = (page - 1) * limit;
-      console.log("from", limit);
+      console.log("from", skip, limit);
       const result = await this.dbContext.find().skip(skip).limit(limit);
       const totalDoc = await this.dbContext.countDocuments({});
 
       return {
-        msg: "get products successful",
+        msg: "get paginated products successful",
         name: "MongodbSuccess",
         operational: true,
         type: "success",

@@ -54,7 +54,7 @@ export class ProductService {
   async categories() {
     try {
       const response = await this.ProductRepository.categories();
-      console.log(response);
+      // console.log(response);
       return response;
     } catch (error) {
       console.log(error);
@@ -64,7 +64,7 @@ export class ProductService {
   async category(query: string) {
     try {
       const response = await this.ProductRepository.category(query);
-      console.log(response);
+      // console.log(response);
       return response;
     } catch (error) {
       console.log(error);

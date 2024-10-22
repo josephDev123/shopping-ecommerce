@@ -22,7 +22,7 @@ export default function ProductListSection({
       <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 my-14 w-[80%] mx-auto">
         <>
           {data.length === 0 ? (
-            <p>No data</p>
+            <div className="h-32 pl-10 items-center">No data</div>
           ) : (
             <>
               {data?.map((item: ProductDataType) => (
