@@ -1,6 +1,7 @@
 import { ProductDataType } from "./productsType";
 
 export type PaymentDataType = {
+  user_id: string; // user id
   tx_ref: string; // Result of generateUniquePaymentID
   amount: number; // total amount
   currency: string; // fixed currency

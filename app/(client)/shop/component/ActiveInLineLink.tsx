@@ -15,13 +15,12 @@ export default function ActiveInLineLink({ items }: IActiveInLineLink) {
   return (
     <ul className="flex items-center justify-center gap-1">
       {items.map((item, i) => (
-        <>
-          <li key={i} className={`${pathname === item.url ? "" : "font-bold"}`}>
-            {" "}
+        <span key={i}>
+          <li className={`${pathname === item.url ? "" : "font-bold"}`}>
             <Link href={item.url}>{item.name}</Link>
           </li>
           <LiaGreaterThanSolid className="last:hidden  text-sm" />
-        </>
+        </span>
       ))}
     </ul>
   );

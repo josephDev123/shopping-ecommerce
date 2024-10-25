@@ -2,10 +2,13 @@
 
 import Button from "@/app/(client)/generic/Button";
 import Input, { SelectInput } from "@/app/(client)/generic/Input";
+import { useSession } from "next-auth/react";
 import React from "react";
 import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
 
 export default function OrderPageMainWrapper() {
+  // const { data } = useSession();
+  // console.log(data?.user);
   return (
     <section>
       <div className="flex w-full justify-between my-8">

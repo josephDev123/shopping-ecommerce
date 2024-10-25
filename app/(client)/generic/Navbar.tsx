@@ -11,8 +11,12 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import MobileNavBar from "./MobileNavBar";
 import { useAppSelector } from "@/lib/slices/hooks";
 import SearchModal from "./SearchModal";
+import { useSession } from "next-auth/react";
+import Loader from "../components/Loader";
 
 export default function Navbar() {
+  const { data, status } = useSession();
+
   const [isSideBarCartOpen, setSideBarCartOpen] = useState(false);
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -46,7 +50,23 @@ export default function Navbar() {
         </Link>
       </nav>
       {/* md:gap-5 lg:gap-10 */}
-      <nav className="flex gap-2  text-3xl ">
+      <nav className="flex gap-2 items-center text-3xl ">
+        {/* {JSON.stringify(status)} */}
+        {status === "loading" ? (
+          <Loader className="h-5 w-5" />
+        ) : status === "authenticated" ? (
+          <Link href={"/dashboard"} className="text-base font-semibold">
+            Dashboard
+          </Link>
+        ) : (
+          <Link
+            href={"/login"}
+            type="button"
+            className="text-base font-semibold"
+          >
+            login
+          </Link>
+        )}
         <FiSearch
           onClick={() => setIsSearchModalOpen((prev) => !prev)}
           className="hover:bg-slate-200 p-1 cursor-pointer rounded-full"

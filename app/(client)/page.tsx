@@ -25,7 +25,7 @@ async function getCategory() {
 async function getPaginateProducts() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?limit=3`
+      `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=1&limit=4`
     );
 
     if (!response.ok) {

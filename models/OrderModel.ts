@@ -1,5 +1,5 @@
 import { BillingDataType } from "@/app/types/billingType";
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema, model, models, Types } from "mongoose";
 
 type CustomerType = {
   email: string;
@@ -41,6 +41,7 @@ type Payment = {
 };
 
 export interface OrderType extends Document {
+  user_id: Schema.Types.ObjectId;
   tx_ref: string;
   items: string[];
   payment: Payment;
@@ -50,6 +51,7 @@ export interface OrderType extends Document {
 
 const orderSchema = new Schema<OrderType>(
   {
+    user_id: { type: Schema.Types.ObjectId, ref: "User" },
     tx_ref: { type: String, required: true },
     items: [String],
     payment: {

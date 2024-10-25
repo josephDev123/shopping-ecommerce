@@ -53,6 +53,7 @@ export default function CheckoutTable() {
           url: "api/checkout",
           method: "post",
           data: {
+            user_id: user?.user.id,
             tx_ref: generateUniquePaymentID("user123"),
             amount: total,
             currency: "NGN",

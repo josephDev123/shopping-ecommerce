@@ -25,7 +25,7 @@ export default async function page({
   const limit = searchParams.limit === undefined ? 4 : searchParams.limit;
   // console.log(page, limit);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products?page=${page}`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`
   );
 
   if (!response.ok) {
@@ -76,7 +76,7 @@ export default async function page({
           </div>
         </div>
       </div>
-      {/* {JSON.stringify(result.additionalData)} */}
+
       {/* <Suspense fallback="loading ..."> */}
       <ProductListSection
         data={result.data}

@@ -16,6 +16,7 @@ export class paymentRepository {
         url: "https://api.flutterwave.com/v3/payments",
         method: "POST",
         data: {
+          user_id: data.user_id,
           tx_ref: data.tx_ref,
           amount: data.amount,
           currency: data.currency,
@@ -39,6 +40,7 @@ export class paymentRepository {
       });
       console.log(data);
       const order = new this.OrderModel({
+        user_id: data.user_id,
         tx_ref: data.tx_ref,
         items: data.item,
         payment: {
