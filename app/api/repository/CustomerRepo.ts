@@ -2,15 +2,15 @@ import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { OrderType } from "@/models/OrderModel";
 import mongoose, { Model } from "mongoose";
 
-export class OrderRepository {
+export class CustomerRepo {
   constructor(private readonly Db: Model<OrderType>) {
     this.Db = Db;
   }
 
   async findByPaginate(user_id: string, pageNumber: number, limits: number) {
     try {
-      const page = pageNumber; // Example: the page you want to retrieve
-      const limit = limits; // Example: number of documents per page
+      const page = pageNumber;
+      const limit = limits;
       const skip = (page - 1) * limit;
 
       const aggregationPipeline = [

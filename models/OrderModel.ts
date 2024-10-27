@@ -14,6 +14,13 @@ type CustomerType = {
   additionalInfo?: string; // Optional field
 };
 
+type Payment = {
+  paymentMethod: string;
+  amount: number;
+  currency: string;
+  status: "Pending" | "Success" | "Fail";
+};
+
 const customerSchema = new Schema<CustomerType>({
   email: { type: String, required: true },
   name: { type: String, required: true },
@@ -33,12 +40,16 @@ const billingDataSchema = new Schema<BillingDataType>({
   // customer: customerSchema,
 });
 
-type Payment = {
-  paymentMethod: string;
-  amount: number;
-  currency: string;
-  status: "Pending | Success | Fail";
-};
+const paymentSchema = new Schema<Payment>({
+  paymentMethod: { type: String },
+  amount: { type: Number, required: true },
+  currency: { type: String, required: true },
+  status: {
+    type: String,
+    enum: ["Pending", "Success", "Fail"],
+    default: "Pending",
+  },
+});
 
 export interface OrderType extends Document {
   user_id: Schema.Types.ObjectId;
@@ -54,12 +65,7 @@ const orderSchema = new Schema<OrderType>(
     user_id: { type: Schema.Types.ObjectId, ref: "User" },
     tx_ref: { type: String, required: true },
     items: [String],
-    payment: {
-      paymentMethod: { type: String },
-      amount: { type: Number, required: true },
-      currency: { type: String, required: true },
-      status: { type: String, default: "Pending" },
-    },
+    payment: paymentSchema,
     billing: billingDataSchema,
     customer: customerSchema,
   },
