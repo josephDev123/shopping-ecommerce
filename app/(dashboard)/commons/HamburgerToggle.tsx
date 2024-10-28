@@ -16,8 +16,7 @@ export default function HamburgerToggle() {
   return (
     <RxHamburgerMenu
       onClick={() => dispatch(toggleLeftPanel())}
-      // onClick={() => alert("hello")}
-      className="text-3xl hover:bg-gray-200 rounded-full p-1 cursor-pointer"
+      className="text-3xl md:hidden  hover:bg-gray-200 rounded-full p-1 cursor-pointer"
     />
   );
 }

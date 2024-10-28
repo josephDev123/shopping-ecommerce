@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import react, { useRef } from "react";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
@@ -13,16 +13,17 @@ import {
 } from "@/lib/slices/hooks";
 import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
 import HamburgerToggle from "./HamburgerToggle";
+import DashboardMobileLeftpanel from "./DashboardMobileLeftpanel";
 
 export default function TopNavbar() {
   // const { data: session, status } = useSession();
 
   // console.log("top nav bar", session);
-  const state = useAppSelector((state) => state);
-  console.log(state.leftPanelState.value);
+  // const state = useAppSelector((state) => state);
+  // console.log(state.leftPanelState.value);
 
   return (
-    <section className="w-full h-[10%] p-4 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
+    <section className="w-full h-[10%] sm:p-4 p-2 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
       <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-2">
         <p className="sm:text-xl text-base font-bold self-center">
           {/* {session?.user?.name} */}
@@ -42,12 +43,13 @@ export default function TopNavbar() {
             name="search"
             id=""
             placeholder="Search here ..."
-            className="p-2  outline-none min-[425px]:w-auto w-24 sm:placeholder:text-inherit placeholder:text-sm "
+            className="sm:p-2 p-1 outline-none sm:w-72 w-32 sm:placeholder:text-inherit placeholder:text-sm "
           />
           <CiSearch className="absolute top-3 right-2 sm:text-xl text-sm" />
         </span>
         <HamburgerToggle />
       </div>
+      <DashboardMobileLeftpanel />
     </section>
   );
 }

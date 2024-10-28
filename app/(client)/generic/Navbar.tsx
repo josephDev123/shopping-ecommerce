@@ -55,7 +55,10 @@ export default function Navbar() {
         {status === "loading" ? (
           <Loader className="h-5 w-5" />
         ) : status === "authenticated" ? (
-          <Link href={"/dashboard"} className="text-base font-semibold">
+          <Link
+            href={"/dashboard"}
+            className="sm:text-base text-sm font-semibold hover:bg-gray-200 px-1.5 py-0.5 rounded-md"
+          >
             Dashboard
           </Link>
         ) : (

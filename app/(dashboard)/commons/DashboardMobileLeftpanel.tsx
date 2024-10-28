@@ -9,6 +9,7 @@ import Link from "next/link";
 import { leftPanelItem } from "../dashboard/data/leftPanelData";
 import { Images } from "@/app/Images";
 import { IoIosClose } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
 import Image from "next/image";
 // import { motion } from "framer-motion";
 import {
@@ -33,13 +34,18 @@ export default function DashboardMobileLeftpanel() {
       {state.value && (
         <section
           // animate={""}
-          className="fixed inset-0 z-20 md:hidden flex flex-col w-full h-full bg-red-400"
+          className="fixed inset-1 z-50 md:hidden flex flex-col w-full h-full "
         >
-          <div className="w-full min-[425px]:w-[50%] h-full flex flex-col pl-6 pr-2 bg-darkBlack overflow-y-auto text-white ">
-            <IoIosClose
-              onClick={() => dispatch(toggleLeftPanel())}
-              className="self-end text-3xl mt-2 hover:bg-gray-200 rounded-full p-1"
-            />
+          <div className="w-full min-[425px]:w-[50%] h-full flex flex-col pl-6 pr-2 bg-darkBlack  overflow-y-auto text-white ">
+            <div
+              className="self-end"
+              // onClick={() => dispatch(toggleLeftPanel())}
+            >
+              <IoMdClose
+                onClick={() => dispatch(toggleLeftPanel())}
+                className="self-end text-2xl mt-2 rounded-full p-1 "
+              />
+            </div>
             <Link href="/" className="text-2xl font-semibold my-4">
               JoeBank
             </Link>

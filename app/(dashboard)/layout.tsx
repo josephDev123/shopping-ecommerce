@@ -27,9 +27,9 @@ export default function DashboardLayout({
       <div className="bg-darkBlack w-[20%] h-full overflow-y-auto px-2 text-white md:flex hidden flex-col justify-center items-center">
         <LeftPanel />
       </div>
-      <div>
+      {/* <div>
         <DashboardMobileLeftpanel />
-      </div>
+      </div> */}
 
       {/* right panel */}
       <div className="w-full h-full bg-white flex flex-col">
