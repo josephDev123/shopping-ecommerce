@@ -1,7 +1,7 @@
 import { BillingDataType } from "@/app/types/billingType";
 import mongoose, { Schema, model, models, Types } from "mongoose";
 
-type CustomerType = {
+export type CustomerType = {
   email: string;
   name: string;
   phonenumber: string;
@@ -14,7 +14,7 @@ type CustomerType = {
   additionalInfo?: string; // Optional field
 };
 
-type Payment = {
+export type Payment = {
   paymentMethod: string;
   amount: number;
   currency: string;
