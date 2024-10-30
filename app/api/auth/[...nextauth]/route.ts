@@ -43,7 +43,7 @@ declare module "next-auth" {
   }
 }
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
@@ -121,5 +121,6 @@ export const authOptions: NextAuthOptions = {
   },
 };
 const handler = NextAuth(authOptions);
-// export const getServerAuthSession = () => getServerSession(authOptions);
+export const getServerAuthSession = async () =>
+  await getServerSession(authOptions);
 export { handler as GET, handler as POST };
