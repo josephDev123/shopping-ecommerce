@@ -6,9 +6,9 @@ import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
 import FooterPagination from "../commons/FooterPagination";
 import OrderPageMainWrapper from "./components/OrderPageMainWrapper";
 import { getServerSession } from "next-auth";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/NextAuthOption";
 // import { auth } from "@/app/utils/getServerSession";
-import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/route";
+// import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/route";
 import { OrderType } from "@/models/OrderModel";
 import { ClientOrderType } from "@/app/types/ClientOrderType";
 
@@ -17,7 +17,7 @@ export interface OrderPageProps {
 }
 
 export default async function page({ searchParams }: OrderPageProps) {
-  const session = await getServerAuthSession();
+  const session = await getServerSession(authOptions);
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASEURL}/api/orders/orders?user_id=${

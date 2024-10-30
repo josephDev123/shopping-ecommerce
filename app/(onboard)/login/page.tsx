@@ -43,7 +43,7 @@ export default function Login() {
   };
   return (
     <section className="flex flex-col justify-center items-center h-screen w-full">
-      <div className="flex flex-col w-[400px]">
+      <div className="flex flex-col sm:w-[400px] w-[90%]">
         <h2 className="text-2xl mb-8 text-center">
           <b className="text-customgreen">JOE</b>bank
         </h2>
