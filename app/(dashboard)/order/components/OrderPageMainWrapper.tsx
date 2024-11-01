@@ -16,19 +16,20 @@ interface OrderPageMainWrapperProps {
 export default function OrderPageMainWrapper({
   data,
 }: OrderPageMainWrapperProps) {
-  const [orderData, setOrderData] = useState<ClientOrderType[]>(data);
+  // const [orderData, setOrderData] = useState<ClientOrderType[]>(data);
   const [search_Id, setSearchId] = useState<string | null>(null);
 
   const searchParam = useSearchParams().get("status") ?? null;
 
-  const filterData = orderData.filter(
-    (order) =>
-      order.payment.status.toLowerCase() === searchParam ||
-      String(order.user_id)
-        .toLowerCase()
-        .includes(String(search_Id).toLowerCase()) ||
-      searchParam === null
-  );
+  const filteredData = data.filter((order) => {
+    const matchesStatus =
+      !searchParam || order.payment.status.toLowerCase() === searchParam;
+    const matchesId =
+      !search_Id ||
+      String(order.user_id).toLowerCase().includes(search_Id.toLowerCase());
+
+    return matchesStatus && matchesId;
+  });
 
   const handleSearchId = (e: React.ChangeEvent<HTMLInputElement>) => {
     // const TimeId = setTimeout(() => {
@@ -38,7 +39,7 @@ export default function OrderPageMainWrapper({
     // clearTimeout(TimeId);
   };
 
-  console.log(filterData, search_Id);
+  console.log(filteredData, search_Id);
   return (
     <section>
       <div className="flex sm:flex-row flex-col justify-between items-start gap-4 my-4">
@@ -77,7 +78,7 @@ export default function OrderPageMainWrapper({
             </tr>
           </thead>
           <tbody className="">
-            {filterData.map((item, i) => (
+            {filteredData.map((item, i) => (
               <tr key={i} className="border-b-2">
                 <td className="p-2 text-nowrap">{item._id}</td>
                 <td className="p-2 text-nowrap">

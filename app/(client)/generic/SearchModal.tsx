@@ -11,7 +11,7 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
 
       {isOpen && (
         <section className="fixed inset-0 h-full w-full flex flex-col items-center justify-center bg-black/50">
-          <div className="bg-white flex flex-col  rounded-md w-[400px] drop-shadow-md">
+          <div className="bg-white flex flex-col  rounded-md sm:w-[400px] w-[90%] drop-shadow-md p-3">
             <div className="flex justify-between items-center ">
               <input
                 type="search"
@@ -28,6 +28,7 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
                 ESC
               </button>
             </div>
+            <p className="font-medium mt-2">No Result</p>
           </div>
         </section>
       )}
