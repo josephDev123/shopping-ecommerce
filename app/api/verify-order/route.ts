@@ -6,6 +6,7 @@ import OrderModel, { OrderType } from "@/models/OrderModel";
 
 export async function GET(req: Request) {
   try {
+    let memoized = false;
     const flw = new Flutterwave(
       process.env.FLUTTERWAVE_PUBLIC_KEY,
       process.env.FLUTTERWAVE_SECRET_KEY
@@ -19,7 +20,6 @@ export async function GET(req: Request) {
     if (queryStatus === "successful") {
       const transactionDetails = await OrderModel.findOneAndUpdate(
         { tx_ref: queryTx_ref },
-        // { payment: { status: "success" } },
         { $set: { "payment.status": "success" } },
         { new: true }
       );
@@ -33,12 +33,15 @@ export async function GET(req: Request) {
         response.data.amount === transactionDetails.payment.amount &&
         response.data.currency === "NGN"
       ) {
-        // Success! Confirm the customer's payment
-        const transaction = new TransactionModel({
-          orderId: transactionDetails._id,
-        });
+        if (!memoized) {
+          memoized = true;
+          // Success! Confirm the customer's payment
+          const transaction = new TransactionModel({
+            orderId: transactionDetails._id,
+          });
 
-        const transactionResult = await transaction.save();
+          await transaction.save();
+        }
 
         return NextResponse.json(
           {

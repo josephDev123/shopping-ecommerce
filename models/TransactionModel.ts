@@ -1,6 +1,10 @@
 import { model, models, Schema } from "mongoose";
 
-const TransactionSchema = new Schema({
+export interface TransactionType {
+  orderId: Schema.Types.ObjectId;
+}
+
+const TransactionSchema = new Schema<TransactionType>({
   orderId: { type: Schema.Types.ObjectId, ref: "Order" },
 });
 export const TransactionModel =
