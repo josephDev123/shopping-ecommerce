@@ -1,37 +1,22 @@
 "use client";
 
-import react, { useRef } from "react";
 import { BiLogOut } from "react-icons/bi";
 import LeftPanelItemCard from "./LeftPanelItemCard";
 import { TbBrandProducthunt } from "react-icons/tb";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import Link from "next/link";
 import { leftPanelItem } from "../dashboard/data/leftPanelData";
-import { Images } from "@/app/Images";
-import { IoIosClose } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
-import Image from "next/image";
-// import { motion } from "framer-motion";
-import {
-  useAppDispatch,
-  useAppSelector,
-  useAppStore,
-} from "@/lib/slices/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/slices/hooks";
 import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
 
 export default function DashboardMobileLeftpanel() {
-  const state = useAppSelector((state) => state.leftPanelState);
+  const state = useAppSelector((state) => state.leftPanelState.value);
   const dispatch = useAppDispatch();
-  // const store = useAppStore();
-  // const initialized = useRef(false);
-  // if (!initialized.current) {
-  //   store.dispatch(toggleLeftPanel());
-  //   initialized.current = true;
-  // }
 
   return (
     <>
-      {state.value && (
+      {state && (
         <section
           // animate={""}
           className="fixed inset-1 z-50 md:hidden flex flex-col w-full h-full "
@@ -46,6 +31,7 @@ export default function DashboardMobileLeftpanel() {
                 className="self-end text-2xl mt-2 rounded-full p-1 "
               />
             </div>
+
             <Link href="/" className="text-2xl font-semibold my-4">
               JoeBank
             </Link>

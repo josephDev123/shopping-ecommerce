@@ -1,11 +1,9 @@
-// "use client";
+"use client";
 
-import react, { useRef } from "react";
 import { MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import { IoIosNotifications } from "react-icons/io";
 import { CiSearch } from "react-icons/ci";
 import { useSession } from "next-auth/react";
-import { RxHamburgerMenu } from "react-icons/rx";
 import {
   useAppSelector,
   useAppDispatch,
@@ -14,24 +12,24 @@ import {
 import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
 import HamburgerToggle from "./HamburgerToggle";
 import DashboardMobileLeftpanel from "./DashboardMobileLeftpanel";
+import moment from "moment";
 
 export default function TopNavbar() {
-  // const { data: session, status } = useSession();
+  const { data: session, status } = useSession();
 
   // console.log("top nav bar", session);
-  // const state = useAppSelector((state) => state);
-  // console.log(state.leftPanelState.value);
+  const state = useAppSelector((state) => state.leftPanelState);
 
   return (
     <section className="w-full h-[10%] sm:p-4 p-2 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
       <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-2">
         <p className="sm:text-xl text-base font-bold self-center">
-          {/* {session?.user?.name} */}
+          {session?.user?.name}
         </p>
 
         <span className="inline-flex sm:self-center items-center self-start text-xs text-slate-400">
           <MdOutlineKeyboardDoubleArrowRight className="text-slate-400" />
-          May 5, 2024
+          {moment(new Date()).format("DD, MMM YYYY")}
         </span>
       </div>
 

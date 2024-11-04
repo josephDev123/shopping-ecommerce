@@ -1,6 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import LeftPanelToggleSliceReducer from "./slices/leftpanelSlice";
-import cartsReducer from "./slices/addToCartSlice";
+import { configureStore } from "@reduxjs/toolkit";
 import { storage } from "./slices/persistStorage";
 import {
   persistStore,
@@ -12,17 +10,13 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { rootReducer } from "./rootReducer";
 
 const persistConfig = {
   key: "root",
   storage,
   whitelist: ["cartState"],
 };
-
-const rootReducer = combineReducers({
-  leftPanelState: LeftPanelToggleSliceReducer,
-  cartState: cartsReducer,
-});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -38,8 +32,7 @@ export const makeStore = () => {
   });
 };
 
-export let persistor = persistStore(makeStore());
-
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore["getState"]>;
 export type AppDispatch = AppStore["dispatch"];
+export let persistor = persistStore(makeStore());
