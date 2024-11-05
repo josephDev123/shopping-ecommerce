@@ -44,12 +44,14 @@ export default function CustomerTable({ data }: CustomerTableProps) {
       />
       <div className="flex flex-col overflow-x-auto w-full h-full my-5">
         <table className="table-auto">
-          <thead className="border-b-2 bg-neutral-800">
-            <tr className="text-white">
-              <th className="text-left text-nowrap px-3 class">NAME</th>
-              <th className="text-left text-nowrap px-3 class">PHONE NUMBER</th>
-              <th className="text-left text-nowrap px-3 class">CREATED</th>
-              <th className="text-left text-nowrap px-3 class">ACTION</th>
+          <thead className="border-b-2 bg-gray-200">
+            <tr className="">
+              <th className="text-left text-nowrap px-3 py-1 class">NAME</th>
+              <th className="text-left text-nowrap px-3 py-1 class">
+                PHONE NUMBER
+              </th>
+              <th className="text-left text-nowrap px-3 py-1 class">CREATED</th>
+              <th className="text-left text-nowrap px-3 py-1 class">ACTION</th>
             </tr>
           </thead>
           <tbody>

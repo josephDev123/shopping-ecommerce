@@ -1,3 +1,4 @@
+import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { TransactionType } from "@/models/TransactionModel";
 import mongoose, { Schema } from "mongoose";
@@ -35,9 +36,8 @@ export class transactionRepository {
         { $limit: limit },
       ];
 
-      const result = await this.transactionModel.aggregate(
-        TransactionAggregationPipeline
-      );
+      const result: TransactionServerResponseType[] =
+        await this.transactionModel.aggregate(TransactionAggregationPipeline);
 
       return result;
     } catch (error) {

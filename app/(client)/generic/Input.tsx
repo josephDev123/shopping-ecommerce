@@ -68,7 +68,7 @@ export const SelectInput = ({
         {labelName}
       </label>
       <select {...props} id="" {...(register && { ...register(name) })}>
-        <option disabled selected value={""}>
+        <option selected value={""}>
           {placeholder}
         </option>
         {data.map((item, i) => (

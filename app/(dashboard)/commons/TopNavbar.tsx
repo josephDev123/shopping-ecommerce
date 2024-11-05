@@ -23,7 +23,7 @@ export default function TopNavbar() {
   return (
     <section className="w-full h-[10%] sm:p-4 p-2 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
       <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-2">
-        <p className="sm:text-xl text-base font-bold self-center">
+        <p className="sm:text-xl sm:w-40 w-28 text-base font-bold self-center text-ellipsis truncate text-nowrap">
           {session?.user?.name}
         </p>
 
