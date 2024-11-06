@@ -33,7 +33,7 @@ export default function TopNavbar() {
         </span>
       </div>
 
-      <div className="flex justify-between gap-4 items-center">
+      <div className="flex  justify-between sm:gap-4 gap-2 items-center">
         <IoIosNotifications className="text-xl cursor-pointer" />
         <span className="relative sm:w-auto border rounded-md">
           <input
