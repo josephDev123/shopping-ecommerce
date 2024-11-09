@@ -29,4 +29,4 @@ export const ProductFormDataSchema = z.object({
     .optional(),
 });
 
-// export type AddProductSchemaTypes = z.infer<typeof ProductFormDataSchema>;
+export type AddProductSchemaTypes = z.infer<typeof ProductFormDataSchema>;

@@ -71,7 +71,8 @@ export default function CheckoutTable() {
               additionalInfo: data.additionalInfo,
               paymentMethod: data.paymentMethod,
             },
-            item: getCarts.map((product) => product._id),
+            // item: getCarts.map((product) => product._id),
+            item: getCarts,
             customizations: {
               title: "Shopping Standard Payment",
             },

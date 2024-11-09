@@ -1,4 +1,5 @@
 import { BillingDataType } from "@/app/types/billingType";
+import { ProductDataType } from "@/app/types/productsType";
 import mongoose, { Schema, model, models, Types } from "mongoose";
 
 export type CustomerType = {
@@ -51,10 +52,29 @@ const paymentSchema = new Schema<Payment>({
   },
 });
 
+const productItemSchema = new Schema<ProductDataType>({
+  qty: { type: String, required: true },
+  productName: { type: String, required: true },
+  Description: { type: String, required: true },
+  productCategory: { type: String, required: true },
+  productTag: { type: String, required: true },
+  productPrice: { type: String, required: true },
+  productDiscount: { type: String, required: true },
+  productQuantity: { type: Number, required: true },
+  productSKU: { type: String, required: true },
+  productSize: { type: String, required: true },
+  productItemWeight: { type: Number, required: true },
+  productUnit: { type: String, required: true },
+  productBreath: { type: Number, required: true },
+  productLength: { type: Number, required: true },
+  productWidth: { type: Number, required: true },
+  productImgUrl: { type: [String], required: true },
+});
+
 export interface OrderType extends Document {
   user_id: Schema.Types.ObjectId;
   tx_ref: string;
-  items: string[];
+  items: ProductDataType[];
   payment: Payment;
   billing: BillingDataType;
   customer: CustomerType;
@@ -64,7 +84,7 @@ const orderSchema = new Schema<OrderType>(
   {
     user_id: { type: Schema.Types.ObjectId, ref: "User" },
     tx_ref: { type: String, required: true },
-    items: [String],
+    items: [productItemSchema],
     payment: paymentSchema,
     billing: billingDataSchema,
     customer: customerSchema,
