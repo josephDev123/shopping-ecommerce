@@ -1,32 +1,46 @@
-import { SuccessApiResponseHelper } from "../utils/ApiResponseHelper";
-import { ProductService } from "../service/productServices/ProductService";
-import { ProductRepository } from "../repository/productRepository/ProductRepository";
-import ProductModel from "@/models/ProductsModel";
 import { NextRequest, NextResponse } from "next/server";
-import { NextApiRequest } from "next";
 import { startDb } from "@/lib/startDb";
+import { categoryRepository } from "../repository/CategoryRepo";
+import { categoryService } from "../service/CategoryService";
+import OrderModel from "@/models/OrderModel";
+import {
+  ApiResponseHelper,
+  SuccessApiResponseHelper,
+} from "../utils/ApiResponseHelper";
+import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
+import ProductModel from "@/models/ProductsModel";
 
 export async function GET(req: NextRequest) {
   try {
     await startDb();
-    const productModelImpl = ProductModel;
-    const productRepoImpl = new ProductRepository(productModelImpl);
-    const ProductServiceImpl = new ProductService(productRepoImpl);
-    // const query = req.nextUrl.searchParams.get("query");
-    // console.log(query);
-    // const response = await ProductServiceImpl.category(query!);
+    const CategoryRepoImpl = new categoryRepository(OrderModel, ProductModel);
+    const CategoryServiceImpl = new categoryService(CategoryRepoImpl);
+    const page = Number(new URL(req.url).searchParams.get("page")) ?? 1;
+    const limit = Number(new URL(req.url).searchParams.get("limit")) ?? 5;
+    console.log(page, limit);
+    const response = await CategoryServiceImpl.getCategories(page, limit);
+
+    return NextResponse.json(
+      { msg: "category successful", data: response },
+      { status: 200 }
+    );
 
     // return SuccessApiResponseHelper(
     //   String(response?.msg),
     //   String(response?.name),
     //   Boolean(response?.operational),
     //   String(response?.type),
-    //   Number(response?.status),
+    //   Number(response?.status) ?? 200,
     //   response?.data
     // );
-
-    return NextResponse.json({ category: "category" }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    const errorObj = error as GlobalErrorHandler;
+    return ApiResponseHelper(
+      errorObj.message,
+      "CategoryError",
+      true,
+      "error",
+      500
+    );
   }
 }

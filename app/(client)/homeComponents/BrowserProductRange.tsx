@@ -21,17 +21,17 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
       </p>
 
       <div className="grid sm:grid-cols-3 min-[425px]:grid-cols-2 grid-cols-1 gap-6 relative w-full mt-8">
-        {data.type === "error" && (
+        {data?.type === "error" && (
           <small className="text-sm text-red-400">Something went wrong</small>
         )}
         {/* {status === "loading" &&
           Array.from({ length: 4 }, (_, index) => <ProductCardLoading />)} */}
 
-        {data.data?.length < 0 && (
+        {data?.data?.length < 0 && (
           <small className="text-sm text-red-400">No data</small>
         )}
 
-        {data.data?.length > 0 && (
+        {data?.data?.length > 0 && (
           <>
             {data.data.map((item: CategoryType, i: number) => (
               <div

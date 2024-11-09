@@ -54,7 +54,7 @@ export default function page() {
       };
       console.log(payload, data);
       const res = await axiosInstance({
-        url: "/product/add-products",
+        url: "api/product/add-products",
         method: "POST",
         data: payload,
       });

@@ -1,11 +1,13 @@
+import { getServerSession } from "next-auth";
 import BrowserProductRange from "./homeComponents/BrowserProductRange";
 import Hero from "./homeComponents/Hero";
 import OurProducts from "./homeComponents/OurProducts";
+import { authOptions } from "@/lib/NextAuthOption";
 
 async function getCategory() {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASEURL}/api/category/categories?limit=8`
+      `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=1&limit=8}`
     );
 
     if (!response.ok) {
@@ -49,7 +51,8 @@ export default async function page() {
     paginateProductsResult,
   ]);
 
-  console.log(categoryResult, paginateProductsResult);
+  console.log("category:", category);
+  console.log("product:", paginateProductsResult);
 
   return (
     <section className="">
