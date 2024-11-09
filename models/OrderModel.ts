@@ -68,7 +68,13 @@ const productItemSchema = new Schema<ProductDataType>({
   productBreath: { type: Number, required: true },
   productLength: { type: Number, required: true },
   productWidth: { type: Number, required: true },
-  productImgUrl: { type: [String], required: true },
+  productImgUrl: [
+    {
+      url: { type: String, required: true },
+      path: { type: String, required: true },
+      _id: { type: String, required: true },
+    },
+  ],
 });
 
 export interface OrderType extends Document {
