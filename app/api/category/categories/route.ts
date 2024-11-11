@@ -25,19 +25,15 @@ export async function GET(req: NextRequest) {
       user_id
     );
 
-    return NextResponse.json(
-      { msg: "category successful", data: response },
-      { status: 200 }
+    return SuccessApiResponseHelper(
+      "category successful",
+      "CategorySuccess",
+      false,
+      "success",
+      200,
+      response,
+      []
     );
-
-    // return SuccessApiResponseHelper(
-    //   String(response?.msg),
-    //   String(response?.name),
-    //   Boolean(response?.operational),
-    //   String(response?.type),
-    //   Number(response?.status) ?? 200,
-    //   response?.data
-    // );
   } catch (error) {
     const errorObj = error as GlobalErrorHandler;
     return ApiResponseHelper(

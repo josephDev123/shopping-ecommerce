@@ -1,7 +1,4 @@
 import mongoose, { Schema, model, models, mongo } from "mongoose";
-import UserModel from "./User";
-import { url } from "inspector";
-import path from "path";
 
 type uploadImgPattern = {
   url: string;

@@ -1,3 +1,4 @@
+import { CategoryType } from "@/app/types/categoryType";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { OrderType } from "@/models/OrderModel";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
@@ -107,7 +108,7 @@ export class categoryRepository {
         { $skip: skip },
       ];
 
-      const response = await this.dbContext.aggregate(
+      const response: CategoryType[] = await this.dbContext.aggregate(
         groupedProductsByCategoryPipeline
       );
       // console.log("result from category", response);
