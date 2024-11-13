@@ -13,6 +13,7 @@ import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
 import HamburgerToggle from "./HamburgerToggle";
 import DashboardMobileLeftpanel from "./DashboardMobileLeftpanel";
 import moment from "moment";
+import Loader from "@/app/(client)/components/Loader";
 
 export default function TopNavbar() {
   const { data: session, status } = useSession();
@@ -24,7 +25,11 @@ export default function TopNavbar() {
     <section className="w-full h-[10%] sm:p-4 p-2 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
       <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-2">
         <p className="sm:text-xl sm:w-40 w-28 text-base font-bold self-center text-ellipsis truncate text-nowrap">
-          {session?.user?.name}
+          {status === "loading" ? (
+            <Loader className="h-5 w-5" />
+          ) : (
+            <>{session?.user?.name}</>
+          )}
         </p>
 
         <span className="inline-flex sm:self-center items-center self-start text-xs text-slate-400">

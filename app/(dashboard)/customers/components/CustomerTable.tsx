@@ -57,7 +57,7 @@ export default function CustomerTable({ data }: CustomerTableProps) {
           <tbody>
             {filteredData.map((customer, i) => (
               <tr className="border-b-2" key={i}>
-                <td className=" gap-2 flex w-fit h-fit p-2 ">
+                <td className="gap-2 flex w-fit h-fit p-2 ">
                   <div className="rounded-full h-10 w-10 relative block bg-gray-200 overflow-clip">
                     <Image
                       src={Images.avatar}

@@ -50,7 +50,7 @@ export default function OrderPageMainWrapper({
           placeholder="Search by order id"
           onChange={handleSearchId}
           labelName=""
-          className="bg-white border p-3  outline-none rounded-md drop-shadow-md sm:max-w-[320px] w-full"
+          className="bg-white border p-3  outline-none rounded-md shadow-md sm:max-w-[320px] w-full"
         />
         {/* </div> */}
 
@@ -60,7 +60,7 @@ export default function OrderPageMainWrapper({
             data={[]}
             placeholder="Filter by date range"
             labelName=""
-            className="bg-white border p-3 outline-none rounded-md drop-shadow-md  "
+            className="bg-white border p-3 outline-none rounded-md shadow-md  "
           />
         </div>
       </div>

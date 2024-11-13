@@ -9,8 +9,11 @@ import { leftPanelItem } from "../dashboard/data/leftPanelData";
 import { IoMdClose } from "react-icons/io";
 import { useAppDispatch, useAppSelector } from "@/lib/slices/hooks";
 import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
+import { useSession } from "next-auth/react";
+import Loader from "@/app/(client)/components/Loader";
 
 export default function DashboardMobileLeftpanel() {
+  const { data: session, status } = useSession();
   const state = useAppSelector((state) => state.leftPanelState.value);
   const dispatch = useAppDispatch();
 
@@ -19,7 +22,7 @@ export default function DashboardMobileLeftpanel() {
       {state && (
         <section
           // animate={""}
-          className="fixed inset-1 z-50 md:hidden flex flex-col w-full h-full "
+          className="fixed inset-0 z-50 md:hidden flex flex-col w-full h-full "
         >
           <div className="w-full min-[425px]:w-[50%] h-full flex flex-col pl-6 pr-2 bg-darkBlack  overflow-y-auto text-white ">
             <div
@@ -46,12 +49,16 @@ export default function DashboardMobileLeftpanel() {
               ))}
             </div>
             <div className="flex flex-col w-full mt-4">
-              <h2 className="text-sm">PRODUCTS</h2>
-              <LeftPanelItemCard
-                icon={<IoIosAddCircleOutline className="text-lg" />}
-                text="Add Products"
-                path="/add-product"
-              />
+              {session?.user.role == "admin" && (
+                <>
+                  <h2 className="text-sm">PRODUCTS</h2>
+                  <LeftPanelItemCard
+                    icon={<IoIosAddCircleOutline className="text-lg" />}
+                    text="Add Products"
+                    path="/add-product"
+                  />
+                </>
+              )}
 
               <LeftPanelItemCard
                 icon={<TbBrandProducthunt className="text-lg" />}
@@ -77,8 +84,12 @@ export default function DashboardMobileLeftpanel() {
                   loading="lazy"
                   className="bg-white/25 rounded-full"
                 /> */}
-                <div className="flex flex-col ">
-                  <h2 className="text-sm">Joseph Uzuegbu</h2>
+                <div className="flex flex-col mb-2">
+                  {status == "loading" ? (
+                    <Loader className="h-5 w-5" />
+                  ) : (
+                    <h2 className="text-sm truncate">{session?.user.name}</h2>
+                  )}
                   <Link href={""} className="text-xs">
                     View profile
                   </Link>

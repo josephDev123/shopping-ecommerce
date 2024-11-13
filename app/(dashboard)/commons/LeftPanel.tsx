@@ -60,8 +60,8 @@ export default async function LeftPanel() {
             loading="lazy"
             className="bg-white/25 rounded-full"
           />
-          <div className="flex flex-col ">
-            <h2 className="text-sm">Joseph Uzuegbu</h2>
+          <div className="flex flex-col mb-2">
+            <h2 className="text-sm truncate">{session?.user.name}</h2>
             <Link href={""} className="text-xs">
               View profile
             </Link>

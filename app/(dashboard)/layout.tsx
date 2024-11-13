@@ -22,7 +22,7 @@ export default function DashboardLayout({
   // console.log("server call", user?.user);
 
   return (
-    <section className="w-full h-full flex bg-green-400">
+    <section className="w-full h-full flex">
       {/* left panel */}
       <div className="bg-darkBlack w-[20%] h-full overflow-y-auto px-2 text-white md:flex hidden flex-col justify-center items-center">
         <LeftPanel />

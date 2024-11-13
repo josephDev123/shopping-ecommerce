@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 type LeftPanelItemCardType = {
@@ -17,8 +17,10 @@ export default function LeftPanelItemCard({
   className,
 }: LeftPanelItemCardType) {
   const activeRoute = usePathname();
+  const navigate = useRouter();
   return (
     <Link
+      // onClick={}
       href={path}
       className={`${
         activeRoute === path && "bg-green"

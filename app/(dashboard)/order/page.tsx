@@ -1,15 +1,9 @@
 import React from "react";
 import Navbar from "./components/Navbar";
-import Input, { SelectInput } from "@/app/(client)/generic/Input";
-import Button from "@/app/(client)/generic/Button";
-import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
 import FooterPagination from "../commons/FooterPagination";
 import OrderPageMainWrapper from "./components/OrderPageMainWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
-// import { auth } from "@/app/utils/getServerSession";
-// import { getServerAuthSession } from "@/app/api/auth/[...nextauth]/route";
-import { OrderType } from "@/models/OrderModel";
 import { ClientOrderType } from "@/app/types/ClientOrderType";
 
 export interface OrderPageProps {
