@@ -1,18 +1,11 @@
-import mongoose, {
-  HydratedDocument,
-  Model,
-  model,
-  models,
-  Schema,
-} from "mongoose";
-// import bcrypt from "bcrypt";
+import { model, models, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
-import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
 export interface UserInterface extends Document {
   name: string;
   email: string;
   password: string;
+  role: string;
 }
 
 const UserSchema = new Schema<UserInterface>({
@@ -29,6 +22,10 @@ const UserSchema = new Schema<UserInterface>({
     type: String,
     required: true,
     unique: true,
+  },
+  role: {
+    type: String,
+    default: "user",
   },
 });
 

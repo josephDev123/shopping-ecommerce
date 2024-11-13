@@ -24,6 +24,7 @@ declare module "next-auth" {
       id: string;
       email: string;
       name: string;
+      role: string;
     };
   }
 
@@ -31,6 +32,7 @@ declare module "next-auth" {
     id: string;
     email: string;
     name: string;
+    role: string;
   }
 }
 
@@ -47,11 +49,13 @@ export const authOptions: NextAuthOptions = {
           const User_Repo = new UserRepo(UserModel);
           const User_service = new UserService(User_Repo);
           const User = await User_service.FindByEmailService(email);
+          console.log("from create", User);
           if (User) {
             return {
               id: User._id.toString(),
               email: User.email,
               name: User.name,
+              role: User.role as string,
             };
           }
           return null;
@@ -71,12 +75,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
       return session;
     },

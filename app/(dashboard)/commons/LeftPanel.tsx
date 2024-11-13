@@ -6,8 +6,11 @@ import { BiLogOut } from "react-icons/bi";
 import { Images } from "@/app/Images";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { TbBrandProducthunt } from "react-icons/tb";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/NextAuthOption";
 
-export default function LeftPanel() {
+export default async function LeftPanel() {
+  const session = await getServerSession(authOptions);
   return (
     <div className="h-full flex flex-col justify-between items-center">
       <Link href="/" className="text-2xl font-semibold my-4">
@@ -24,12 +27,16 @@ export default function LeftPanel() {
         ))}
       </div>
       <div className="flex flex-col w-full mt-4">
-        <h2 className="text-sm">PRODUCTS</h2>
-        <LeftPanelItemCard
-          icon={<IoIosAddCircleOutline className="text-lg" />}
-          text="Add Products"
-          path="/add-product"
-        />
+        {session?.user.role === "admin" && (
+          <>
+            <h2 className="text-sm">PRODUCTS</h2>
+            <LeftPanelItemCard
+              icon={<IoIosAddCircleOutline className="text-lg" />}
+              text="Add Products"
+              path="/add-product"
+            />
+          </>
+        )}
 
         <LeftPanelItemCard
           icon={<TbBrandProducthunt className="text-lg" />}
