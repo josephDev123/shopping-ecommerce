@@ -13,6 +13,8 @@ import { useAppSelector } from "@/lib/slices/hooks";
 import SearchModal from "./SearchModal";
 import { useSession } from "next-auth/react";
 import Loader from "../components/Loader";
+import Image from "next/image";
+import logo from "../../assets/png/logo.png";
 
 export default function Navbar() {
   const { data, status } = useSession();
@@ -27,9 +29,15 @@ export default function Navbar() {
 
   const getCarts = useAppSelector((state) => state.cartState.carts);
   return (
-    <section className="flex justify-between items-center py-6 w-full sm:px-6 px-1 border-b">
-      <Link href={"/"} className="text-lg font-semibold">
-        Ecommerce
+    <section className="flex justify-between items-center py-6 w-full sm:px-6 px-1 border-b ">
+      <Link href={"/"} className="">
+        <Image
+          src={logo}
+          alt="logo"
+          width={60}
+          height={60}
+          // className="object-contain h-16 w-16"
+        />
       </Link>
 
       <nav className="md:flex hidden justify-between lg:gap-10 gap-5 items-center text-lg">
@@ -39,7 +47,7 @@ export default function Navbar() {
         <Link href={"/shop"} className={`hover:text-gray-500 font-semibold `}>
           Shop
         </Link>
-        <Link href={""} className={`hover:text-gray-500 font-semibold `}>
+        <Link href={"/about"} className={`hover:text-gray-500 font-semibold `}>
           About
         </Link>
         <Link
