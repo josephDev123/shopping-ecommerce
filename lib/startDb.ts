@@ -1,4 +1,3 @@
-import { UserInterface } from "@/models/User";
 import mongoose, { Schema } from "mongoose";
 
 export async function startDb() {

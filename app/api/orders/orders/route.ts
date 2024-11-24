@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
     console.log(response);
     return SuccessApiResponseHelper(
       "order successful",
-      "OrderSucess",
+      "OrderSuccess",
       false,
       "success",
       200,

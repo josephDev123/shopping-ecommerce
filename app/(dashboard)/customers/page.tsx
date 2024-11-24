@@ -21,7 +21,7 @@ export default async function page({ searchParams }: CustomerPageProps) {
   }
 
   const data = await response.json();
-  const result: ClientOrderType[] = data.data;
+  const result: ClientOrderType[] = data.data.customers;
   // console.log(data);
   return (
     <section className="flex flex-col w-full h-full p-3">

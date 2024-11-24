@@ -23,8 +23,8 @@ export default async function page({ searchParams }: OrderPageProps) {
   }
 
   const data = await response.json();
-  const result: ClientOrderType[] = data.data;
-  // console.log(data);
+  const result: ClientOrderType[] = data.data.orders;
+  console.log(data);
   return (
     <section className="flex flex-col p-2 h-full">
       {/* {JSON.stringify(session)} */}

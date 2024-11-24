@@ -30,7 +30,7 @@ export default async function page({ searchParams }: OrderPageProps) {
   }
 
   const data = await response.json();
-  const result: CategoryType[] = data.data;
+  const result: CategoryType[] = data.data.categoryPurchased;
   // console.log(data);
   return (
     <section className="flex flex-col p-2 h-full">

@@ -1,4 +1,5 @@
 import { CategoryType } from "@/app/types/categoryType";
+import { IdbCategoriesPurchasedType } from "@/app/types/DbResultType";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { OrderType } from "@/models/OrderModel";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
@@ -15,40 +16,86 @@ export class categoryRepository {
       const page = pageNumber;
       const limit = limits;
       const skip = (page - 1) * limit;
+      // const groupedProductsByCategoryPipeline = [
+      //   { $limit: limit },
+      //   { $skip: skip },
+      //   {
+      //     $group: {
+      //       _id: "$productCategory",
+      //       products: {
+      //         $push: {
+      //           id: "$_id",
+      //           productName: "$productName",
+      //           Description: "$Description",
+      //           productTag: "$productTag",
+      //           productPrice: "$productPrice",
+      //           productDiscount: "$productDiscount",
+      //           productQuantity: "$productQuantity",
+      //           productSKU: "$productSKU",
+      //           productSize: "$productSize",
+      //           productColor: "$productColor",
+      //           productItemWeight: "$productItemWeight",
+      //           productUnit: "$productUnit",
+      //           productBreath: "$productBreath",
+      //           productLength: "$productLength",
+      //           productWidth: "$productWidth",
+      //           productImgUrl: "$productImgUrl",
+      //         },
+      //       },
+      //     },
+      //   },
+      // ];
+
       const groupedProductsByCategoryPipeline = [
-        { $limit: limit },
-        { $skip: skip },
         {
-          $group: {
-            _id: "$productCategory",
-            products: {
-              $push: {
-                id: "$_id",
-                productName: "$productName",
-                Description: "$Description",
-                productTag: "$productTag",
-                productPrice: "$productPrice",
-                productDiscount: "$productDiscount",
-                productQuantity: "$productQuantity",
-                productSKU: "$productSKU",
-                productSize: "$productSize",
-                productColor: "$productColor",
-                productItemWeight: "$productItemWeight",
-                productUnit: "$productUnit",
-                productBreath: "$productBreath",
-                productLength: "$productLength",
-                productWidth: "$productWidth",
-                productImgUrl: "$productImgUrl",
+          $facet: {
+            categoriesByGroup: [
+              { $limit: limit },
+              { $skip: skip },
+              {
+                $group: {
+                  _id: "$productCategory",
+                  products: {
+                    $push: {
+                      id: "$_id",
+                      productName: "$productName",
+                      Description: "$Description",
+                      productTag: "$productTag",
+                      productPrice: "$productPrice",
+                      productDiscount: "$productDiscount",
+                      productQuantity: "$productQuantity",
+                      productSKU: "$productSKU",
+                      productSize: "$productSize",
+                      productColor: "$productColor",
+                      productItemWeight: "$productItemWeight",
+                      productUnit: "$productUnit",
+                      productBreath: "$productBreath",
+                      productLength: "$productLength",
+                      productWidth: "$productWidth",
+                      productImgUrl: "$productImgUrl",
+                    },
+                  },
+                },
               },
-            },
+            ],
+            totalCount: [
+              {
+                $count: "totalCount",
+              },
+            ],
           },
         },
       ];
-
-      const response = await this.ProductDbContext.aggregate(
+      const result = await this.ProductDbContext.aggregate(
         groupedProductsByCategoryPipeline
       );
-      // console.log("result from category", response);
+      // Extract the data
+      const response = result[0]?.categoriesByGroup || [];
+      const totalCategories = result[0]?.totalCount[0]?.totalCount || 0;
+      return {
+        totalCategories,
+        categoriesGroup: response,
+      };
       return response;
     } catch (error) {
       const errorObj = error as GlobalErrorHandler;
@@ -65,54 +112,105 @@ export class categoryRepository {
     pageNumber: number,
     limits: number,
     user_id: string
-  ) {
+  ): Promise<IdbCategoriesPurchasedType> {
     try {
       const page = pageNumber;
       const limit = limits;
       const skip = (page - 1) * limit;
-      const groupedProductsByCategoryPipeline = [
+      // const groupedProductsByCategoryPipeline = [
+      //   {
+      //     $match: {
+      //       user_id: new mongoose.Types.ObjectId(user_id),
+      //     },
+      //   },
+
+      //   { $unwind: "$items" },
+
+      //   {
+      //     $group: {
+      //       _id: "$items.productCategory",
+      //       products: {
+      //         $push: {
+      //           id: "$_id",
+      //           productName: "$items.productName",
+      //           Description: "$items.Description",
+      //           productTag: "$items.productTag",
+      //           productPrice: "$items.productPrice",
+      //           productDiscount: "$items.productDiscount",
+      //           productQuantity: "$items.productQuantity",
+      //           productSKU: "$items.productSKU",
+      //           productSize: "$items.productSize",
+      //           productColor: "$items.productColor",
+      //           productItemWeight: "$items.productItemWeight",
+      //           productUnit: "$items.productUnit",
+      //           productBreath: "$items.productBreath",
+      //           productLength: "$items.productLength",
+      //           productWidth: "$items.productWidth",
+      //           productImgUrl: "$items.productImgUrl",
+      //         },
+      //       },
+      //     },
+      //   },
+      //   { $limit: limit },
+      //   { $skip: skip },
+      // ];
+      const groupedProductsByUserPurchasedCategoryPipeline = [
         {
           $match: {
             user_id: new mongoose.Types.ObjectId(user_id),
           },
         },
-
-        { $unwind: "$items" },
-
         {
-          $group: {
-            _id: "$items.productCategory",
-            products: {
-              $push: {
-                id: "$_id",
-                productName: "$items.productName",
-                Description: "$items.Description",
-                productTag: "$items.productTag",
-                productPrice: "$items.productPrice",
-                productDiscount: "$items.productDiscount",
-                productQuantity: "$items.productQuantity",
-                productSKU: "$items.productSKU",
-                productSize: "$items.productSize",
-                productColor: "$items.productColor",
-                productItemWeight: "$items.productItemWeight",
-                productUnit: "$items.productUnit",
-                productBreath: "$items.productBreath",
-                productLength: "$items.productLength",
-                productWidth: "$items.productWidth",
-                productImgUrl: "$items.productImgUrl",
+          $facet: {
+            categoryOfProductPurchased: [
+              { $unwind: "$items" },
+              {
+                $group: {
+                  _id: "$items.productCategory",
+                  products: {
+                    $push: {
+                      id: "$_id",
+                      productName: "$items.productName",
+                      Description: "$items.Description",
+                      productTag: "$items.productTag",
+                      productPrice: "$items.productPrice",
+                      productDiscount: "$items.productDiscount",
+                      productQuantity: "$items.productQuantity",
+                      productSKU: "$items.productSKU",
+                      productSize: "$items.productSize",
+                      productColor: "$items.productColor",
+                      productItemWeight: "$items.productItemWeight",
+                      productUnit: "$items.productUnit",
+                      productBreath: "$items.productBreath",
+                      productLength: "$items.productLength",
+                      productWidth: "$items.productWidth",
+                      productImgUrl: "$items.productImgUrl",
+                    },
+                  },
+                },
               },
-            },
+              { $limit: limit },
+              { $skip: skip },
+            ],
+            totalCount: [
+              {
+                $count: "totalCount",
+              },
+            ],
           },
         },
-        { $limit: limit },
-        { $skip: skip },
       ];
-
-      const response: CategoryType[] = await this.dbContext.aggregate(
-        groupedProductsByCategoryPipeline
+      const result = await this.dbContext.aggregate(
+        groupedProductsByUserPurchasedCategoryPipeline
       );
-      // console.log("result from category", response);
-      return response;
+      // Extract the data
+      const response = result[0]?.categoryOfProductPurchased || [];
+      const totalPurchaseCategoryCount =
+        result[0]?.totalCount[0]?.totalCount || 0;
+      return {
+        totalPurchaseCategoryCount,
+        categoryPurchased: response,
+      };
     } catch (error) {
       const errorObj = error as GlobalErrorHandler;
 

@@ -1,15 +1,13 @@
-import { getServerSession } from "next-auth";
 import BrowserProductRange from "./homeComponents/BrowserProductRange";
 import Hero from "./homeComponents/Hero";
 import OurProducts from "./homeComponents/OurProducts";
-import { authOptions } from "@/lib/NextAuthOption";
 
 async function getCategory() {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=1&limit=8}`
     );
-
+    console.log(response);
     if (!response.ok) {
       // Handle errors
       console.error("Failed to fetch data:", response.statusText);
