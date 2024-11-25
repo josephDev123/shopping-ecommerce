@@ -2,8 +2,7 @@ import Banner from "../generic/Banner";
 import { MdLocationPin } from "react-icons/md";
 import { IoIosCall } from "react-icons/io";
 import { MdAccessTimeFilled } from "react-icons/md";
-import Input, { TextareaInput } from "../generic/Input";
-import Button from "../generic/Button";
+import ContactForm from "./components/ContactForm";
 
 export default function page() {
   const links = [
@@ -13,24 +12,24 @@ export default function page() {
   return (
     <section className="flex flex-col w-full h-full ">
       <Banner title="Contact" links={links} />
-      <div className="flex flex-col justify-center items-center  my-20">
+      <div className="flex flex-col justify-center items-center  my-20 p-2">
         <h2 className="text-xl font-bold">Get In Touch With Us</h2>
-        <p className="text-center w-[600px]">
+        <p className="text-center sm:w-[600px]">
           For More Information About Our Product & Services. Please Feel Free To
           Drop Us An Email. Our Staff Always Be There To Help You Out. Do Not
           Hesitate!
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-10 w-[80%] mx-auto my-10">
+      <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 w-[80%] mx-auto my-10">
         {/* first div */}
         <div className="flex flex-col space-y-4">
           <div className="flex gap-3">
             <MdLocationPin />
             <div className="flex flex-col">
               <h2 className="font-bold">Address</h2>
-              <p>236 5th SE Avenue, New </p>
-              <p>York NY10000, United </p>
-              <p>States.</p>
+              <p>Sabo, palace road </p>
+              <p>Abeokuta, Sagamu </p>
+              <p>Nigeria.</p>
             </div>
           </div>
 
@@ -38,8 +37,8 @@ export default function page() {
             <IoIosCall />
             <div className="flex flex-col">
               <h2 className="font-bold">Address</h2>
-              <p>Mobile: +(84) 546-6789</p>
-              <p>Hotline: +(84) 456-6789</p>
+              <p>Mobile: +(234) 8130197306</p>
+              {/* <p>Hotline: +(84) 456-6789</p> */}
             </div>
           </div>
 
@@ -54,47 +53,7 @@ export default function page() {
         </div>
 
         {/* second div */}
-        <form method="post" className="flex flex-col  space-y-4">
-          <Input
-            name=""
-            type="text"
-            labelName="Your name"
-            errorLabel=""
-            className="border p-3 outline-none"
-            placeholder="Abc"
-          />
-
-          <Input
-            name=""
-            type="email"
-            labelName="Email address"
-            errorLabel=""
-            className="border p-3 outline-none"
-            placeholder="Abc@def.com"
-          />
-
-          <Input
-            name=""
-            type="text"
-            labelName="Subject"
-            errorLabel=""
-            className="border p-3 outline-none"
-            placeholder="This is an optional"
-          />
-
-          <TextareaInput
-            name=""
-            labelName="Message"
-            errorLabel=""
-            className="border p-3 outline-none"
-            placeholder="Hi! i’d like to ask about"
-          />
-
-          <Button
-            textContent="Submit"
-            className="bg-yellow-600 w-[200px] p-3 rounded-md text-white"
-          />
-        </form>
+        <ContactForm />
       </div>
     </section>
   );
