@@ -6,6 +6,9 @@ import { ResponsiveContainer } from "recharts";
 
 export default function Page() {
   return (
+    <div className="flex flex-col h-56 justify-center items-center w-full">
+      coming soon...
+    </div>
     // <section className="flex flex-col p-3 w-full">
     //   <div className="grid grid-cols-4 gap-4 w-full">
     //     <TransactionStat />
@@ -259,7 +262,5 @@ export default function Page() {
     //     </div>
     //   </div>
     // </section>
-
-    <></>
   );
 }
