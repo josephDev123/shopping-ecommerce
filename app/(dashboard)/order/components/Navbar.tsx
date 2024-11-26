@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
 interface OrderPageNavProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -16,7 +15,7 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Pending
       </Link>
       <Link
-        href={"/order?status=confirmed"}
+        href={"/order?status=success"} //confirmed
         className={`${
           searchParams.status === "confirmed" && "border-b-4 border-blue-600"
         }`}

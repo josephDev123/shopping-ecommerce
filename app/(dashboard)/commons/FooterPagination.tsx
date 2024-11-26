@@ -9,23 +9,20 @@ import Link from "next/link";
 
 interface FooterPaginationProps<T> {
   // pages: any[] | null;
-  searchParam: string;
-  itemToShow: string;
-  setLimit: (value: string) => void;
+  searchParam: number;
+  itemToShow: number;
   totalDocs: number;
 }
 
 export default function FooterPagination<T>({
   searchParam,
-  // pages,
   itemToShow,
-  setLimit,
   totalDocs,
 }: FooterPaginationProps<T>) {
-  // const navigate = useRouter();
+  const navigate = useRouter();
   const itemPerPage = 3;
   const pagesNumber = Math.ceil(Number(totalDocs) / itemPerPage);
-  console.log(pagesNumber);
+  console.log(pagesNumber, searchParam);
 
   const limit = [3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -35,11 +32,14 @@ export default function FooterPagination<T>({
         Showing
         <div>
           <SelectInput
-            onChange={(e) => setLimit(e.target.value)}
+            // onChange={(e) => setLimit(e.target.value)}
+            onChange={(e) =>
+              navigate.push(`?page=${searchParam}&limit=${e.target.value}`)
+            }
             name=""
             min={3}
             max={10}
-            placeholder="3"
+            // placeholder="3"
             value={itemToShow}
             data={limit}
             labelName=""
@@ -52,31 +52,21 @@ export default function FooterPagination<T>({
       </div>
 
       <div className="flex gap-1">
-        <Link href={`product-list?page=${pagesNumber - 1}`}>
-          <Button
-            type="button"
-            disabled={
-              searchParam === "0"
-                ? true
-                : searchParam === undefined
-                ? true
-                : false
-            }
-            // onClick={() => navigate.push(`product-list?page=${pagesNumber - 1}`)}
-            textContent=""
-            className={`flex justify-center items-center p-1 rounded-md bg-gray-300 w-8 h-6 ${
-              searchParam === "0"
-                ? "cursor-not-allowed"
-                : searchParam === undefined
-                ? "cursor-not-allowed"
-                : "cursor-pointer"
-            }`}
-          >
-            <MdOutlineExpandLess className="-rotate-90" />
-          </Button>
-        </Link>
+        {/* <Link href={`?page=${pagesNumber - 1}`}> */}
+        <Button
+          type="button"
+          disabled={searchParam === 1 ? true : false}
+          onClick={() => navigate.push(`?page=${searchParam - 1}`)}
+          textContent=""
+          className={`flex justify-center items-center p-1 rounded-md bg-gray-300 w-8 h-6 ${
+            searchParam === 1 ? "cursor-not-allowed" : "cursor-pointer"
+          }`}
+        >
+          <MdOutlineExpandLess className="-rotate-90" />
+        </Button>
+        {/* </Link> */}
         {Array.from({ length: pagesNumber }, (page, i) => (
-          <Link href={`product-list?page=${i + 1}`}>
+          <Link href={`?page=${i + 1}`}>
             <Button
               key={i}
               // onClick={() => navigate.push(`product-list?page=${i + 1}`)}
@@ -88,30 +78,28 @@ export default function FooterPagination<T>({
           </Link>
         ))}
 
-        <Link
-          href={`product-list?page=${
-            searchParam === undefined ? 0 + 1 : searchParam
+        <Button
+          disabled={searchParam === pagesNumber ? true : false}
+          onClick={() => {
+            if (searchParam !== pagesNumber) {
+              navigate.push(`?page=${Number(searchParam) + 1}`);
+            }
+          }}
+          textContent=""
+          className={`flex justify-center items-center p-1 rounded-md bg-gray-300 w-8 h-6  ${
+            searchParam === pagesNumber
+              ? "cursor-not-allowed"
+              : "cursor-pointer"
           }`}
         >
-          <Button
-            disabled={searchParam === String(pagesNumber) ? true : false}
-            // onClick={() => {
-            //   navigate.push(
-            //     `product-list?page=${
-            //       searchParam === undefined ? 0 + 1 : searchParam
-            //     }`
-            //   );
-            // }}
-            textContent=""
-            className={`flex justify-center items-center p-1 rounded-md bg-gray-300 w-8 h-6  ${
-              searchParam === String(pagesNumber)
-                ? "cursor-not-allowed"
-                : "cursor-pointer"
+          {/* <Link
+            href={`?page=${
+              Number(searchParam) !== Number(pagesNumber) && 0 + 1
             }`}
-          >
-            <MdOutlineExpandLess className="rotate-90" />
-          </Button>
-        </Link>
+          > */}
+          <MdOutlineExpandLess className="rotate-90" />
+          {/* </Link> */}
+        </Button>
       </div>
     </div>
   );

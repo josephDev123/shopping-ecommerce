@@ -108,13 +108,13 @@ export default function page({ searchParams }: pageProps) {
           )}
       </div>
 
-      <FooterPagination
+      {/* <FooterPagination
         itemToShow={limit}
         // pages={productData}
         searchParam={paramValue}
         setLimit={(e: string) => setLimit(e)}
         totalDocs={additionalData.totalDoc}
-      />
+      /> */}
     </section>
   );
 }

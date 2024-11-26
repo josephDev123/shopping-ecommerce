@@ -7,7 +7,7 @@ import { OrderType } from "@/models/OrderModel";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import React, { use, useEffect, useState } from "react";
+import React, { Suspense, use, useEffect, useState } from "react";
 import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
 
 interface OrderPageMainWrapperProps {
@@ -16,11 +16,12 @@ interface OrderPageMainWrapperProps {
 export default function OrderPageMainWrapper({
   data,
 }: OrderPageMainWrapperProps) {
+  console.log(data);
   // const [orderData, setOrderData] = useState<ClientOrderType[]>(data);
   const [search_Id, setSearchId] = useState<string | null>(null);
 
   const searchParam = useSearchParams().get("status") ?? null;
-
+  console.log(searchParam);
   const filteredData = data.filter((order) => {
     const matchesStatus =
       !searchParam || order.payment.status.toLowerCase() === searchParam;
@@ -32,11 +33,7 @@ export default function OrderPageMainWrapper({
   });
 
   const handleSearchId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const TimeId = setTimeout(() => {
     setSearchId(e.target.value);
-    // }, 1000);
-
-    // clearTimeout(TimeId);
   };
 
   console.log(filteredData, search_Id);
