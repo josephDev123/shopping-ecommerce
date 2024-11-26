@@ -26,7 +26,7 @@ export default async function page({ searchParams }: OrderPageProps) {
     }&page=${searchParams.page ?? 1}&limit=5`
   );
   if (!response.ok) {
-    throw new Error("Failed to fetch data");
+    return "Failed to fetch categories data";
   }
 
   const data = await response.json();

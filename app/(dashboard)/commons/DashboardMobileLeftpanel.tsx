@@ -1,7 +1,9 @@
 "use client";
 
 import { BiLogOut } from "react-icons/bi";
-import LeftPanelItemCard from "./LeftPanelItemCard";
+import LeftPanelItemCard, {
+  LeftMobilePanelItemCard,
+} from "./LeftPanelItemCard";
 import { TbBrandProducthunt } from "react-icons/tb";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import Link from "next/link";
@@ -11,11 +13,13 @@ import { useAppDispatch, useAppSelector } from "@/lib/slices/hooks";
 import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
 import { useSession } from "next-auth/react";
 import Loader from "@/app/(client)/components/Loader";
+import { useRouter } from "next/navigation";
 
 export default function DashboardMobileLeftpanel() {
   const { data: session, status } = useSession();
   const state = useAppSelector((state) => state.leftPanelState.value);
   const dispatch = useAppDispatch();
+  const navigate = useRouter();
 
   return (
     <>
@@ -40,7 +44,7 @@ export default function DashboardMobileLeftpanel() {
             </Link>
             <div className="space-y-4">
               {leftPanelItem.map((item, id) => (
-                <LeftPanelItemCard
+                <LeftMobilePanelItemCard
                   key={id}
                   icon={item.icons}
                   text={item.text}

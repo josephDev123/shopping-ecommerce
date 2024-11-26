@@ -17,7 +17,7 @@ export default async function page({ searchParams }: CustomerPageProps) {
     }&page=${searchParams.page ?? 1}&limit=5`
   );
   if (!response.ok) {
-    throw new Error("Failed to fetch data");
+    return "Failed to fetch Customer's data";
   }
 
   const data = await response.json();

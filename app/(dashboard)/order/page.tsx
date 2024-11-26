@@ -25,7 +25,7 @@ export default async function page({ searchParams }: OrderPageProps) {
     }`
   );
   if (!response.ok) {
-    throw new Error("Failed to fetch data");
+    return "Failed to fetch order data";
   }
 
   const data = await response.json();
