@@ -51,6 +51,7 @@ export function LeftMobilePanelItemCard({
 
   return (
     <button
+      disabled={path === "/coupon"}
       onClick={() => {
         navigate.push(path);
         dispatch(toggleLeftPanel());

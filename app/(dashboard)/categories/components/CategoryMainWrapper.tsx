@@ -19,8 +19,6 @@ export default function CategoryMainWrapper({
   const searchParam = useSearchParams().get("status") ?? null;
 
   const filteredData = data.filter((category) => {
-    // const matchesStatus =
-    //   !searchParam || order.payment.status.toLowerCase() === searchParam;
     const matchesCategorySearch =
       !searchCategory ||
       String(category._id).toLowerCase().includes(searchCategory.toLowerCase());
@@ -28,15 +26,11 @@ export default function CategoryMainWrapper({
     return matchesCategorySearch;
   });
 
-  const [products, _id] = filteredData.map((item) => item);
-  console.log(products.products);
+  const [products, _id] = filteredData.map((item) => item) || [];
+  // console.log(products.products);
 
   const handleCategorySearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // const TimeId = setTimeout(() => {
     setSearchCategory(e.target.value);
-    // }, 1000);
-
-    // clearTimeout(TimeId);
   };
 
   // console.log(filteredData, searchCategory);

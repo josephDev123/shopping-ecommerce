@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Input, { SelectInput } from "@/app/(client)/generic/Input";
 import Button from "@/app/(client)/generic/Button";
@@ -23,7 +23,9 @@ export default async function page({ searchParams }: OrderPageProps) {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASEURL}/api/category/categories?user_id=${
       session?.user.id
-    }&page=${searchParams.page ?? 1}&limit=5`
+    }&page=${Number(searchParams.page) || 1}&limit=${
+      Number(searchParams.limit) || 4
+    }`
   );
   if (!response.ok) {
     return "Failed to fetch categories data";
@@ -31,21 +33,31 @@ export default async function page({ searchParams }: OrderPageProps) {
 
   const data = await response.json();
   const result: CategoryType[] = data.data.categoryPurchased;
+  const totalCategories = data.data.totalPurchaseCategoryCount;
   // console.log(data);
   return (
     <section className="flex flex-col p-2 h-full">
       {/* {JSON.stringify(session)} */}
       <h1 className="font-bold text-xl my-2">Categories Management</h1>
       {/* <Navbar searchParams={searchParams} /> */}
-      <CategoryMainSection data={result} />
-      <footer className="mt-auto ms-auto">
+      <Suspense fallback={<p>Loading...</p>}>
+        <CategoryMainSection data={result} />
+      </Suspense>
+      {/* <footer className="mt-auto ms-auto">
         <button
           type="button"
           className="border border-green-400 rounded-md py-0.5 px-2 font-semibold text-green-400 hover:bg-green-100 hover:text-green-500"
         >
           Next
         </button>
-      </footer>
+      </footer> */}
+      <Suspense fallback={<p>Loading...</p>}>
+        <FooterPagination
+          itemToShow={Number(searchParams.limit) || 4}
+          totalDocs={totalCategories}
+          searchParam={Number(searchParams.page) || 1}
+        />
+      </Suspense>
     </section>
   );
 }

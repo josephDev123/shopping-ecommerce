@@ -3,6 +3,7 @@ import FooterPagination from "../commons/FooterPagination";
 import CustomerTable from "./components/CustomerTable";
 import { authOptions } from "@/lib/NextAuthOption";
 import { ClientOrderType } from "@/app/types/ClientOrderType";
+import { Suspense } from "react";
 
 export interface CustomerPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -28,7 +29,9 @@ export default async function page({ searchParams }: CustomerPageProps) {
     <section className="flex flex-col w-full h-full p-3">
       {/* {JSON.stringify(data)} */}
       <h2 className="text-2xl font-bold">Customer</h2>
-      <CustomerTable data={result} />
+      <Suspense fallback={<p>Loading...</p>}>
+        <CustomerTable data={result} />
+      </Suspense>
       {/* <footer className="mt-auto ms-auto">
         <button
           type="button"
@@ -37,11 +40,13 @@ export default async function page({ searchParams }: CustomerPageProps) {
           Next
         </button>
       </footer> */}
-      <FooterPagination
-        itemToShow={Number(searchParams.limit) || 4}
-        totalDocs={totalCustomers}
-        searchParam={Number(searchParams.page) || 1}
-      />
+      <Suspense fallback={<p>Loading...</p>}>
+        <FooterPagination
+          itemToShow={Number(searchParams.limit) || 4}
+          totalDocs={totalCustomers}
+          searchParam={Number(searchParams.page) || 1}
+        />
+      </Suspense>
     </section>
   );
 }
