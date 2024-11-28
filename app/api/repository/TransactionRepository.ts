@@ -15,31 +15,72 @@ export class transactionRepository {
       const limit = limits;
       const skip = (page - 1) * limit;
 
+      // const TransactionAggregationPipeline = [
+      //   {
+      //     $lookup: {
+      //       from: "orders", // Ensure this is the correct collection name for Order
+      //       localField: "orderId",
+      //       foreignField: "_id",
+      //       as: "orderDetails",
+      //     },
+      //   },
+      //   {
+      //     $unwind: "$orderDetails",
+      //   },
+      //   {
+      //     $match: {
+      //       "orderDetails.user_id": new mongoose.Types.ObjectId(user_id),
+      //     },
+      //   },
+      //   { $skip: skip },
+      //   { $limit: limit },
+      // ];
+
       const TransactionAggregationPipeline = [
         {
-          $lookup: {
-            from: "orders", // Ensure this is the correct collection name for Order
-            localField: "orderId",
-            foreignField: "_id",
-            as: "orderDetails",
+          $facet: {
+            transactionData: [
+              {
+                $lookup: {
+                  from: "orders", // Ensure this is the correct collection name for Order
+                  localField: "orderId",
+                  foreignField: "_id",
+                  as: "orderDetails",
+                },
+              },
+              {
+                $unwind: "$orderDetails",
+              },
+              {
+                $match: {
+                  "orderDetails.user_id": new mongoose.Types.ObjectId(user_id),
+                },
+              },
+              { $skip: skip },
+              { $limit: limit },
+            ],
+            totalTransaction: [
+              {
+                $count: "totalTransactionCount",
+              },
+            ],
           },
         },
-        {
-          $unwind: "$orderDetails",
-        },
-        {
-          $match: {
-            "orderDetails.user_id": new mongoose.Types.ObjectId(user_id),
-          },
-        },
-        { $skip: skip },
-        { $limit: limit },
       ];
 
-      const result: TransactionServerResponseType[] =
-        await this.transactionModel.aggregate(TransactionAggregationPipeline);
+      const result = await this.transactionModel.aggregate(
+        TransactionAggregationPipeline
+      );
 
-      return result;
+      const totalTransaction =
+        result[0]?.totalTransaction[0]?.totalTransactionCount || 0;
+      const transactionData: TransactionServerResponseType[] =
+        result[0]?.transactionData || [];
+
+      return {
+        totalCount: totalTransaction,
+        transactionData,
+      };
     } catch (error) {
       throw new GlobalErrorHandler(
         "Something went wrong",
