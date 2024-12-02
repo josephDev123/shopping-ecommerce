@@ -29,27 +29,33 @@ export default function TransactionTable({ data }: ITransactionTableProps) {
   });
   return (
     <>
-      <div className="flex justify-between  items-center w-full flex-wrap">
+      <div className="flex sm:flex-row flex-col justify-between  sm:items-center w-full">
         <div className="flex gap-2">
-          <Input
-            name=""
-            labelName=""
-            placeholder="Search"
-            onChange={(e) => setSearch(e.target.value)}
-            icon={<CiSearch className="text-xl" />}
-            type="text"
-            className=" outline-none"
-            wrapperClassName="border rounded-md p-2 w-fit"
-          />
+          <div className="flex flex-col relative w-full">
+            <input
+              type="text"
+              name=""
+              id=""
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search"
+              className="outline-none border rounded-md p-2 "
+            />
+            <CiSearch className="text-xl absolute right-2 top-3" />
+          </div>
 
-          <SelectInput
+          <select
             name=""
-            data={["pending", "success", "failed"]}
-            placeholder="Status"
+            id=""
             onChange={(e) => setStatus(e.target.value)}
-            labelName=""
-            className="border rounded-md p-2 outline-none"
-          />
+            className="border rounded-md p-2 outline-none w-full"
+          >
+            <option value=""> Status</option>
+            {["pending", "success", "failed"].map((status, i) => (
+              <option key={i} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div>

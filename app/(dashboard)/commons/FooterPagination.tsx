@@ -24,7 +24,7 @@ export default function FooterPagination<T>({
   const pagesNumber = Math.ceil(Number(totalDocs) / itemPerPage);
   console.log(pagesNumber, searchParam);
 
-  const limit = [3, 4, 5, 6, 7, 8, 9, 10];
+  const limit = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div className="flex justify-between items-center w-full h-fit mt-auto">

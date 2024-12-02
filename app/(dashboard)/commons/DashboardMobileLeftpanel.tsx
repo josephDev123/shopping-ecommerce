@@ -39,9 +39,15 @@ export default function DashboardMobileLeftpanel() {
               />
             </div>
 
-            <Link href="/" className="text-2xl font-semibold my-4">
+            <h2
+              onClick={() => {
+                navigate.push("/");
+                dispatch(toggleLeftPanel());
+              }}
+              className="text-2xl font-semibold my-4"
+            >
               JoeBank
-            </Link>
+            </h2>
             <div className="space-y-4">
               {leftPanelItem.map((item, id) => (
                 <LeftMobilePanelItemCard
