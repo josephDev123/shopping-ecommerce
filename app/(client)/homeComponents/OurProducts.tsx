@@ -22,7 +22,7 @@ export default function OurProducts({ data }: IOurProducts) {
     <section className="flex flex-col justify-center items-center my-8 sm:w-[80%] w-full p-4  mx-auto">
       <h1 className="font-bold text-2xl mb-4"> Our Products</h1>
 
-      <div className="grid lg:grid-cols-4 bg-red-400 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
         {data.type === "error" && (
           <small className="text-sm text-red-400">Something went wrong</small>
         )}
