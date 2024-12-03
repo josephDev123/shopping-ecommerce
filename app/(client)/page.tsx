@@ -1,3 +1,4 @@
+import ProductCardLoading from "./generic/ProductLoading";
 import BrowserProductRange from "./homeComponents/BrowserProductRange";
 import Hero from "./homeComponents/Hero";
 import OurProducts from "./homeComponents/OurProducts";
@@ -12,13 +13,13 @@ async function getCategory() {
       // Handle errors
       console.error("Failed to fetch data:", response.statusText);
       // return <div>Error fetching data</div>;
-      throw new Error(`Failed to fetch data:  ${response.statusText}`);
+      return `Failed to fetch  category data:  ${response.statusText}`;
     }
 
     return response.json();
   } catch (error) {
     console.error("Failed to fetch data:", error);
-    // throw new Error(`Failed to fetch data:  ${error}`);
+    return `Failed to fetch data:  ${error}`;
   }
 }
 
@@ -30,13 +31,13 @@ async function getPaginateProducts() {
 
     if (!response.ok) {
       // console.error("Failed to fetch data:", response.statusText);
-      throw new Error(`Failed to fetch data:, ${response.statusText}`);
+      return `Failed to fetch products data:, ${response.statusText}`;
       // return <div>Error fetching data</div>;
     }
     // console.log(response.status);
     return response.json();
   } catch (error) {
-    console.error("Failed to fetch data:", error);
+    return `Failed to fetch products data:, ${error}`;
   }
 }
 
@@ -55,6 +56,8 @@ export default async function page() {
   return (
     <section className="">
       <Hero />
+      {/* <ProductCardLoading /> */}
+
       <BrowserProductRange data={category} />
       <OurProducts data={products} />
     </section>
