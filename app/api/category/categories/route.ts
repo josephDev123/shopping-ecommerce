@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     const user_id = new URL(req.url).searchParams.get("user_id") as string;
     const page = Number(new URL(req.url).searchParams.get("page")) ?? 1;
     const limit = Number(new URL(req.url).searchParams.get("limit")) ?? 5;
-    console.log(user_id, page, limit);
+    // console.log(user_id, page, limit);
     const response = await CategoryServiceImpl.getUserCategoriesByPaginate(
       page,
       limit,

@@ -3,6 +3,6 @@ import Loader from "../components/Loader";
 
 export default function Loading() {
   <section className="w-full h-screen flex flex-col justify-center items-center">
-    <Loader className="w-16 h-16" />
+    <Loader className="h-72" />
   </section>;
 }

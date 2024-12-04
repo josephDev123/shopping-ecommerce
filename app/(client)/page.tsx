@@ -1,44 +1,38 @@
+import { Suspense } from "react";
 import ProductCardLoading from "./generic/ProductLoading";
 import BrowserProductRange from "./homeComponents/BrowserProductRange";
 import Hero from "./homeComponents/Hero";
 import OurProducts from "./homeComponents/OurProducts";
+import Loading from "./generic/ComponentLoading";
 
 async function getCategory() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=1&limit=8}`
-    );
-    console.log(response);
-    if (!response.ok) {
-      // Handle errors
-      console.error("Failed to fetch data:", response.statusText);
-      // return <div>Error fetching data</div>;
-      return `Failed to fetch  category data:  ${response.statusText}`;
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error("Failed to fetch data:", error);
-    return `Failed to fetch data:  ${error}`;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=1&limit=8}`
+  );
+  console.log(response);
+  if (!response.ok) {
+    // Handle errors
+    console.error("Failed to fetch data:", response.statusText);
+    // return <div>Error fetching data</div>;
+    return `Failed to fetch  category data:  ${response.statusText}`;
   }
+
+  const result = await response.json();
+  return result.data.categoriesGroup;
 }
 
 async function getPaginateProducts() {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=1&limit=4`
-    );
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=1&limit=4`
+  );
 
-    if (!response.ok) {
-      // console.error("Failed to fetch data:", response.statusText);
-      return `Failed to fetch products data:, ${response.statusText}`;
-      // return <div>Error fetching data</div>;
-    }
-    // console.log(response.status);
-    return response.json();
-  } catch (error) {
-    return `Failed to fetch products data:, ${error}`;
+  if (!response.ok) {
+    // console.error("Failed to fetch data:", response.statusText);
+    return `Failed to fetch products data:, ${response.statusText}`;
+    // return <div>Error fetching data</div>;
   }
+  // console.log(response.status);
+  return response.json();
 }
 
 export default async function page() {
@@ -50,16 +44,20 @@ export default async function page() {
     paginateProductsResult,
   ]);
 
-  console.log("category:", category);
-  console.log("product:", paginateProductsResult);
+  // console.log("category:", category);
+  // console.log("product:", paginateProductsResult);
 
   return (
     <section className="">
       <Hero />
       {/* <ProductCardLoading /> */}
+      <Suspense fallback={<Loading />}>
+        <BrowserProductRange data={category} />
+      </Suspense>
 
-      <BrowserProductRange data={category} />
-      <OurProducts data={products} />
+      <Suspense fallback={<Loading />}>
+        <OurProducts data={products} />
+      </Suspense>
     </section>
   );
 }

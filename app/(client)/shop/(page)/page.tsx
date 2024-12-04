@@ -7,6 +7,7 @@ import Banner from "../../generic/Banner";
 import ProductListSection from "./components/ProductListSection";
 import { ProductDataType } from "@/app/types/productsType";
 import { Suspense } from "react";
+import Loading from "../../generic/ComponentLoading";
 
 export type ILink = {
   name: string;
@@ -31,13 +32,13 @@ export default async function page({
   if (!response.ok) {
     // Handle errors
     console.error("Failed to fetch data:", response.statusText);
-    return <div>Error fetching data</div>;
+    return <div>Error fetching product data</div>;
   }
 
   const result = await response.json();
 
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col h-full">
       <Banner title="Shop" links={links} />
       <div className="flex sm:flex-row gap-2 flex-col sm:items-center justify-around bg-[#F9F1E7] h-fit py-1 px-2">
         <div className="flex md:flex-row sm:flex-col flex-row gap-2 items-start justify-start sm:order-1 order-2 min-[375px]:text-base text-sm">
@@ -78,11 +79,13 @@ export default async function page({
       </div>
 
       {/* <Suspense fallback="loading ..."> */}
-      <ProductListSection
-        data={result.data}
-        itemsNumber={result.additionalData.totalDoc}
-      />
-      {/* </Suspense> */}
+
+      <Suspense fallback={<Loading />}>
+        <ProductListSection
+          data={result.data}
+          itemsNumber={result.additionalData.totalDoc}
+        />
+      </Suspense>
 
       <ThingsToEnjoy />
     </section>

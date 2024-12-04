@@ -1,16 +1,14 @@
 "use client";
 
-import { IproductCategory } from "@/app/data/productCategory";
-import { useFetchFilterAndPaginateApi } from "@/app/hooks/useFetchApiAxios";
 import Image from "next/image";
-import ProductCardLoading from "../generic/ProductLoading";
-import { ApiProductResponseType, CategoryType } from "@/app/types/categoryType";
+import { CategoryType } from "@/app/types/categoryType";
 
 type IBrowserProductRange = {
-  data: ApiProductResponseType;
+  data: CategoryType[];
 };
 
 export default function BrowserProductRange({ data }: IBrowserProductRange) {
+  console.log(data);
   return (
     <section className="flex flex-col items-center py-6 w-[80%] mx-auto">
       <h2 className="font-bold text-xl">Browse The Range</h2>
@@ -21,19 +19,9 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
       </p>
 
       <div className="grid sm:grid-cols-3 min-[425px]:grid-cols-2 grid-cols-1 gap-6 relative w-full mt-8">
-        {data?.type === "error" && (
-          <small className="text-sm text-red-400">Something went wrong</small>
-        )}
-        {/* {status === "loading" &&
-          Array.from({ length: 4 }, (_, index) => <ProductCardLoading />)} */}
-
-        {data?.data?.length < 0 && (
-          <small className="text-sm text-red-400">No data</small>
-        )}
-
-        {data?.data?.length > 0 && (
+        {data?.length > 0 && (
           <>
-            {data.data.map((item: CategoryType, i: number) => (
+            {data.map((item: CategoryType, i: number) => (
               <div
                 key={i}
                 className="flex flex-col justify-start items-start space-y-3 rounded-lg border overflow-hidden"

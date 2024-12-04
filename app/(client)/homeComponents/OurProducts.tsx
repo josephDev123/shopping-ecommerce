@@ -1,11 +1,8 @@
 "use client";
 
-import { IproductCardTypes } from "@/app/data/productCardData";
 import ProductCard from "../generic/ProductCard";
 import Button from "../generic/Button";
 import { useRouter } from "next/navigation";
-import { useFetchFilterAndPaginateApi } from "@/app/hooks/useFetchApiAxios";
-import ProductCardLoading from "../generic/ProductLoading";
 import { ProductDataType, ProductResponseType } from "@/app/types/productsType";
 import { useAppSelector } from "@/lib/slices/hooks";
 
@@ -23,10 +20,6 @@ export default function OurProducts({ data }: IOurProducts) {
       <h1 className="font-bold text-2xl mb-4"> Our Products</h1>
 
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-4">
-        {data.type === "error" && (
-          <small className="text-sm text-red-400">Something went wrong</small>
-        )}
-
         {Array.isArray(data.data) && data.data?.length < 0 && (
           <small className="text-sm text-red-400">No data</small>
         )}

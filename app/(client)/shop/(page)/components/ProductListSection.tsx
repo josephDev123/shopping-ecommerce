@@ -1,11 +1,8 @@
 "use client";
 
 import ProductCard from "@/app/(client)/generic/ProductCard";
-import { IproductCardTypes, productCardData } from "@/app/data/productCardData";
-import { useFetchFilterAndPaginateApi } from "@/app/hooks/useFetchApiAxios";
 import { ProductDataType } from "@/app/types/productsType";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import React from "react";
 
 interface ProductListSectionProps {
