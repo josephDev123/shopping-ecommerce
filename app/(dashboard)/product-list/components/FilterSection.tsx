@@ -4,10 +4,12 @@ import { SelectInput } from "@/app/(client)/generic/Input";
 
 export default function FilterSection() {
   return (
-    <div className="flex w-full justify-between">
-      <h2 className="text-xl font-semibold w-full">Filter</h2>
-      <div className="flex items-center gap-3 w-full">
-        <span className="w-fit whitespace-nowrap font-semibold">Sort By:</span>
+    <div className="flex sm:flex-row flex-col w-full gap-2  sm:items-center ">
+      <h2 className="text-xl font-semibold ">Filter</h2>
+      <div className="flex sm:flex-row flex-col items-center sm:gap-3  w-full">
+        {/* <span className="w-fit whitespace-nowrap font-semibold">
+          Filter By:
+        </span> */}
         <SelectInput
           name="status"
           data={[]}

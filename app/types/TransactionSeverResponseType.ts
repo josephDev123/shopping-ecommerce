@@ -1,3 +1,5 @@
+import { ProductDataType } from "./productsType";
+
 export type TransactionServerResponseType = {
   _id: string;
   orderId: string;
@@ -6,7 +8,7 @@ export type TransactionServerResponseType = {
     _id: string;
     user_id: string;
     tx_ref: string;
-    items: string[];
+    items: ProductDataType[];
     payment: {
       amount: number;
       currency: string;

@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 import FilterSection from "./components/FilterSection";
 import ExportSection from "./components/ExportSection";
-import { ClientOrderType } from "@/app/types/ClientOrderType";
+import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
 
 interface pageProps {
   searchParams: {
@@ -16,15 +16,15 @@ interface pageProps {
 }
 
 export default async function page({ searchParams }: pageProps) {
-  type productType = z.infer<typeof ProductFormDataSchema>;
+  // type productType = z.infer<typeof ProductFormDataSchema>;
   const session = await getServerSession(authOptions);
 
   console.log(searchParams);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/orders/orders?user_id=${
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/transaction?user_id=${
       session?.user.id
     }&page=${Number(searchParams.page) || 1}&limit=${
-      Number(searchParams.limit) || 4
+      Number(searchParams.limit) || 2
     }`
   );
   if (!response.ok) {
@@ -32,8 +32,8 @@ export default async function page({ searchParams }: pageProps) {
   }
 
   const data = await response.json();
-  const result: ClientOrderType[] = data.data.orders;
-  const totalDocs = data.data.totalOrders;
+  const result: TransactionServerResponseType[] = data.data.transactionData;
+  const totalDocs = data.data.totalCount;
 
   return (
     <section id="productPage" className="flex flex-col w-full h-full p-4">
