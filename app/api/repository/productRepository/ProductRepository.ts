@@ -3,6 +3,7 @@ import { ProductSchemaTypes } from "@/models/ProductsModel";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
 import { match } from "assert";
+import { ProductDataType } from "@/app/types/productsType";
 
 export class ProductRepository {
   constructor(private readonly dbContext: Model<ProductSchemaTypes>) {}
@@ -41,30 +42,54 @@ export class ProductRepository {
 
   async findByPaginateAndFilter<T>(
     page: number,
-    itemToShow: number,
-    condition: T
+    itemToShow: number
+    // condition: T
   ) {
     try {
       const limit = Number(itemToShow);
-      const queryCondition = condition;
+      // const queryCondition = condition;
       const skip = (page - 1) * limit;
-      console.log("from", skip, limit);
-      const result = await this.dbContext.find().skip(skip).limit(limit);
-      const totalDoc = await this.dbContext.countDocuments({});
+
+      // console.log("from", skip, limit);
+      // const result = await this.dbContext.find().skip(skip).limit(limit);
+      // const totalDoc = await this.dbContext.countDocuments({});
+
+      const productsQueryAggregate = [
+        {
+          $facet: {
+            products: [{ $skip: skip }, { $limit: limit }],
+            totalDoc: [{ $count: "count" }],
+          },
+        },
+      ];
+
+      const response = await this.dbContext.aggregate(productsQueryAggregate);
+      const products: ProductDataType = response[0].products;
+      const totalDoc: number = response[0].totalDoc[0]?.count || 0;
 
       return {
-        msg: "get paginated products successful",
-        name: "MongodbSuccess",
-        operational: true,
-        type: "success",
-        status: 200,
-        data: result,
-        additionalData: {
-          totalDoc,
-        },
+        products,
+        totalDoc,
       };
+      // return {
+      //   msg: "get paginated products successful",
+      //   name: "MongodbSuccess",
+      //   operational: true,
+      //   type: "success",
+      //   status: 200,
+      //   data: result,
+      //   additionalData: {
+      //     totalDoc,
+      //   },
+      // };
     } catch (error) {
-      new GlobalErrorHandler("get product fails", "UnknownError", "500", true);
+      const customError = error as GlobalErrorHandler;
+      throw new GlobalErrorHandler(
+        customError.msg,
+        customError.name,
+        "500",
+        false
+      );
     }
   }
 

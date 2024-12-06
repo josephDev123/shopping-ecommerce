@@ -71,8 +71,9 @@ export default function SuccessOrder() {
           <div className="flex flex-col space-y-6">
             <h2 className="text-4xl font-bold">Thank you for the purchase!</h2>
             <p>
-              We sent a confirmation email at support@dddd.com. Below you wll
-              find all information about your order.
+              We sent a confirmation email at{" "}
+              {outcomeTransaction.customer.email}. Below you wll find all
+              information about your order.
             </p>
             <p>
               <strong>Note:</strong> Your order will be processed within 24hrs
@@ -149,17 +150,29 @@ export default function SuccessOrder() {
               </div>
               <div className="flex justify-between p-3">
                 <div className="flex min-[375px]:flex-row flex-col gap-3">
-                  <div className="relative block rounded-lg shadow-md size-28">
-                    <Image src={Images.productCat1} alt="item" fill />
+                  <div className="relative block size-28">
+                    <Image
+                      className="rounded-lg"
+                      src={outcomeTransaction.items[0].productImgUrl[0].url}
+                      alt="item"
+                      fill
+                    />
                   </div>
                   <div className="flex  flex-col">
-                    <h2 className="font-semibold">One in one Chocolate</h2>
-                    <small>Pack: medium</small>
-                    <small>Qty: 1</small>
+                    <h2 className="font-semibold">
+                      {outcomeTransaction.items[0].productName}
+                    </h2>
+                    <small>
+                      Pack: {outcomeTransaction.items[0].productItemWeight}
+                    </small>
+                    <small>Qty: {outcomeTransaction.items[0].qty}</small>
                   </div>
                 </div>
 
-                <strong>$50.00</strong>
+                <strong>
+                  {outcomeTransaction.payment.currency}
+                  {outcomeTransaction.payment.amount}
+                </strong>
               </div>
               <p className="bg-gray-500 w-full h-[0.5px] mb-3"></p>
               <div className="p-3 w-full">

@@ -6,7 +6,7 @@ import OrderModel, { OrderType } from "@/models/OrderModel";
 
 export async function GET(req: Request) {
   try {
-    let memoized = false;
+    // let memoized = false;
     const flw = new Flutterwave(
       process.env.FLUTTERWAVE_PUBLIC_KEY,
       process.env.FLUTTERWAVE_SECRET_KEY
@@ -18,11 +18,15 @@ export async function GET(req: Request) {
     const queryTransaction_id = queryParams.get("transaction_id");
     // console.log(queryStatus, queryTx_ref, queryTransaction_id);
     if (queryStatus === "successful") {
-      const transactionDetails = await OrderModel.findOneAndUpdate(
-        { tx_ref: queryTx_ref },
-        { $set: { "payment.status": "success" } },
-        { new: true }
-      );
+      // const transactionDetails = await OrderModel.findOneAndUpdate(
+      //   { tx_ref: queryTx_ref },
+      //   { $set: { "payment.status": "success" } },
+      //   { new: true }
+      // );
+
+      const transactionDetails = await OrderModel.findOne({
+        tx_ref: queryTx_ref,
+      });
       const response = await flw.Transaction.verify({
         id: queryTransaction_id,
       });
@@ -33,20 +37,20 @@ export async function GET(req: Request) {
         response.data.amount === transactionDetails.payment.amount &&
         response.data.currency === "NGN"
       ) {
-        if (!memoized) {
-          memoized = true;
-          // Success! Confirm the customer's payment
-          const transaction = new TransactionModel({
-            orderId: transactionDetails._id,
-          });
+        // if (!memoized) {
+        //   memoized = true;
+        //   // Success! Confirm the customer's payment
+        //   const transaction = new TransactionModel({
+        //     orderId: transactionDetails._id,
+        //   });
 
-          await transaction.save();
-        }
+        //   await transaction.save();
+        // }
 
         return NextResponse.json(
           {
             message: {
-              message: "transaction successful",
+              message: "Order successful, please wait for confirmation",
               data: transactionDetails,
             },
           },
@@ -55,9 +59,11 @@ export async function GET(req: Request) {
       } else {
         return NextResponse.json({ message: "order failed" }, { status: 400 });
       }
+    } else {
+      return NextResponse.json({ message: "order failed" }, { status: 400 });
     }
 
-    return NextResponse.json({ message: "order status" }, { status: 200 });
+    // return NextResponse.json({ message: "order status" }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "something went wrong" },

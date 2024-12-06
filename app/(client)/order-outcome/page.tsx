@@ -12,11 +12,16 @@ export default function page({
   return (
     // <Suspense fallback="suspense Loading ...">
     <section className="flex flex-col h-full w-full">
-      {searchParams.status === "failed" && <FailedOrder />}
-      {searchParams.status === "successful" && (
-        <SuccessOrder /> //queryParam={searchParams}
-      )}
+      <Suspense
+        fallback={
+          <p className="flex flex-col justify-center items-center h-56">
+            Loading ...
+          </p>
+        }
+      >
+        {searchParams.status === "failed" && <FailedOrder />}
+        {searchParams.status === "successful" && <SuccessOrder />}
+      </Suspense>
     </section>
-    // </Suspense>
   );
 }

@@ -11,14 +11,14 @@ async function getCategory() {
   );
   console.log(response);
   if (!response.ok) {
-    // Handle errors
     console.error("Failed to fetch data:", response.statusText);
-    // return <div>Error fetching data</div>;
-    return `Failed to fetch  category data:  ${response.statusText}`;
+    <div className="flex flex-col h-56 justify-center items-center ">
+      Failed to fetch category data: {response.statusText}
+    </div>;
   }
 
   const result = await response.json();
-  return result.data.categoriesGroup;
+  return result.data?.categoriesGroup;
 }
 
 async function getPaginateProducts() {
@@ -28,10 +28,13 @@ async function getPaginateProducts() {
 
   if (!response.ok) {
     // console.error("Failed to fetch data:", response.statusText);
-    return `Failed to fetch products data:, ${response.statusText}`;
-    // return <div>Error fetching data</div>;
+    return (
+      <div className="flex flex-col h-56 justify-center items-center ">
+        Error fetching data
+      </div>
+    );
   }
-  // console.log(response.status);
+
   return response.json();
 }
 
@@ -56,7 +59,7 @@ export default async function page() {
       </Suspense>
 
       <Suspense fallback={<Loading />}>
-        <OurProducts data={products} />
+        <OurProducts data={products.data?.products} />
       </Suspense>
     </section>
   );

@@ -13,20 +13,26 @@ export class ProductService {
     }
   }
 
-  async findByPaginateAndFilter<T>(
+  async findByPaginateAndFilter(
     page: number,
-    itemToShow: number,
-    condition: T
+    itemToShow: number
+    // condition: T
   ) {
     try {
       const result = await this.ProductRepository.findByPaginateAndFilter(
         page,
-        itemToShow,
-        condition
+        itemToShow
+        // condition
       );
       return result;
     } catch (error) {
-      console.log(error);
+      const customError = error as GlobalErrorHandler;
+      throw new GlobalErrorHandler(
+        customError.msg,
+        customError.name,
+        "500",
+        false
+      );
     }
   }
 

@@ -32,7 +32,11 @@ export default async function page({
   if (!response.ok) {
     // Handle errors
     console.error("Failed to fetch data:", response.statusText);
-    return <div>Error fetching product data</div>;
+    return (
+      <div className="flex flex-col h-56 justify-center items-center ">
+        Error fetching product data
+      </div>
+    );
   }
 
   const result = await response.json();
@@ -50,7 +54,7 @@ export default async function page({
             <GoHorizontalRule className="rotate-90" />
           </span>
 
-          <p className="">Showing 1–16 of 32 results</p>
+          <p className="">Showing 1–16 of {result.data.totalDoc} results</p>
         </div>
 
         <div className="flex items-center gap-6 sm:order-2 order-1">
@@ -82,8 +86,8 @@ export default async function page({
 
       <Suspense fallback={<Loading />}>
         <ProductListSection
-          data={result.data}
-          itemsNumber={result.additionalData.totalDoc}
+          data={result.data.products}
+          itemsNumber={result.data.totalDoc}
         />
       </Suspense>
 

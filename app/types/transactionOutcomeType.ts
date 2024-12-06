@@ -1,3 +1,5 @@
+import { ProductDataType } from "./productsType";
+
 type Payment = {
   amount: number;
   currency: string;
@@ -28,7 +30,7 @@ export type transactionOutcomeType = {
   payment: Payment;
   _id: string;
   tx_ref: string;
-  items: string[];
+  items: ProductDataType[];
   billing: Billing;
   customer: Customer;
   createdAt: string;
