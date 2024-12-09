@@ -52,7 +52,7 @@ export default function ProductCard({ credential }: IProductCard) {
       </span>
       <Image
         src={credential.productImgUrl[0].url}
-        alt=""
+        alt={credential.productName}
         height={300}
         width={300}
         className="w-full object-cover rounded-t-lg"

@@ -31,7 +31,7 @@ export async function GET(req: Request) {
         id: queryTransaction_id,
       });
 
-      // console.log(response);
+      console.log("verify transaction", response);
       if (
         response.data.status === "successful" &&
         response.data.amount === transactionDetails.payment.amount &&

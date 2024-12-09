@@ -8,6 +8,7 @@ import ProductListSection from "./components/ProductListSection";
 import { ProductDataType } from "@/app/types/productsType";
 import { Suspense } from "react";
 import Loading from "../../generic/ComponentLoading";
+import ItemLimit from "./components/ItemLimit";
 
 export type ILink = {
   name: string;
@@ -54,37 +55,15 @@ export default async function page({
             <GoHorizontalRule className="rotate-90" />
           </span>
 
-          <p className="">Showing 1–16 of {result.data.totalDoc} results</p>
+          <p className="">
+            Showing {page}–{page * limit} of {result.data.totalDoc} results
+          </p>
         </div>
 
-        <div className="flex items-center gap-6 sm:order-2 order-1">
-          <div className="flex items-center gap-4">
-            <b className="min-[375px]:text-sm">Show</b>
-            <input
-              type="number"
-              placeholder="0"
-              name=""
-              id=""
-              className="min-[375px]:w-16 min-[375px]:h-10 w-12 h-6 rounded-md outline-none px-1"
-            />
-          </div>
-
-          <div className="flex items-center gap-4">
-            <b className="min-[375px]:text-sm">Sort by</b>
-            <input
-              type="search"
-              placeholder="Default"
-              name=""
-              id=""
-              className="min-[375px]:w-28 min-[375px]:h-10 w-24 h-7 rounded-md outline-none px-1"
-            />
-          </div>
-        </div>
+        <ItemLimit />
       </div>
 
-      {/* <Suspense fallback="loading ..."> */}
-
-      <Suspense fallback={<Loading />}>
+      <Suspense key={limit} fallback={<Loading />}>
         <ProductListSection
           data={result.data.products}
           itemsNumber={result.data.totalDoc}

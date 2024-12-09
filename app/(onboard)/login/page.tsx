@@ -45,7 +45,7 @@ export default function Login() {
     <section className="flex flex-col justify-center items-center h-screen w-full">
       <div className="flex flex-col sm:w-[400px] w-[90%]">
         <h2 className="text-2xl mb-8 text-center">
-          <b className="text-customgreen">JOE</b>bank
+          <b className="text-customgreen">Shopping</b> Commerce
         </h2>
         <form className="space-y-5" onSubmit={handleSubmit(handleLogin)}>
           <div className="flex flex-col ">
@@ -69,7 +69,9 @@ export default function Login() {
               <label htmlFor="email_address" className="font-semibold">
                 Password
               </label>
-              <span className="text-customgreen">Forgot Password?</span>
+              <span className="text-customgreen font-semibold">
+                Forgot Password?
+              </span>
             </span>
 
             <input

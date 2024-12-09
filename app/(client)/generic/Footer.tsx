@@ -20,23 +20,23 @@ export default function Footer() {
           <Link href={"/shop"} className="font-bold text-lg">
             Shop
           </Link>
-          <Link href={""} className="font-bold text-lg">
+          <Link href={"/about"} className="font-bold text-lg">
             About
           </Link>
-          <Link href={""} className="font-bold text-lg">
+          <Link href={"/contact"} className="font-bold text-lg">
             Contact
           </Link>
         </div>
 
         <div className="flex flex-col space-y-6">
           <h2 className="text-gray-400 font-semibold text-xl">Help</h2>
-          <Link href={"#"} className="font-bold text-lg">
+          <Link href={"#"} className="font-bold text-lg cursor-not-allowed">
             Payment Options
           </Link>
           {/* <Link href={""} className="font-bold text-lg">
             Returns
           </Link> */}
-          <Link href={"#"} className="font-bold text-lg">
+          <Link href={"#"} className="font-bold text-lg cursor-not-allowed">
             Privacy Policies
           </Link>
         </div>

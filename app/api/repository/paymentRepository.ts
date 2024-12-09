@@ -68,6 +68,7 @@ export class paymentRepository {
       });
       await order.save();
       const result: FlutterwaveHostedLinkResponse = await response.data;
+      console.log("from checkout", result);
 
       return result;
     } catch (error) {
