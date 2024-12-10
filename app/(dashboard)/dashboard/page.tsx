@@ -3,12 +3,61 @@ import TransactionStat from "./indexComponent/TransactionStat";
 import LineChart, { LineChartsMultiple } from "../commons/LineChart";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ResponsiveContainer } from "recharts";
+import SummaryCard from "./indexComponent/SummaryCard";
+import DoughnutChart from "./indexComponent/Doughnut";
 
 export default function Page() {
+  const progress = 50;
   return (
-    <div className="flex flex-col h-56 justify-center items-center w-full">
-      coming soon...
-    </div>
+    <section className="flex flex-col h-full p-3  w-full">
+      <h1 className="text-xl font-bold">Dashboard</h1>
+      <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 mt-3">
+        <SummaryCard
+          figure={"7864k"}
+          title="Total Product"
+          description="Total Product purchased"
+        >
+          <div className="w-full h-32">
+            <DoughnutChart
+              value={progress}
+              maxValue={100}
+              labelsData={["Total Product"]}
+              backgroundColors={["#4CAF50", "#E0E0E0"]}
+            />
+          </div>
+        </SummaryCard>
+
+        <SummaryCard
+          figure={"786k"}
+          title="Total Orders"
+          description="Total Orders"
+        >
+          <div className="w-full h-32">
+            <DoughnutChart
+              value={progress}
+              maxValue={100}
+              labelsData={["Total Orders"]}
+              backgroundColors={["#0000FF", "#E0E0E0"]}
+            />
+          </div>
+        </SummaryCard>
+
+        <SummaryCard
+          figure={"106k"}
+          title="Total Transaction"
+          description="Total Transaction"
+        >
+          <div className="w-full h-32">
+            <DoughnutChart
+              value={progress}
+              maxValue={100}
+              labelsData={["Total Transaction"]}
+              backgroundColors={["#FFA500", "#E0E0E0"]}
+            />
+          </div>
+        </SummaryCard>
+      </div>
+    </section>
     // <section className="flex flex-col p-3 w-full">
     //   <div className="grid grid-cols-4 gap-4 w-full">
     //     <TransactionStat />
