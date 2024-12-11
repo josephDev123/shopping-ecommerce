@@ -5,12 +5,23 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { ResponsiveContainer } from "recharts";
 import SummaryCard from "./indexComponent/SummaryCard";
 import DoughnutChart from "./indexComponent/Doughnut";
+import BarChart from "./indexComponent/BarChart";
+import customerNames from "./data/customer";
 
 export default function Page() {
   const progress = 50;
+  const SanitizedCustomerNames = customerNames.map(
+    (name) => name.split(" ")[0]
+  );
+  const barData = Array.from(
+    { length: SanitizedCustomerNames.length },
+    (_, i) => i + 1
+  );
+
   return (
     <section className="flex flex-col h-full p-3  w-full">
       <h1 className="text-xl font-bold">Dashboard</h1>
+      {JSON.stringify(barData)}
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 mt-3">
         <SummaryCard
           figure={"7864k"}
@@ -29,14 +40,14 @@ export default function Page() {
 
         <SummaryCard
           figure={"786k"}
-          title="Total Orders"
-          description="Total Orders"
+          title="Pending"
+          description="Pending Transaction"
         >
           <div className="w-full h-32">
             <DoughnutChart
               value={progress}
               maxValue={100}
-              labelsData={["Total Orders"]}
+              labelsData={["Pending"]}
               backgroundColors={["#0000FF", "#E0E0E0"]}
             />
           </div>
@@ -44,20 +55,41 @@ export default function Page() {
 
         <SummaryCard
           figure={"106k"}
-          title="Total Transaction"
-          description="Total Transaction"
+          title="Success"
+          description="Successful Transaction"
         >
           <div className="w-full h-32">
             <DoughnutChart
               value={progress}
               maxValue={100}
-              labelsData={["Total Transaction"]}
+              labelsData={["Successful"]}
               backgroundColors={["#FFA500", "#E0E0E0"]}
             />
           </div>
         </SummaryCard>
       </div>
-      Coming soon ...
+      <div className="grid grid-cols-3 gap-4 mt-3">
+        <div className="flex flex-col col-span-2 w-full p-2 bg-black text-white rounded-md overflow-x-auto">
+          <h1 className="font-medium text-white/70">
+            latest Customer i purchased for
+          </h1>
+          <BarChart
+            labels={SanitizedCustomerNames}
+            data={barData}
+            ShowLegends={false}
+          />
+        </div>
+        <div className="flex flex-col col-span-1 w-full p-2 bg-black text-white rounded-md overflow-x-auto">
+          <h1 className="font-medium text-white/70">
+            latest Category i purchased from
+          </h1>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 mt-3">
+        <h1 className="font-medium">latest order</h1>
+        <p> Coming soon ...</p>
+      </div>
     </section>
     // <section className="flex flex-col p-3 w-full">
     //   <div className="grid grid-cols-4 gap-4 w-full">

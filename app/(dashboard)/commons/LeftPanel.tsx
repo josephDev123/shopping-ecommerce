@@ -8,6 +8,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { TbBrandProducthunt } from "react-icons/tb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
+import Logout from "./Logout";
 
 export default async function LeftPanel() {
   const session = await getServerSession(authOptions);
@@ -45,12 +46,7 @@ export default async function LeftPanel() {
         />
       </div>
       <div className="mt-auto flex flex-col space-y-8 w-full">
-        <LeftPanelItemCard
-          icon={<BiLogOut className="" />}
-          text="Logout"
-          path="login"
-          className="bg-gray-600/30"
-        />
+        <Logout />
 
         <div className="flex gap-3 items-center justify-center">
           <img
@@ -62,7 +58,7 @@ export default async function LeftPanel() {
           />
           <div className="flex flex-col mb-2">
             <h2 className="text-sm truncate">{session?.user.name}</h2>
-            <Link href={""} className="text-xs">
+            <Link aria-disabled={true} href={""} className="text-xs">
               View profile
             </Link>
           </div>
