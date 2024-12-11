@@ -7,6 +7,7 @@ import SummaryCard from "./indexComponent/SummaryCard";
 import DoughnutChart from "./indexComponent/Doughnut";
 import BarChart from "./indexComponent/BarChart";
 import customerNames from "./data/customer";
+import BarLabel from "./indexComponent/BarLabel";
 
 export default function Page() {
   const progress = 50;
@@ -21,7 +22,7 @@ export default function Page() {
   return (
     <section className="flex flex-col h-full p-3  w-full">
       <h1 className="text-xl font-bold">Dashboard</h1>
-      {JSON.stringify(barData)}
+
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 mt-3">
         <SummaryCard
           figure={"7864k"}
@@ -68,10 +69,10 @@ export default function Page() {
           </div>
         </SummaryCard>
       </div>
-      <div className="grid grid-cols-3 gap-4 mt-3">
+      <div className="grid sm:grid-cols-3 grid-cols-1 sm:gap-4 sm:space-y-0 space-y-3 mt-3">
         <div className="flex flex-col col-span-2 w-full p-2 bg-black text-white rounded-md overflow-x-auto">
-          <h1 className="font-medium text-white/70">
-            latest Customer i purchased for
+          <h1 className="font-medium text-white/70  sm:text-base text-sm mb-3">
+            latest Customer purchased for
           </h1>
           <BarChart
             labels={SanitizedCustomerNames}
@@ -79,10 +80,15 @@ export default function Page() {
             ShowLegends={false}
           />
         </div>
-        <div className="flex flex-col col-span-1 w-full p-2 bg-black text-white rounded-md overflow-x-auto">
-          <h1 className="font-medium text-white/70">
-            latest Category i purchased from
+        <div className="flex flex-col col-span-1 w-full p-2  bg-black text-white rounded-md overflow-x-auto">
+          <h1 className="font-medium text-white/70 sm:text-base text-sm">
+            Most Category bought
           </h1>
+          <div className="flex flex-col mt-3 space-y-2">
+            <BarLabel className="" label="Fashion" />
+            <BarLabel className="" label="Football" />
+            <BarLabel className="" label="Accessories" />
+          </div>
         </div>
       </div>
 
