@@ -64,6 +64,8 @@ export default async function page({
         <ItemLimit />
       </div>
 
+      {JSON.stringify(result)}
+
       <Suspense key={limit} fallback={<Loading />}>
         <ProductListSection
           data={result?.data.products}
