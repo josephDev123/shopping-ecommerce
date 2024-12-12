@@ -41,6 +41,7 @@ export default async function page({
   }
 
   const result = await response.json();
+  console.log(result);
 
   return (
     <section className="flex flex-col h-full">
@@ -56,7 +57,7 @@ export default async function page({
           </span>
 
           <p className="">
-            Showing {page}–{page * limit} of {result?.data.totalDoc || 0}{" "}
+            Showing {page}–{page * limit} of {result?.data.totalDoc || 0}
             results
           </p>
         </div>
@@ -64,12 +65,10 @@ export default async function page({
         <ItemLimit />
       </div>
 
-      {JSON.stringify(result)}
-
       <Suspense key={limit} fallback={<Loading />}>
         <ProductListSection
-          data={result?.data.products}
-          itemsNumber={result?.data.totalDoc}
+          data={result?.data?.products}
+          itemsNumber={result?.data?.totalDoc}
         />
       </Suspense>
 
