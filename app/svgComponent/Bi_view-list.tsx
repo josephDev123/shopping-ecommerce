@@ -1,3 +1,5 @@
+"use client";
+
 import { HTMLAttributes } from "react";
 
 interface IBiviewList extends HTMLAttributes<HTMLOrSVGElement> {}

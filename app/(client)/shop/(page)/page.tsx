@@ -56,7 +56,8 @@ export default async function page({
           </span>
 
           <p className="">
-            Showing {page}–{page * limit} of {result.data.totalDoc || 0} results
+            Showing {page}–{page * limit} of {result?.data.totalDoc || 0}{" "}
+            results
           </p>
         </div>
 
@@ -65,8 +66,8 @@ export default async function page({
 
       <Suspense key={limit} fallback={<Loading />}>
         <ProductListSection
-          data={result.data.products}
-          itemsNumber={result.data.totalDoc}
+          data={result?.data.products}
+          itemsNumber={result?.data.totalDoc}
         />
       </Suspense>
 
