@@ -10,10 +10,6 @@ import { Suspense } from "react";
 import Loading from "../../generic/ComponentLoading";
 import ItemLimit from "./components/ItemLimit";
 
-export type ILink = {
-  name: string;
-  url: string;
-};
 export default async function page({
   searchParams,
 }: {
@@ -25,10 +21,6 @@ export default async function page({
   ];
   // const page = searchParams.page === undefined ? 1 : searchParams.page;
   // const limit = searchParams.limit === undefined ? 4 : searchParams.limit;
-
-  // page=${Number(searchParams.page) || 1}&limit=${
-  //   Number(searchParams.limit) || 4
-  // }
 
   const page = Number(searchParams.page) || 1;
   const limit = Number(searchParams.limit) || 4;
@@ -49,7 +41,7 @@ export default async function page({
   }
 
   const result = await response.json();
-  console.log(result);
+  console.log("real data:", result);
 
   return (
     <section className="flex flex-col h-full">
@@ -75,7 +67,7 @@ export default async function page({
 
       <Suspense fallback={<Loading />}>
         <ProductListSection
-          data={result?.data.products as ProductDataType[]}
+          data={result?.data.products}
           itemsNumber={result?.data?.totalDoc}
         />
       </Suspense>
