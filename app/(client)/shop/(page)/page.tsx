@@ -73,9 +73,9 @@ export default async function page({
         <ItemLimit />
       </div>
 
-      <Suspense key={limit} fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
         <ProductListSection
-          data={result?.data?.products}
+          data={result?.data.products as ProductDataType[]}
           itemsNumber={result?.data?.totalDoc}
         />
       </Suspense>
