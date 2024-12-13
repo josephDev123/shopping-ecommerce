@@ -13,7 +13,7 @@ export default function ProductListSection({
   data,
   itemsNumber,
 }: ProductListSectionProps) {
-  console.log(data);
+  console.log("from prdict list", data);
   const totalPages = itemsNumber / 4;
   return (
     <>
