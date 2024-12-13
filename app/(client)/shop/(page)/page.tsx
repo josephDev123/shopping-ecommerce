@@ -17,15 +17,23 @@ export type ILink = {
 export default async function page({
   searchParams,
 }: {
-  searchParams: { page: number; limit: number };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const links = [
     { name: "Home", url: "/" },
     { name: "Shop", url: "/shop" },
   ];
-  const page = searchParams.page === undefined ? 1 : searchParams.page;
-  const limit = searchParams.limit === undefined ? 4 : searchParams.limit;
+  // const page = searchParams.page === undefined ? 1 : searchParams.page;
+  // const limit = searchParams.limit === undefined ? 4 : searchParams.limit;
+
+  // page=${Number(searchParams.page) || 1}&limit=${
+  //   Number(searchParams.limit) || 4
+  // }
+
+  const page = Number(searchParams.page) || 1;
+  const limit = Number(searchParams.limit) || 4;
   // console.log(page, limit);
+  // // console.log(page, limit);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`
   );
