@@ -1,7 +1,7 @@
 "use client";
 
 import ProductCard from "@/app/(client)/generic/ProductCard";
-import { ProductDataType } from "@/app/types/productsType";
+import { ProductDataType, ProductResponseType } from "@/app/types/productsType";
 import Link from "next/link";
 import React from "react";
 
@@ -19,12 +19,14 @@ export default function ProductListSection({
     <>
       <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 my-14 w-[80%] mx-auto">
         <>
-          {data?.length === 0 ? (
+          {Array.isArray(data) && data?.length <= 0 && (
             <div className="h-32 pl-10 items-center">No data</div>
-          ) : (
+          )}
+
+          {Array.isArray(data) && data?.length > 0 && (
             <>
-              {data?.map((item: ProductDataType) => (
-                <ProductCard key={item._id} credential={item} />
+              {data?.map((item: ProductDataType, i: number) => (
+                <ProductCard key={i} credential={item} />
               ))}
             </>
           )}

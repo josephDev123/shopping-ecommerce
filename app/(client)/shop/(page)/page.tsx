@@ -57,7 +57,7 @@ export default async function page({
           </span>
 
           <p className="">
-            Showing {page}–{page * limit} of {result?.data.totalDoc || 0}
+            Showing {page}–{page * limit} of {result?.data?.totalDoc || 0}{" "}
             results
           </p>
         </div>
