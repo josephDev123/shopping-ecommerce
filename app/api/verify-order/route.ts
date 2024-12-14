@@ -6,7 +6,6 @@ import OrderModel, { OrderType } from "@/models/OrderModel";
 
 export async function GET(req: Request) {
   try {
-    // let memoized = false;
     const flw = new Flutterwave(
       process.env.FLUTTERWAVE_PUBLIC_KEY,
       process.env.FLUTTERWAVE_SECRET_KEY
@@ -37,16 +36,6 @@ export async function GET(req: Request) {
         response.data.amount === transactionDetails.payment.amount &&
         response.data.currency === "NGN"
       ) {
-        // if (!memoized) {
-        //   memoized = true;
-        //   // Success! Confirm the customer's payment
-        //   const transaction = new TransactionModel({
-        //     orderId: transactionDetails._id,
-        //   });
-
-        //   await transaction.save();
-        // }
-
         return NextResponse.json(
           {
             message: {

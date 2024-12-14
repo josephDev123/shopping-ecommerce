@@ -39,6 +39,7 @@ export class paymentRepository {
         },
       });
       console.log(data);
+
       const order = new this.OrderModel({
         user_id: data.user_id,
         tx_ref: data.tx_ref,
