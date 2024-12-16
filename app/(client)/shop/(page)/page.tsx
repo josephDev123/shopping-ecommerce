@@ -19,17 +19,13 @@ export default async function page({
     { name: "Home", url: "/" },
     { name: "Shop", url: "/shop" },
   ];
-  // const page = searchParams.page === undefined ? 1 : searchParams.page;
-  // const limit = searchParams.limit === undefined ? 4 : searchParams.limit;
 
   const page = Number(searchParams.page) || 1;
   const limit = Number(searchParams.limit) || 4;
 
   // // console.log(page, limit);
   const response = await fetch(
-    `${
-      process.env.NEXT_PUBLIC_BASEURL
-    }/api/product/products-paginate?page=${1}&limit=${4}`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`
   );
 
   if (!response.ok) {
@@ -67,14 +63,12 @@ export default async function page({
         <ItemLimit />
       </div>
 
-      <Suspense fallback={<Loading />}>
-        <ProductListSection
-          data={result?.data.products}
-          itemsNumber={result?.data?.totalDoc}
-          page={page}
-          limit={limit}
-        />
-      </Suspense>
+      {/* <Suspense fallback={<Loading />}> */}
+      <ProductListSection
+        data={result?.data.products}
+        itemsNumber={result?.data?.totalDoc}
+      />
+      {/* </Suspense> */}
 
       <ThingsToEnjoy />
     </section>

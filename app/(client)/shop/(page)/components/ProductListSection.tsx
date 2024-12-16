@@ -8,21 +8,18 @@ import React from "react";
 interface ProductListSectionProps {
   data: ProductDataType[];
   itemsNumber: number;
-  page: number;
-  limit: number;
 }
 export default function ProductListSection({
   data,
   itemsNumber,
-  page,
-  limit,
 }: ProductListSectionProps) {
   console.log("from prdict list", data);
-  console.log("page and limit", page, limit);
+  // console.log("page and limit", );
   const totalPages = itemsNumber / 4;
 
   return (
     <>
+      {JSON.stringify(data)}
       <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 my-14 w-[80%] mx-auto">
         <>
           {Array.isArray(data) && data?.length <= 0 && (
