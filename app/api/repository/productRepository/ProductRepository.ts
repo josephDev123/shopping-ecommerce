@@ -64,8 +64,9 @@ export class ProductRepository {
       ];
 
       const response = await this.dbContext.aggregate(productsQueryAggregate);
-      const result: ProductDataType = response[0].products || [];
-      const totalProduct: number = response[0].totalDoc[0]?.count || 0;
+      console.log(response);
+      const result: ProductDataType = response[0]?.products || [];
+      const totalProduct: number = response[0]?.totalDoc[0]?.count || 0;
 
       return {
         products: result,
