@@ -57,19 +57,19 @@ export class ProductRepository {
       const productsQueryAggregate = [
         {
           $facet: {
-            products: [{ $skip: skip }, { $limit: limit }],
+            productDocs: [{ $skip: skip }, { $limit: limit }],
             totalDoc: [{ $count: "count" }],
           },
         },
       ];
 
       const response = await this.dbContext.aggregate(productsQueryAggregate);
-      console.log(response);
-      const result = response[0]?.products || [];
+      // console.log(response);
+      const result = response[0]?.productDocs || [];
       const totalProduct: number = response[0]?.totalDoc[0]?.count || 0;
 
       return {
-        productDocs: result,
+        products: result,
         totalDoc: totalProduct,
       };
       // return {
