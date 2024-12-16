@@ -66,7 +66,7 @@ export default async function page({
 
       {/* <Suspense fallback={<Loading />}> */}
       <ProductListSection
-        data={result?.data.products}
+        data={result?.data}
         itemsNumber={result?.data?.totalDoc}
       />
       {/* </Suspense> */}
