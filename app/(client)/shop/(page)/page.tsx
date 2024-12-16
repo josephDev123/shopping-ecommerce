@@ -24,7 +24,8 @@ export default async function page({
 
   const page = Number(searchParams.page) || 1;
   const limit = Number(searchParams.limit) || 4;
-  // console.log(page, limit);
+
+  console.log("page and limit", page, limit);
   // // console.log(page, limit);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`
