@@ -6,14 +6,14 @@ import Link from "next/link";
 import React from "react";
 
 interface ProductListSectionProps {
-  data: ProductDataType[];
+  data: any[];
   itemsNumber: number;
 }
 export default function ProductListSection({
   data,
   itemsNumber,
 }: ProductListSectionProps) {
-  console.log("from prdict list", data);
+  console.log("from product list", data);
   // console.log("page and limit", );
   const totalPages = itemsNumber / 4;
 
