@@ -39,7 +39,7 @@ export default async function page({
   }
 
   const result = await response.json();
-  console.log("real data:", result.data);
+  console.log("real data:", result);
 
   return (
     <section className="flex flex-col h-full">
@@ -62,14 +62,14 @@ export default async function page({
 
         <ItemLimit />
       </div>
-      <pre>{JSON.stringify(result.data)}</pre>
+      <pre>{JSON.stringify(result)}</pre>
 
-      {/* <Suspense fallback={<Loading />}> */}
-      <ProductListSection
-        data={result?.data}
-        itemsNumber={result?.data?.totalDoc}
-      />
-      {/* </Suspense> */}
+      <Suspense fallback={<Loading />}>
+        <ProductListSection
+          data={result?.data}
+          itemsNumber={result?.data?.totalDoc}
+        />
+      </Suspense>
 
       <ThingsToEnjoy />
     </section>

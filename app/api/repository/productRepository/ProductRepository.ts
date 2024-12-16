@@ -65,11 +65,11 @@ export class ProductRepository {
 
       const response = await this.dbContext.aggregate(productsQueryAggregate);
       const products: ProductDataType = response[0].products;
-      const totalDoc: number = response[0].totalDoc[0]?.count || 0;
+      const totalProduct: number = response[0].totalDoc[0]?.count || 0;
 
       return {
         products,
-        totalDoc,
+        totalDoc: totalProduct,
       };
       // return {
       //   msg: "get paginated products successful",
