@@ -30,7 +30,7 @@ export default async function page({
 
   if (!response.ok) {
     // Handle errors
-    console.error("Failed to fetch data:", response.statusText);
+
     return (
       <div className="flex flex-col h-56 justify-center items-center ">
         Error fetching product data

@@ -64,11 +64,11 @@ export class ProductRepository {
       ];
 
       const response = await this.dbContext.aggregate(productsQueryAggregate);
-      const products: ProductDataType = response[0].products;
+      const result: ProductDataType = response[0].products || [];
       const totalProduct: number = response[0].totalDoc[0]?.count || 0;
 
       return {
-        products,
+        products: result,
         totalDoc: totalProduct,
       };
       // return {
