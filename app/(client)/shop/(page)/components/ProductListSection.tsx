@@ -14,7 +14,9 @@ export default function ProductListSection({
   itemsNumber,
 }: ProductListSectionProps) {
   console.log("from prdict list", data);
+  // console.log("page and limit", );
   const totalPages = itemsNumber / 4;
+
   return (
     <>
       <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 my-14 w-[80%] mx-auto">
