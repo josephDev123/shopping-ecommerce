@@ -8,13 +8,17 @@ import React from "react";
 interface ProductListSectionProps {
   data: ProductDataType[];
   itemsNumber: number;
+  page: number;
+  limit: number;
 }
 export default function ProductListSection({
   data,
   itemsNumber,
+  page,
+  limit,
 }: ProductListSectionProps) {
   console.log("from prdict list", data);
-  // console.log("page and limit", );
+  console.log("page and limit", page, limit);
   const totalPages = itemsNumber / 4;
 
   return (

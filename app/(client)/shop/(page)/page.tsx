@@ -71,6 +71,8 @@ export default async function page({
         <ProductListSection
           data={result?.data.products}
           itemsNumber={result?.data?.totalDoc}
+          page={page}
+          limit={limit}
         />
       </Suspense>
 
