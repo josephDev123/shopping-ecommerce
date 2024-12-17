@@ -19,7 +19,7 @@ export default function page({
           </p>
         }
       >
-        {searchParams.status === "failed" && <FailedOrder />}
+        {searchParams.status === "cancelled" && <FailedOrder />}
         {searchParams.status === "successful" && <SuccessOrder />}
       </Suspense>
     </section>

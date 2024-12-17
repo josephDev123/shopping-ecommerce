@@ -13,6 +13,7 @@ export class paymentRepository {
         headers: {
           Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}`,
         },
+
         url: "https://api.flutterwave.com/v3/payments",
         method: "POST",
         data: {
@@ -20,7 +21,11 @@ export class paymentRepository {
           tx_ref: data.tx_ref,
           amount: data.amount,
           currency: data.currency,
+
           redirect_url: `${process.env.NEXT_PUBLIC_BASEURL}/order-outcome`,
+          json: {
+            payment_options: "card, ussd, mobilemoneyghana",
+          },
           customer: {
             email: data.customer_billing.email,
             name: data.customer_billing.name,
