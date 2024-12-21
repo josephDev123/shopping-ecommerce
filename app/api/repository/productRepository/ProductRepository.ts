@@ -50,10 +50,6 @@ export class ProductRepository {
       // const queryCondition = condition;
       const skip = (page - 1) * limit;
 
-      // console.log("from", skip, limit);
-      // const result = await this.dbContext.find().skip(skip).limit(limit);
-      // const totalDoc = await this.dbContext.countDocuments({});
-
       const productsQueryAggregate = [
         {
           $facet: {

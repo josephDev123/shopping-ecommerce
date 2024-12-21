@@ -25,7 +25,10 @@ export default async function page({
 
   // // console.log(page, limit);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`,
+    {
+      cache: "no-cache",
+    }
   );
 
   if (!response.ok) {
