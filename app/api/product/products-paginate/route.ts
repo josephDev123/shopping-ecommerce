@@ -29,7 +29,7 @@ export async function GET(req: Request) {
       formatLimit
     );
 
-    console.log(formatPage, formatLimit, result);
+    console.log(result);
 
     return SuccessApiResponseHelper(
       "get products successful",
