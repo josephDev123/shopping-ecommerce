@@ -7,10 +7,10 @@ import {
   SuccessApiResponseHelper,
 } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
-import { isDynamicServerError } from "next/dist/client/components/hooks-server-context";
-import { NextResponse } from "next/server";
+// import { isDynamicServerError } from "next/dist/client/components/hooks-server-context";
+// import { NextResponse } from "next/server";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
   try {
     await startDb();

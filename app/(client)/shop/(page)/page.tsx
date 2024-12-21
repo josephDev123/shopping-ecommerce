@@ -30,7 +30,9 @@ export default async function page({
 
   if (!response.ok) {
     // Handle errors
-
+    console.error(`Error: ${response.status} - ${response.statusText}`);
+    const errorData = await response.json();
+    console.error("Error details:", errorData);
     return (
       <div className="flex flex-col h-56 justify-center items-center ">
         Error fetching product data
