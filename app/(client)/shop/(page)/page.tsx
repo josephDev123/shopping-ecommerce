@@ -27,7 +27,7 @@ export default async function page({
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`,
     {
-      cache: "no-cache",
+      next: { revalidate: 600 },
     }
   );
 
@@ -70,7 +70,7 @@ export default async function page({
 
         <ItemLimit />
       </div>
-      <pre>{JSON.stringify(result)}</pre>
+
       <Suspense fallback={<Loading />}>
         <ProductListSection data={data} itemsNumber={totalDoc} />
       </Suspense>
