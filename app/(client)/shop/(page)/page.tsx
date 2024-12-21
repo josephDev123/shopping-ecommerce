@@ -41,6 +41,7 @@ export default async function page({
   }
 
   const result = await response.json();
+  console.log(result);
   const data = result.data.products;
   const totalDoc = result?.data?.totalDoc;
   console.log("real data:", data);
