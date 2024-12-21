@@ -22,7 +22,7 @@ export async function GET(req: Request) {
 
     const formatPage = Number(page);
     const formatLimit = Number(limit);
-    console.log(formatPage, formatLimit);
+    // console.log(formatPage, formatLimit);
 
     const result = await ProductServiceImpl.findByPaginateAndFilter(
       formatPage,
