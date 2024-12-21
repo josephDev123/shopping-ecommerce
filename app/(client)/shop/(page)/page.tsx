@@ -41,7 +41,7 @@ export default async function page({
   }
 
   const result = await response.json();
-  console.log(result);
+  console.log("from products data", result);
   const data = result.data.products;
   const totalDoc = result?.data?.totalDoc;
   console.log("real data:", data);
@@ -67,7 +67,7 @@ export default async function page({
 
         <ItemLimit />
       </div>
-
+      <pre>{JSON.stringify(result)}</pre>
       <Suspense fallback={<Loading />}>
         <ProductListSection data={data} itemsNumber={totalDoc} />
       </Suspense>
