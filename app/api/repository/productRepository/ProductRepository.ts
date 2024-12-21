@@ -72,17 +72,6 @@ export class ProductRepository {
         products: result,
         totalDoc: totalProduct,
       };
-      // return {
-      //   msg: "get paginated products successful",
-      //   name: "MongodbSuccess",
-      //   operational: true,
-      //   type: "success",
-      //   status: 200,
-      //   data: result,
-      //   additionalData: {
-      //     totalDoc,
-      //   },
-      // };
     } catch (error) {
       const customError = error as GlobalErrorHandler;
       throw new GlobalErrorHandler(
