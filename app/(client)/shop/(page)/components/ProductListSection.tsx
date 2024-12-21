@@ -1,5 +1,4 @@
 "use client";
-
 import ProductCard from "@/app/(client)/generic/ProductCard";
 import { ProductDataType, ProductResponseType } from "@/app/types/productsType";
 import Link from "next/link";
