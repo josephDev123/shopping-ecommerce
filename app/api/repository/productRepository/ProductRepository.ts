@@ -58,7 +58,7 @@ export class ProductRepository {
         {
           $facet: {
             productDocs: [{ $skip: skip }, { $limit: limit }],
-            totalDoc: [{ $count: "count" }],
+            totalDoc: [{ $count: "total" }],
           },
         },
       ];
@@ -66,7 +66,7 @@ export class ProductRepository {
       const response = await this.dbContext.aggregate(productsQueryAggregate);
       // console.log(response);
       const result = response[0]?.productDocs || [];
-      const totalProduct: number = response[0]?.totalDoc[0]?.count || 0;
+      const totalProduct: number = response[0]?.totalDoc[0]?.total || 0;
 
       return {
         products: result,

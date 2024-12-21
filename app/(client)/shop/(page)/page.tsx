@@ -44,7 +44,7 @@ export default async function page({
   console.log("from products data", result);
   const data = result.data.products;
   const totalDoc = result?.data?.totalDoc;
-  console.log("real data:", data);
+  // console.log("real data:", data);
 
   return (
     <section className="flex flex-col h-full">
