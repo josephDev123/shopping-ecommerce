@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { axiosInstance } from "@/app/axiosInstance";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { toast } from "react-toastify";
 
 export default function CheckoutTable() {
   const { data: user } = useSession();
@@ -48,48 +49,59 @@ export default function CheckoutTable() {
   // console.log(errors);
   const handleCheckout: SubmitHandler<CheckoutFormDataType> = async (data) => {
     try {
-      if (data.paymentMethod === "Direct Bank Transfer") {
-        const response = await axiosInstance({
-          url: "api/checkout",
-          method: "post",
-          data: {
-            user_id: user?.user.id,
-            tx_ref: generateUniquePaymentID("user123"),
-            amount: total,
-            currency: "NGN",
-            redirect_url: "http://localhost:3000/success",
-            customer_billing: {
-              email: data.email,
-              name: data.firstName + " " + data.lastName,
-              phonenumber: data.phone,
-              companyName: data.companyName,
-              country: data.country,
-              address: data.streetAddress,
-              town: data.townCity,
-              province: data.province,
-              zipCode: data.zipCode,
-              additionalInfo: data.additionalInfo,
-              paymentMethod: data.paymentMethod,
-            },
-            // item: getCarts.map((product) => product._id),
-            item: getCarts,
-            customizations: {
-              title: "Shopping Standard Payment",
-            },
-          },
-        });
-
-        const result = await response.data.message;
-        console.log(result);
-        if (result.status === "success") {
-          return (window.location.href = result.data.link);
-        }
-      } else {
-        alert("payment method not Supported");
+      if (data.paymentMethod !== "Direct Bank Transfer") {
+        toast.error("payment method not Supported yet");
         return;
       }
+
+      if (!user?.user.email) {
+        toast.error("login to checkout");
+        return navigate.push("/login");
+      }
+      // if (data.paymentMethod === "Direct Bank Transfer") {
+      const response = await axiosInstance({
+        url: "api/checkout",
+        method: "post",
+        data: {
+          user_id: user?.user.id,
+          tx_ref: generateUniquePaymentID("user123"),
+          amount: total,
+          currency: "NGN",
+          redirect_url: "http://localhost:3000/success",
+          customer_billing: {
+            email: data.email,
+            name: data.firstName + " " + data.lastName,
+            phonenumber: data.phone,
+            companyName: data.companyName,
+            country: data.country,
+            address: data.streetAddress,
+            town: data.townCity,
+            province: data.province,
+            zipCode: data.zipCode,
+            additionalInfo: data.additionalInfo,
+            paymentMethod: data.paymentMethod,
+          },
+          // item: getCarts.map((product) => product._id),
+          item: getCarts,
+          customizations: {
+            title: "Shopping Standard Payment",
+          },
+        },
+      });
+
+      const result = await response.data.message;
+      console.log(result);
+      if (result.status === "success") {
+        return (window.location.href = result.data.link);
+      }
+      // }
+      // else {
+      //   alert("payment method not Supported yet");
+      //   return;
+      // }
     } catch (err) {
       console.error(err);
+      toast.error("An error occurred, please try again");
     }
   };
   return (
