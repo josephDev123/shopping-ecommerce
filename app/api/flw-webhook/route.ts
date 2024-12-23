@@ -85,5 +85,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "success" }, { status: 200 });
 
     // Do something (that doesn't take too long) with the payload
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ message: "error" }, { status: 500 });
+  }
 }
