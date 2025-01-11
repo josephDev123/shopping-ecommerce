@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
     // }
 
     // It's a good idea to log all received events.
-    console.log(payload);
+    console.log("flw webhook", payload);
     const flwPayload = {
       event: payload.event,
       data: {
