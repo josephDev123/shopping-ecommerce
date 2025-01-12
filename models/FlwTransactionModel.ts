@@ -1,7 +1,7 @@
 import { models, Schema, model } from "mongoose";
 
 const CustomerSchema = new Schema({
-  pid: String,
+  cid: String,
   name: String,
   phone_number: String,
   email: String,
@@ -38,8 +38,12 @@ const TransactionSchema = new Schema({
     created_at: Date,
     account_id: String,
     customer: CustomerSchema,
-    // card: CardSchema,
+    card: CardSchema,
   },
+  meta_data: {
+    __CheckoutInitAddress: String,
+  },
+  // "event.type": String,
 });
 
 const Flw_Transaction =

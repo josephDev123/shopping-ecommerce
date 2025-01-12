@@ -1,6 +1,5 @@
 import { PaymentDataType } from "@/app/types/flutterwaverRequestDataType";
 import { FlutterwaveHostedLinkResponse } from "@/app/types/flutterwaveSuccessRedirectType";
-import axios from "axios";
 import { Model } from "mongoose";
 import { OrderType } from "@/models/OrderModel";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
@@ -37,7 +36,7 @@ export class paymentRepository {
           additionalInfo: data.customer_billing.additionalInfo,
         },
       });
-
+      await order.save();
       return order;
     } catch (error) {
       console.log(error);

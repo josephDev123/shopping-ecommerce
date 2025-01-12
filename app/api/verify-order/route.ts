@@ -23,24 +23,24 @@ export async function GET(req: Request) {
       //   { new: true }
       // );
 
-      const transactionDetails = await OrderModel.findOne({
+      const OrderDetails = await OrderModel.findOne({
         tx_ref: queryTx_ref,
       });
       const response = await flw.Transaction.verify({
         id: queryTransaction_id,
       });
 
-      console.log("verify transaction", response);
+      // console.log("verify transaction", response);
       if (
         response.data.status === "successful" &&
-        response.data.amount === transactionDetails.payment.amount &&
+        response.data.amount === OrderDetails.payment.amount &&
         response.data.currency === "NGN"
       ) {
         return NextResponse.json(
           {
             message: {
               message: "Order successful, please wait for confirmation",
-              data: transactionDetails,
+              data: OrderDetails,
             },
           },
           { status: 200 }

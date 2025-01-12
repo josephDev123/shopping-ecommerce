@@ -39,7 +39,7 @@ export class FlutterwavePayment {
           },
         },
       });
-      console.log(data);
+      // console.log(data);
 
       //   const order = new this.OrderModel({
       //     user_id: data.user_id,
