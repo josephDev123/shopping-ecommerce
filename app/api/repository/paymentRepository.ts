@@ -3,9 +3,46 @@ import { FlutterwaveHostedLinkResponse } from "@/app/types/flutterwaveSuccessRed
 import axios from "axios";
 import { Model } from "mongoose";
 import { OrderType } from "@/models/OrderModel";
+import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
 export class paymentRepository {
   constructor(private readonly OrderModel: Model<OrderType>) {}
+
+  async create(data: PaymentDataType) {
+    try {
+      const order = new this.OrderModel({
+        user_id: data.user_id,
+        tx_ref: data.tx_ref,
+        items: data.item,
+        payment: {
+          method: data.customer_billing.paymentMethod,
+          amount: data.amount,
+          currency: data.currency,
+          status: "Pending",
+        },
+        billing: {
+          amount: data.amount,
+          currency: data.currency,
+        },
+        customer: {
+          email: data.customer_billing.email,
+          name: data.customer_billing.name,
+          phonenumber: data.customer_billing.phonenumber,
+          companyName: data.customer_billing.companyName,
+          country: data.customer_billing.country,
+          address: data.customer_billing.address,
+          town: data.customer_billing.town,
+          province: data.customer_billing.province,
+          zipCode: data.customer_billing.zipCode,
+          additionalInfo: data.customer_billing.additionalInfo,
+        },
+      });
+
+      return order;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // async FlutterCheckout(data: PaymentDataType) {
   //   try {

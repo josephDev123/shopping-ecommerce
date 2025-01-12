@@ -1,6 +1,7 @@
 import { PaymentDataType } from "@/app/types/flutterwaverRequestDataType";
 import { paymentRepository } from "../repository/paymentRepository";
 import { FlutterwavePayment } from "../utils/FlutterwavePayment";
+import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
 export class PaymentService {
   FlutterwavePayment: FlutterwavePayment;
@@ -10,11 +11,12 @@ export class PaymentService {
 
   async create(data: PaymentDataType) {
     try {
-      // const checkout = await this.paymentRepository.FlutterCheckout(data);
-      const checkout = await this.FlutterwavePayment.process(data);
-      return checkout;
+      const order = await this.paymentRepository.create(data);
+      const process_payment = await this.FlutterwavePayment.process(data);
+      return process_payment;
     } catch (error) {
       console.log(error);
+      throw new GlobalErrorHandler("Payment fail", "OrderError", "500", true);
     }
   }
 }

@@ -1,14 +1,14 @@
-import mongoose, { models } from "mongoose";
+import { models, Schema, model } from "mongoose";
 
-const CustomerSchema = new mongoose.Schema({
-  id: Number,
+const CustomerSchema = new Schema({
+  pid: String,
   name: String,
   phone_number: String,
   email: String,
   created_at: Date,
 });
 
-const CardSchema = new mongoose.Schema({
+const CardSchema = new Schema({
   first_6digits: String,
   last_4digits: String,
   issuer: String,
@@ -17,10 +17,10 @@ const CardSchema = new mongoose.Schema({
   expiry: String,
 });
 
-const TransactionSchema = new mongoose.Schema({
+const TransactionSchema = new Schema({
   event: String,
   data: {
-    id: Number,
+    id: String,
     tx_ref: String,
     flw_ref: String,
     device_fingerprint: String,
@@ -36,13 +36,13 @@ const TransactionSchema = new mongoose.Schema({
     status: String,
     payment_type: String,
     created_at: Date,
-    account_id: Number,
+    account_id: String,
     customer: CustomerSchema,
-    card: CardSchema,
+    // card: CardSchema,
   },
 });
 
 const Flw_Transaction =
-  models.FlwTransaction || mongoose.model("FlwTransaction", TransactionSchema);
+  models.FlwTransaction || model("FlwTransaction", TransactionSchema);
 
 export default Flw_Transaction;

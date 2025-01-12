@@ -29,7 +29,7 @@ export async function GET(req: Request) {
       formatLimit
     );
 
-    console.log("aggregate db", result);
+    // console.log("aggregate db", result);
 
     return SuccessApiResponseHelper(
       "get products successful",
