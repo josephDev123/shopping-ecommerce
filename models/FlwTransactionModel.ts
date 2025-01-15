@@ -1,6 +1,54 @@
 import { models, Schema, model } from "mongoose";
+export interface Customer {
+  cid: string;
+  name: string;
+  phone_number: string;
+  email: string;
+  created_at: Date;
+}
 
-const CustomerSchema = new Schema({
+export interface Card {
+  first_6digits: string;
+  last_4digits: string;
+  issuer: string;
+  country: string;
+  type: string;
+  expiry: string;
+}
+
+export interface TransactionData {
+  id: string;
+  tx_ref: string;
+  flw_ref: string;
+  device_fingerprint: string;
+  amount: number;
+  currency: string;
+  charged_amount: number;
+  app_fee: number;
+  merchant_fee: number;
+  processor_response: string;
+  auth_model: string;
+  ip: string;
+  narration: string;
+  status: string;
+  payment_type: string;
+  created_at: Date;
+  account_id: string;
+  customer: Customer;
+  card: Card;
+}
+
+export interface MetaData {
+  __CheckoutInitAddress: string;
+}
+
+export interface TransactionType {
+  event: string;
+  data: TransactionData;
+  meta_data: MetaData;
+}
+
+const CustomerSchema = new Schema<Customer>({
   cid: String,
   name: String,
   phone_number: String,
@@ -8,7 +56,7 @@ const CustomerSchema = new Schema({
   created_at: Date,
 });
 
-const CardSchema = new Schema({
+const CardSchema = new Schema<Card>({
   first_6digits: String,
   last_4digits: String,
   issuer: String,
@@ -17,7 +65,7 @@ const CardSchema = new Schema({
   expiry: String,
 });
 
-const TransactionSchema = new Schema({
+const TransactionSchema = new Schema<TransactionType>({
   event: String,
   data: {
     id: String,
@@ -47,6 +95,7 @@ const TransactionSchema = new Schema({
 });
 
 const Flw_Transaction =
-  models.FlwTransaction || model("FlwTransaction", TransactionSchema);
+  models.FlwTransaction ||
+  model<TransactionType>("FlwTransaction", TransactionSchema);
 
 export default Flw_Transaction;

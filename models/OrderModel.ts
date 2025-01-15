@@ -19,7 +19,7 @@ export type Payment = {
   paymentMethod: string;
   amount: number;
   currency: string;
-  status: "Pending" | "Success" | "Fail";
+  // status: "Pending" | "Success" | "Fail";
 };
 
 const customerSchema = new Schema<CustomerType>({
@@ -45,11 +45,11 @@ const paymentSchema = new Schema<Payment>({
   paymentMethod: { type: String },
   amount: { type: Number, required: true },
   currency: { type: String, required: true },
-  status: {
-    type: String,
-    enum: ["Pending", "Success", "Fail"],
-    default: "Pending",
-  },
+  // status: {
+  //   type: String,
+  //   enum: ["Pending", "Success", "Fail"],
+  //   default: "Pending",
+  // },
 });
 
 const productItemSchema = new Schema<ProductDataType>({

@@ -41,14 +41,6 @@ export default async function page({ searchParams }: OrderPageProps) {
         <OrderPageMainWrapper data={result} />
       </Suspense>
 
-      {/* <footer className="mt-auto ms-auto">
-        <button
-          type="button"
-          className="border border-green-400 rounded-md py-0.5 px-2 font-semibold text-green-400 hover:bg-green-100 hover:text-green-500"
-        >
-          Next
-        </button>
-      </footer> */}
       <Suspense key={Number(searchParams)} fallback={<p>Loading...</p>}>
         <FooterPagination
           searchParam={Number(searchParams.page) || 1}

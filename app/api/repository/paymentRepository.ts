@@ -17,7 +17,7 @@ export class paymentRepository {
           method: data.customer_billing.paymentMethod,
           amount: data.amount,
           currency: data.currency,
-          status: "Pending",
+          // status: "Pending",
         },
         billing: {
           amount: data.amount,

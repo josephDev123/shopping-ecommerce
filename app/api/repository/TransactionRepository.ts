@@ -1,7 +1,7 @@
 import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
-import { TransactionType } from "@/models/TransactionModel";
-import mongoose, { Schema } from "mongoose";
+// import { TransactionType } from "@/models/TransactionModel";
+import { TransactionType } from "@/models/FlwTransactionModel";
 import { Model } from "mongoose";
 
 export class transactionRepository {
@@ -14,64 +14,52 @@ export class transactionRepository {
       const page = pageNumber;
       const limit = limits;
       const skip = (page - 1) * limit;
-
-      // const TransactionAggregationPipeline = [
-      //   {
-      //     $lookup: {
-      //       from: "orders", // Ensure this is the correct collection name for Order
-      //       localField: "orderId",
-      //       foreignField: "_id",
-      //       as: "orderDetails",
-      //     },
-      //   },
-      //   {
-      //     $unwind: "$orderDetails",
-      //   },
-      //   {
-      //     $match: {
-      //       "orderDetails.user_id": new mongoose.Types.ObjectId(user_id),
-      //     },
-      //   },
-      //   { $skip: skip },
-      //   { $limit: limit },
-      // ];
+      console.log(user_id);
 
       const TransactionAggregationPipeline = [
         {
-          $facet: {
-            transactionData: [
-              {
-                $lookup: {
-                  from: "orders", // Ensure this is the correct collection name for Order
-                  localField: "orderId",
-                  foreignField: "_id",
-                  as: "orderDetails",
-                },
-              },
-              {
-                $unwind: "$orderDetails",
-              },
-              {
-                $match: {
-                  "orderDetails.user_id": new mongoose.Types.ObjectId(user_id),
-                },
-              },
-              { $skip: skip },
-              { $limit: limit },
-            ],
-            totalTransaction: [
-              {
-                $count: "totalTransactionCount",
-              },
-            ],
+          $match: {
+            "data.tx_ref": { $regex: `^${user_id}/` },
           },
         },
       ];
 
+      // const TransactionAggregationPipeline = [
+      //   {
+      //     $facet: {
+      //       transactionData: [
+      //         {
+      //           $lookup: {
+      //             from: "orders", // Ensure this is the correct collection name for Order
+      //             localField: "orderId",
+      //             foreignField: "_id",
+      //             as: "orderDetails",
+      //           },
+      //         },
+      //         {
+      //           $unwind: "$orderDetails",
+      //         },
+      //         {
+      //           $match: {
+      //             "orderDetails.user_id": new mongoose.Types.ObjectId(user_id),
+      //           },
+      //         },
+      //         { $skip: skip },
+      //         { $limit: limit },
+      //       ],
+      //       totalTransaction: [
+      //         {
+      //           $count: "totalTransactionCount",
+      //         },
+      //       ],
+      //     },
+      //   },
+      // ];
+
       const result = await this.transactionModel.aggregate(
         TransactionAggregationPipeline
       );
-
+      console.log("from transaction", result);
       const totalTransaction =
         result[0]?.totalTransaction[0]?.totalTransactionCount || 0;
       const transactionData: TransactionServerResponseType[] =

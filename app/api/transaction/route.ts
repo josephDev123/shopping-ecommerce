@@ -9,11 +9,12 @@ import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { TransactionService } from "../service/transactionService";
 import { transactionRepository } from "../repository/TransactionRepository";
 import { TransactionModel } from "@/models/TransactionModel";
+import Flw_Transaction from "@/models/FlwTransactionModel";
 
 export async function GET(req: NextRequest) {
   try {
     await startDb();
-    const TransactionReposInit = new transactionRepository(TransactionModel);
+    const TransactionReposInit = new transactionRepository(Flw_Transaction);
     const TransactionServiceInit = new TransactionService(TransactionReposInit);
     const params = new URL(req.url).searchParams;
     const user_id = params.get("user_id") || "";

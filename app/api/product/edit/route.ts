@@ -7,7 +7,7 @@ import {
   SuccessApiResponseHelper,
 } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
   try {
     await startDb();
