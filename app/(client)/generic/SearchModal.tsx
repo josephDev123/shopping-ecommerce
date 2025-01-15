@@ -3,7 +3,7 @@
 import { SearchResultType } from "@/app/types/searchResultType";
 import React, { useEffect, useState } from "react";
 import Loader from "../components/Loader";
-import { set } from "mongoose";
+import { motion, AnimatePresence } from "motion/react";
 
 interface SearchModalProps {
   closeModal: () => void;
@@ -20,8 +20,6 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "error" | "data">(
     "idle"
   );
-
-  console.log(status);
 
   useEffect(() => {
     const timeId = setTimeout(() => {
@@ -62,11 +60,15 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
     handleSearch();
   }, [deferredSearch]);
   return (
-    <>
-      {!isOpen && ""}
-
+    <AnimatePresence>
       {isOpen && (
-        <section className="fixed inset-0 h-full w-full flex flex-col items-center justify-center bg-black/50">
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.4 }}
+          className="fixed inset-0 h-full w-full flex flex-col items-center justify-center bg-black/50"
+        >
           <div className="bg-white flex flex-col  rounded-md sm:w-[400px] w-[90%] drop-shadow-md p-3">
             <div className="flex justify-between items-center ">
               <input
@@ -115,8 +117,8 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
               )}
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
-    </>
+    </AnimatePresence>
   );
 }

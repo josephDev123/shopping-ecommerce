@@ -37,7 +37,7 @@ export default async function page({
     const errorData = await response.json();
     console.error("Error details:", errorData);
     return (
-      <div className="flex flex-col h-56 justify-center items-center ">
+      <div className="flex flex-col h-56 justify-center items-center text-red-400">
         Error fetching product data
       </div>
     );

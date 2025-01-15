@@ -17,7 +17,11 @@ export default async function page({ searchParams }: TransactionPageProps) {
     }`
   );
   if (!response.ok) {
-    return "Failed to fetch transaction data";
+    return (
+      <div className="flex flex-col h-40 justify-center items-center text-red-300">
+        Failed to fetch transaction data
+      </div>
+    );
   }
 
   const data = await response.json();

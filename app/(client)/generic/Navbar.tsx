@@ -15,6 +15,8 @@ import { useSession } from "next-auth/react";
 import Loader from "../components/Loader";
 import Image from "next/image";
 import logo from "../../assets/png/logo.png";
+import AnimatePresenceWrapper from "./AnimatePresenceWrapper";
+import { AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const { data, status } = useSession();
@@ -113,9 +115,11 @@ export default function Navbar() {
           )}
         </span>
       </nav>
-      {isSideBarCartOpen && (
-        <SideBarCart closeSideBar={() => setSideBarCartOpen(false)} />
-      )}
+      <AnimatePresence>
+        {isSideBarCartOpen && (
+          <SideBarCart closeSideBar={() => setSideBarCartOpen(false)} />
+        )}
+      </AnimatePresence>
 
       <SearchModal
         closeModal={() => setIsSearchModalOpen(false)}

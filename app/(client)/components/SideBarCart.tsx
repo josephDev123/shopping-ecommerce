@@ -6,6 +6,7 @@ import { IoIosClose } from "react-icons/io";
 import Button from "../generic/Button";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/lib/slices/hooks";
+import { motion } from "motion/react";
 
 interface ISideBarCart {
   closeSideBar: () => void;
@@ -21,9 +22,10 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
   };
 
   const navigate = useRouter();
-  const total = getCarts.reduce((acc, cart) => {
-    return acc + Number(cart.productPrice) * cart.productQuantity;
-  }, 0);
+  const total = getCarts.reduce(
+    (acc, cart) => acc + Number(cart.productPrice) * Number(cart.qty),
+    0
+  );
 
   const disCountPercentage = getCarts.reduce(
     (acc, Cart) => acc + Number(Cart.productDiscount),
@@ -31,9 +33,12 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
   );
   const discountAmount = (total * disCountPercentage) / 100;
   const subtotal = total - discountAmount;
-
   return (
-    <section
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
       id="sideBar"
       onClick={handleCloseSideBarOverlay}
       className="fixed inset-0 z-50 flex flex-col w-full h-full bg-transparent/15"
@@ -50,34 +55,36 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
             <p className="text-center">Your cart is empty</p>
           </div>
         ) : (
-          getCarts.map((cart, i) => (
-            <div
-              key={i}
-              className="flex sm:flex-row flex-col sm:items-center justify-between "
-            >
-              <div className="h-[100px] w-[108px] rounded-md relative block ">
-                <Image
-                  src={cart.productImgUrl[0].url}
-                  fill
-                  objectFit="cover"
-                  alt=""
-                />
-                {/* <img src={cart.productImgUrl[0].url} alt="" /> */}
+          <div className="gap-2 h-64 overflow-y-auto">
+            {getCarts.map((cart, i) => (
+              <div
+                key={i}
+                className="flex sm:flex-row flex-col sm:items-center justify-between bg-red-400"
+              >
+                <div className="h-[100px] w-[108px] rounded-md relative block ">
+                  <Image
+                    src={cart.productImgUrl[0].url}
+                    fill
+                    objectFit="cover"
+                    alt=""
+                  />
+                  {/* <img src={cart.productImgUrl[0].url} alt="" /> */}
+                </div>
+                <div className="flex flex-col">
+                  <p className="font-medium  text-ellipsis overflow-hidden whitespace-nowrap sm:max-w-[200px] max-w-[300px] ">
+                    {cart.productName}
+                  </p>
+                  <p>
+                    1 x{" "}
+                    <span className="text-[#B88E2F]">
+                      usd. {cart.productPrice}
+                    </span>
+                  </p>
+                </div>
+                <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer" />
               </div>
-              <div className="flex flex-col">
-                <p className="font-medium  text-ellipsis overflow-hidden whitespace-nowrap sm:max-w-[200px] max-w-[300px] ">
-                  {cart.productName}
-                </p>
-                <p>
-                  1 x{" "}
-                  <span className="text-[#B88E2F]">
-                    usd. {cart.productPrice}
-                  </span>
-                </p>
-              </div>
-              <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer" />
-            </div>
-          ))
+            ))}
+          </div>
         )}
 
         {getCarts.length >= 1 && (
@@ -110,6 +117,6 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
           </div>
         )}
       </div>
-    </section>
+    </motion.section>
   );
 }

@@ -7,6 +7,7 @@ import { ProductDataType } from "@/app/types/productsType";
 import { useAppDispatch } from "@/lib/slices/hooks";
 import { setCart } from "@/lib/slices/addToCartSlice";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
 
 type IProductCard = {
   credential: ProductDataType;
@@ -30,6 +31,7 @@ export default function ProductCard({ credential }: IProductCard) {
       ...product,
     };
     dispatch(setCart(CartData));
+    toast.success("Product added to cart", { position: "top-center" });
   };
   return (
     <section className="flex flex-col bg-[#F4F5F7] relative cursor-pointer group rounded-lg">
