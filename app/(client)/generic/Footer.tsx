@@ -5,7 +5,7 @@ export default function Footer() {
     <section className="flex flex-col min-[425px]:p-16 p-4 border-2 border-t">
       <section className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 w-full">
         <div className="flex flex-col space-y-6">
-          <h2 className="font-bold text-2xl">Ecommerce</h2>
+          <h2 className="font-bold text-2xl">Shopping</h2>
           <p className="text-gray-500 font-medium">
             Abeokuta, Eleweran, <br />
             Ogun state, Nigeria

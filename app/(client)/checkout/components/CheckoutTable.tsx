@@ -46,9 +46,13 @@ export default function CheckoutTable() {
     resolver: zodResolver(checkoutSchema),
   });
 
-  // console.log(errors);
+  console.log(errors);
   const handleCheckout: SubmitHandler<CheckoutFormDataType> = async (data) => {
     try {
+      if (errors.paymentMethod) {
+        toast.error(errors.paymentMethod.message, { position: "top-center" });
+        return;
+      }
       if (data.paymentMethod !== "Direct Bank Transfer") {
         toast.error("payment method not Supported yet");
         return;
@@ -94,11 +98,6 @@ export default function CheckoutTable() {
       if (result.status === "success") {
         return (window.location.href = result.data.link);
       }
-      // }
-      // else {
-      //   alert("payment method not Supported yet");
-      //   return;
-      // }
     } catch (err) {
       console.error(err);
       toast.error("An error occurred, please try again");
@@ -316,11 +315,11 @@ export default function CheckoutTable() {
             <b> Direct Bank Transfer</b>
           </span>
 
-          <p className="mt-2">
+          {/* <p className="mt-2">
             Make your payment directly into our bank account. Please use your
             Order ID as the payment reference. Your order will not be shipped
             until the funds have cleared in our account.
-          </p>
+          </p> */}
 
           <div className="flex items-center gap-2 mt-4">
             <input
@@ -331,7 +330,7 @@ export default function CheckoutTable() {
             />
             <p>Direct Bank Transfer</p>
           </div>
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <input
               type="radio"
               id=""
@@ -339,7 +338,12 @@ export default function CheckoutTable() {
               {...register("paymentMethod")}
             />
             <p>Cash On Delivery</p>
-          </div>
+          </div> */}
+          {errors.paymentMethod && (
+            <small className="text-red-300 font-bold">
+              {errors.paymentMethod.message}
+            </small>
+          )}
         </div>
         <p className="mt-2">
           Your personal data will be used to support your experience throughout
@@ -353,10 +357,9 @@ export default function CheckoutTable() {
           textContent="Place order"
           className="p-3 flex items-center gap-4 justify-center mx-auto border-2 border-black mt-4 rounded-md font-semibold min-[375]:w-80 w-full text-xl"
         >
-          {isSubmitting ||
-            (isLoading && (
-              <AiOutlineLoading3Quarters className="animate-spin items-end" />
-            ))}
+          {isSubmitting && (
+            <AiOutlineLoading3Quarters className="animate-spin items-end" />
+          )}
         </Button>
       </div>
     </form>

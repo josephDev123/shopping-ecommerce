@@ -24,14 +24,14 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
         >
           Description
         </h3>
-        <h3
+        {/* <h3
           className={`text-lg cursor-pointer ${
             expand === "additional_Information" && "font-bold"
           }`}
           onClick={() => setExpand("additional_Information")}
         >
           Additional Information
-        </h3>
+        </h3> */}
         <h3
           className={`text-lg cursor-pointer ${
             expand === "reviews" && "font-bold"
@@ -45,7 +45,7 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
         {expand === "description" && (
           <ProductDescription description={product.Description} />
         )}
-        {expand === "additional_Information" && <AdditionalInformation />}
+        {/* {expand === "additional_Information" && <AdditionalInformation />} */}
         {expand === "reviews" && <Reviews />}
       </div>
     </div>

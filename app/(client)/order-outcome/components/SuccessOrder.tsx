@@ -132,12 +132,14 @@ export default function SuccessOrder() {
                 <p className="bg-gray-500 w-full h-[0.5px] mb-3 sm:hidden block"></p>
                 <div className="flex  flex-col leading-tight  p-3 sm:border-r-2  border-gray-500">
                   <h1 className="text-gray-700">Order Number</h1>
-                  <p className="font-semibold">{outcomeTransaction.tx_ref}</p>
+                  <p className="font-semibold break-words">
+                    {outcomeTransaction.tx_ref}
+                  </p>
                 </div>
                 <p className="bg-gray-500 w-full h-[0.5px] mb-3 sm:hidden block"></p>
                 <div className="flex  flex-col leading-tight  p-3 ">
                   <h1 className="text-gray-700">Payment Method</h1>
-                  <p className="font-semibold">Mastercard</p>
+                  <p className="font-semibold">""</p>
                 </div>
               </div>
 

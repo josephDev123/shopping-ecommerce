@@ -59,7 +59,7 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
             {getCarts.map((cart, i) => (
               <div
                 key={i}
-                className="flex sm:flex-row flex-col sm:items-center justify-between"
+                className="flex sm:flex-row flex-col sm:items-center justify-between relative"
               >
                 <div className="h-[100px] w-[108px] rounded-md relative block ">
                   <Image
@@ -68,20 +68,20 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
                     objectFit="cover"
                     alt=""
                   />
-                  {/* <img src={cart.productImgUrl[0].url} alt="" /> */}
                 </div>
                 <div className="flex flex-col">
-                  <p className="font-medium  text-ellipsis overflow-hidden whitespace-nowrap sm:max-w-[200px] max-w-[300px] ">
+                  <p className="font-medium mt-4 text-ellipsis overflow-hidden whitespace-nowrap sm:max-w-[200px] max-w-[300px] ">
                     {cart.productName}
                   </p>
                   <p>
-                    1 x{" "}
+                    {cart.qty} x{" "}
                     <span className="text-[#B88E2F]">
                       usd. {cart.productPrice}
                     </span>
                   </p>
                 </div>
-                <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer" />
+                <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:block hidden" />
+                <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:hidden absolute bottom-4 right-2" />
               </div>
             ))}
           </div>

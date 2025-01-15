@@ -15,5 +15,5 @@ export const checkoutSchema = z.object({
     .min(1, "Email address is required")
     .email("Invalid email address"),
   additionalInfo: z.string().optional(),
-  paymentMethod: z.enum(["Direct Bank Transfer", "Cash On Delivery"]),
+  paymentMethod: z.enum(["Direct Bank Transfer"]), // "Cash On Delivery"
 });

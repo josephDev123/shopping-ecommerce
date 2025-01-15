@@ -108,11 +108,13 @@ export default function Navbar() {
             className="hover:bg-slate-200 p-1 cursor-pointer rounded-full md:hidden block"
           />
 
-          {isMobileNavbarOpen && (
-            <MobileNavBar
-              closeMobileNavBar={() => setIsMobileNavbarOpen(false)}
-            />
-          )}
+          <AnimatePresence>
+            {isMobileNavbarOpen && (
+              <MobileNavBar
+                closeMobileNavBar={() => setIsMobileNavbarOpen(false)}
+              />
+            )}
+          </AnimatePresence>
         </span>
       </nav>
       <AnimatePresence>

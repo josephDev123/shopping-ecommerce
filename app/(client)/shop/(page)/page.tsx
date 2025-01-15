@@ -57,8 +57,8 @@ export default async function page({
           <span className="flex  items-center">
             <FilterIcons />
             <span className="font-bold">Filter</span>
-            <PiDotsSixBold className="text-xl font-bold" />
-            <BiviewList />
+            {/* <PiDotsSixBold className="text-xl font-bold" /> */}
+            {/* <BiviewList /> */}
             <GoHorizontalRule className="rotate-90" />
           </span>
 

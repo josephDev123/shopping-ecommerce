@@ -41,10 +41,10 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
 
   const handleAddToCart = () => {
     const CartData = {
+      ...product,
       qty: qty,
       buyerEmail: session?.user.email,
       buyer_name: session?.user.name,
-      ...product,
     };
     dispatch(setCart(CartData));
     toast.success("product added to cart", { position: "top-center" });
@@ -91,7 +91,7 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
         <p className="font-medium mt-3">{product.Description}</p>
 
         <ProductSize className="mt-3" size={product.productSize} />
-        <ProductColor className="mt-3" />
+        {/* <ProductColor className="mt-3" /> */}
         <div className="flex min-[375px]:flex-row flex-col items-center mt-4 gap-3  w-full">
           <div className="flex border rounded-md p-1.5 min-w-[25%] w-full justify-between">
             <button
@@ -115,10 +115,10 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
             className="border rounded-md p-2  w-full font-medium hover:bg-gray-100"
           />
 
-          <Button
+          {/* <Button
             textContent="Compare"
             className="border rounded-md p-2 w-full font-medium hover:bg-gray-100"
-          />
+          /> */}
         </div>
 
         <hr className="my-10" />
