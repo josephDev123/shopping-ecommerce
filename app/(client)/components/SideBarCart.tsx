@@ -59,7 +59,7 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
             {getCarts.map((cart, i) => (
               <div
                 key={i}
-                className="flex sm:flex-row flex-col sm:items-center justify-between bg-red-400"
+                className="flex sm:flex-row flex-col sm:items-center justify-between"
               >
                 <div className="h-[100px] w-[108px] rounded-md relative block ">
                   <Image

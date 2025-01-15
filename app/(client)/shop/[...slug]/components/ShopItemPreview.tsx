@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useAppDispatch } from "@/lib/slices/hooks";
 import { useSession } from "next-auth/react";
 import { setCart } from "@/lib/slices/addToCartSlice";
+import { toast } from "react-toastify";
 
 interface ShopItemPreviewProps {
   data: ProductResponseType;
@@ -46,6 +47,7 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
       ...product,
     };
     dispatch(setCart(CartData));
+    toast.success("product added to cart", { position: "top-center" });
   };
 
   return (
@@ -133,12 +135,12 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
             <span>:{product.productTag}</span>
           </div>
 
-          <div className="flex items-center gap-8">
+          {/* <div className="flex items-center gap-8">
             <span className="w-20">Share</span>{" "}
             <span className="flex items-center gap-2">
               : <BsFacebook /> <FaLinkedin /> <AiFillTwitterCircle />
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
