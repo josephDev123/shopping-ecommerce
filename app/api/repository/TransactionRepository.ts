@@ -1,12 +1,12 @@
 import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 // import { TransactionType } from "@/models/TransactionModel";
-import { TransactionType } from "@/models/FlwTransactionModel";
+import Flw_Transaction, { TransactionType } from "@/models/FlwTransactionModel";
 import { Model } from "mongoose";
 
 export class transactionRepository {
   constructor(private readonly transactionModel: Model<TransactionType>) {
-    this.transactionModel = transactionModel;
+    // this.transactionModel = transactionModel;
   }
 
   async findByPaginate(user_id: string, pageNumber: number, limits: number) {
@@ -14,15 +14,19 @@ export class transactionRepository {
       const page = pageNumber;
       const limit = limits;
       const skip = (page - 1) * limit;
-      console.log(user_id);
+      const Transactions = await this.transactionModel.find({
+        "data.tx_ref": { $regex: `^${user_id}/` },
+      });
+      // console.log("from transaction", Transactions);
+      return Transactions;
 
-      const TransactionAggregationPipeline = [
-        {
-          $match: {
-            "data.tx_ref": { $regex: `^${user_id}/` },
-          },
-        },
-      ];
+      // const TransactionAggregationPipeline = [
+      //   {
+      //     $match: {
+      //       "data.tx_ref": { $regex: `^${user_id}/` },
+      //     },
+      //   },
+      // ];
 
       // const TransactionAggregationPipeline = [
       //   {
@@ -56,19 +60,19 @@ export class transactionRepository {
       //   },
       // ];
 
-      const result = await this.transactionModel.aggregate(
-        TransactionAggregationPipeline
-      );
-      console.log("from transaction", result);
-      const totalTransaction =
-        result[0]?.totalTransaction[0]?.totalTransactionCount || 0;
-      const transactionData: TransactionServerResponseType[] =
-        result[0]?.transactionData || [];
+      // const result = await this.transactionModel.aggregate(
+      //   TransactionAggregationPipeline
+      // );
 
-      return {
-        totalCount: totalTransaction,
-        transactionData,
-      };
+      // const totalTransaction =
+      //   result[0]?.totalTransaction[0]?.totalTransactionCount || 0;
+      // const transactionData: TransactionServerResponseType[] =
+      //   result[0]?.transactionData || [];
+
+      // return {
+      //   totalCount: totalTransaction,
+      //   transactionData,
+      // };
     } catch (error) {
       throw new GlobalErrorHandler(
         "Something went wrong",

@@ -3,29 +3,29 @@
 import Button from "@/app/(client)/generic/Button";
 import Input, { SelectInput } from "@/app/(client)/generic/Input";
 import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
+import { TransactionType } from "@/models/FlwTransactionModel";
 import moment from "moment";
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
 interface ITransactionTableProps {
-  data: TransactionServerResponseType[];
+  // data: TransactionServerResponseType[];
+  data: TransactionType[];
 }
 export default function TransactionTable({ data }: ITransactionTableProps) {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [status, setStatus] = useState<string | undefined>(undefined);
 
   const filteredData = data.filter((transaction) => {
-    const matchesName =
-      !search ||
-      String(transaction.orderDetails.customer.name)
-        .toLowerCase()
-        .includes(search.toLowerCase());
+    // const matchesName =
+    //   !search ||
+    //   String(transaction.orderDetails.customer.name)
+    //     .toLowerCase()
+    //     .includes(search.toLowerCase());
     const statusMatch =
-      !status ||
-      transaction.orderDetails.payment.status.toLowerCase() ===
-        status.toLowerCase();
-    console.log(statusMatch, matchesName);
-    return statusMatch && matchesName;
+      !status || transaction.data.status.toLowerCase() === status.toLowerCase();
+    console.log(statusMatch);
+    return statusMatch;
   });
   return (
     <>
@@ -85,25 +85,26 @@ export default function TransactionTable({ data }: ITransactionTableProps) {
           <tbody>
             {filteredData.map((transaction, i) => (
               <tr className="border-b" key={i}>
-                <td className="p-2">{transaction._id}</td>
+                <td className="p-2">{transaction.data.id}</td>
                 <td className="p-2 text-ellipsis w-40">
-                  {transaction.orderDetails.customer.name}
+                  {transaction.data.customer.name}
                 </td>
                 <td className="p-2 text-nowrap">
-                  {moment(transaction.createdAt).format("DD MMM, yyyy")}
+                  {moment(transaction.data.created_at).format("DD MMM, yyyy")}
                 </td>
                 <td className="p-2 text-nowrap">
-                  {transaction.orderDetails.payment.currency}
-                  {transaction.orderDetails.payment.amount}
+                  {transaction.data.currency}
+                  {transaction.data.amount}
                 </td>
-                <td className="p-2">??</td>
+                <td className="p-2">{transaction.data.payment_type}</td>
                 <td className="text-yellow-400 font-semibold">
-                  {transaction.orderDetails.payment.status}
+                  {transaction.data.status}
                 </td>
                 <td>
                   <Button
+                    disabled
                     textContent="View Details"
-                    className="text-blue-600 font-semibold text-nowrap"
+                    className="text-blue-600 font-semibold text-nowrap cursor-not-allowed"
                   />
                 </td>
               </tr>

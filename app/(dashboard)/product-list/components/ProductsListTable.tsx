@@ -2,11 +2,13 @@
 
 import { Images } from "@/app/Images";
 import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
+import { TransactionType } from "@/models/FlwTransactionModel";
 import moment from "moment";
 import Image from "next/image";
 
 interface ProductsListTableProps {
-  data: TransactionServerResponseType[];
+  // data: TransactionServerResponseType[];
+  data: TransactionType[];
 }
 export default function ProductsListTable({ data }: ProductsListTableProps) {
   console.log(data);
@@ -25,46 +27,46 @@ export default function ProductsListTable({ data }: ProductsListTableProps) {
           </tr>
         </thead>
         <tbody className="odd:border-b border-gray-200  p-16">
-          {data.length < 1 ? (
+          {data?.length < 1 ? (
             <tr>
               <td colSpan={7} className="text-center">
                 No data found
               </td>
             </tr>
           ) : (
-            data.map((item, i) => (
+            data?.map((item, i) => (
               <tr key={i} className="odd:bg-white even:bg-gray-100">
                 <td className="p-3 inline-flex gap-2 items-center sm:w-[400px] w-[200px]">
                   <Image
                     src={Images.product6}
                     width={26}
                     height={26}
-                    alt={item.orderDetails.items[0].productName}
+                    alt={""}
                   />
                   <div className="inline-block ">
                     <p className="truncate">
-                      {item.orderDetails.items[0].productName}
+                      {/* {item.orderDetails.items[0].productName} */}
                     </p>
 
                     <p className="truncate text-sm text-gray-500">
-                      {item.orderDetails.items[0].productCategory}
+                      {/* {item.orderDetails.items[0].productCategory} */}
                     </p>
                   </div>
                 </td>
                 <td className="p-3 ">
                   <p className="line-clamp-2 w-[300px]">
-                    {item.orderDetails.items[0].Description}
+                    {/* {item.orderDetails.items[0].Description} */}
                   </p>
                 </td>
                 <td className="p-3">{"??"}</td>
                 <td className="p-3 text-nowrap">
-                  <span className="bg-[#dbf6cb] text-green-700 py-1 px-2 text-sm font-semibold rounded-full">{`${item.orderDetails.payment.currency} ${item.orderDetails.payment.amount}`}</span>
+                  <span className="bg-[#dbf6cb] text-green-700 py-1 px-2 text-sm font-semibold rounded-full">
+                    {`${item.data.currency} ${item.data.amount}`}
+                  </span>
                 </td>
+                <td className="p-3 text-nowrap">{item.data.status}</td>
                 <td className="p-3 text-nowrap">
-                  {item.orderDetails.payment.status}
-                </td>
-                <td className="p-3 text-nowrap">
-                  {moment(item.updatedAt).format("MMM DD YYYY hh:mm")}
+                  {moment(item.data.created_at).format("MMM DD YYYY hh:mm")}
                 </td>
               </tr>
             ))

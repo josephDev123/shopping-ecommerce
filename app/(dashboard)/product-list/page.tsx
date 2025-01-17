@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/NextAuthOption";
 import FilterSection from "./components/FilterSection";
 import ExportSection from "./components/ExportSection";
 import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
+import { TransactionType } from "@/models/FlwTransactionModel";
 
 interface pageProps {
   searchParams: {
@@ -32,7 +33,9 @@ export default async function page({ searchParams }: pageProps) {
   }
 
   const data = await response.json();
-  const result: TransactionServerResponseType[] = data.data.transactionData;
+  // const result: TransactionServerResponseType[] = data.data;
+  const result: TransactionType[] = data.data;
+  console.log(result);
   const totalDocs = data.data.totalCount;
 
   return (

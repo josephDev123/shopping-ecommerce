@@ -4,6 +4,7 @@ import TransactionTable from "./components/TransactionTable";
 import { authOptions } from "@/lib/NextAuthOption";
 import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
 import { Suspense } from "react";
+import { TransactionType } from "@/models/FlwTransactionModel";
 export interface TransactionPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -26,7 +27,7 @@ export default async function page({ searchParams }: TransactionPageProps) {
 
   const data = await response.json();
 
-  const result: TransactionServerResponseType[] = data.data.transactionData;
+  const result: TransactionType[] = data.data;
   const totalTransactionCount = data.data.totalCount;
   // console.log(result);
   return (

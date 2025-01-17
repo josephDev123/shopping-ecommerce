@@ -61,12 +61,12 @@ export default function OrderPageMainWrapper({
       </div>
       <div className="overflow-x-auto flex flex-col w-full h-full">
         <table className="table-auto border-spacing-y-6">
-          <thead>
+          <thead className="bg-gray-200">
             <tr className="">
-              <th className="text-left px-4">ORDER ID</th>
-              <th className="text-left px-4">CREATED</th>
-              <th className="text-left px-4">CUSTOMER</th>
-              <th className="text-left px-4">TOTAL </th>
+              <th className="text-left px-4 py-2">ORDER ID</th>
+              <th className="text-left px-4 py-2">CREATED</th>
+              <th className="text-left px-4 py-2">CUSTOMER</th>
+              <th className="text-left px-4 py-2">TOTAL </th>
               {/* <th className="text-left px-4">PROFIT</th> */}
               {/* <th className="text-left px-4">STATUS</th> */}
               <th className="text-left px-4"></th>

@@ -18,23 +18,24 @@ export async function GET(req: NextRequest) {
     const TransactionServiceInit = new TransactionService(TransactionReposInit);
     const params = new URL(req.url).searchParams;
     const user_id = params.get("user_id") || "";
+
     const page = Number(params.get("page")) || 1;
     const limit = Number(params.get("limit")) || 4;
     // console.log(params);
 
-    const response = await TransactionServiceInit.findByPaginate(
+    const transaction = await TransactionServiceInit.findByPaginate(
       user_id,
       page,
       limit
     );
-    console.log(response);
+    // console.log(transaction);
     return SuccessApiResponseHelper(
-      "order successful",
+      "Transaction successful",
       "TransactionSuccess",
       false,
       "success",
       200,
-      response
+      transaction
     );
   } catch (error) {
     const errorObj = error as GlobalErrorHandler;
