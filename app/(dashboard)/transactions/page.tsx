@@ -27,7 +27,7 @@ export default async function page({ searchParams }: TransactionPageProps) {
 
   const data = await response.json();
 
-  const result: TransactionType[] = data.data;
+  const result: TransactionType[] = data.data.transactionData;
   const totalTransactionCount = data.data.totalCount;
   // console.log(result);
   return (

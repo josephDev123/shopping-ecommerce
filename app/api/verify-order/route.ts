@@ -17,7 +17,7 @@ export async function GET(req: Request) {
     const queryStatus = queryParams.get("status");
     const queryTx_ref = queryParams.get("tx_ref");
     const queryTransaction_id = queryParams.get("transaction_id");
-    // console.log(queryStatus, queryTx_ref, queryTransaction_id);
+    console.log(queryStatus, queryTx_ref, queryTransaction_id);
     if (queryStatus === "successful") {
       const OrderDetails = await OrderModel.findOne({
         tx_ref: queryTx_ref,
@@ -26,7 +26,7 @@ export async function GET(req: Request) {
         id: queryTransaction_id,
       });
 
-      // console.log("verify transaction", response);
+      console.log(OrderDetails, response);
       if (
         response.data.status === "successful" &&
         response.data.amount === OrderDetails.payment.amount &&
