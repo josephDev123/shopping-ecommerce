@@ -22,30 +22,30 @@ export async function GET(req: Request) {
       const OrderDetails = await OrderModel.findOne({
         tx_ref: queryTx_ref,
       });
-      const response = await flw.Transaction.verify({
-        id: queryTransaction_id,
-      });
+      // const response = await flw.Transaction.verify({
+      //   id: queryTransaction_id,
+      // });
 
-      console.log("order", OrderDetails);
-      console.log("response", response);
-      if (
-        response.data.status === "successful" &&
-        response.data.amount === OrderDetails.payment.amount
-        // response.data.currency === "NGN"
-      ) {
-        return NextResponse.json(
-          {
-            message: {
-              message: "Order successful, please wait for confirmation",
-              data: OrderDetails,
-            },
+      // console.log("order", OrderDetails);
+      // console.log("response", response);
+      // if (
+      //   response.data.status === "successful" &&
+      //   response.data.amount === OrderDetails.payment.amount
+      //   // response.data.currency === "NGN"
+      // ) {
+      return NextResponse.json(
+        {
+          message: {
+            message: "Order successful, please wait for confirmation",
+            data: OrderDetails,
           },
-          { status: 200 }
-        );
-      }
-    } else {
-      return NextResponse.json({ message: "order failed" }, { status: 500 });
+        },
+        { status: 200 }
+      );
     }
+    // } else {
+    //   return NextResponse.json({ message: "order failed" }, { status: 500 });
+    // }
   } catch (error) {
     return NextResponse.json(
       { message: "something went wrong" },
