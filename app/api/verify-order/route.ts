@@ -3,9 +3,11 @@ import Flutterwave from "flutterwave-node-v3";
 import { NextResponse } from "next/server";
 import { TransactionModel } from "@/models/TransactionModel";
 import OrderModel, { OrderType } from "@/models/OrderModel";
+import { startDb } from "@/lib/startDb";
 
 export async function GET(req: Request) {
   try {
+    await startDb();
     const flw = new Flutterwave(
       process.env.FLUTTERWAVE_PUBLIC_KEY,
       process.env.FLUTTERWAVE_SECRET_KEY
@@ -17,12 +19,6 @@ export async function GET(req: Request) {
     const queryTransaction_id = queryParams.get("transaction_id");
     // console.log(queryStatus, queryTx_ref, queryTransaction_id);
     if (queryStatus === "successful") {
-      // const transactionDetails = await OrderModel.findOneAndUpdate(
-      //   { tx_ref: queryTx_ref },
-      //   { $set: { "payment.status": "success" } },
-      //   { new: true }
-      // );
-
       const OrderDetails = await OrderModel.findOne({
         tx_ref: queryTx_ref,
       });
@@ -46,10 +42,10 @@ export async function GET(req: Request) {
           { status: 200 }
         );
       } else {
-        return NextResponse.json({ message: "order failed" }, { status: 400 });
+        return NextResponse.json({ message: "order failed" }, { status: 500 });
       }
     } else {
-      return NextResponse.json({ message: "order failed" }, { status: 400 });
+      return NextResponse.json({ message: "order failed" }, { status: 500 });
     }
 
     // return NextResponse.json({ message: "order status" }, { status: 200 });
