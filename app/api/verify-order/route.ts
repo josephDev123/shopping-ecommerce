@@ -26,7 +26,7 @@ export async function GET(req: Request) {
       id: queryTransaction_id,
     });
 
-    console.log("order", OrderDetails);
+    console.log("orders", OrderDetails);
     console.log("response", response);
     if (
       response.data.status === "successful" &&

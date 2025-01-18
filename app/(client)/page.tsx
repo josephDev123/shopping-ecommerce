@@ -7,11 +7,10 @@ import Loading from "./generic/ComponentLoading";
 
 async function getCategory() {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=1&limit=8}`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=1&limit=8`
   );
-  console.log(response);
+
   if (!response.ok) {
-    console.error("Failed to fetch data:", response.statusText);
     <div className="flex flex-col h-56 justify-center items-center ">
       Failed to fetch category data: {response.statusText}
     </div>;
@@ -27,7 +26,6 @@ async function getPaginateProducts() {
   );
 
   if (!response.ok) {
-    // console.error("Failed to fetch data:", response.statusText);
     return (
       <div className="flex flex-col h-56 justify-center items-center ">
         Error fetching data

@@ -7,18 +7,16 @@ import {
   SuccessApiResponseHelper,
 } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
-// import { isDynamicServerError } from "next/dist/client/components/hooks-server-context";
-// import { NextResponse } from "next/server";
 
 // export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
+  const page = new URL(req.url).searchParams.get("page") || 1;
+  const limit = new URL(req.url).searchParams.get("limit") || 4;
   try {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     // const userId = new URL(req.url).searchParams.get("user_id");
-    const page = new URL(req.url).searchParams.get("page") || 1;
-    const limit = new URL(req.url).searchParams.get("limit") || 4;
 
     const formatPage = Number(page);
     const formatLimit = Number(limit);
