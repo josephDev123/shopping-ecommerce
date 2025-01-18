@@ -26,11 +26,12 @@ export async function GET(req: Request) {
         id: queryTransaction_id,
       });
 
-      console.log(OrderDetails, response);
+      console.log("order", OrderDetails);
+      console.log("response", response);
       if (
         response.data.status === "successful" &&
-        response.data.amount === OrderDetails.payment.amount &&
-        response.data.currency === "NGN"
+        response.data.amount === OrderDetails.payment.amount
+        // response.data.currency === "NGN"
       ) {
         return NextResponse.json(
           {
@@ -41,14 +42,10 @@ export async function GET(req: Request) {
           },
           { status: 200 }
         );
-      } else {
-        return NextResponse.json({ message: "order failed" }, { status: 500 });
       }
     } else {
       return NextResponse.json({ message: "order failed" }, { status: 500 });
     }
-
-    // return NextResponse.json({ message: "order status" }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "something went wrong" },
