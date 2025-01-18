@@ -18,21 +18,21 @@ export async function GET(req: Request) {
     const queryTx_ref = queryParams.get("tx_ref");
     const queryTransaction_id = queryParams.get("transaction_id");
     console.log(queryStatus, queryTx_ref, queryTransaction_id);
-    if (queryStatus === "successful") {
-      const OrderDetails = await OrderModel.findOne({
-        tx_ref: queryTx_ref,
-      });
-      // const response = await flw.Transaction.verify({
-      //   id: queryTransaction_id,
-      // });
+    // if (queryStatus === "successful") {
+    const OrderDetails = await OrderModel.findOne({
+      tx_ref: queryTx_ref,
+    });
+    const response = await flw.Transaction.verify({
+      id: queryTransaction_id,
+    });
 
-      // console.log("order", OrderDetails);
-      // console.log("response", response);
-      // if (
-      //   response.data.status === "successful" &&
-      //   response.data.amount === OrderDetails.payment.amount
-      //   // response.data.currency === "NGN"
-      // ) {
+    console.log("order", OrderDetails);
+    console.log("response", response);
+    if (
+      response.data.status === "successful" &&
+      response.data.amount === OrderDetails.payment.amount
+      // response.data.currency === "NGN"
+    ) {
       return NextResponse.json(
         {
           message: {
