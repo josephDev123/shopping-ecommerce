@@ -26,7 +26,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
     "idle" | "success" | "error" | "loading"
   >("idle");
 
-  console.log("data", outcomeTransaction);
+  console.log("datas", outcomeTransaction);
 
   async function verifyOrderSuccess() {
     setStatus("loading");
