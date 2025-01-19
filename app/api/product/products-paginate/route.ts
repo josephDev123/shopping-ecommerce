@@ -7,11 +7,13 @@ import {
   SuccessApiResponseHelper,
 } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
+import { NextRequest } from "next/server";
 
 // export const dynamic = "force-dynamic";
-export async function GET(req: Request) {
-  const page = new URL(req.url).searchParams.get("page") || 1;
-  const limit = new URL(req.url).searchParams.get("limit") || 4;
+export async function GET(req: NextRequest) {
+  const page = req.nextUrl.searchParams.get("page") || 1;
+  const limit = req.nextUrl.searchParams.get("limit") || 4;
+  // console.log(page, limit);
   try {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);

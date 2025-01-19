@@ -1,22 +1,22 @@
 import { useSearchParams } from "next/navigation";
 import Flutterwave from "flutterwave-node-v3";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { TransactionModel } from "@/models/TransactionModel";
 import OrderModel, { OrderType } from "@/models/OrderModel";
 import { startDb } from "@/lib/startDb";
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     await startDb();
     const flw = new Flutterwave(
       process.env.FLUTTERWAVE_PUBLIC_KEY,
       process.env.FLUTTERWAVE_SECRET_KEY
     );
-    const request = new URL(req.url);
-    const queryParams = new URLSearchParams(request.searchParams);
-    const queryStatus = queryParams.get("status");
-    const queryTx_ref = queryParams.get("tx_ref");
-    const queryTransaction_id = queryParams.get("transaction_id");
+    const request = req.nextUrl;
+    // const queryParams = new URLSearchParams(request.searchParams);
+    const queryStatus = request.searchParams.get("status");
+    const queryTx_ref = request.searchParams.get("tx_ref");
+    const queryTransaction_id = request.searchParams.get("transaction_id");
     console.log(queryStatus, queryTx_ref, queryTransaction_id);
     // if (queryStatus === "successful") {
     const OrderDetails = await OrderModel.findOne({
@@ -30,8 +30,8 @@ export async function GET(req: Request) {
     console.log("response", response);
     if (
       response.data.status === "successful" &&
-      response.data.amount === OrderDetails.payment.amount
-      // response.data.currency === "NGN"
+      response.data.amount === OrderDetails.payment.amount &&
+      response.data.currency === "NGN"
     ) {
       return NextResponse.json(
         {

@@ -15,9 +15,9 @@ export async function GET(req: NextRequest) {
     await startDb();
     const CategoryRepoImpl = new categoryRepository(OrderModel, ProductModel);
     const CategoryServiceImpl = new categoryService(CategoryRepoImpl);
-    const page = Number(new URL(req.url).searchParams.get("page")) || 1;
-    const limit = Number(new URL(req.url).searchParams.get("limit")) || 4;
-    // console.log(page, limit);
+    const page = Number(req.nextUrl.searchParams.get("page")) || 1;
+    const limit = Number(req.nextUrl.searchParams.get("limit")) || 4;
+    console.log(page, limit);
     const response = await CategoryServiceImpl.getCategories(page, limit);
 
     return NextResponse.json(

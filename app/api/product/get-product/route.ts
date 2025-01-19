@@ -7,14 +7,15 @@ import {
   SuccessApiResponseHelper,
 } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
+import { NextRequest } from "next/server";
 
 // export const dynamic = "force-dynamic";
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
-    const product_id = new URL(req.url).searchParams.get("product_id");
+    const product_id = req.nextUrl.searchParams.get("product_id");
     const result = await ProductServiceImpl.findById(product_id!);
     // console.log(product_id);
     return SuccessApiResponseHelper(
