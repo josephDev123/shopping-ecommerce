@@ -28,8 +28,8 @@ export async function GET(req: NextRequest) {
       id: queryTransaction_id,
     });
 
-    console.log("orders", OrderDetails);
-    console.log("response", response);
+    // console.log("orders", OrderDetails);
+    // console.log("response", response);
     if (
       response.data.status === "successful" &&
       response.data.amount === OrderDetails.payment.amount &&
@@ -37,10 +37,8 @@ export async function GET(req: NextRequest) {
     ) {
       return NextResponse.json(
         {
-          message: {
-            message: "Order successful, please wait for confirmation",
-            data: OrderDetails,
-          },
+          message: "Order successful, please wait for confirmation",
+          data: OrderDetails,
         },
         { status: 200 }
       );

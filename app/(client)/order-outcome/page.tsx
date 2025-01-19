@@ -1,10 +1,9 @@
-// "use  client";
-
+"use server";
 import { Suspense } from "react";
 import FailedOrder from "./components/FailedOrder";
 import SuccessOrder from "./components/SuccessOrder";
 
-export default function page({
+export default async function page({
   searchParams,
 }: {
   searchParams: { status: string; tx_ref: string; transaction_id: string };
@@ -20,7 +19,9 @@ export default function page({
         }
       >
         {searchParams.status === "cancelled" && <FailedOrder />}
-        {searchParams.status === "successful" && <SuccessOrder />}
+        {searchParams.status === "successful" && (
+          <SuccessOrder queryParam={searchParams} />
+        )}
       </Suspense>
     </section>
   );

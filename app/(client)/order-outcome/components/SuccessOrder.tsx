@@ -8,16 +8,17 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 
-// type SuccessOrderProps = {
-//   queryParam: { status: string; tx_ref: string; transaction_id: string };
-// };
+type SuccessOrderProps = {
+  queryParam: { status: string; tx_ref: string; transaction_id: string };
+};
 
 // { queryParam }: SuccessOrderProps
-export default function SuccessOrder() {
-  const searchParams = useSearchParams();
-  const statuse = searchParams.get("status");
-  const tx_ref = searchParams.get("tx_ref");
-  const transaction_id = searchParams.get("transaction_id");
+export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
+  // const searchParams = useSearchParams();
+  // const statuse = searchParams.get("status");
+  // const tx_ref = searchParams.get("tx_ref");
+  // const transaction_id = searchParams.get("transaction_id");
+  // console.log(statuse, tx_ref, transaction_id);
 
   const [outcomeTransaction, setOutcomeTransaction] =
     useState<transactionOutcomeType>(null!);
@@ -25,7 +26,7 @@ export default function SuccessOrder() {
     "idle" | "success" | "error" | "loading"
   >("idle");
 
-  console.log(outcomeTransaction);
+  console.log("data", outcomeTransaction);
 
   async function verifyOrderSuccess() {
     setStatus("loading");
@@ -34,15 +35,15 @@ export default function SuccessOrder() {
         method: "get",
         url: "api/verify-order",
         params: {
-          // status: queryParam.status,
-          // tx_ref: queryParam.tx_ref,
-          // transaction_id: queryParam.transaction_id,
-          status: statuse,
-          tx_ref: tx_ref,
-          transaction_id: transaction_id,
+          status: queryParam.status,
+          tx_ref: queryParam.tx_ref,
+          transaction_id: queryParam.transaction_id,
+          // status: statuse,
+          // tx_ref: tx_ref,
+          // transaction_id: transaction_id,
         },
       });
-      const data: transactionOutcomeType = await req.data.message.data;
+      const data: transactionOutcomeType = await req.data.data;
       setOutcomeTransaction(data);
       setStatus("success");
     } catch (error) {
@@ -50,11 +51,9 @@ export default function SuccessOrder() {
     }
   }
 
-  // console.log(status, queryParam);
-
   useEffect(() => {
     verifyOrderSuccess();
-  }, []);
+  }, [queryParam.status, queryParam.transaction_id, queryParam.tx_ref]);
 
   return (
     <>
