@@ -5,6 +5,7 @@ import { TransactionModel } from "@/models/TransactionModel";
 import OrderModel, { OrderType } from "@/models/OrderModel";
 import { startDb } from "@/lib/startDb";
 
+// export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   // const request = req.nextUrl;
   // const queryStatus = request.searchParams.get("status");
@@ -35,13 +36,7 @@ export async function GET(req: NextRequest) {
     //   // response.data.amount === OrderDetails.payment.amount &&
     //   response.data.currency === "NGN"
     // ) {
-    return NextResponse.json(
-      {
-        message: "Order successful, please wait for confirmation ...",
-        data: "hello world",
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({ message: "success" }, { status: 200 });
     // }
     // } else {
     //   return NextResponse.json({ message: "order failed" }, { status: 500 });
