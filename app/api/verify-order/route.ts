@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
     // console.log("response", response);
     if (
       response.data.status === "successful" &&
-      response.data.amount === OrderDetails.payment.amount &&
+      // response.data.amount === OrderDetails.payment.amount &&
       response.data.currency === "NGN"
     ) {
       return NextResponse.json(

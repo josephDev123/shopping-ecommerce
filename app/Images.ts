@@ -8,5 +8,5 @@ export const Images = {
   product4: new URL("./assets/png/product4.png", import.meta.url).href,
   product5: new URL("./assets/png/product5.png", import.meta.url).href,
   product6: new URL("./assets/png/product6.png", import.meta.url).href,
-  // productCat3: new URL("./assets/png/productCat3.png", import.meta.url).href,
+  pawPawErrorImg: new URL("./assets/png/pawpawErrorMeme", import.meta.url).href,
 };
