@@ -1,4 +1,3 @@
-"use server";
 import { Suspense } from "react";
 import FailedOrder from "./components/FailedOrder";
 import SuccessOrder from "./components/SuccessOrder";
