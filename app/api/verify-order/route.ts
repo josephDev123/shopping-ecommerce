@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
     // ) {
     return NextResponse.json(
       {
-        message: "Order successful, please wait for confirmation",
+        message: "Order successful, please wait for confirmation ...",
         data: "hello",
       },
       { status: 200 }
