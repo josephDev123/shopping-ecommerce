@@ -14,11 +14,16 @@ export default function GlobalError({
     <html>
       <body className="h-full flex flex-col items-center justify-center">
         {/* <div> */}
-        <Image src={Images.pawPawErrorImg} alt="error" />
+        <Image src={Images.pawPawErrorImg} alt="error" className="size-80" />
         {/* </div> */}
 
         <h2>Something went wrong!</h2>
-        <button onClick={() => reset()}>Try again</button>
+        <button
+          className="p-1 rounded-md bg-red-300 text-white"
+          onClick={() => reset()}
+        >
+          Try again
+        </button>
       </body>
     </html>
   );
