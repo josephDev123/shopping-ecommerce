@@ -44,6 +44,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
         },
       });
       const data: transactionOutcomeType = await req.data.data;
+      console.log("data", data);
       setOutcomeTransaction(data);
       setStatus("success");
     } catch (error) {
@@ -90,18 +91,20 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
                 <tr>
                   <td className="font-bold">Address</td>
                   <td className="px-4">
-                    {outcomeTransaction.customer?.address}
+                    {outcomeTransaction?.customer?.address}
                   </td>
                 </tr>
                 <tr>
                   <td className="font-bold">Phone</td>
                   <td className="px-4">
-                    {outcomeTransaction.customer?.phonenumber}
+                    {outcomeTransaction?.customer?.phonenumber}
                   </td>
                 </tr>
                 <tr>
                   <td className="font-bold">Email</td>
-                  <td className="px-4">{outcomeTransaction.customer?.email}</td>
+                  <td className="px-4">
+                    {outcomeTransaction?.customer?.email}
+                  </td>
                 </tr>
               </table>
             </div>
@@ -123,7 +126,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
                 <div className="flex  flex-col leading-tight  p-3 sm:border-r-2  border-gray-500">
                   <h1 className="text-gray-700">Date</h1>
                   <p className="font-semibold">
-                    {moment(String(outcomeTransaction.createdAt)).format(
+                    {moment(String(outcomeTransaction?.createdAt)).format(
                       "DD MMM YYYY"
                     )}
                   </p>
@@ -132,7 +135,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
                 <div className="flex  flex-col leading-tight  p-3 sm:border-r-2  border-gray-500">
                   <h1 className="text-gray-700">Order Number</h1>
                   <p className="font-semibold break-words">
-                    {outcomeTransaction.tx_ref}
+                    {outcomeTransaction?.tx_ref}
                   </p>
                 </div>
                 <p className="bg-gray-500 w-full h-[0.5px] mb-3 sm:hidden block"></p>
@@ -152,27 +155,33 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
               <div className="flex justify-between p-3">
                 <div className="flex min-[375px]:flex-row flex-col gap-3">
                   <div className="relative block size-28">
-                    <Image
-                      className="rounded-lg"
-                      src={outcomeTransaction.items[0].productImgUrl[0].url}
-                      alt="item"
-                      fill
-                    />
+                    {outcomeTransaction?.items?.[0]?.productImgUrl?.[0]?.url ? (
+                      <Image
+                        className="rounded-lg"
+                        src={
+                          outcomeTransaction.items[0].productImgUrl[0].url || ""
+                        }
+                        alt="item"
+                        fill
+                      />
+                    ) : (
+                      <span>No Image Available</span>
+                    )}
                   </div>
                   <div className="flex  flex-col">
                     <h2 className="font-semibold">
-                      {outcomeTransaction.items[0].productName}
+                      {outcomeTransaction?.items[0]?.productName}
                     </h2>
                     <small>
-                      Pack: {outcomeTransaction.items[0].productItemWeight}
+                      Pack: {outcomeTransaction?.items[0]?.productItemWeight}
                     </small>
-                    <small>Qty: {outcomeTransaction.items[0].qty}</small>
+                    <small>Qty: {outcomeTransaction?.items[0]?.qty}</small>
                   </div>
                 </div>
 
                 <strong>
-                  {outcomeTransaction.payment.currency}
-                  {outcomeTransaction.payment.amount}
+                  {outcomeTransaction?.payment?.currency}
+                  {outcomeTransaction?.payment?.amount}
                 </strong>
               </div>
               <p className="bg-gray-500 w-full h-[0.5px] mb-3"></p>
@@ -182,15 +191,15 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
                     <tr className="flex justify-between">
                       <td>Sub Total</td>
                       <td>
-                        {outcomeTransaction.payment.currency}{" "}
-                        {outcomeTransaction.payment.amount}
+                        {outcomeTransaction?.payment?.currency}{" "}
+                        {outcomeTransaction?.payment?.amount}
                       </td>
                     </tr>
                     <tr className="flex justify-between">
                       <td>Shipping</td>
                       <td>
-                        {outcomeTransaction.payment.currency}{" "}
-                        {outcomeTransaction.payment.amount}
+                        {outcomeTransaction?.payment?.currency}{" "}
+                        {outcomeTransaction?.payment?.amount}
                       </td>
                     </tr>
                     <tr className="flex justify-between">
@@ -206,8 +215,8 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
               <div className="p-3 flex items-center justify-between">
                 <span className="text-xl font-bold">Order Total</span>{" "}
                 <span className="text-xl font-bold">
-                  {outcomeTransaction.payment.currency}{" "}
-                  {outcomeTransaction.payment.amount}
+                  {outcomeTransaction?.payment?.currency}{" "}
+                  {outcomeTransaction?.payment?.amount}
                 </span>
               </div>
             </div>
