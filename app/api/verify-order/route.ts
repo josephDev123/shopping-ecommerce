@@ -21,28 +21,28 @@ export async function GET(req: NextRequest) {
 
     console.log(queryStatus, queryTx_ref, queryTransaction_id);
     // if (queryStatus === "successful") {
-    const OrderDetails = await OrderModel.findOne({
-      tx_ref: queryTx_ref,
-    });
-    const response = await flw.Transaction.verify({
-      id: queryTransaction_id,
-    });
+    // const OrderDetails = await OrderModel.findOne({
+    //   tx_ref: queryTx_ref,
+    // });
+    // const response = await flw.Transaction.verify({
+    //   id: queryTransaction_id,
+    // });
 
     // console.log("orders", OrderDetails);
     // console.log("response", response);
-    if (
-      response.data.status === "successful" &&
-      // response.data.amount === OrderDetails.payment.amount &&
-      response.data.currency === "NGN"
-    ) {
-      return NextResponse.json(
-        {
-          message: "Order successful, please wait for confirmation",
-          data: OrderDetails,
-        },
-        { status: 200 }
-      );
-    }
+    // if (
+    //   response.data.status === "successful" &&
+    //   // response.data.amount === OrderDetails.payment.amount &&
+    //   response.data.currency === "NGN"
+    // ) {
+    return NextResponse.json(
+      {
+        message: "Order successful, please wait for confirmation",
+        data: "hello",
+      },
+      { status: 200 }
+    );
+    // }
     // } else {
     //   return NextResponse.json({ message: "order failed" }, { status: 500 });
     // }
