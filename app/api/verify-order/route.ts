@@ -17,8 +17,17 @@ export async function GET(req: NextRequest) {
       process.env.FLUTTERWAVE_PUBLIC_KEY,
       process.env.FLUTTERWAVE_SECRET_KEY
     );
-
-    // const queryParams = new URLSearchParams(request.searchParams);
+    return NextResponse.json(
+      {
+        message: "success",
+        data: {
+          queryStatus,
+          queryTx_ref,
+          queryTransaction_id,
+        },
+      },
+      { status: 200 }
+    );
 
     // console.log(queryStatus, queryTx_ref, queryTransaction_id);
     if (queryStatus === "successful") {
@@ -31,19 +40,7 @@ export async function GET(req: NextRequest) {
 
       console.log("orders", OrderDetails);
       console.log("response", response);
-      return NextResponse.json(
-        {
-          message: "success",
-          data: {
-            // queryStatus,
-            // queryTx_ref,
-            // queryTransaction_id,
-            // OrderDetails,
-            message: "sucess",
-          },
-        },
-        { status: 200 }
-      );
+
       // if (
       //   response.data.status === "successful" &&
       //   response.data.amount === OrderDetails.payment.amount &&
