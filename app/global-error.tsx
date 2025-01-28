@@ -14,7 +14,7 @@ export default function GlobalError({
     <html>
       <body className="h-full flex flex-col items-center justify-center">
         {/* <div> */}
-        <Image src={Images.pawPawErrorImg} alt="error" className="size-80" />
+        {/* <Image src={Images.pawPawErrorImg} alt="error" className="size-80" /> */}
         {/* </div> */}
 
         <h2>Something went wrong!</h2>
