@@ -82,7 +82,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
             </p>
 
             <h1 className="text-xl font-bold">Billing Address</h1>
-            <div className="w-full overflow-x-auto">
+            {/* <div className="w-full overflow-x-auto">
               <table className="table-fixed">
                 <tr className="">
                   <td className="font-bold">Name</td>
@@ -107,7 +107,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
                   </td>
                 </tr>
               </table>
-            </div>
+            </div> */}
 
             <button
               type="button"
