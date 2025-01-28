@@ -29,6 +29,7 @@ export default async function page({
           <SuccessOrder queryParam={searchParams} />
         )} */}
         {/* {JSON.stringify(result)} */}
+        {JSON.stringify(process.env.NEXT_PUBLIC_BASEURL)}
         {JSON.stringify(searchParams.status)}
         {JSON.stringify(searchParams.tx_ref)}
         {JSON.stringify(searchParams.transaction_id)}
