@@ -58,7 +58,8 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
 
   return (
     <>
-      {status === "error" ? (
+      {JSON.stringify(outcomeTransaction)}
+      {/* {status === "error" ? (
         <div className="w-full h-56 flex flex-col items-center justify-center p-3">
           Something went wrong
         </div>
@@ -220,7 +221,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
         </section>
       ) : (
         ""
-      )}
+      )} */}
     </>
   );
 }
