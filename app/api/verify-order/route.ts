@@ -29,15 +29,22 @@ export async function GET(req: NextRequest) {
         id: queryTransaction_id,
       });
 
-      // console.log("orders", OrderDetails);
-      // console.log("response", response);
+      console.log("orders", OrderDetails);
+      console.log("response", response);
       if (
         response.data.status === "successful" &&
         response.data.amount === OrderDetails.payment.amount &&
         response.data.currency === "NGN"
       ) {
         return NextResponse.json(
-          { message: "success", data: OrderDetails },
+          {
+            message: "success",
+            data: {
+              queryStatus,
+              queryTx_ref,
+              queryTransaction_id,
+            },
+          },
           { status: 200 }
         );
       } else {
