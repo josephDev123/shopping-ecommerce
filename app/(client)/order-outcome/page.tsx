@@ -22,7 +22,7 @@ export default async function page({
           <SuccessOrder queryParam={searchParams} />
         )} */}
 
-        <p className="text-center p-2">hello outcome</p>
+        <p className="text-center p-2">hello outcome {searchParams.status}</p>
       </Suspense>
     </section>
   );
