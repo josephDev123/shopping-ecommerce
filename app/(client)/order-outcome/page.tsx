@@ -7,13 +7,13 @@ export default async function page({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  // const response = await fetch(
-  //   `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`
-  // );
-  // if (!response.ok) {
-  //   return "error occur";
-  // }
-  // const result = await response.json();
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASEURL}api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`
+  );
+  if (!response.ok) {
+    return "error occur";
+  }
+  const result = await response.json();
   return (
     // <Suspense fallback="suspense Loading ...">
     <section className="flex flex-col h-full w-full">
@@ -28,7 +28,7 @@ export default async function page({
         {/* {searchParams.status === "successful" && (
           <SuccessOrder queryParam={searchParams} />
         )} */}
-        {/* {JSON.stringify(result)} */}
+        {JSON.stringify(result)}
         {JSON.stringify(process.env.NEXT_PUBLIC_BASEURL)}
         {JSON.stringify(searchParams.status)}
         {JSON.stringify(searchParams.tx_ref)}
