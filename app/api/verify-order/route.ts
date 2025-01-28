@@ -35,10 +35,11 @@ export async function GET(req: NextRequest) {
         {
           message: "success",
           data: {
-            queryStatus,
-            queryTx_ref,
-            queryTransaction_id,
-            OrderDetails,
+            // queryStatus,
+            // queryTx_ref,
+            // queryTransaction_id,
+            // OrderDetails,
+            message: "sucess",
           },
         },
         { status: 200 }
