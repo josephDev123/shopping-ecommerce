@@ -31,28 +31,40 @@ export async function GET(req: NextRequest) {
 
       console.log("orders", OrderDetails);
       console.log("response", response);
-      if (
-        response.data.status === "successful" &&
-        response.data.amount === OrderDetails.payment.amount &&
-        response.data.currency === "NGN"
-      ) {
-        return NextResponse.json(
-          {
-            message: "success",
-            data: {
-              queryStatus,
-              queryTx_ref,
-              queryTransaction_id,
-            },
+      return NextResponse.json(
+        {
+          message: "success",
+          data: {
+            queryStatus,
+            queryTx_ref,
+            queryTransaction_id,
+            OrderDetails,
           },
-          { status: 200 }
-        );
-      } else {
-        return NextResponse.json(
-          { message: "order has credibility issue" },
-          { status: 500 }
-        );
-      }
+        },
+        { status: 200 }
+      );
+      // if (
+      //   response.data.status === "successful" &&
+      //   response.data.amount === OrderDetails.payment.amount &&
+      //   response.data.currency === "NGN"
+      // ) {
+      //   return NextResponse.json(
+      //     {
+      //       message: "success",
+      //       data: {
+      //         queryStatus,
+      //         queryTx_ref,
+      //         queryTransaction_id,
+      //       },
+      //     },
+      //     { status: 200 }
+      //   );
+      // } else {
+      //   return NextResponse.json(
+      //     { message: "order has credibility issue" },
+      //     { status: 500 }
+      //   );
+      // }
     }
   } catch (error) {
     return NextResponse.json(
