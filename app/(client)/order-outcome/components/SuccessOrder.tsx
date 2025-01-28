@@ -43,7 +43,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
           // transaction_id: transaction_id,
         },
       });
-      const data: transactionOutcomeType = await req.data.data;
+      const data: transactionOutcomeType = await req.data;
       console.log("data", data);
       setOutcomeTransaction(data);
       setStatus("success");
