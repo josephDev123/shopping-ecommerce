@@ -17,10 +17,10 @@ export default async function page({
           </p>
         }
       >
-        {/* {searchParams.status === "cancelled" && <FailedOrder />}
+        {/* {searchParams.status === "cancelled" && <FailedOrder />}*/}
         {searchParams.status === "successful" && (
           <SuccessOrder queryParam={searchParams} />
-        )} */}
+        )}
 
         <p className="text-center p-2">hello outcome {searchParams.status}</p>
       </Suspense>
