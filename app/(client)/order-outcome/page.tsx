@@ -29,6 +29,9 @@ export default async function page({
           <SuccessOrder queryParam={searchParams} />
         )} */}
         {JSON.stringify(result)}
+        {JSON.stringify(searchParams.status)}
+        {JSON.stringify(searchParams.tx_ref)}
+        {JSON.stringify(searchParams.transaction_id)}
         {/* <p className="text-center p-2">hello outcome {searchParams.status}</p> */}
       </Suspense>
     </section>
