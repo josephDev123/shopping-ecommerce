@@ -72,7 +72,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
             <h2 className="text-4xl font-bold">Thank you for the purchase!</h2>
             <p>
               We sent a confirmation email at{" "}
-              {outcomeTransaction.customer.email}. Below you wll find all
+              {/* {outcomeTransaction.customer.email}. Below you wll find all */}
               information about your order.
             </p>
             <p>
