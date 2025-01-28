@@ -58,11 +58,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
 
   return (
     <>
-      {status === "loading" ? (
-        <div className=" w-full h-56 flex flex-col items-center justify-center p-3">
-          Loading ...
-        </div>
-      ) : status === "error" ? (
+      {status === "error" ? (
         <div className="w-full h-56 flex flex-col items-center justify-center p-3">
           Something went wrong
         </div>
@@ -72,7 +68,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
             <h2 className="text-4xl font-bold">Thank you for the purchase!</h2>
             <p>
               We sent a confirmation email at{" "}
-              {/* {outcomeTransaction.customer.email}. Below you wll find all */}
+              {outcomeTransaction.customer.email}. Below you wll find all
               information about your order.
             </p>
             <p>
@@ -117,7 +113,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
               Track Your Order
             </button>
           </div>
-          {/* <div className="flex flex-col">
+          <div className="flex flex-col">
             <div className="rounded-full h-8 w-full bg-gray-300 translate-y-4 -z-10"></div>
             <div className="bg-gray-200 flex flex-col sm:w-[95%] mx-auto">
               <h2 className="text-2xl font-bold p-3">Order Summary</h2>
@@ -220,7 +216,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
                 </span>
               </div>
             </div>
-          </div> */}
+          </div>
         </section>
       ) : (
         ""
