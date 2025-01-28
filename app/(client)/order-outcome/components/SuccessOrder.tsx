@@ -113,7 +113,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
               Track Your Order
             </button>
           </div>
-          {/* <div className="flex flex-col">
+          <div className="flex flex-col">
             <div className="rounded-full h-8 w-full bg-gray-300 translate-y-4 -z-10"></div>
             <div className="bg-gray-200 flex flex-col sm:w-[95%] mx-auto">
               <h2 className="text-2xl font-bold p-3">Order Summary</h2>
@@ -216,7 +216,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
                 </span>
               </div>
             </div>
-          </div> */}
+          </div>
         </section>
       ) : (
         ""
