@@ -58,7 +58,8 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
 
   return (
     <>
-      {status === "loading" ? (
+      success
+      {/* {status === "loading" ? (
         <div className=" w-full h-56 flex flex-col items-center justify-center p-3">
           Loading ...
         </div>
@@ -224,7 +225,7 @@ export default function SuccessOrder({ queryParam }: SuccessOrderProps) {
         </section>
       ) : (
         ""
-      )}
+      )} */}
     </>
   );
 }
