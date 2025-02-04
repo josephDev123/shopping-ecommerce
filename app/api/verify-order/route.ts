@@ -12,11 +12,11 @@ export async function GET(req: NextRequest) {
   // const queryTx_ref = request.searchParams.get("tx_ref");
   // const queryTransaction_id = request.searchParams.get("transaction_id");
   try {
-    await startDb();
-    const flw = new Flutterwave(
-      process.env.FLUTTERWAVE_PUBLIC_KEY,
-      process.env.FLUTTERWAVE_SECRET_KEY
-    );
+    // await startDb();
+    // const flw = new Flutterwave(
+    //   process.env.FLUTTERWAVE_PUBLIC_KEY,
+    //   process.env.FLUTTERWAVE_SECRET_KEY
+    // );
 
     // console.log(queryStatus, queryTx_ref, queryTransaction_id);
     return NextResponse.json(
