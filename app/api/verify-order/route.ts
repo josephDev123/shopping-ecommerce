@@ -19,15 +19,9 @@ export async function GET(req: NextRequest) {
     // );
 
     // console.log(queryStatus, queryTx_ref, queryTransaction_id);
-    return NextResponse.json(
-      {
-        message: "success",
-        data: {
-          data: "heo",
-        },
-      },
-      { status: 200 }
-    );
+    return Response.json({
+      data: "hello",
+    });
     // if (queryStatus === "successful") {
     //   const OrderDetails = await OrderModel.findOne({
     //     tx_ref: queryTx_ref,
@@ -64,9 +58,6 @@ export async function GET(req: NextRequest) {
     // }
     // }
   } catch (error) {
-    return NextResponse.json(
-      { message: "something went wrong" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "something went wrong" });
   }
 }
