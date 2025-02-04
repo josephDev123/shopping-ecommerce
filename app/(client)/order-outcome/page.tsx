@@ -8,7 +8,7 @@ export default async function page({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`
   );
   if (!response.ok) {
     return (
