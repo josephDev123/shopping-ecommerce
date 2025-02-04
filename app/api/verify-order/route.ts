@@ -8,10 +8,10 @@ import { startDb } from "@/lib/startDb";
 export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
-    const request = req.nextUrl;
-    const queryStatus = request.searchParams.get("status");
-    const queryTx_ref = request.searchParams.get("tx_ref");
-    const queryTransaction_id = request.searchParams.get("transaction_id");
+    const request = req.nextUrl.searchParams;
+    const queryStatus = request.get("status");
+    const queryTx_ref = request.get("tx_ref");
+    const queryTransaction_id = request.get("transaction_id");
     await startDb();
     const flw = new Flutterwave(
       process.env.FLUTTERWAVE_PUBLIC_KEY,
@@ -55,6 +55,6 @@ export async function GET(req: NextRequest) {
     // }
     // }
   } catch (error) {
-    return Response.json({ message: error });
+    return Response.json({ error });
   }
 }
