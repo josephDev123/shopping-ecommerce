@@ -13,7 +13,7 @@ export default async function page({
   if (!response.ok) {
     return (
       <div className="h-42 flex flex-col justify-center items-center">
-        error occurs
+        error occur
       </div>
     );
   }
