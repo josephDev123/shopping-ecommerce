@@ -8,10 +8,14 @@ export default async function page({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`
+    `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order`
   );
   if (!response.ok) {
-    return "error occur";
+    return (
+      <div className="h-42 flex flex-col justify-center items-center">
+        error occur
+      </div>
+    );
   }
   const result = await response.json();
   return (
@@ -29,10 +33,10 @@ export default async function page({
           <SuccessOrder queryParam={searchParams} />
         )} */}
         {JSON.stringify(result)}
-        {JSON.stringify(process.env.NEXT_PUBLIC_BASEURL)}
+        {/* {JSON.stringify(process.env.NEXT_PUBLIC_BASEURL)}
         {JSON.stringify(searchParams.status)}
         {JSON.stringify(searchParams.tx_ref)}
-        {JSON.stringify(searchParams.transaction_id)}
+        {JSON.stringify(searchParams.transaction_id)} */}
         {/* <p className="text-center p-2">hello outcome {searchParams.status}</p> */}
       </Suspense>
     </section>
