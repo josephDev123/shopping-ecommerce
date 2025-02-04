@@ -18,41 +18,42 @@ export async function GET(req: NextRequest) {
       process.env.FLUTTERWAVE_SECRET_KEY
     );
 
-    // console.log(queryStatus, queryTx_ref, queryTransaction_id);
-    // return Response.json({
-    //   data: "hello",
+    const OrderDetails = await OrderModel.findOne({
+      tx_ref: queryTx_ref,
+    });
+
+    return Response.json({
+      data: OrderDetails,
+    });
+
+    // if (queryStatus === "successful") {
+    //   const OrderDetails = await OrderModel.findOne({
+    //     tx_ref: queryTx_ref,
+    //   });
+
+    // const response = await flw.Transaction.verify({
+    //   id: queryTransaction_id,
     // });
-    if (queryStatus === "successful") {
-      const OrderDetails = await OrderModel.findOne({
-        tx_ref: queryTx_ref,
-      });
 
-      return Response.json({
-        data: OrderDetails,
-      });
-      // const response = await flw.Transaction.verify({
-      //   id: queryTransaction_id,
-      // });
-
-      // if (
-      //   response.data.status === "successful" &&
-      //   response.data.amount === OrderDetails.payment.amount &&
-      //   response.data.currency === "NGN"
-      // ) {
-      //   return Response.json(
-      //     {
-      //       // message: "success",
-      //       data: OrderDetails,
-      //     }
-      //     // { status: 200 }
-      //   );
-      // } else {
-      //   return Response.json(
-      //     { message: "order has credibility issue" }
-      //     // { status: 500 }
-      //   );
-      // }
-    }
+    // if (
+    //   response.data.status === "successful" &&
+    //   response.data.amount === OrderDetails.payment.amount &&
+    //   response.data.currency === "NGN"
+    // ) {
+    //   return Response.json(
+    //     {
+    //       // message: "success",
+    //       data: OrderDetails,
+    //     }
+    //     // { status: 200 }
+    //   );
+    // } else {
+    //   return Response.json(
+    //     { message: "order has credibility issue" }
+    //     // { status: 500 }
+    //   );
+    // }
+    // }
   } catch (error) {
     return Response.json({ message: error });
   }
