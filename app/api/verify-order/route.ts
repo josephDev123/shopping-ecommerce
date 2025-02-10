@@ -1,11 +1,11 @@
 import { useSearchParams } from "next/navigation";
 import Flutterwave from "flutterwave-node-v3";
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest } from "next/server";
 import { TransactionModel } from "@/models/TransactionModel";
 import OrderModel, { OrderType } from "@/models/OrderModel";
 import { startDb } from "@/lib/startDb";
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     const request = req.nextUrl.searchParams;
