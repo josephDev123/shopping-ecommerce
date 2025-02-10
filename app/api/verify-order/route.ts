@@ -8,8 +8,8 @@ import { startDb } from "@/lib/startDb";
 export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
-    // const request = req.nextUrl.searchParams;
-    const { searchParams } = new URL(req.url);
+    const searchParams = req.nextUrl.searchParams;
+    // const { searchParams } = new URL(req.url);
     const queryStatus = searchParams.get("status");
     const queryTx_ref = searchParams.get("tx_ref");
     const queryTransaction_id = searchParams.get("transaction_id");
