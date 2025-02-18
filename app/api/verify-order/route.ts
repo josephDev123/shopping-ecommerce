@@ -9,25 +9,29 @@ export async function GET(req: NextRequest) {
   try {
     await startDb();
     const searchParams = req.nextUrl.searchParams;
-    // const queryStatus = searchParams.get("status");
+    const queryStatus = searchParams.get("status");
     const queryTx_ref = searchParams.get("tx_ref");
-    // const queryTransaction_id = searchParams.get("transaction_id");
+    const queryTransaction_id = searchParams.get("transaction_id");
 
     // const flw = new Flutterwave(
     //   process.env.FLUTTERWAVE_PUBLIC_KEY!,
     //   process.env.FLUTTERWAVE_SECRET_KEY!
     // );
+    // console.log(
+    //   process.env.FLUTTERWAVE_PUBLIC_KEY!,
+    //   process.env.FLUTTERWAVE_SECRET_KEY!
+    // );
 
-    const OrderDetails = await OrderModel.findOne({
-      tx_ref: queryTx_ref,
-    });
+    // const OrderDetails = await OrderModel.findOne({
+    //   tx_ref: queryTx_ref,
+    // });
 
-    return Response.json(
-      {
-        data: OrderDetails,
-      },
-      { status: 200 }
-    );
+    // return Response.json(
+    //   {
+    //     data: OrderDetails,
+    //   },
+    //   { status: 200 }
+    // );
 
     // if (queryStatus === "successful") {
     //   const OrderDetails = await OrderModel.findOne({
@@ -43,20 +47,22 @@ export async function GET(req: NextRequest) {
     //   response.data.amount === OrderDetails.payment.amount &&
     //   response.data.currency === "NGN"
     // ) {
-    //   return Response.json(
-    //     {
-    //       // message: "success",
-    //       data: OrderDetails,
-    //     }
-    //     // { status: 200 }
-    //   );
-    // } else {
-    //   return Response.json(
-    //     { message: "order has credibility issue" }
-    //     // { status: 500 }
-    //   );
-    // }
-    // }
+    if (queryStatus === "successful") {
+      const OrderDetails = await OrderModel.findOne({
+        tx_ref: queryTx_ref,
+      });
+      return Response.json(
+        {
+          data: OrderDetails,
+        },
+        { status: 200 }
+      );
+    } else {
+      return Response.json(
+        { message: "order has credibility issue" },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     return Response.json({ error: error }, { status: 500 });
   }
