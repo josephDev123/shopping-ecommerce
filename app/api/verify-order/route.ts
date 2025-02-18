@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     await startDb();
-    // const searchParams = req.nextUrl.searchParams;
+    const searchParams = req.nextUrl.searchParams;
     // const queryStatus = searchParams.get("status");
-    // const queryTx_ref = searchParams.get("tx_ref");
+    const queryTx_ref = searchParams.get("tx_ref");
     // const queryTransaction_id = searchParams.get("transaction_id");
 
     // const flw = new Flutterwave(
@@ -18,13 +18,13 @@ export async function GET(req: NextRequest) {
     //   process.env.FLUTTERWAVE_SECRET_KEY!
     // );
 
-    // const OrderDetails = await OrderModel.findOne({
-    //   tx_ref: queryTx_ref,
-    // });
+    const OrderDetails = await OrderModel.findOne({
+      tx_ref: queryTx_ref,
+    });
 
     return Response.json(
       {
-        data: "data from api",
+        data: OrderDetails,
       },
       { status: 200 }
     );
