@@ -8,12 +8,13 @@ import { startDb } from "@/lib/startDb";
 export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
+    await startDb();
     const searchParams = req.nextUrl.searchParams;
     // const { searchParams } = new URL(req.url);
     const queryStatus = searchParams.get("status");
     const queryTx_ref = searchParams.get("tx_ref");
     const queryTransaction_id = searchParams.get("transaction_id");
-    await startDb();
+
     const flw = new Flutterwave(
       process.env.FLUTTERWAVE_PUBLIC_KEY,
       process.env.FLUTTERWAVE_SECRET_KEY
