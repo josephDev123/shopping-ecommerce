@@ -20,12 +20,12 @@ export async function GET(req: NextRequest) {
       process.env.FLUTTERWAVE_SECRET_KEY
     );
 
-    const OrderDetails = await OrderModel.findOne({
-      tx_ref: queryTx_ref,
-    });
+    // const OrderDetails = await OrderModel.findOne({
+    //   tx_ref: queryTx_ref,
+    // });
 
     return Response.json({
-      data: OrderDetails,
+      data: "data",
     });
 
     // if (queryStatus === "successful") {
