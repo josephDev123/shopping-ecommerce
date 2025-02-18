@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     // });
 
     return Response.json({
-      data: "data",
+      data: "data from api",
     });
 
     // if (queryStatus === "successful") {
@@ -57,6 +57,6 @@ export async function GET(req: NextRequest) {
     // }
     // }
   } catch (error) {
-    return Response.json({ error });
+    return Response.json({ error: error });
   }
 }
