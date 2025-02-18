@@ -1,4 +1,3 @@
-import { useSearchParams } from "next/navigation";
 import Flutterwave from "flutterwave-node-v3";
 import { type NextRequest } from "next/server";
 import { TransactionModel } from "@/models/TransactionModel";
@@ -8,7 +7,7 @@ import { startDb } from "@/lib/startDb";
 export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
-    await startDb();
+    // await startDb();
     const searchParams = req.nextUrl.searchParams;
     // const { searchParams } = new URL(req.url);
     const queryStatus = searchParams.get("status");
@@ -16,6 +15,11 @@ export async function GET(req: NextRequest) {
     const queryTransaction_id = searchParams.get("transaction_id");
 
     const flw = new Flutterwave(
+      process.env.FLUTTERWAVE_PUBLIC_KEY,
+      process.env.FLUTTERWAVE_SECRET_KEY
+    );
+
+    console.log(
       process.env.FLUTTERWAVE_PUBLIC_KEY,
       process.env.FLUTTERWAVE_SECRET_KEY
     );

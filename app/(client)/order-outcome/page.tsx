@@ -15,21 +15,46 @@ export default async function page({
     "idle"
   );
 
+  // const memoOrderData = useCallback(
+  //   async function OrderData() {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id=${searchParams.transaction_id}`
+  //     );
+  //     setStatus("loading");
+  //     if (!response.ok) {
+  //       setStatus("error");
+  //     }
+  //     const result = await response.json();
+  //     setStatus("data");
+  //     setData(result);
+  //   },
+  //   [searchParams.status, searchParams.tx_ref, searchParams.transaction_id]
+  // );
+
   const memoOrderData = useCallback(
     async function OrderData() {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`
-      );
       setStatus("loading");
-      if (!response.ok) {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id=${searchParams.transaction_id}`
+        );
+
+        if (!response.ok) throw new Error("API request failed");
+
+        const result = await response.json();
+        setData(result);
+        setStatus("data");
+      } catch (error) {
+        console.error("Error fetching order data:", error);
         setStatus("error");
       }
-      const result = await response.json();
-      setStatus("data");
-      setData(result);
     },
     [searchParams.status, searchParams.tx_ref, searchParams.transaction_id]
   );
+
+  useEffect(() => {
+    memoOrderData();
+  }, [memoOrderData]);
 
   useEffect(() => {
     memoOrderData();
