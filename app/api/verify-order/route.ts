@@ -28,9 +28,12 @@ export async function GET(req: NextRequest) {
     //   tx_ref: queryTx_ref,
     // });
 
-    return Response.json({
-      data: "data from api",
-    });
+    return Response.json(
+      {
+        data: "data from api",
+      },
+      { status: 200 }
+    );
 
     // if (queryStatus === "successful") {
     //   const OrderDetails = await OrderModel.findOne({
@@ -61,6 +64,6 @@ export async function GET(req: NextRequest) {
     // }
     // }
   } catch (error) {
-    return Response.json({ error: error });
+    return Response.json({ error: error }, { status: 500 });
   }
 }
