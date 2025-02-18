@@ -4,13 +4,15 @@ import { Suspense, useCallback, useEffect, useState } from "react";
 import FailedOrder from "./components/FailedOrder";
 import SuccessOrder from "./components/SuccessOrder";
 import { useSearchParams } from "next/navigation";
+import { transactionOutcomeType } from "@/app/types/transactionOutcomeType";
+import ComponentLoading from "../generic/ComponentLoading";
 
 export default async function page({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const [data, setData] = useState<Record<string, string | number>>({});
+  const [data, setData] = useState<transactionOutcomeType>(null!);
   const [status, setStatus] = useState<"idle" | "loading" | "data" | "error">(
     "idle"
   );
@@ -42,7 +44,8 @@ export default async function page({
         if (!response.ok) throw new Error("API request failed");
 
         const result = await response.json();
-        setData(result);
+        setData(result.data);
+
         setStatus("data");
       } catch (error) {
         console.error("Error fetching order data:", error);
@@ -60,6 +63,8 @@ export default async function page({
     memoOrderData();
   }, [memoOrderData]);
 
+  console.log(data);
+
   // [searchParams.status, searchParams.tx_ref, searchParams.transaction_id]
   // const response = await fetch(
   //   `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`
@@ -73,27 +78,19 @@ export default async function page({
   // }
   // const result = await response.json();
   return (
-    // <Suspense fallback="suspense Loading ...">
     <section className="flex flex-col h-full w-full">
-      {/* <Suspense
-        fallback={
-          <p className="flex flex-col justify-center items-center h-56">
-            Loading ...
-          </p>
-        }
-      > */}
-      {/* {searchParams.status === "cancelled" && <FailedOrder />}*/}
-      {/* {searchParams.status === "successful" && (
-          <SuccessOrder queryParam={searchParams} />
-        )} */}
-      {JSON.stringify(data)}
-      {/* {JSON.stringify(searchParams.status)} */}
-      {/* {JSON.stringify(process.env.NEXT_PUBLIC_BASEURL)}
-        {JSON.stringify(searchParams.status)}
-        {JSON.stringify(searchParams.tx_ref)}
-        {JSON.stringify(searchParams.transaction_id)} */}
-      {/* <p className="text-center p-2">hello outcome {searchParams.status}</p> */}
-      {/* </Suspense> */}
+      {status == "loading" ? (
+        <ComponentLoading />
+      ) : status === "error" ? (
+        <p className="text-red-300 ">Something went wrong</p>
+      ) : (
+        <>
+          {searchParams.status === "cancelled" && <FailedOrder />}
+          {searchParams.status === "successful" && (
+            <SuccessOrder successTransaction={data} />
+          )}
+        </>
+      )}
     </section>
   );
 }
