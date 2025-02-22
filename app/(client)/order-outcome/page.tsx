@@ -17,22 +17,6 @@ export default async function page({
     "idle"
   );
 
-  // const memoOrderData = useCallback(
-  //   async function OrderData() {
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id=${searchParams.transaction_id}`
-  //     );
-  //     setStatus("loading");
-  //     if (!response.ok) {
-  //       setStatus("error");
-  //     }
-  //     const result = await response.json();
-  //     setStatus("data");
-  //     setData(result);
-  //   },
-  //   [searchParams.status, searchParams.tx_ref, searchParams.transaction_id]
-  // );
-
   const memoOrderData = useCallback(
     async function OrderData() {
       setStatus("loading");
@@ -59,12 +43,6 @@ export default async function page({
     memoOrderData();
   }, [memoOrderData]);
 
-  useEffect(() => {
-    memoOrderData();
-  }, [memoOrderData]);
-
-  console.log(data);
-
   // [searchParams.status, searchParams.tx_ref, searchParams.transaction_id]
   // const response = await fetch(
   //   `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`
@@ -82,7 +60,7 @@ export default async function page({
       {status == "loading" ? (
         <ComponentLoading />
       ) : status === "error" ? (
-        <p className="text-red-300 ">Something went wrong</p>
+        <p className="text-red-400 text-center">Something went wrong</p>
       ) : (
         <>
           {searchParams.status === "cancelled" && <FailedOrder />}

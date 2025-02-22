@@ -1,14 +1,16 @@
 "use client";
-
-import Button from "@/app/(client)/generic/Button";
 import Input, { SelectInput } from "@/app/(client)/generic/Input";
 import { ClientOrderType } from "@/app/types/ClientOrderType";
 import { OrderType } from "@/models/OrderModel";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import React, { Suspense, use, useEffect, useState } from "react";
+import React, { Suspense, use, useEffect, useRef, useState } from "react";
 import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
+import Table from "../../commons/Table";
+import { columns, TableData } from "@/app/data/columns";
+import { orderMoreDetailType } from "@/app/columns/OrderMoreDetailColumns";
+const ModalOverlay = React.lazy(() => import("../../commons/ModalOverLay"));
 
 interface OrderPageMainWrapperProps {
   data: ClientOrderType[];
@@ -19,6 +21,41 @@ export default function OrderPageMainWrapper({
   console.log(data);
   // const [orderData, setOrderData] = useState<ClientOrderType[]>(data);
   const [search_Id, setSearchId] = useState<string | null>(null);
+  const [moreDetailModal, setMoreDetailModal] = useState<boolean>(false);
+  const [tableRowIndex, setTableRowIndex] = useState<number | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<ClientOrderType | null>(
+    null
+  );
+
+  const [formattedSelectedOrder, setFormattedSelectedOrder] =
+    useState<orderMoreDetailType | null>(null);
+
+  // useEffect(() => {
+  //   setFormattedSelectedOrder({
+  //     amount: selectedOrder?.payment.amount,
+  //     currency: selectedOrder?.payment.currency,
+  //     customer: selectedOrder?.customer.name,
+  //     customer_country: selectedOrder?.customer.country,
+  //     customer_email: selectedOrder?.customer.email,
+  //     Description: selectedOrder?.product.description,
+  //     productBreath: selectedOrder?.product.breath,
+  //     productCategory: selectedOrder?.product.category,
+  //     productDiscount: selectedOrder?.product.discount,
+  //     productImgUrl: selectedOrder?.product.imgUrl,
+  //     productItemWeight: selectedOrder?.product.itemWeight,
+  //     productLength: selectedOrder?.product.length,
+  //     productName: selectedOrder?.product.name,
+  //     productPrice: selectedOrder?.product.price,
+  //     productQuantity: selectedOrder?.product.quantity,
+  //     productSKU: selectedOrder?.product.sku,
+  //     productSize: selectedOrder?.product.size,
+  //     productTag: selectedOrder?.product.tag,
+  //     productUnit: selectedOrder?.product.unit,
+  //     productWidth: selectedOrder?.product.width,
+  //     qty: selectedOrder?.product.qty,
+  //     tx_ref: selectedOrder?.tx_ref,
+  //   });
+  // }, [selectedOrder]);
 
   const searchParam = useSearchParams().get("status") ?? null;
   console.log(searchParam);
@@ -92,7 +129,16 @@ export default function OrderPageMainWrapper({
                 </td> */}
 
                 <td>
-                  <MdOutlineArrowDropDownCircle className="text-xl cursor-pointer" />
+                  <MdOutlineArrowDropDownCircle
+                    className={`text-xl cursor-pointer ${
+                      tableRowIndex === i && "rotate-180"
+                    }`}
+                    onClick={() => {
+                      setSelectedOrder(item);
+                      setTableRowIndex(i);
+                      setMoreDetailModal(true);
+                    }}
+                  />
                 </td>
               </tr>
             ))}
@@ -100,12 +146,15 @@ export default function OrderPageMainWrapper({
         </table>
       </div>
 
-      {/* <FooterPagination
-        itemToShow=""
-        totalDocs={0}
-        searchParam=""
-        setLimit={() => ""}
-      /> */}
+      <ModalOverlay
+        isCollapse={moreDetailModal}
+        closeOverLay={() => {
+          setMoreDetailModal(false);
+          setTableRowIndex(null);
+        }}
+      >
+        <Table columns={columns} data={TableData} />
+      </ModalOverlay>
     </section>
   );
 }

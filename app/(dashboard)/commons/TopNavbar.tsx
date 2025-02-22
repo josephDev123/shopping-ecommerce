@@ -40,7 +40,7 @@ export default function TopNavbar() {
 
       <div className="flex  justify-between sm:gap-4 gap-2 items-center">
         <IoIosNotifications className="text-xl cursor-pointer" />
-        <span className="relative sm:w-auto border rounded-md">
+        {/* <span className="relative sm:w-auto border rounded-md">
           <input
             type="text"
             name="search"
@@ -49,7 +49,7 @@ export default function TopNavbar() {
             className="sm:p-2 p-1 outline-none sm:w-72 w-32 sm:placeholder:text-inherit placeholder:text-sm "
           />
           <CiSearch className="absolute top-3 right-2 sm:text-xl text-sm" />
-        </span>
+        </span> */}
         <HamburgerToggle />
       </div>
       <DashboardMobileLeftpanel />

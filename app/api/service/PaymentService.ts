@@ -1,16 +1,14 @@
 import { PaymentDataType } from "@/app/types/flutterwaverRequestDataType";
 import { paymentRepository } from "../repository/paymentRepository";
-import { FlutterwavePayment } from "../utils/FlutterwavePayment";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
+import { BasePaymentFactory } from "../factories/BasePayment";
 
 export class PaymentService {
-  FlutterwavePayment: FlutterwavePayment;
-  constructor(private readonly paymentRepository: paymentRepository) {
-    this.FlutterwavePayment = new FlutterwavePayment();
-  }
+  constructor(private readonly paymentRepository: paymentRepository) {}
 
   async create(data: PaymentDataType) {
     try {
+      const BasePaymentFactoryImpl = new BasePaymentFactory("flutterwave");
       const tx_ref = `${data.user_id}/${data.tx_ref}`;
       const formattedPayload = {
         ...data,
@@ -19,9 +17,9 @@ export class PaymentService {
       // Run all asynchronous operations in parallel using Promise.all
       const [order, process_payment] = await Promise.all([
         this.paymentRepository.create(formattedPayload),
-        this.FlutterwavePayment.process(formattedPayload),
+        BasePaymentFactoryImpl.process(formattedPayload),
       ]);
-
+      console.log(process_payment);
       return process_payment;
     } catch (error) {
       console.log(error);

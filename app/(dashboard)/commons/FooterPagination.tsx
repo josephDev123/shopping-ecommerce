@@ -20,7 +20,7 @@ export default function FooterPagination<T>({
   totalDocs,
 }: FooterPaginationProps<T>) {
   const navigate = useRouter();
-  const itemPerPage = 3;
+  const itemPerPage = itemToShow;
   const pagesNumber = Math.ceil(Number(totalDocs) / itemPerPage);
   console.log(pagesNumber, searchParam);
 
@@ -65,18 +65,21 @@ export default function FooterPagination<T>({
           <MdOutlineExpandLess className="-rotate-90" />
         </Button>
         {/* </Link> */}
-        {Array.from({ length: pagesNumber }, (page, i) => (
-          <Link href={`?page=${i + 1}`}>
-            <Button
-              key={i}
-              // onClick={() => navigate.push(`product-list?page=${i + 1}`)}
-              textContent=""
-              className="flex justify-center items-center p-1 rounded-md bg-blue-800 text-white w-8 h-6"
-            >
-              {i + 1}
-            </Button>
-          </Link>
-        ))}
+        {Array.from(
+          { length: pagesNumber <= 4 ? pagesNumber : 4 },
+          (page, i) => (
+            <Link href={`?page=${i + 1}`}>
+              <Button
+                key={i}
+                // onClick={() => navigate.push(`product-list?page=${i + 1}`)}
+                textContent=""
+                className="flex justify-center items-center p-1 rounded-md bg-blue-800 text-white w-8 h-6"
+              >
+                {i + 1}
+              </Button>
+            </Link>
+          )
+        )}
 
         <Button
           disabled={searchParam === pagesNumber ? true : false}

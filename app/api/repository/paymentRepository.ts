@@ -1,8 +1,6 @@
 import { PaymentDataType } from "@/app/types/flutterwaverRequestDataType";
-import { FlutterwaveHostedLinkResponse } from "@/app/types/flutterwaveSuccessRedirectType";
 import { Model } from "mongoose";
 import { OrderType } from "@/models/OrderModel";
-import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
 export class paymentRepository {
   constructor(private readonly OrderModel: Model<OrderType>) {}
