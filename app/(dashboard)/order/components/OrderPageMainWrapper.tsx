@@ -9,7 +9,10 @@ import React, { Suspense, use, useEffect, useRef, useState } from "react";
 import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
 import Table from "../../commons/Table";
 import { columns, TableData } from "@/app/data/columns";
-import { orderMoreDetailType } from "@/app/columns/OrderMoreDetailColumns";
+import {
+  OrderMoreDetailColumns,
+  orderMoreDetailType,
+} from "@/app/columns/OrderMoreDetailColumns";
 const ModalOverlay = React.lazy(() => import("../../commons/ModalOverLay"));
 
 interface OrderPageMainWrapperProps {
@@ -30,35 +33,42 @@ export default function OrderPageMainWrapper({
   const [formattedSelectedOrder, setFormattedSelectedOrder] =
     useState<orderMoreDetailType | null>(null);
 
-  // useEffect(() => {
-  //   setFormattedSelectedOrder({
-  //     amount: selectedOrder?.payment.amount,
-  //     currency: selectedOrder?.payment.currency,
-  //     customer: selectedOrder?.customer.name,
-  //     customer_country: selectedOrder?.customer.country,
-  //     customer_email: selectedOrder?.customer.email,
-  //     Description: selectedOrder?.product.description,
-  //     productBreath: selectedOrder?.product.breath,
-  //     productCategory: selectedOrder?.product.category,
-  //     productDiscount: selectedOrder?.product.discount,
-  //     productImgUrl: selectedOrder?.product.imgUrl,
-  //     productItemWeight: selectedOrder?.product.itemWeight,
-  //     productLength: selectedOrder?.product.length,
-  //     productName: selectedOrder?.product.name,
-  //     productPrice: selectedOrder?.product.price,
-  //     productQuantity: selectedOrder?.product.quantity,
-  //     productSKU: selectedOrder?.product.sku,
-  //     productSize: selectedOrder?.product.size,
-  //     productTag: selectedOrder?.product.tag,
-  //     productUnit: selectedOrder?.product.unit,
-  //     productWidth: selectedOrder?.product.width,
-  //     qty: selectedOrder?.product.qty,
-  //     tx_ref: selectedOrder?.tx_ref,
-  //   });
-  // }, [selectedOrder]);
+  useEffect(() => {
+    if (selectedOrder === null) return;
+    setFormattedSelectedOrder({
+      // amount: selectedOrder?.payment.amount,
+      currency: selectedOrder?.payment.currency || "Nil",
+      // customer_name: selectedOrder?.customer.name,
+      customer_country: selectedOrder?.customer.country || "Nil",
+      customer_email: selectedOrder?.customer.email || "Nil",
+      Description: selectedOrder?.items[0]?.Description || "Nil",
+      // productBreath: selectedOrder?.items[0].productBreath,
+      productCategory: selectedOrder?.items[0]?.productCategory || "Nil",
+      productDiscount: selectedOrder?.items[0]?.productDiscount || "Nil",
+      // productImgUrl: [
+      //   {
+      //     url: selectedOrder?.items[0].productImgUrl[0].url,
+      //     path: "",
+      //     _id: "",
+      //   },
+      // ],
+      productItemWeight: selectedOrder?.items[0]?.productItemWeight || 0,
+      // productLength: selectedOrder?.items[0].productLength,
+      productName: selectedOrder?.items[0]?.productName || "Nil",
+      productPrice: selectedOrder?.items[0]?.productPrice || "Nil",
+      // productQuantity: selectedOrder?.items[0].productQuantity,
+      productSKU: selectedOrder?.items[0]?.productSKU || "Nil",
+      productSize: selectedOrder?.items[0]?.productSize || "Nil",
+      productTag: selectedOrder?.items[0]?.productTag || "Nil",
+      productUnit: selectedOrder?.items[0]?.productUnit || "Nil",
+      // productWidth: selectedOrder?.items[0].productWidth,
+      qty: selectedOrder?.items[0]?.qty || "Nil",
+      tx_ref: selectedOrder?.tx_ref || "Nil",
+    });
+  }, [selectedOrder]);
 
   const searchParam = useSearchParams().get("status") ?? null;
-  console.log(searchParam);
+  console.log(selectedOrder);
   const filteredData = data.filter((order) => {
     const matchesId =
       !search_Id ||
@@ -146,6 +156,7 @@ export default function OrderPageMainWrapper({
         </table>
       </div>
 
+      {/* modal */}
       <ModalOverlay
         isCollapse={moreDetailModal}
         closeOverLay={() => {
@@ -153,7 +164,10 @@ export default function OrderPageMainWrapper({
           setTableRowIndex(null);
         }}
       >
-        <Table columns={columns} data={TableData} />
+        <Table
+          columns={OrderMoreDetailColumns}
+          data={[formattedSelectedOrder]}
+        />
       </ModalOverlay>
     </section>
   );

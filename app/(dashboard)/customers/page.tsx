@@ -32,15 +32,8 @@ export default async function page({ searchParams }: CustomerPageProps) {
       <Suspense fallback={<p>Loading...</p>}>
         <CustomerTable data={result} />
       </Suspense>
-      {/* <footer className="mt-auto ms-auto">
-        <button
-          type="button"
-          className="border border-green-400 rounded-md py-0.5 px-2 font-semibold text-green-400 hover:bg-green-100 hover:text-green-500"
-        >
-          Next
-        </button>
-      </footer> */}
-      <Suspense fallback={<p>Loading...</p>}>
+
+      <Suspense fallback={<p className="mt-auto">Loading...</p>}>
         <FooterPagination
           itemToShow={Number(searchParams.limit) || 4}
           totalDocs={totalCustomers}

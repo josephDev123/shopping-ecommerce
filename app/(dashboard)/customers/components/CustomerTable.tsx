@@ -10,6 +10,11 @@ import React, { useState } from "react";
 import { CiLock, CiSearch } from "react-icons/ci";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { IoIosExpand } from "react-icons/io";
+import ModalOverlay from "../../commons/ModalOverLay";
+import Table from "../../commons/Table";
+import { CustomerType } from "@/models/OrderModel";
+import { CustomerColumns } from "@/app/columns/CustomerColumn";
 
 interface CustomerTableProps {
   data: ClientOrderType[];
@@ -17,7 +22,12 @@ interface CustomerTableProps {
 
 export default function CustomerTable({ data }: CustomerTableProps) {
   const [search, setSearch] = useState<string | null>(null);
-
+  const [moreDetailModal, setMoreDetailModal] = useState<boolean>(false);
+  const [tableRowIndex, setTableRowIndex] = useState<number | null>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<CustomerType | null>(
+    null
+  );
+  console.log(selectedCustomer);
   //   const searchParam = useSearchParams().get("status") ?? null;
 
   const filteredData = data.filter((order) => {
@@ -81,16 +91,39 @@ export default function CustomerTable({ data }: CustomerTableProps) {
                 <td className=" p-3 text-nowrap">
                   {moment(customer.createdAt).format("DD MMM YYYY")}
                 </td>
-                <td className="flex gap-2 h-16 items-center p-3 text-nowrap">
-                  <FiEdit className="cursor-pointer" />
-                  <CiLock className="cursor-pointer" />
-                  <RiDeleteBinLine className="cursor-pointer" />
+                <td className="flex gap-2 h-16 items-center p-3 text-nowrap justify-center">
+                  <IoIosExpand
+                    className="cursor-pointer"
+                    onClick={() => {
+                      setSelectedCustomer(customer.customer);
+                      setTableRowIndex(i);
+                      setMoreDetailModal(true);
+                    }}
+                  />
+                  {/* <FiEdit className="cursor-pointer" /> */}
+                  {/* <CiLock className="cursor-pointer" />
+                  <RiDeleteBinLine className="cursor-pointer" /> */}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      <ModalOverlay
+        isCollapse={moreDetailModal}
+        closeOverLay={() => {
+          setMoreDetailModal(false);
+          setTableRowIndex(null);
+        }}
+      >
+        <Table
+          columns={CustomerColumns}
+          data={[selectedCustomer]}
+          width="200px"
+        />
+        {/* hel */}
+      </ModalOverlay>
     </section>
   );
 }
