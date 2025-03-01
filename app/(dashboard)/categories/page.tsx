@@ -38,19 +38,12 @@ export default async function page({ searchParams }: OrderPageProps) {
   return (
     <section className="flex flex-col p-2 h-full">
       {/* {JSON.stringify(session)} */}
-      <h1 className="font-bold text-xl my-2">Categories Management</h1>
+      <h1 className="font-bold text-xl my-2">Categories </h1>
       {/* <Navbar searchParams={searchParams} /> */}
       <Suspense fallback={<p>Loading...</p>}>
         <CategoryMainSection data={result} />
       </Suspense>
-      {/* <footer className="mt-auto ms-auto">
-        <button
-          type="button"
-          className="border border-green-400 rounded-md py-0.5 px-2 font-semibold text-green-400 hover:bg-green-100 hover:text-green-500"
-        >
-          Next
-        </button>
-      </footer> */}
+
       <Suspense fallback={<p>Loading...</p>}>
         <FooterPagination
           itemToShow={Number(searchParams.limit) || 4}

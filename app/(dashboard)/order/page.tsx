@@ -24,14 +24,14 @@ export default async function page({ searchParams }: OrderPageProps) {
       Number(searchParams.limit) || 4
     }`
   );
+  const data = await response.json();
   if (!response.ok) {
     return "Failed to fetch order data";
   }
 
-  const data = await response.json();
   const result: ClientOrderType[] = data.data.orders;
   const totalDocs = data.data.totalOrders;
-  // console.log(data);
+  console.log(data);
   return (
     <section className="flex flex-col p-2 h-full">
       {/* {JSON.stringify(session)} */}

@@ -23,7 +23,7 @@ export default function ModalOverlay({
         isCollapse ? "flex" : "hidden"
       } fixed inset-0  flex-col h-full w-full justify-center items-center bg-black/40 transition-all duration-100`}
     >
-      <div className="flex flex-col w-[80%]  bg-white rounded-md shadow-md overflow-y-auto overflow-x-auto">
+      <div className="flex flex-col sm:w-[80%] w-[90%]  bg-white rounded-md shadow-md overflow-y-auto overflow-x-auto">
         {children}
       </div>
     </section>

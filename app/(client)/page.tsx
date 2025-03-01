@@ -51,6 +51,7 @@ export default async function page() {
   return (
     <section className="">
       <Hero />
+
       {/* <ProductCardLoading /> */}
       <Suspense fallback={<Loading />}>
         <BrowserProductRange data={category} />

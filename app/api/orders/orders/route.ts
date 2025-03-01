@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
       page,
       limit
     );
-    // console.log(response);
+    console.log(response);
     return SuccessApiResponseHelper(
       "order successful",
       "OrderSuccess",
