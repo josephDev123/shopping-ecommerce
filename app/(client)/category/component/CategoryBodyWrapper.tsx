@@ -1,0 +1,66 @@
+"use client";
+
+import { Suspense, useEffect, useState } from "react";
+import MainCategory from "./MainCategory";
+import CategoryItem, { ICategoryItemProps } from "./CategoryItem";
+import { ProductDataType } from "@/app/types/productsType";
+import { useSearchParams } from "next/navigation";
+
+interface ICategoryBodyWrapper {
+  categories: ICategoryItemProps[];
+}
+
+export default function CategoryBodyWrapper({
+  categories,
+}: ICategoryBodyWrapper) {
+  const queryParam = useSearchParams();
+  const group = queryParam.get("group");
+
+  const decodedGroup = group ? decodeURIComponent(group) : "";
+  console.log(decodedGroup);
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(decodedGroup);
+
+  const [selectedCategoryItem, setSelectedCategoryItem] = useState<
+    ProductDataType[]
+  >([]);
+
+  useEffect(() => {
+    if (!categories.length) return; // Ensure categories exist
+
+    let newSelectedCategory = decodedGroup || categories[0]._id;
+    setSelectedCategory(newSelectedCategory);
+
+    const categoryMap = new Map(
+      categories.map((groupCategory) => [groupCategory._id, groupCategory])
+    );
+
+    if (categoryMap.has(newSelectedCategory)) {
+      setSelectedCategoryItem(categoryMap.get(newSelectedCategory)!.products);
+    } else {
+      setSelectedCategoryItem([]);
+    }
+  }, [decodedGroup, categories]);
+
+  console.log(selectedCategory, selectedCategoryItem);
+
+  return (
+    <Suspense fallback={<p>Loading ..</p>}>
+      <div className="grid grid-cols-4 gap-4 mt-4">
+        {/* left panel */}
+        <div className="col-span-1  h-full p-4 px-8">
+          <h2 className="text-lg font-semibold"> Category</h2>
+          <hr className="my-3" />
+
+          <CategoryItem category={categories} />
+        </div>
+        <div className="col-span-3  h-full">
+          <MainCategory
+            item={selectedCategoryItem}
+            categoryLabel={selectedCategory}
+          />
+        </div>
+      </div>
+    </Suspense>
+  );
+}
