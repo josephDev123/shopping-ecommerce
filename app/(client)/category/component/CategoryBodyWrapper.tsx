@@ -46,15 +46,15 @@ export default function CategoryBodyWrapper({
 
   return (
     <Suspense fallback={<p>Loading ..</p>}>
-      <div className="grid grid-cols-4 gap-4 mt-4">
+      <div className="grid lg:grid-cols-4 sm:grid-cols-3  gap-4 mt-4">
         {/* left panel */}
-        <div className="col-span-1  h-full p-4 px-8">
+        <div className="lg:col-span-1 sm:col-span-1  h-full md:px-8 p-4">
           <h2 className="text-lg font-semibold"> Category</h2>
           <hr className="my-3" />
 
           <CategoryItem category={categories} />
         </div>
-        <div className="col-span-3  h-full">
+        <div className="lg:col-span-3 sm:col-span-2  h-full md:p-8 p-4">
           <MainCategory
             item={selectedCategoryItem}
             categoryLabel={selectedCategory}

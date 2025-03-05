@@ -7,6 +7,12 @@ import moment from "moment";
 import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { MdOutlineArrowDropDownCircle } from "react-icons/md";
+import ModalOverlay from "../../commons/ModalOverLay";
+import Table from "../../commons/Table";
+import {
+  MoreCategoryColumn,
+  moreCategoryType,
+} from "@/app/columns/categoryColumn";
 
 interface CategoryMainWrapperProps {
   data: CategoryType[];
@@ -16,8 +22,12 @@ export default function CategoryMainWrapper({
 }: CategoryMainWrapperProps) {
   const [searchCategory, setSearchCategory] = useState<string | null>(null);
   const [isDropdown, setIsDropdown] = useState({ state: false, index: "" });
+  const [moreDetailModal, setMoreDetailModal] = useState<boolean>(false);
+  const [selectedCategoryArray, setSelectedCategoryArray] = useState<
+    moreCategoryType[]
+  >([]);
   const searchParam = useSearchParams().get("status") ?? null;
-  console.log(data);
+  console.log(selectedCategoryArray);
   const filteredData = data.filter((category) => {
     const matchesCategorySearch =
       !searchCategory ||
@@ -33,7 +43,7 @@ export default function CategoryMainWrapper({
     setSearchCategory(e.target.value);
   };
 
-  // console.log(filteredData, searchCategory);
+  console.log(filteredData);
   return (
     <section className="flex flex-col w-full">
       <div className="flex sm:flex-row flex-col justify-between  items-start gap-4 my-4">
@@ -76,14 +86,10 @@ export default function CategoryMainWrapper({
                   <button
                     type="button"
                     className="bg-green-400 p-1.5 text-white rounded-md"
-                    onClick={
-                      () => alert("View category item(s) clicked coming ...")
-                      // setIsDropdown((prev) => ({
-                      //   ...prev,
-                      //   state: !prev.state,
-                      //   index: item._id,
-                      // }))
-                    }
+                    onClick={() => {
+                      setMoreDetailModal(true);
+                      setSelectedCategoryArray(item.products);
+                    }}
                   >
                     View category item(s)
                   </button>
@@ -93,6 +99,156 @@ export default function CategoryMainWrapper({
           </tbody>
         </table>
       </div>
+
+      <ModalOverlay
+        isCollapse={moreDetailModal}
+        closeOverLay={() => {
+          setMoreDetailModal(false);
+          // setTableRowIndex(null);
+        }}
+      >
+        <div className="overflow-x-auto overflow-y-auto">
+          <table className="border-collapse border border-gray-300 w-full">
+            <thead>
+              <tr className="bg-gray-200">
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[300px]`}
+                  style={{}}
+                >
+                  Id
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[300px]`}
+                  style={{}}
+                >
+                  Product Name
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[350px]`}
+                  style={{}}
+                >
+                  Description
+                </th>
+
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[150px]`}
+                  style={{}}
+                >
+                  Product Tag
+                </th>
+
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[150px]`}
+                  style={{}}
+                >
+                  Product Price
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[200px]`}
+                  style={{}}
+                >
+                  Product Discount
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[150px]`}
+                  style={{}}
+                >
+                  Product Qty
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[200px]`}
+                  style={{}}
+                >
+                  Product SKU
+                </th>
+
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[150px]`}
+                  style={{}}
+                >
+                  Product Size
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[250px]`}
+                  style={{}}
+                >
+                  Product Weight
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[150px]`}
+                  style={{}}
+                >
+                  Product Unit
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[200px]`}
+                  style={{}}
+                >
+                  Product Breadth
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[200px]`}
+                  style={{}}
+                >
+                  Product Length
+                </th>
+                <th
+                  className={`border border-gray-300 px-4 py-2 min-w-[200px]`}
+                  style={{}}
+                >
+                  Product Width
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {selectedCategoryArray?.map((row, rowIndex) => (
+                <tr key={rowIndex} className="hover:bg-gray-100">
+                  <td className="border border-gray-300 px-4 py-2">{row.id}</td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productName}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.Description}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productTag}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productPrice}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productDiscount}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productQuantity}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productSKU}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productSize}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productItemWeight}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productUnit}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productBreath}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productLength}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {row.productWidth}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </ModalOverlay>
     </section>
   );
 }

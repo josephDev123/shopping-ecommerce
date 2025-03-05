@@ -34,7 +34,7 @@ export default async function page({
 
   return (
     <section className="flex flex-col w-full h-full ">
-      <Banner title="Contact" links={links} />
+      <Banner title="Category" links={links} />
       <Suspense
         fallback={
           <Loader className="h-56 flex flex-col items-center justify-center" />

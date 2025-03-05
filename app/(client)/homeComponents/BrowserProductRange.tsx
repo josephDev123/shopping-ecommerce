@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import { CategoryType } from "@/app/types/categoryType";
+import Button from "../generic/Button";
+import { useRouter } from "next/navigation";
 
 type IBrowserProductRange = {
   data: CategoryType[];
 };
 
 export default function BrowserProductRange({ data }: IBrowserProductRange) {
-  console.log(data);
+  const navigate = useRouter();
   return (
     <section className="flex flex-col items-center py-6 w-[80%] mx-auto">
       <h2 className="font-bold text-xl">Browse The Range</h2>
@@ -46,6 +48,11 @@ export default function BrowserProductRange({ data }: IBrowserProductRange) {
           </>
         )}
       </div>
+      <Button
+        onClick={() => navigate.push("/category")}
+        textContent="Browse more Category"
+        className="mt-8 border border-[#B88E2F] px-5 py-2 font-bold text-[#B88E2F] hover:text-[#ddba6a]"
+      />
     </section>
   );
 }
