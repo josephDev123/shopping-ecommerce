@@ -31,7 +31,7 @@ export default function TransactionTable({ data }: ITransactionTableProps) {
     <>
       <div className="flex sm:flex-row flex-col justify-between  sm:items-center w-full">
         <div className="flex gap-2">
-          <div className="flex flex-col relative w-full">
+          <div className="flex flex-col  w-full">
             <input
               type="text"
               name=""
@@ -40,7 +40,7 @@ export default function TransactionTable({ data }: ITransactionTableProps) {
               placeholder="Search"
               className="outline-none border rounded-md p-2 "
             />
-            <CiSearch className="text-xl absolute right-2 top-3" />
+            {/* <CiSearch className="text-xl absolute right-2 top-3" /> */}
           </div>
 
           <select
@@ -70,15 +70,15 @@ export default function TransactionTable({ data }: ITransactionTableProps) {
       </div>
 
       <div className="flex flex-col overflow-x-auto w-full h-full my-10">
-        <table>
+        <table className="table-auto">
           <thead className="bg-gray-200">
             <tr className="text-black/70">
               <th className="text-left p-2">ID</th>
-              <th className="text-left p-2">CUSTOMER</th>
-              <th className="text-left p-2">DATE</th>
-              <th className="text-left p-2">TOTAL</th>
+              <th className="text-left p-2 min-w-52 max-w-72">CUSTOMER</th>
+              <th className="text-left p-2 min-w-40 max-w-52">DATE</th>
+              <th className="text-left p-2 min-w-40 max-w-52">TOTAL</th>
               <th className="text-left p-2">METHOD</th>
-              <th className="text-left p-2">STATUS</th>
+              <th className="text-left p-2 min-w-40 max-w-52">STATUS</th>
               <th className="text-left p-2">ACTION</th>
             </tr>
           </thead>

@@ -52,7 +52,7 @@ export default function CustomerTable({ data }: CustomerTableProps) {
         className=" outline-none"
         wrapperClassName="border rounded-md p-2 w-fit"
       />
-      <div className="flex flex-col overflow-x-auto w-full h-full my-5">
+      <div className="flex flex-col overflow-x-auto w-full my-5">
         <table className="table-auto">
           <thead className="border-b-2 bg-gray-200">
             <tr className="">

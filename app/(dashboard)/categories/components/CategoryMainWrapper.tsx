@@ -68,24 +68,26 @@ export default function CategoryMainWrapper({
           />
         </div>
       </div>
-      <div className="overflow-x-auto flex flex-col w-full h-full">
-        <table className="table-auto border-separate border-spacing-y-2 w-full">
+      <div className="overflow-x-auto flex flex-col w-full">
+        <table className="table-auto  border-spacing-y-2">
           <thead className="bg-gray-200">
             <tr>
-              <th className="w-52 text-left">SN</th>
-              <th className="w-52 text-left">Category</th>
-              <th className="w-52 text-left">Detail</th>
+              <th className="px-4 py-2 text-left">SN</th>
+              <th className="px-4 py-2 text-left min-w-52 max-w-72">
+                Category
+              </th>
+              <th className="px-4 py-2 text-left">Detail</th>
             </tr>
           </thead>
           <tbody>
             {filteredData.map((item, i) => (
               <tr key={item._id}>
-                <td className="w-52">{i + 1}</td>
-                <td className="w-52">{item._id}</td>
-                <td className="w-52">
+                <td className="p-2">{i + 1}</td>
+                <td className="">{item._id}</td>
+                <td className="">
                   <button
                     type="button"
-                    className="bg-green-400 p-1.5 text-white rounded-md"
+                    className="bg-green-400 p-1.5 text-white rounded-md whitespace-nowrap"
                     onClick={() => {
                       setMoreDetailModal(true);
                       setSelectedCategoryArray(item.products);

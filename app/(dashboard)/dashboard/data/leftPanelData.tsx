@@ -14,7 +14,7 @@ export const leftPanelItem = [
     path: "/order",
   },
   { icons: <SlPeople />, text: "Customers", path: "/customers" },
-  { icons: <RiCoupon2Line />, text: "Coupon Code", path: "/" },
+  // { icons: <RiCoupon2Line />, text: "Coupon Code", path: "/" },
   { icons: <MdOutlineCategory />, text: "Categories", path: "/categories" },
   {
     icons: <AiOutlineTransaction />,
