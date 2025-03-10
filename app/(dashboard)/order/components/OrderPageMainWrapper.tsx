@@ -83,7 +83,7 @@ export default function OrderPageMainWrapper({
 
   console.log(filteredData, search_Id);
   return (
-    <section>
+    <section className="">
       <div className="flex sm:flex-row flex-col justify-between items-start gap-4 my-4">
         {/* <div className="bg-red-200 w-full"> */}
         <Input
@@ -106,7 +106,7 @@ export default function OrderPageMainWrapper({
           />
         </div>
       </div>
-      <div className="overflow-x-auto flex flex-col w-full h-full">
+      <div className="overflow-x-auto flex flex-col w-full">
         <table className="table-auto border-spacing-y-6">
           <thead className="bg-gray-200">
             <tr className="">
