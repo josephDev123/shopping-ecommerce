@@ -27,8 +27,8 @@ export default function FooterPagination<T>({
   const limit = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
-    <div className="flex justify-between items-center w-full h-fit mt-auto">
-      <div className="flex gap-2 items-center w-full ">
+    <div className="flex  flex-col  sm:flex-row sm:justify-between  sm:items-center  space-y-2  h-fit mt-auto">
+      <div className="flex gap-2 items-center ">
         Showing
         <div>
           <SelectInput
@@ -51,7 +51,7 @@ export default function FooterPagination<T>({
         </span>
       </div>
 
-      <div className="flex gap-1">
+      <div className="flex gap-1 ">
         {/* <Link href={`?page=${pagesNumber - 1}`}> */}
         <Button
           type="button"
