@@ -1,3 +1,4 @@
+import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { OrderType } from "@/models/OrderModel";
 import { Model, Types } from "mongoose";
 
@@ -36,8 +37,25 @@ export class DashboardOverviewRepo {
         latestOrders: result[0].latestOrders,
       };
     } catch (error) {
-      console.error("Error fetching dashboard stats:", error);
-      return null;
+      if (error instanceof GlobalErrorHandler) {
+        return new GlobalErrorHandler(
+          error.message,
+          error.name,
+          error.code,
+          error.operational
+        );
+      }
+
+      if (error instanceof Error) {
+        return new GlobalErrorHandler(error.message, error.name, "500", false);
+      }
+
+      return new GlobalErrorHandler(
+        "something went wrong",
+        "ServerError",
+        "500",
+        false
+      );
     }
   }
 }
