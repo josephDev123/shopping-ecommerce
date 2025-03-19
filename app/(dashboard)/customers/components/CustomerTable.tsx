@@ -41,7 +41,7 @@ export default function CustomerTable({ data }: CustomerTableProps) {
     return matchEmail || matchesName;
   });
   return (
-    <section className="flex flex-col w-full h-full p-3">
+    <section className="flex flex-col w-full">
       <Input
         name=""
         labelName=""
@@ -68,17 +68,16 @@ export default function CustomerTable({ data }: CustomerTableProps) {
             {filteredData.map((customer, i) => (
               <tr className="border-b-2" key={i}>
                 <td className="gap-2 flex w-fit h-fit p-2 ">
-                  <div className="rounded-full h-10 w-10 relative block bg-gray-200 overflow-clip">
-                    <Image
-                      src={Images.avatar}
-                      alt={"user pic"}
-                      // width={16}
-                      // height={16}
-                      // objectFit="contain"
-                      fill
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
+                  {/* <div className="rounded-full h-10 w-10 relative block bg-gray-200 overflow-clip"> */}
+                  <Image
+                    src={Images.avatar}
+                    alt={"user pic"}
+                    width={26}
+                    height={26}
+                    objectFit="contain"
+                    className="h-full w-full rounded-full object-contain"
+                  />
+                  {/* </div> */}
 
                   <div className="flex flex-col leading-tight w-fit">
                     <h2 className="font-bold">{customer.customer.name}</h2>

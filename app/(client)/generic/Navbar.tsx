@@ -67,7 +67,7 @@ export default function Navbar() {
         ) : status === "authenticated" ? (
           <Link
             href={"/dashboard"}
-            className="sm:text-base text-sm font-semibold hover:bg-gray-200 px-1.5 py-0.5 rounded-md"
+            className="text-base font-semibold hover:bg-gray-200 px-1.5 py-0.5 rounded-md"
           >
             Dashboard
           </Link>
