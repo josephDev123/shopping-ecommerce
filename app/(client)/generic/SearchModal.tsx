@@ -1,7 +1,7 @@
 "use client";
 
 import { SearchResultType } from "@/app/types/searchResultType";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -32,8 +32,7 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
   }, [searchValue]);
 
   // console.log(deferredSearch);
-
-  async function handleSearch() {
+  const handleSearch = useCallback(async () => {
     try {
       setStatus("loading");
       const response = await fetch(
@@ -55,7 +54,30 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
       console.log(error);
       setStatus("error");
     }
-  }
+  }, [deferredSearch]);
+  // async function handleSearch() {
+  //   try {
+  //     setStatus("loading");
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASEURL}/api/text-search`,
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ search: deferredSearch }),
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     const result: SearchResultType[] = data.data;
+  //     setSearchResult(result);
+  //     setStatus("data");
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setStatus("error");
+  //   }
+  // }
   useEffect(() => {
     handleSearch();
   }, [deferredSearch]);

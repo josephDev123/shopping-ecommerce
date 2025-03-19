@@ -53,7 +53,7 @@ export default function CustomerTable({ data }: CustomerTableProps) {
         wrapperClassName="border rounded-md p-2 w-fit"
       />
       <div className="flex flex-col overflow-x-auto w-full my-5">
-        <table className="table-auto">
+        <table className="table-fixed">
           <thead className="border-b-2 bg-gray-200">
             <tr className="">
               <th className="text-left text-nowrap px-3 py-1 class">NAME</th>
