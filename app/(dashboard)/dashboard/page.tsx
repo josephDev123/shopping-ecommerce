@@ -112,6 +112,7 @@ export default async function Page() {
             ) : (
               MostOrderedCategories.map((category, i) => (
                 <BarLabel
+                  key={i}
                   value={category.count}
                   className=""
                   label={category._id}

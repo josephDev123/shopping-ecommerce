@@ -21,7 +21,7 @@ interface OrderPageMainWrapperProps {
 export default function OrderPageMainWrapper({
   data,
 }: OrderPageMainWrapperProps) {
-  console.log(data);
+  // console.log(data);
   // const [orderData, setOrderData] = useState<ClientOrderType[]>(data);
   const [search_Id, setSearchId] = useState<string | null>(null);
   const [moreDetailModal, setMoreDetailModal] = useState<boolean>(false);
@@ -74,7 +74,11 @@ export default function OrderPageMainWrapper({
       !search_Id ||
       String(order.user_id).toLowerCase().includes(search_Id.toLowerCase());
 
-    return matchesId;
+    const matchesStatus =
+      !searchParam ||
+      order.order_status.toLowerCase() === searchParam.toLowerCase();
+
+    return matchesId && matchesStatus;
   });
 
   const handleSearchId = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +88,8 @@ export default function OrderPageMainWrapper({
   console.log(filteredData, search_Id);
   return (
     <section className="">
+      {/* {JSON.stringify(searchParam, null, 2)} */}
+
       <div className="flex sm:flex-row flex-col justify-between items-start gap-4 my-4">
         {/* <div className="bg-red-200 w-full"> */}
         <Input

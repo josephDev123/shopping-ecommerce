@@ -15,7 +15,7 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Pending
       </Link>
       <Link
-        href={"/order?status=success"} //confirmed
+        href={"/order?status=confirmed"} //confirmed
         className={`${
           searchParams.status === "confirmed" && "border-b-4 border-blue-600"
         }`}

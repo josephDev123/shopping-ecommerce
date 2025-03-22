@@ -16,7 +16,6 @@ export interface OrderPageProps {
 export default async function page({ searchParams }: OrderPageProps) {
   const session = await getServerSession(authOptions);
 
-  console.log(searchParams);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASEURL}/api/orders/orders?user_id=${
       session?.user.id
@@ -31,10 +30,10 @@ export default async function page({ searchParams }: OrderPageProps) {
 
   const result: ClientOrderType[] = data.data.orders;
   const totalDocs = data.data.totalOrders;
-  console.log(result);
+  // console.log(result);
   return (
     <section className="flex flex-col p-2 h-full">
-      <pre>{JSON.stringify(result, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
       <h1 className="font-bold text-xl my-2">Order Management</h1>
       <Navbar searchParams={searchParams} />
       <Suspense key={Number(searchParams)} fallback={<p>Loading...</p>}>

@@ -63,6 +63,7 @@ export class OrderRepository {
                   payment: 1,
                   billing: 1,
                   customer: 1,
+                  order_status: 1,
                   createdAt: 1,
                   updatedAt: 1,
                 },
