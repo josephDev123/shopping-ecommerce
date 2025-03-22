@@ -31,10 +31,10 @@ export default async function page({ searchParams }: OrderPageProps) {
 
   const result: ClientOrderType[] = data.data.orders;
   const totalDocs = data.data.totalOrders;
-  console.log(data);
+  console.log(result);
   return (
     <section className="flex flex-col p-2 h-full">
-      {/* {JSON.stringify(session)} */}
+      <pre>{JSON.stringify(result, null, 2)}</pre>
       <h1 className="font-bold text-xl my-2">Order Management</h1>
       <Navbar searchParams={searchParams} />
       <Suspense key={Number(searchParams)} fallback={<p>Loading...</p>}>

@@ -1,6 +1,6 @@
 import { BillingDataType } from "@/app/types/billingType";
 import { ProductDataType } from "@/app/types/productsType";
-import mongoose, { Schema, model, models, Types } from "mongoose";
+import { Schema, model, models, Types } from "mongoose";
 
 export type CustomerType = {
   email: string;
@@ -21,6 +21,16 @@ export type Payment = {
   currency: string;
   // status: "Pending" | "Success" | "Fail";
 };
+
+export const Order_progress = [
+  "Pending",
+  "Confirmed",
+  "Processed",
+  "Picked",
+  "Shipped",
+  "Delivered",
+  "Cancelled",
+];
 
 const customerSchema = new Schema<CustomerType>({
   email: { type: String, required: true },
@@ -84,6 +94,7 @@ export interface OrderType extends Document {
   payment: Payment;
   billing: BillingDataType;
   customer: CustomerType;
+  order_status: string;
 }
 
 const orderSchema = new Schema<OrderType>(
@@ -94,6 +105,11 @@ const orderSchema = new Schema<OrderType>(
     payment: paymentSchema,
     billing: billingDataSchema,
     customer: customerSchema,
+    order_status: {
+      type: String,
+      enum: Order_progress,
+      default: "Pending",
+    },
   },
   { timestamps: true }
 );

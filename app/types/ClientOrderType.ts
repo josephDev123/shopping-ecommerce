@@ -13,4 +13,5 @@ export interface ClientOrderType {
   customer: CustomerType;
   createdAt: string;
   updatedAt: string;
+  order_status: string;
 }
