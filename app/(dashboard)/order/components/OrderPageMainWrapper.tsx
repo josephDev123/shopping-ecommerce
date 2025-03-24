@@ -126,38 +126,41 @@ export default function OrderPageMainWrapper({
             </tr>
           </thead>
           <tbody className="">
-            {filteredData.map((item, i) => (
-              <tr key={i} className="border-b-2">
-                <td className="p-2 text-nowrap">{item._id}</td>
-                <td className="p-2 text-nowrap">
-                  {moment(item.createdAt).fromNow()}
-                </td>
-                <td className="p-2 text-nowrap">{item.customer.name}</td>
-                <td className="p-2 text-nowrap">
-                  {item.payment.currency ?? ""} {item.payment.amount}
-                </td>
-                {/* <td className="p-2 inline-flex gap-1 items-center">
-                  $154
-                  <span className="bg-[#7ce4ab] text-[#31985f] font-bold p-1">
-                    16%
-                  </span> 
-               
-                </td> */}
-
-                <td>
-                  <MdOutlineArrowDropDownCircle
-                    className={`text-xl cursor-pointer ${
-                      tableRowIndex === i && "rotate-180"
-                    }`}
-                    onClick={() => {
-                      setSelectedOrder(item);
-                      setTableRowIndex(i);
-                      setMoreDetailModal(true);
-                    }}
-                  />
+            {filteredData.length < 1 ? (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="text-center p-4 font-semibold w-full"
+                >
+                  No result
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredData.map((item, i) => (
+                <tr key={i} className="border-b-2">
+                  <td className="p-2 text-nowrap">{item._id}</td>
+                  <td className="p-2 text-nowrap">
+                    {moment(item.createdAt).fromNow()}
+                  </td>
+                  <td className="p-2 text-nowrap">{item.customer.name}</td>
+                  <td className="p-2 text-nowrap">
+                    {item.payment.currency ?? ""} {item.payment.amount}
+                  </td>
+                  <td>
+                    <MdOutlineArrowDropDownCircle
+                      className={`text-xl cursor-pointer ${
+                        tableRowIndex === i && "rotate-180"
+                      }`}
+                      onClick={() => {
+                        setSelectedOrder(item);
+                        setTableRowIndex(i);
+                        setMoreDetailModal(true);
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

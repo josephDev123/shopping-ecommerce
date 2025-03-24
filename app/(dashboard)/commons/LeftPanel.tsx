@@ -39,11 +39,11 @@ export default async function LeftPanel() {
           </>
         )}
 
-        <LeftPanelItemCard
+        {/* <LeftPanelItemCard
           icon={<TbBrandProducthunt className="text-lg" />}
           text="Product List"
           path="/product-list"
-        />
+        /> */}
       </div>
       <div className="mt-auto flex flex-col space-y-8 w-full">
         <Logout />

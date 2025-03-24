@@ -80,24 +80,35 @@ export default function CategoryMainWrapper({
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((item, i) => (
-              <tr key={item._id}>
-                <td className="p-2">{i + 1}</td>
-                <td className="">{item._id}</td>
-                <td className="">
-                  <button
-                    type="button"
-                    className="bg-green-400 p-1.5 text-white rounded-md whitespace-nowrap"
-                    onClick={() => {
-                      setMoreDetailModal(true);
-                      setSelectedCategoryArray(item.products);
-                    }}
-                  >
-                    View category item(s)
-                  </button>
+            {filteredData.length < 1 ? (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="text-center p-4 font-semibold w-full"
+                >
+                  No result
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredData.map((item, i) => (
+                <tr key={item._id}>
+                  <td className="p-2">{i + 1}</td>
+                  <td className="">{item._id}</td>
+                  <td className="">
+                    <button
+                      type="button"
+                      className="bg-green-400 p-1.5 text-white rounded-md whitespace-nowrap"
+                      onClick={() => {
+                        setMoreDetailModal(true);
+                        setSelectedCategoryArray(item.products);
+                      }}
+                    >
+                      View category item(s)
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

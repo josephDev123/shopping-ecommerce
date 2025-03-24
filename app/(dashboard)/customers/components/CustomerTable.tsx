@@ -46,7 +46,7 @@ export default function CustomerTable({ data }: CustomerTableProps) {
         name=""
         labelName=""
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search"
+        placeholder="Search bg name"
         icon={<CiSearch className="text-xl" />}
         type="text"
         className=" outline-none"
@@ -65,46 +65,57 @@ export default function CustomerTable({ data }: CustomerTableProps) {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((customer, i) => (
-              <tr className="border-b-2" key={i}>
-                <td className="gap-2 flex w-fit h-fit p-2 ">
-                  {/* <div className="rounded-full h-10 w-10 relative block bg-gray-200 overflow-clip"> */}
-                  <Image
-                    src={Images.avatar}
-                    alt={"user pic"}
-                    width={26}
-                    height={26}
-                    objectFit="contain"
-                    className="h-full w-full rounded-full object-contain"
-                  />
-                  {/* </div> */}
-
-                  <div className="flex flex-col leading-tight w-fit">
-                    <h2 className="font-bold">{customer.customer.name}</h2>
-                    <p className="text-sm">{customer.customer.email}</p>
-                  </div>
-                </td>
-                <td className=" p-3 text-nowrap">
-                  {customer.customer.phonenumber}
-                </td>
-                <td className=" p-3 text-nowrap">
-                  {moment(customer.createdAt).format("DD MMM YYYY")}
-                </td>
-                <td className="flex gap-2 h-16 items-center p-3 text-nowrap justify-center">
-                  <IoIosExpand
-                    className="cursor-pointer"
-                    onClick={() => {
-                      setSelectedCustomer(customer.customer);
-                      setTableRowIndex(i);
-                      setMoreDetailModal(true);
-                    }}
-                  />
-                  {/* <FiEdit className="cursor-pointer" /> */}
-                  {/* <CiLock className="cursor-pointer" />
-                  <RiDeleteBinLine className="cursor-pointer" /> */}
+            {filteredData.length < 1 ? (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="text-center p-4 font-semibold w-full"
+                >
+                  No result
                 </td>
               </tr>
-            ))}
+            ) : (
+              filteredData.map((customer, i) => (
+                <tr className="border-b-2" key={i}>
+                  <td className="gap-2 flex w-fit h-fit p-2 ">
+                    {/* <div className="rounded-full h-10 w-10 relative block bg-gray-200 overflow-clip"> */}
+                    <Image
+                      src={Images.avatar}
+                      alt={"user pic"}
+                      width={26}
+                      height={26}
+                      objectFit="contain"
+                      className="h-full w-full rounded-full object-contain"
+                    />
+                    {/* </div> */}
+
+                    <div className="flex flex-col leading-tight w-fit">
+                      <h2 className="font-bold">{customer.customer.name}</h2>
+                      <p className="text-sm">{customer.customer.email}</p>
+                    </div>
+                  </td>
+                  <td className=" p-3 text-nowrap">
+                    {customer.customer.phonenumber}
+                  </td>
+                  <td className=" p-3 text-nowrap">
+                    {moment(customer.createdAt).format("DD MMM YYYY")}
+                  </td>
+                  <td className="flex gap-2 h-16 items-center p-3 text-nowrap justify-center">
+                    <IoIosExpand
+                      className="cursor-pointer"
+                      onClick={() => {
+                        setSelectedCustomer(customer.customer);
+                        setTableRowIndex(i);
+                        setMoreDetailModal(true);
+                      }}
+                    />
+                    {/* <FiEdit className="cursor-pointer" /> */}
+                    {/* <CiLock className="cursor-pointer" />
+                  <RiDeleteBinLine className="cursor-pointer" /> */}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
