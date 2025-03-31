@@ -14,7 +14,6 @@ import SearchModal from "./SearchModal";
 import { useSession } from "next-auth/react";
 import Loader from "../components/Loader";
 import Image from "next/image";
-import logo from "../../assets/png/logo.png";
 import AnimatePresenceWrapper from "./AnimatePresenceWrapper";
 import { AnimatePresence } from "framer-motion";
 
@@ -34,7 +33,7 @@ export default function Navbar() {
     <section className="flex justify-between items-center py-6 w-full sm:px-6 px-1 border-b ">
       <Link href={"/"} className="">
         <Image
-          src={logo}
+          src={"/png/logo.png"}
           alt="logo"
           width={60}
           height={60}

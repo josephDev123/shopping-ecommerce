@@ -11,5 +11,9 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className=" h-full w-full bg-bg">{children}</section>;
+  return (
+    <section className=" h-full w-full bg-[url(/jpeg/waveBg.jpg)] bg-blend-overlay">
+      {children}
+    </section>
+  );
 }
