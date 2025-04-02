@@ -37,7 +37,7 @@ export default function ProductCard({ credential }: IProductCard) {
     <section className="flex flex-col bg-[#F4F5F7] relative cursor-pointer group rounded-lg">
       <div
         // onClick={() => navigate.push(`/shop/${credential._id}`)}
-        className=" flex-col justify-center items-center absolute top-0 w-full h-full bg-gray-50/50 group-hover:flex hidden"
+        className=" flex-col justify-center items-center absolute top-0 w-full h-[80%] bg-gray-50/50 group-hover:flex hidden"
       >
         <Button
           onClick={(e) => {

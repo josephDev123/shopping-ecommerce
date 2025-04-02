@@ -1,14 +1,10 @@
 import FilterIcons from "@/app/svgComponent/FilterIcons";
-import { PiDotsSixBold } from "react-icons/pi";
-import BiviewList from "@/app/svgComponent/Bi_view-list";
 import { GoHorizontalRule } from "react-icons/go";
 import ThingsToEnjoy from "../../generic/ThingsToEnjoy";
 import Banner from "../../generic/Banner";
 import ProductListSection from "./components/ProductListSection";
-import { ProductDataType } from "@/app/types/productsType";
-import { Suspense } from "react";
-import Loading from "../../generic/ComponentLoading";
 import ItemLimit from "./components/ItemLimit";
+import { fetchOrders } from "../../lib/fetchOrders";
 
 export default async function page({
   searchParams,
@@ -23,28 +19,8 @@ export default async function page({
   const page = Number(searchParams.page) || 1;
   const limit = Number(searchParams.limit) || 4;
 
-  // // console.log(page, limit);
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`,
-    {
-      next: { revalidate: 600 },
-    }
-  );
+  const result = await fetchOrders(page, limit);
 
-  if (!response.ok) {
-    // Handle errors
-    console.error(`Error: ${response.status} - ${response.statusText}`);
-    const errorData = await response.json();
-    console.error("Error details:", errorData);
-    return (
-      <div className="flex flex-col h-56 justify-center items-center text-red-400">
-        Error fetching product data
-      </div>
-    );
-  }
-
-  const result = await response.json();
-  console.log("from products data", result);
   const data = result.data.products;
   const totalDoc = result?.data?.totalDoc;
   // console.log("real data:", data);
@@ -71,9 +47,9 @@ export default async function page({
         <ItemLimit />
       </div>
 
-      <Suspense fallback={<Loading />}>
-        <ProductListSection data={data} itemsNumber={totalDoc} />
-      </Suspense>
+      {/* <Suspense fallback={<Loading />}> */}
+      <ProductListSection data={data} itemsNumber={totalDoc} />
+      {/* </Suspense> */}
 
       <ThingsToEnjoy />
     </section>

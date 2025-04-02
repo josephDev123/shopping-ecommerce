@@ -1,7 +1,7 @@
 import Link from "next/link";
 import bgImg from "../homeStyleModule/homestyle.module.css";
 
-export default function Hero() {
+export default async function Hero() {
   return (
     <section
       className={`flex items-center w-full justify-end sm:px-20 min-[375px]:px-10 px-4 sm:h-[700px] h-[500px]  ${bgImg.bgImage}`}

@@ -36,7 +36,7 @@ export default function MobileNavBar({ closeMobileNavBar }: MobileNavBarType) {
         </Link>
         <Link
           onClick={() => closeMobileNavBar()}
-          href={""}
+          href={"/about"}
           className={`hover:text-gray-500 font-semibold `}
         >
           About
