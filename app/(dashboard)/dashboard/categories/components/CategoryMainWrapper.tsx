@@ -7,8 +7,8 @@ import moment from "moment";
 import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import { MdOutlineArrowDropDownCircle } from "react-icons/md";
-import ModalOverlay from "../../commons/ModalOverLay";
-import Table from "../../commons/Table";
+import ModalOverlay from "../../../commons/ModalOverLay";
+import Table from "../../../commons/Table";
 import {
   MoreCategoryColumn,
   moreCategoryType,

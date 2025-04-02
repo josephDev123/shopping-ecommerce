@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import FooterPagination from "../commons/FooterPagination";
+import FooterPagination from "../../commons/FooterPagination";
 import TransactionTable from "./components/TransactionTable";
 import { authOptions } from "@/lib/NextAuthOption";
 import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";

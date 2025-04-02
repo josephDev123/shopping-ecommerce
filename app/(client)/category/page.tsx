@@ -40,7 +40,6 @@ export default async function page({
           <Loader className="h-56 flex flex-col items-center justify-center" />
         }
       >
-        {/* <pre>{JSON.stringify(result)}</pre> */}
         <CategoryBodyWrapper categories={result} />
       </Suspense>
     </section>

@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Input, { SelectInput } from "@/app/(client)/generic/Input";
 import Button from "@/app/(client)/generic/Button";
 import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
-import FooterPagination from "../commons/FooterPagination";
+import FooterPagination from "../../commons/FooterPagination";
 import CategoryMainSection from "./components/CategoryMainWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";

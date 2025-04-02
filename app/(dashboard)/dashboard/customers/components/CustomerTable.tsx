@@ -11,8 +11,8 @@ import { CiLock, CiSearch } from "react-icons/ci";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { IoIosExpand } from "react-icons/io";
-import ModalOverlay from "../../commons/ModalOverLay";
-import Table from "../../commons/Table";
+import ModalOverlay from "../../../commons/ModalOverLay";
+import Table from "../../../commons/Table";
 import { CustomerType } from "@/models/OrderModel";
 import { CustomerColumns } from "@/app/columns/CustomerColumn";
 

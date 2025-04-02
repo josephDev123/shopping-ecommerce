@@ -7,13 +7,13 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import React, { Suspense, use, useEffect, useRef, useState } from "react";
 import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
-import Table from "../../commons/Table";
+import Table from "../../../commons/Table";
 import { columns, TableData } from "@/app/data/columns";
 import {
   OrderMoreDetailColumns,
   orderMoreDetailType,
 } from "@/app/columns/OrderMoreDetailColumns";
-const ModalOverlay = React.lazy(() => import("../../commons/ModalOverLay"));
+const ModalOverlay = React.lazy(() => import("../../../commons/ModalOverLay"));
 
 interface OrderPageMainWrapperProps {
   data: ClientOrderType[];

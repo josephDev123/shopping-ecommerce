@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import FooterPagination from "../commons/FooterPagination";
+import FooterPagination from "../../commons/FooterPagination";
 import CustomerTable from "./components/CustomerTable";
 import { authOptions } from "@/lib/NextAuthOption";
 import { ClientOrderType } from "@/app/types/ClientOrderType";

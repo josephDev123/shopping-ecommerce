@@ -23,7 +23,7 @@ export default function Navbar() {
   const [isSideBarCartOpen, setSideBarCartOpen] = useState(false);
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState(false);
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const pathname = usePathname();
+
   const handleOpenSideCart = () => {
     setSideBarCartOpen(true);
   };
@@ -66,7 +66,7 @@ export default function Navbar() {
         ) : status === "authenticated" ? (
           <Link
             href={"/dashboard"}
-            className="text-base font-semibold hover:bg-gray-200 px-1.5 py-0.5 rounded-md"
+            className="text-base font-semibold hover:text-gray-600 px-1.5 py-0.5 rounded-md"
           >
             Dashboard
           </Link>

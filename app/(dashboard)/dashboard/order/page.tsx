@@ -2,7 +2,7 @@
 
 import React, { Suspense } from "react";
 import Navbar from "./components/Navbar";
-import FooterPagination from "../commons/FooterPagination";
+import FooterPagination from "../../commons/FooterPagination";
 import OrderPageMainWrapper from "./components/OrderPageMainWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";

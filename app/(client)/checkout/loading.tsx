@@ -1,8 +1,12 @@
-import React from "react";
-import Loader from "../components/Loader";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-export default function Loading() {
-  <section className="w-full h-screen flex flex-col justify-center items-center">
-    <Loader className="w-16 h-16" />
-  </section>;
+interface LoaderProps {
+  className: string;
+}
+export default function Loader({ className }: LoaderProps) {
+  return (
+    <section className="h-80 w-full flex flex-col justify-center items-center">
+      <AiOutlineLoading3Quarters className={`animate-spin ${className}`} />
+    </section>
+  );
 }

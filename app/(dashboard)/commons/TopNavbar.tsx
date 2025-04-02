@@ -14,6 +14,7 @@ import HamburgerToggle from "./HamburgerToggle";
 import DashboardMobileLeftpanel from "./DashboardMobileLeftpanel";
 import moment from "moment";
 import Loader from "@/app/(client)/components/Loader";
+import Link from "next/link";
 
 export default function TopNavbar() {
   const { data: session, status } = useSession();
@@ -39,6 +40,12 @@ export default function TopNavbar() {
       </div>
 
       <div className="flex  justify-between sm:gap-4 gap-2 items-center">
+        <Link
+          href="/"
+          className="font-semibold text-green-500 hover:text-green-400"
+        >
+          Home
+        </Link>
         <IoIosNotifications className="text-xl cursor-pointer" />
         {/* <span className="relative sm:w-auto border rounded-md">
           <input

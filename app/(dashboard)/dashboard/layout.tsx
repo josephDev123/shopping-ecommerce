@@ -1,12 +1,12 @@
 import { getSession } from "next-auth/react";
-import "../globals.css";
-import NextAuthSessionProvider from "../nextAuthSessionProvider";
-import LeftPanel from "./commons/LeftPanel";
-import TopNavbar from "./commons/TopNavbar";
+// import "../globals.css";
+import NextAuthSessionProvider from "../../nextAuthSessionProvider";
+import LeftPanel from "../commons/LeftPanel";
+import TopNavbar from "../commons/TopNavbar";
 import { getServerSession } from "next-auth";
 // import { authOptions } from "../api/auth/[...nextauth]/route";
-import DashboardMobileLeftpanel from "./commons/DashboardMobileLeftpanel";
-import StoreProvider from "../StoreProvider";
+import DashboardMobileLeftpanel from "../commons/DashboardMobileLeftpanel";
+import StoreProvider from "../../StoreProvider";
 
 export const metadata = {
   title: "Shopping Dashboard",
@@ -41,3 +41,8 @@ export default function DashboardLayout({
     </section>
   );
 }
+
+// Unhandled Runtime Error
+// Error: async/await is not yet supported in Client Components,
+// only Server Components. This error is often caused by accidentally
+//  adding `'use client'` to a module that was originally written for the server.

@@ -35,9 +35,8 @@ export default function ProductCard({ credential }: IProductCard) {
   };
   return (
     <section className="flex flex-col bg-[#F4F5F7] relative cursor-pointer group rounded-lg">
-      {/* <pre>{JSON.stringify(data)}</pre> */}
       <div
-        onClick={() => navigate.push(`/shop/${credential._id}`)}
+        // onClick={() => navigate.push(`/shop/${credential._id}`)}
         className=" flex-col justify-center items-center absolute top-0 w-full h-full bg-gray-50/50 group-hover:flex hidden"
       >
         <Button
@@ -60,7 +59,10 @@ export default function ProductCard({ credential }: IProductCard) {
         className="w-full object-cover rounded-t-lg"
         style={{ maxHeight: 300 }}
       />
-      <div className="mt-auto p-2">
+      <div
+        className="mt-auto p-2"
+        onClick={() => navigate.push(`/shop/${credential._id}`)}
+      >
         <p className="font-bold">{credential.productName}</p>
         <p className="truncate">{credential.Description}</p>
         <span className="flex justify-between items-center">

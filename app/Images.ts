@@ -12,14 +12,14 @@
 // };
 
 export const Images = {
-  avatar: "./assets/png/user_avatar wearing_suit.png",
-  banner: "./jpeg/bannerOne.jpg",
-  productCat1: "./png/productCat1.png",
-  productCat2: "./png/productCat2.png",
-  productCat3: "./png/productCat3.png",
-  product4: "./png/product4.png",
-  product5: "./png/product5.png",
-  product6: "./png/product6.png",
-  pawPawErrorImg: "./png/pawpawErrorMeme",
-  logo: "./png/logo.png",
+  avatar: "/png/user_avatar wearing_suit.png",
+  banner: "/jpeg/bannerOne.jpg",
+  productCat1: "/png/productCat1.png",
+  productCat2: "/png/productCat2.png",
+  productCat3: "/png/productCat3.png",
+  product4: "/png/product4.png",
+  product5: "/png/product5.png",
+  product6: "/png/product6.png",
+  pawPawErrorImg: "/png/pawpawErrorMeme",
+  logo: "/png/logo.png",
 };

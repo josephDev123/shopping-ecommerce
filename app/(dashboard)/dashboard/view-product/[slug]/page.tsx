@@ -4,9 +4,9 @@ import Input, {
   SelectInput,
   TextareaInput,
 } from "@/app/(client)/generic/Input";
-import { marketplaceCategories } from "../../types/CategoryData";
+import { marketplaceCategories } from "../../../types/CategoryData";
 import ImageGrid from "../../add-product/components/ImageGrid";
-import { weightUnits } from "../../types/weigthUnit";
+import { weightUnits } from "../../../types/weigthUnit";
 import Button from "@/app/(client)/generic/Button";
 import { useFetchFilterAndPaginateApi } from "@/app/hooks/useFetchApiAxios";
 import { useParams } from "next/navigation";

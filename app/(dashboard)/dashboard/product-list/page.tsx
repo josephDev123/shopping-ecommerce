@@ -1,5 +1,5 @@
 import ProductsListTable from "./components/ProductsListTable";
-import FooterPagination from "../commons/FooterPagination";
+import FooterPagination from "../../commons/FooterPagination";
 import { z } from "zod";
 import { ProductFormDataSchema } from "../add-product/types/addProductDataTypes";
 import { Suspense } from "react";

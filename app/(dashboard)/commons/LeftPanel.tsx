@@ -9,13 +9,21 @@ import { TbBrandProducthunt } from "react-icons/tb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 import Logout from "./Logout";
+import Image from "next/image";
 
 export default async function LeftPanel() {
   const session = await getServerSession(authOptions);
   return (
     <div className="h-full flex flex-col justify-between items-center">
-      <Link href="/" className="text-2xl font-semibold my-4">
-        JoeBank
+      <Link
+        href="/dashboard"
+        className="text-2xl font-semibold my-4 inline-flex items-center gap-2  w-full"
+      >
+        <div className="relative size-12">
+          <Image src="/png/logo.png" alt="logo" fill objectFit="contain" />
+        </div>
+
+        <span>Shop</span>
       </Link>
       <div className="space-y-4">
         {leftPanelItem.map((item, id) => (
@@ -34,7 +42,7 @@ export default async function LeftPanel() {
             <LeftPanelItemCard
               icon={<IoIosAddCircleOutline className="text-lg" />}
               text="Add Products"
-              path="/add-product"
+              path="/dashboard/add-product"
             />
           </>
         )}

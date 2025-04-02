@@ -11,15 +11,19 @@ export const leftPanelItem = [
   {
     icons: <BsCart3 />,
     text: "Order Management",
-    path: "/order",
+    path: "/dashboard/order",
   },
-  { icons: <SlPeople />, text: "Customers", path: "/customers" },
+  { icons: <SlPeople />, text: "Customers", path: "/dashboard/customers" },
   // { icons: <RiCoupon2Line />, text: "Coupon Code", path: "/" },
-  { icons: <MdOutlineCategory />, text: "Categories", path: "/categories" },
+  {
+    icons: <MdOutlineCategory />,
+    text: "Categories",
+    path: "/dashboard/categories",
+  },
   {
     icons: <AiOutlineTransaction />,
     text: "Transaction",
-    path: "/transactions",
+    path: "/dashboard/transactions",
   },
   // { icons: <TbBrandSketch />, text: "Brand", path: "/brand" },
 ];
