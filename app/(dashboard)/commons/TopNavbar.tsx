@@ -15,6 +15,7 @@ import DashboardMobileLeftpanel from "./DashboardMobileLeftpanel";
 import moment from "moment";
 import Loader from "@/app/(client)/components/Loader";
 import Link from "next/link";
+import { AnimatePresence } from "framer-motion";
 
 export default function TopNavbar() {
   const { data: session, status } = useSession();
@@ -59,7 +60,9 @@ export default function TopNavbar() {
         </span> */}
         <HamburgerToggle />
       </div>
-      <DashboardMobileLeftpanel />
+      <AnimatePresence>
+        <DashboardMobileLeftpanel />
+      </AnimatePresence>
     </section>
   );
 }

@@ -14,6 +14,7 @@ import { toggleLeftPanel } from "@/lib/slices/leftpanelSlice";
 import { useSession } from "next-auth/react";
 import Loader from "@/app/(client)/components/Loader";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "motion/react";
 
 export default function DashboardMobileLeftpanel() {
   const { data: session, status } = useSession();
@@ -22,10 +23,14 @@ export default function DashboardMobileLeftpanel() {
   const navigate = useRouter();
 
   return (
-    <>
+    <AnimatePresence>
       {state && (
-        <section
-          // animate={""}
+        // <section
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
           className="fixed inset-0 z-50 md:hidden flex flex-col w-full h-full "
         >
           <div className="w-full min-[425px]:w-[50%] h-full flex flex-col pl-6 pr-2 bg-darkBlack  overflow-y-auto text-white ">
@@ -107,8 +112,9 @@ export default function DashboardMobileLeftpanel() {
               </div>
             </div>
           </div>
-        </section>
+          {/* </section> */}
+        </motion.section>
       )}
-    </>
+    </AnimatePresence>
   );
 }

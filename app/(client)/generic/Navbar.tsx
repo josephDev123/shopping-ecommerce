@@ -6,16 +6,18 @@ import { FiSearch } from "react-icons/fi";
 import { AiOutlineLike } from "react-icons/ai";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import SideBarCart from "../components/SideBarCart";
-import { useState } from "react";
+import { lazy, startTransition, Suspense, useState } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import MobileNavBar from "./MobileNavBar";
 import { useAppSelector } from "@/lib/slices/hooks";
-import SearchModal from "./SearchModal";
+// import SearchModal from "./SearchModal";
 import { useSession } from "next-auth/react";
 import Loader from "../components/Loader";
 import Image from "next/image";
 import AnimatePresenceWrapper from "./AnimatePresenceWrapper";
 import { AnimatePresence } from "framer-motion";
+
+const SearchModal = lazy(() => import("./SearchModal"));
 
 export default function Navbar() {
   const { data, status } = useSession();
@@ -80,7 +82,9 @@ export default function Navbar() {
           </Link>
         )}
         <FiSearch
-          onClick={() => setIsSearchModalOpen((prev) => !prev)}
+          onClick={() =>
+            startTransition(() => setIsSearchModalOpen((prev) => !prev))
+          }
           className="hover:bg-slate-200 p-1 cursor-pointer rounded-full"
         />
 
@@ -122,10 +126,12 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      <SearchModal
-        closeModal={() => setIsSearchModalOpen(false)}
-        isOpen={isSearchModalOpen}
-      />
+      <Suspense fallback={<Loader className="h-5 w-5" />}>
+        <SearchModal
+          closeModal={() => setIsSearchModalOpen(false)}
+          isOpen={isSearchModalOpen}
+        />
+      </Suspense>
     </section>
   );
 }

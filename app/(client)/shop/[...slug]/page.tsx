@@ -5,6 +5,7 @@ import ShopHeading from "./components/ShopHeading";
 import ShopDetailSection from "./components/ShopDetailSection";
 import ShopItemPreview from "./components/ShopItemPreview";
 import { ProductResponseType } from "@/app/types/productsType";
+import { CustomFetch } from "@/app/serverActions/customFetch";
 
 interface pageProps {
   params: {
@@ -12,18 +13,10 @@ interface pageProps {
   };
 }
 
-// ${process.env.SERVER_BASEURL}
 export default async function Page({ params }: pageProps) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug[0]}`
-  );
-
-  if (!response.ok) {
-    // Handle errors
-    console.error("Failed to fetch data:", response.statusText);
-    return <div>Error fetching data</div>;
-  }
-  const result: ProductResponseType = await response.json();
+  const result = await CustomFetch({
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug[0]}`,
+  });
 
   return (
     <section className="flex flex-col w-full h-full">

@@ -11,7 +11,7 @@ export default function page() {
   return (
     <section className="flex flex-col w-full h-full">
       <Banner title="Checkout" links={links} />
-      <div className=" min-[1136px]::w-[80%] w-[90%] mx-auto my-10">
+      <div className=" min-[1136px]:w-[80%] w-[90%] mx-auto my-10">
         <h2 className="font-bold text-xl">Billing details</h2>
         <CheckoutTable />
       </div>

@@ -4,7 +4,7 @@ import ThingsToEnjoy from "../../generic/ThingsToEnjoy";
 import Banner from "../../generic/Banner";
 import ProductListSection from "./components/ProductListSection";
 import ItemLimit from "./components/ItemLimit";
-import { fetchOrders } from "../../lib/fetchOrders";
+import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export default async function page({
   searchParams,
@@ -19,7 +19,9 @@ export default async function page({
   const page = Number(searchParams.page) || 1;
   const limit = Number(searchParams.limit) || 4;
 
-  const result = await fetchOrders(page, limit);
+  const result = await CustomFetch({
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`,
+  });
 
   const data = result.data.products;
   const totalDoc = result?.data?.totalDoc;

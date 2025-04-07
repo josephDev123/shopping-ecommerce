@@ -6,7 +6,7 @@ import { IoIosClose } from "react-icons/io";
 import Button from "../generic/Button";
 import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/lib/slices/hooks";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 
 interface ISideBarCart {
   closeSideBar: () => void;
@@ -34,89 +34,91 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
   const discountAmount = (total * disCountPercentage) / 100;
   const subtotal = total - discountAmount;
   return (
-    <motion.section
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      id="sideBar"
-      onClick={handleCloseSideBarOverlay}
-      className="fixed inset-0 z-50 flex flex-col w-full h-full bg-transparent/15"
-    >
-      <div className="flex flex-col sm:w-[400px] w-full bg-white self-end p-5">
-        <div className="flex items-center justify-between">
-          <h2 className="font-bold">Shopping Cart</h2>
-          <IoCartOutline />
-        </div>
-        <hr className="mt-2 mb-5" />
-        {getCarts.length < 1 ? (
-          <div className="flex flex-col items-center justify-center h-full">
-            <IoCartOutline className="text-5xl" />
-            <p className="text-center">Your cart is empty</p>
+    <AnimatePresence>
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        id="sideBar"
+        onClick={handleCloseSideBarOverlay}
+        className="fixed inset-0 z-50 flex flex-col w-full h-full bg-transparent/15"
+      >
+        <div className="flex flex-col sm:w-[400px] w-full bg-white self-end p-5">
+          <div className="flex items-center justify-between">
+            <h2 className="font-bold">Shopping Cart</h2>
+            <IoCartOutline />
           </div>
-        ) : (
-          <div className="gap-2 h-64 overflow-y-auto">
-            {getCarts.map((cart, i) => (
-              <div
-                key={i}
-                className="flex sm:flex-row flex-col sm:items-center justify-between relative"
-              >
-                <div className="h-[100px] w-[108px] rounded-md relative block ">
-                  <Image
-                    src={cart.productImgUrl[0].url}
-                    fill
-                    objectFit="cover"
-                    alt=""
-                  />
+          <hr className="mt-2 mb-5" />
+          {getCarts.length < 1 ? (
+            <div className="flex flex-col items-center justify-center h-full">
+              <IoCartOutline className="text-5xl" />
+              <p className="text-center">Your cart is empty</p>
+            </div>
+          ) : (
+            <div className="gap-2 h-64 overflow-y-auto">
+              {getCarts.map((cart, i) => (
+                <div
+                  key={i}
+                  className="flex sm:flex-row flex-col sm:items-center justify-between relative"
+                >
+                  <div className="h-[100px] w-[108px] rounded-md relative block ">
+                    <Image
+                      src={cart.productImgUrl[0].url}
+                      fill
+                      objectFit="cover"
+                      alt=""
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="font-medium mt-4 text-ellipsis overflow-hidden whitespace-nowrap sm:max-w-[200px] max-w-[300px] ">
+                      {cart.productName}
+                    </p>
+                    <p>
+                      {cart.qty} x{" "}
+                      <span className="text-[#B88E2F]">
+                        usd. {cart.productPrice}
+                      </span>
+                    </p>
+                  </div>
+                  <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:block hidden" />
+                  <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:hidden absolute bottom-4 right-2" />
                 </div>
-                <div className="flex flex-col">
-                  <p className="font-medium mt-4 text-ellipsis overflow-hidden whitespace-nowrap sm:max-w-[200px] max-w-[300px] ">
-                    {cart.productName}
-                  </p>
-                  <p>
-                    {cart.qty} x{" "}
-                    <span className="text-[#B88E2F]">
-                      usd. {cart.productPrice}
-                    </span>
-                  </p>
-                </div>
-                <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:block hidden" />
-                <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:hidden absolute bottom-4 right-2" />
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
 
-        {getCarts.length >= 1 && (
-          <div className="flex flex-col">
-            <div className="flex items-center gap-4">
-              <h3 className="font-medium">Subtotal</h3>
-              <p className="text-[#B88E2F] font-medium">
-                usd. {subtotal.toFixed(2)}
-              </p>
+          {getCarts.length >= 1 && (
+            <div className="flex flex-col">
+              <div className="flex items-center gap-4">
+                <h3 className="font-medium">Subtotal</h3>
+                <p className="text-[#B88E2F] font-medium">
+                  usd. {subtotal.toFixed(2)}
+                </p>
+              </div>
+              <hr className="my-4" />
+              <div className="flex items-center gap-4">
+                <Button
+                  onClick={() => {
+                    navigate.push("/cart");
+                    closeSideBar();
+                  }}
+                  textContent="Cart"
+                  className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
+                />
+                <Button
+                  onClick={() => {
+                    navigate.push("/checkout");
+                    closeSideBar();
+                  }}
+                  textContent="Checkout"
+                  className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
+                />
+              </div>
             </div>
-            <hr className="my-4" />
-            <div className="flex items-center gap-4">
-              <Button
-                onClick={() => {
-                  navigate.push("/cart");
-                  closeSideBar();
-                }}
-                textContent="Cart"
-                className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
-              />
-              <Button
-                onClick={() => {
-                  navigate.push("/checkout");
-                  closeSideBar();
-                }}
-                textContent="Checkout"
-                className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
-              />
-            </div>
-          </div>
-        )}
-      </div>
-    </motion.section>
+          )}
+        </div>
+      </motion.section>
+    </AnimatePresence>
   );
 }
