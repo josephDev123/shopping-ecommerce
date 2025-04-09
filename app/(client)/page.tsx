@@ -9,11 +9,9 @@ export default async function page() {
   const [category, products] = await Promise.all([
     CustomFetch({
       url: `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=1&limit=8`,
-      cache: "force-cache",
     }),
     CustomFetch({
       url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=1&limit=4`,
-      cache: "force-cache",
     }),
   ]);
 
