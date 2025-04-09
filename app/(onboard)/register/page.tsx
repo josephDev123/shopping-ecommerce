@@ -41,18 +41,20 @@ export default function Register() {
     }
   };
   return (
-    <section className="flex flex-col justify-center items-center h-screen w-full">
-      <div className="grid sm:grid-cols-2 grid-cols-1 gap-6 xl:w-[70%] w-full p-4">
+    <section className="flex flex-col justify-center items-center my-auto h-screen w-full overflow-y-auto">
+      <div className="grid sm:grid-cols-2 grid-cols-1 gap-6 xl:w-[70%] w-full p-4 h-[80%]">
         <div className="sm:flex flex-col hidden text-[#333333] p-4 ">
           <div className="inline-flex gap-2 items-center ">
             <h1 className="lg:text-4xl text-2xl font-bold">Join </h1>
             <div className="relative  size-8">
-              <Image
-                src={"/png/logo.png"}
-                className="bg-white rounded-full p-2 "
-                alt="logo"
-                fill
-              />
+              <Link href={"/"}>
+                <Image
+                  src={"/png/logo.png"}
+                  className="bg-white rounded-full p-2 "
+                  alt="logo"
+                  fill
+                />
+              </Link>
             </div>
             <p className="lg:text-4xl text-2xl font-bold">Today!</p>
           </div>
@@ -77,6 +79,7 @@ export default function Register() {
           <p className="mb-4 font-bold text-xl text-center">
             Create an account
           </p>
+
           <form className="space-y-5" onSubmit={handleSubmit(handleRegister)}>
             <div className="flex flex-col ">
               <label htmlFor="name" className="font-semibold mb-2">
