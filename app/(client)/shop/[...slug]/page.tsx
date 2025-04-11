@@ -29,10 +29,10 @@ export default async function Page({ params }: pageProps) {
       <div className="flex flex-col justify-center items-center">
         <h2 className="font-bold text-2xl mb-10">Related Products</h2>
         <div className="grid grid-cols-4 gap-4 w-[80%] mx-auto ">
-          {productCardData.map((product, i) => (
+          {/* {productCardData.map((product, i) => (
             // <ProductCard key={i} credential={product} />
             <></>
-          ))}
+          ))} */}
         </div>
         <Button
           textContent="Show More"
