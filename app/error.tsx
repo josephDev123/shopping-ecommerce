@@ -2,6 +2,11 @@
 
 import Image from "next/image";
 import { Images } from "./Images";
+import { Suspense } from "react";
+import CategoryBodyWrapper from "./(client)/category/component/CategoryBodyWrapper";
+import Loader from "./(client)/components/Loader";
+import Banner from "./(client)/generic/Banner";
+import { CustomFetch } from "./serverActions/customFetch";
 
 export default function Error({
   error,

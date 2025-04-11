@@ -4,6 +4,7 @@ import CategoryItem from "./component/CategoryItem";
 import Loader from "../components/Loader";
 import MainCategory from "./component/MainCategory";
 import CategoryBodyWrapper from "./component/CategoryBodyWrapper";
+import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export default async function page({
   searchParams,
@@ -15,33 +16,25 @@ export default async function page({
     { name: "Category", url: "/category" },
   ];
 
-  // console.log(searchParams);
-  const productCategories = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/category?&page=${1}&limit=${2}`
-  );
-  if (!productCategories.ok) {
-    return (
-      <div className="flex flex-col h-56 justify-center items-center text-red-400">
-        Error fetching category data
-      </div>
-    );
-  }
+  const productCategories = await CustomFetch({
+    url: `${
+      process.env.NEXT_PUBLIC_BASEURL
+    }/api/category?&page=${1}&limit=${6}`,
+  });
 
-  const formatResponse = await productCategories.json();
-  const result = formatResponse.data.categoriesGroup;
-  const totalResult = formatResponse.totalCategories;
-  // console.log(result);
+  const result = productCategories.data.categoriesGroup;
+  const totalResult = productCategories.totalCategories;
 
   return (
     <section className="flex flex-col w-full h-full ">
       <Banner title="Category" links={links} />
-      <Suspense
+      {/* <Suspense
         fallback={
           <Loader className="h-56 flex flex-col items-center justify-center" />
         }
-      >
-        <CategoryBodyWrapper categories={result} />
-      </Suspense>
+      > */}
+      <CategoryBodyWrapper categories={result} />
+      {/* </Suspense> */}
     </section>
   );
 }

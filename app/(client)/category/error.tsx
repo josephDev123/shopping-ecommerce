@@ -8,7 +8,7 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="h-full flex flex-col items-center justify-center">
+    <div className="h-96 flex flex-col items-center justify-center">
       {/* <Image src={Images.pawPawErrorImg} alt="error" className="size-80" /> */}
       <h2>Something went wrong!</h2>
       <button

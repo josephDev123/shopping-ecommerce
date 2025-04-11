@@ -12,7 +12,7 @@ import { NextRequest } from "next/server";
 // export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   const page = req.nextUrl.searchParams.get("page") || 1;
-  const limit = req.nextUrl.searchParams.get("limit") || 4;
+  const limit = req.nextUrl.searchParams.get("limit") || 10;
   // console.log(page, limit);
   try {
     await startDb();

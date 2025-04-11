@@ -17,7 +17,7 @@ export default async function page({
   ];
 
   const page = Number(searchParams.page) || 1;
-  const limit = Number(searchParams.limit) || 4;
+  const limit = Number(searchParams.limit) || 10;
 
   const result = await CustomFetch({
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`,
@@ -50,7 +50,7 @@ export default async function page({
       </div>
 
       {/* <Suspense fallback={<Loading />}> */}
-      <ProductListSection data={data} itemsNumber={totalDoc} />
+      <ProductListSection data={data} itemsNumber={totalDoc} limit={limit} />
       {/* </Suspense> */}
 
       <ThingsToEnjoy />
