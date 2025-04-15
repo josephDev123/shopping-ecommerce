@@ -1,8 +1,5 @@
 "use client";
 
-import { AiFillTwitterCircle } from "react-icons/ai";
-import { BsFacebook } from "react-icons/bs";
-import { FaLinkedin } from "react-icons/fa";
 import ProductSize, { ProductColor } from "./ProductSize";
 import Rating from "@/app/(client)/generic/Rating";
 import Image from "next/image";
@@ -22,7 +19,8 @@ interface ShopItemPreviewProps {
 export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
   const productDataArray = Array.isArray(data.data) ? data.data : [data.data];
   const product = productDataArray[0];
-  const [cartNo, setCartNo] = useState(0);
+  console.log(product);
+  // const [cartNo, setCartNo] = useState(0);
   const [qty, setQty] = useState(1);
 
   const { data: session } = useSession();
@@ -60,31 +58,31 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
             <Link
               key={i}
               style={{ objectPosition: "top" }}
-              href={`/shop/1?imgurl=${img.url}`}
+              // href={`/shop/1?imgurl=${img.url}`}
+              href={""}
               className="bg-green-400 w-[100px] rounded-md h-[100px] block relative"
             >
-              <Image src={img.url} fill alt="" sizes="" />
+              <Image src={img.url} fill alt={img.url} className="rounded-md" />
             </Link>
           ))}
         </div>
         {/* SECOND */}
-        <Link href={`/shop/1`} className="w-full h-[400px] block  relative">
+        <Link href={``} className="w-full h-[400px] block  relative">
           <Image
             style={{ objectPosition: "top left" }}
             src={product.productImgUrl[0].url}
             fill
-            sizes=""
-            alt=""
-            className="object-contain"
+            alt={product.productImgUrl[0].url}
+            className="object-contain rounded-md"
           />
         </Link>
       </div>
       {/* second grid */}
       <div className="flex flex-col w-full">
-        <h2 className="text-2xl font-medium">{product.productName}</h2>
-        <p>USD {product.productPrice}</p>
+        <h2 className="text-2xl font-medium">{product.productName || ""}</h2>
+        <p>USD {product.productPrice || 0}</p>
         <div className="flex gap-3 items-center ">
-          <Rating rating={3} /> <div className="h-6 w-0.5 bg-black/80"></div>{" "}
+          <Rating rating={3} /> <div className="h-6 w-0.5 bg-black/80"></div>
           <p className="text-black/70">5 Customer Review</p>
         </div>
 
