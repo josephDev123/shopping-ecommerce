@@ -67,13 +67,16 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
           ))}
         </div>
         {/* SECOND */}
-        <Link href={``} className="w-full h-[400px] block  relative">
+        <Link
+          href={``}
+          className="w-full h-[400px] block  relative rounded-md  overflow-hidden"
+        >
           <Image
             style={{ objectPosition: "top left" }}
             src={product.productImgUrl[0].url}
             fill
             alt={product.productImgUrl[0].url}
-            className="object-contain rounded-md"
+            className="object-cover"
           />
         </Link>
       </div>
