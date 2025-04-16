@@ -15,7 +15,7 @@ interface pageProps {
 
 export default async function Page({ params }: pageProps) {
   const result = await CustomFetch({
-    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug[0]}`,
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug}`,
   });
 
   return (
