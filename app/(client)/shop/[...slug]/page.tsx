@@ -9,7 +9,7 @@ import { CustomFetch } from "@/app/serverActions/customFetch";
 
 interface pageProps {
   params: {
-    slug: string[];
+    slug: string;
   };
 }
 
