@@ -13,7 +13,7 @@ type param = {
 
 export default async function Page({ params }: { params: param }) {
   const result = await CustomFetch({
-    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug}`,
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug[0]}`,
   });
 
   return (
