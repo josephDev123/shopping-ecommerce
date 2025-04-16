@@ -8,7 +8,7 @@ import { ProductResponseType } from "@/app/types/productsType";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 
 type param = {
-  slug: string;
+  slug: string[];
 };
 
 export default async function Page({ params }: { params: param }) {
