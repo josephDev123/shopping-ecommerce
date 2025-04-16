@@ -18,7 +18,7 @@ export default function ShopHeading({ data }: ShopHeadingProps) {
           <span className="text-black/50">Shop</span> <TbMathGreater />
         </Link>
         <div className="h-8 w-0.5 bg-black"></div>
-        <span className="font-bold">{product.productName}</span>
+        <span className="font-bold">{product.productName || ""}</span>
       </div>
     </div>
   );

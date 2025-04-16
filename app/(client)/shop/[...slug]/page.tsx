@@ -20,6 +20,7 @@ export default async function Page({ params }: pageProps) {
 
   return (
     <section className="flex flex-col w-full h-full">
+      {params.slug}
       <ShopHeading data={result} />
       <ShopItemPreview data={result} />
       <ShopDetailSection data={result} />

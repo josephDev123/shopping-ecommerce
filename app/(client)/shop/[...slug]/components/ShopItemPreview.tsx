@@ -3,7 +3,6 @@
 import ProductSize, { ProductColor } from "./ProductSize";
 import Rating from "@/app/(client)/generic/Rating";
 import Image from "next/image";
-import { Images } from "@/app/Images";
 import Link from "next/link";
 import Button from "@/app/(client)/generic/Button";
 import { ProductResponseType } from "@/app/types/productsType";
@@ -89,9 +88,9 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
           <p className="text-black/70">5 Customer Review</p>
         </div>
 
-        <p className="font-medium mt-3">{product.Description}</p>
+        <p className="font-medium mt-3">{product.Description || ""}</p>
 
-        <ProductSize className="mt-3" size={product.productSize} />
+        <ProductSize className="mt-3" size={product.productSize || ""} />
         {/* <ProductColor className="mt-3" /> */}
         <div className="flex min-[375px]:flex-row flex-col items-center mt-4 gap-3  w-full">
           <div className="flex border rounded-md p-1.5 min-w-[25%] w-full justify-between">
@@ -125,15 +124,16 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
         <hr className="my-10" />
         <div className="flex flex-col space-y-2 text-sm">
           <div className="flex items-center gap-8">
-            <span className="w-20">SKU</span> <span>:{product.productSKU}</span>
+            <span className="w-20">SKU</span>{" "}
+            <span>:{product.productSKU || ""}</span>
           </div>
           <div className="flex items-center gap-8">
             <span className="w-20">Category</span>{" "}
-            <span>:{product.productCategory}</span>
+            <span>:{product.productCategory || ""}</span>
           </div>
           <div className="flex items-center gap-8">
             <span className="w-20">Tags</span>{" "}
-            <span>:{product.productTag}</span>
+            <span>:{product.productTag || ""}</span>
           </div>
 
           {/* <div className="flex items-center gap-8">
