@@ -20,6 +20,7 @@ export default async function Page({ params }: pageProps) {
 
   return (
     <section className="flex flex-col w-full h-full">
+      <pre>{JSON.stringify(params, null, 2)}</pre>
       <pre>{JSON.stringify(result, null, 2)}</pre>
       {/* {params.slug}
       <ShopHeading data={result} /> */}
