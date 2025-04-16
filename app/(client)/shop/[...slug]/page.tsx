@@ -7,13 +7,11 @@ import ShopItemPreview from "./components/ShopItemPreview";
 import { ProductResponseType } from "@/app/types/productsType";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 
-interface pageProps {
-  params: {
-    slug: string;
-  };
-}
+type param = {
+  slug: string;
+};
 
-export default async function Page({ params }: pageProps) {
+export default async function Page({ params }: { params: param }) {
   const result = await CustomFetch({
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug}`,
   });
