@@ -20,12 +20,12 @@ export default async function Page({ params }: pageProps) {
 
   return (
     <section className="flex flex-col w-full h-full">
-      {params.slug}
-      <ShopHeading data={result} />
+      <pre>{JSON.stringify(result, null, 2)}</pre>
+      {/* {params.slug}
+      <ShopHeading data={result} /> */}
       {/* <ShopItemPreview data={result} />
       <ShopDetailSection data={result} /> */}
       <hr />
-
       <hr className="py-6" />
       <div className="flex flex-col justify-center items-center">
         <h2 className="font-bold text-2xl mb-10">Related Products</h2>
