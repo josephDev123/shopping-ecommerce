@@ -16,6 +16,7 @@ export async function GET(req: NextRequest) {
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     const product_id = req.nextUrl.searchParams.get("product_id");
+    console.log(product_id);
     const result = await ProductServiceImpl.findById(product_id!);
     // console.log(product_id);
     return SuccessApiResponseHelper(

@@ -39,6 +39,7 @@ export class ProductService {
   async findById(product_id: string) {
     try {
       const result = await this.ProductRepository.findById(product_id);
+      console.log("product service", result);
       return result;
     } catch (error) {
       console.log(error);
