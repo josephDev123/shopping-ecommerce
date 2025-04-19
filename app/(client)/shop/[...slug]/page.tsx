@@ -12,9 +12,14 @@ type param = {
 };
 
 export default async function Page({ params }: { params: param }) {
+  const productId = params.slug[0];
   const result = await CustomFetch({
-    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${params.slug[0]}`,
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${productId}`,
   });
+
+  if (!productId) {
+    return <div>Invalid route — product ID missing.</div>;
+  }
 
   return (
     <section className="flex flex-col w-full h-full">

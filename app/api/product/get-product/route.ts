@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   try {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);
-    // const ProductServiceImpl = new ProductService(ProductRepositoryImp);
+    const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     // const product_id = req.nextUrl.searchParams.get("product_id");
     // console.log(product_id);
     // const result = await ProductServiceImpl.findById(product_id || "");
