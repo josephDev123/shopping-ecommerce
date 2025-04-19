@@ -1,6 +1,7 @@
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { ProductRepository } from "../../repository/productRepository/ProductRepository";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
+import mongoose from "mongoose";
 
 export class ProductService {
   constructor(private readonly ProductRepository: ProductRepository) {}
@@ -43,6 +44,7 @@ export class ProductService {
       return result;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   }
 

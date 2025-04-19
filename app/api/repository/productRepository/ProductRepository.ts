@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
@@ -81,7 +81,9 @@ export class ProductRepository {
 
   async findById(id: string) {
     try {
-      const doc = await this.dbContext.findById(id);
+      const doc = await this.dbContext.findById(
+        new mongoose.Types.ObjectId(id)
+      );
       return {
         msg: "get product successful",
         name: "MongodbSuccess",
