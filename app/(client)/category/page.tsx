@@ -17,9 +17,7 @@ export default async function page({
   ];
 
   const productCategories = await CustomFetch({
-    url: `${
-      process.env.NEXT_PUBLIC_BASEURL
-    }/api/category?&page=${1}&limit=${6}`,
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=${1}&limit=${6}`,
   });
 
   const result = productCategories.data.categoriesGroup;

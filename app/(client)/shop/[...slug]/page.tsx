@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "../../generic/Button";
 import { productCardData } from "@/app/data/productCardData";
 import ShopHeading from "./components/ShopHeading";
