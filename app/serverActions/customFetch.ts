@@ -10,7 +10,7 @@ type CustomFetchOptions = {
 };
 export async function CustomFetch({
   url,
-  revalidate = 60,
+  revalidate,
 }: //   cache = "force-cache",
 CustomFetchOptions) {
   try {
