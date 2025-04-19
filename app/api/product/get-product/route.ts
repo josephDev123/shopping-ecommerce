@@ -13,7 +13,7 @@ import {
 import { NextRequest, NextResponse } from "next/server";
 import GlobalError from "@/app/global-error";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     await startDb();
