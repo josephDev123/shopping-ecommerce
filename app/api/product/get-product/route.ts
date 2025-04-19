@@ -16,8 +16,8 @@ import GlobalError from "@/app/global-error";
 // export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
-    // await startDb();
-    // const ProductRepositoryImp = new ProductRepository(ProductModel);
+    await startDb();
+    const ProductRepositoryImp = new ProductRepository(ProductModel);
     // const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     // const product_id = req.nextUrl.searchParams.get("product_id");
     // console.log(product_id);
