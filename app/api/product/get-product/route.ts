@@ -19,8 +19,8 @@ export async function GET(req: NextRequest, res: NextResponse) {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
-    // const product_id = req.nextUrl.searchParams.get("product_id");
-    // console.log(product_id);
+    const product_id = req.nextUrl.searchParams.get("product_id");
+    console.log("from product", product_id);
     // const result = await ProductServiceImpl.findById(product_id || "");
     // console.log(product_id);
     // return SuccessApiResponseHelper(
@@ -32,9 +32,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
     //   result?.data || {}
     // );
 
-    return NextResponse.json({ msg: "hello" }, { status: 200 });
+    return NextResponse.json({ msg: product_id }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
 
     if (error instanceof GlobalErrorHandler) {
       return ApiResponseHelper(
