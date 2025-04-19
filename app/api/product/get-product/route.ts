@@ -21,18 +21,18 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     const product_id = req.nextUrl.searchParams.get("product_id");
     console.log("from product", product_id);
-    // const result = await ProductServiceImpl.findById(product_id || "");
-    // console.log(product_id);
-    // return SuccessApiResponseHelper(
-    //   result?.msg || "",
-    //   result?.name || "",
-    //   result?.operational || false,
-    //   result?.type || "",
-    //   result?.status || 200,
-    //   result?.data || {}
-    // );
+    const result = await ProductServiceImpl.findById(product_id || "");
+    console.log(product_id);
+    return SuccessApiResponseHelper(
+      result?.msg || "",
+      result?.name || "",
+      result?.operational || false,
+      result?.type || "",
+      result?.status || 200,
+      result?.data || {}
+    );
 
-    return NextResponse.json({ msg: product_id }, { status: 200 });
+    // return NextResponse.json({ msg: product_id }, { status: 200 });
   } catch (error) {
     // console.log(error);
 
