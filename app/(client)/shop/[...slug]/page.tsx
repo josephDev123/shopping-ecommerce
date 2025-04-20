@@ -17,18 +17,15 @@ export default async function Page({ params }: { params: param }) {
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/get-product?product_id=${productId}`,
   });
 
-  if (!productId) {
-    return <div>Invalid route — product ID missing.</div>;
-  }
-
   return (
     <section className="flex flex-col w-full h-full">
+      {/* <pre>{JSON.stringify(process.env.NEXT_PUBLIC_BASEURL, null, 2)}</pre>
       <pre>{JSON.stringify(params, null, 2)}</pre>
-      <pre>{JSON.stringify(result, null, 2)}</pre>
-      {/* {params.slug}
-      <ShopHeading data={result} /> */}
-      {/* <ShopItemPreview data={result} />
-      <ShopDetailSection data={result} /> */}
+      <pre>{JSON.stringify(result, null, 2)}</pre> */}
+      {/* {params.slug} */}
+      <ShopHeading data={result} />
+      <ShopItemPreview data={result} />
+      <ShopDetailSection data={result} />
       <hr />
       <hr className="py-6" />
       <div className="flex flex-col justify-center items-center">
