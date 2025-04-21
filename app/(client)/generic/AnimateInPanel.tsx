@@ -34,7 +34,7 @@ export default function AnimateInPanel({
           onClick={handleOverlayClose}
           className="flex flex-col fixed inset-0 z-30 bg-gray-900/45 backdrop-blur-sm"
         >
-          <motion.div variants={childVariants} className="w-72 h-full ">
+          <motion.div variants={childVariants} className="sm:w-72 w-64 h-full">
             {children}
           </motion.div>
         </motion.section>
