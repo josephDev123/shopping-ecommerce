@@ -5,6 +5,7 @@ import Banner from "../../generic/Banner";
 import ProductListSection from "./components/ProductListSection";
 import ItemLimit from "./components/ItemLimit";
 import { CustomFetch } from "@/app/serverActions/customFetch";
+import ShopFilter from "./components/ShopFilter";
 
 export default async function page({
   searchParams,
@@ -32,13 +33,7 @@ export default async function page({
       <Banner title="Shop" links={links} />
       <div className="flex sm:flex-row gap-2 flex-col sm:items-center justify-around bg-[#F9F1E7] h-fit py-1 px-2">
         <div className="flex md:flex-row sm:flex-col flex-row gap-2 items-start justify-start sm:order-1 order-2 min-[375px]:text-base text-sm">
-          <span className="flex  items-center">
-            <FilterIcons />
-            <span className="font-bold">Filter</span>
-            {/* <PiDotsSixBold className="text-xl font-bold" /> */}
-            {/* <BiviewList /> */}
-            <GoHorizontalRule className="rotate-90" />
-          </span>
+          <ShopFilter />
 
           <p className="">
             Showing {page}–{page * limit} of {result?.data?.totalDoc || 0}{" "}
