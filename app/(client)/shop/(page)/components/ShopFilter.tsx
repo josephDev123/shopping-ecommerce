@@ -1,13 +1,17 @@
 "use client";
 
 import AnimateInPanel from "@/app/(client)/generic/AnimateInPanel";
+import { productCategory } from "@/app/data/productCategory";
+import { sizes } from "@/app/data/size";
 import FilterIcons from "@/app/svgComponent/FilterIcons";
 import React, { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { GoHorizontalRule } from "react-icons/go";
 
 // interface ShopFilterProps {
 //   onClick: () => void;
 // }
+
 export default function ShopFilter() {
   const [visible, setVisible] = useState<"hidden" | "visible">("hidden");
   const variants = {
@@ -32,7 +36,7 @@ export default function ShopFilter() {
   return (
     <>
       <span
-        className="flex  items-center cursor-pointer h-fit"
+        className="flex  items-center cursor-pointer gap-1 h-fit"
         onClick={() => setVisible("visible")}
       >
         <FilterIcons />
@@ -48,8 +52,78 @@ export default function ShopFilter() {
         parentVariants={variants}
         childVariants={childrenVariants}
       >
-        <div className="flex flex-col h-full text-black text-center p-4 bg-white">
-          Shop Filter Coming soon ...
+        <div className="flex flex-col h-full text-black  p-4 bg-white">
+          <div className="flex items-center justify-between border-b pb-2">
+            <h1 className=" text-lg">Filter Results</h1>
+            <AiOutlineClose
+              onClick={() => setVisible("hidden")}
+              className="cursor-pointer hover:bg-gray-200 p-1 rounded-full text-2xl"
+            />
+          </div>
+
+          <div className="flex flex-col gap-4 mt-4">
+            <p className="">Sort By</p>
+            <div className="inline-flex gap-2 items-center flex-wrap">
+              {sizes.map((size, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className="border rounded-md p-1 hover:bg-gray-200 text-black/55"
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 mt-4">
+            <p className="">Category</p>
+            <div className="inline-flex gap-2 items-center flex-wrap">
+              {productCategory.map((category, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className="border rounded-md p-1 hover:bg-gray-200 text-black/55"
+                >
+                  {category.category_name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 mt-4">
+            <p className="">Size</p>
+            <div className="inline-flex gap-2 items-center flex-wrap">
+              {sizes.map((size, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  className="border rounded-md p-1 hover:bg-gray-200 text-black/55"
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 mt-4">
+            <p className="">Price</p>
+            <div className="flex w-full gap-2 items-center ">
+              <input type="range" name="" id="" className="w-full" />
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center mt-4">
+            <button type="button" className="py-1 px-3 rounded-full border">
+              Clear
+            </button>
+            <button
+              type="button"
+              className="py-1 px-3 rounded-full bg-[#ebd1af] hover:bg-[#f7e2c7] hover:text-black/75"
+            >
+              Apply Filter
+            </button>
+          </div>
         </div>
       </AnimateInPanel>
     </>
