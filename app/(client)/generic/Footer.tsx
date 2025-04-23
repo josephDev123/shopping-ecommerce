@@ -6,60 +6,66 @@ export default function Footer() {
       <section className="grid md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4 w-full">
         <div className="flex flex-col space-y-6">
           <h2 className="font-bold text-2xl">Shopping</h2>
-          <p className="text-gray-500 font-medium">
+          <p className="text-sm text-black/60 font-medium">
             Abeokuta, Eleweran, <br />
             Ogun state, Nigeria
           </p>
         </div>
 
         <div className="flex flex-col space-y-6">
-          <h2 className="text-gray-400 font-semibold text-xl">Link</h2>
-          <Link href={"/"} className="font-bold text-lg">
+          <h2 className="font-bold text-xl">Link</h2>
+          <Link href={"/"} className="font-bold text-sm text-black/60">
             Home
           </Link>
-          <Link href={"/shop"} className="font-bold text-lg">
+          <Link href={"/shop"} className="font-bold text-sm text-black/60">
             Shop
           </Link>
-          <Link href={"/about"} className="font-bold text-lg">
+          <Link href={"/about"} className="font-bold text-sm text-black/60">
             About
           </Link>
-          <Link href={"/contact"} className="font-bold text-lg">
+          <Link href={"/contact"} className="font-bold text-sm text-black/60">
             Contact
           </Link>
         </div>
 
         <div className="flex flex-col space-y-6">
-          <h2 className="text-gray-400 font-semibold text-xl">Help</h2>
-          <Link href={"#"} className="font-bold text-lg cursor-not-allowed">
+          <h2 className=" font-bold text-xl">Help</h2>
+          <Link
+            href={"#"}
+            className="font-bold text-sm text-black/60 cursor-not-allowed"
+          >
             Payment Options
           </Link>
           {/* <Link href={""} className="font-bold text-lg">
             Returns
           </Link> */}
-          <Link href={"#"} className="font-bold text-lg cursor-not-allowed">
+          <Link
+            href={"#"}
+            className="font-bold text-sm text-black/60 cursor-not-allowed"
+          >
             Privacy Policies
           </Link>
         </div>
 
         <div className="flex flex-col space-y-6">
-          <h2 className="text-gray-400 font-semibold text-xl">Newsletter</h2>
-          <div className="lg:flex flex-col gap-2">
+          <h2 className="font-bold text-xl">Newsletter</h2>
+          <div className="flex flex-col gap-2">
             <input
               type="email"
               placeholder="Enter your email address"
               className="outline-none border-b-2 border-b-black "
             />
 
-            <button className="border-b-2 border-b-black outline-none font-semibold">
+            <button className="border-b-2 border-b-black text-sm text-black/60 outline-none font-semibold">
               SUBSCRIBE
             </button>
           </div>
         </div>
       </section>
 
-      <hr className="mt-16 w-full" />
+      <hr className="mt-16 w-full text-sm" />
       <p className="mt-10 font-bold">
-        {new Date().getFullYear()} furino. All rights reverved
+        {new Date().getFullYear()}. All rights reserved
       </p>
     </section>
   );

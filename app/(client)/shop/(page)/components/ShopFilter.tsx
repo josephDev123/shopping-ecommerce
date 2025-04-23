@@ -52,7 +52,7 @@ export default function ShopFilter() {
         parentVariants={variants}
         childVariants={childrenVariants}
       >
-        <div className="flex flex-col h-full text-black  p-4 bg-white">
+        <div className="flex flex-col h-full w-full text-black  p-4 bg-white">
           <div className="flex items-center justify-between border-b pb-2">
             <h1 className=" text-lg">Filter Results</h1>
             <AiOutlineClose

@@ -5,12 +5,18 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Roboto, Inter, Lato, Raleway } from "next/font/google";
 import StoreProvider from "./StoreProvider";
+import type { Metadata } from "next";
 
 const raleway = Raleway({
   subsets: ["latin"],
   variable: "--font-raleway",
   display: "swap",
 });
+
+export const metadata: Metadata = {
+  // title: path === "/login" ? "Login" : "Register",
+  description: "Shopping commerce | E-commerce | Online shopping",
+};
 
 export default function RootLayout({
   children,

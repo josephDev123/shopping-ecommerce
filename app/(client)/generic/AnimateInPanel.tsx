@@ -32,7 +32,7 @@ export default function AnimateInPanel({
           exit="hidden"
           variants={parentVariants}
           onClick={handleOverlayClose}
-          className="flex flex-col fixed inset-0 z-30 bg-gray-900/45 backdrop-blur-sm"
+          className="flex flex-col fixed inset-0 w-full h-full z-40 bg-gray-900/45 backdrop-blur-none"
         >
           <motion.div variants={childVariants} className="sm:w-72 w-64 h-full">
             {children}
