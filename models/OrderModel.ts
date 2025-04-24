@@ -100,7 +100,7 @@ export interface OrderType extends Document {
 const orderSchema = new Schema<OrderType>(
   {
     user_id: { type: Schema.Types.ObjectId, ref: "User" },
-    tx_ref: { type: String, required: true },
+    tx_ref: { type: String },
     items: [productItemSchema],
     payment: paymentSchema,
     billing: billingDataSchema,

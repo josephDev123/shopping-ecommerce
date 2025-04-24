@@ -1,5 +1,3 @@
-import { generateUniquePaymentID } from "@/app/utils/randomCharacters";
-import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import { paymentRepository } from "../repository/paymentRepository";
 import { PaymentService } from "../service/PaymentService";

@@ -4,9 +4,11 @@ import axios from "axios";
 
 export class FlutterwavePayment {
   static async process(
-    data: PaymentDataType
+    data: PaymentDataType,
+    payload2: string
   ): Promise<FlutterwaveHostedLinkResponse | null> {
     try {
+      console.log("payload", payload2);
       const response = await axios({
         headers: {
           Authorization: `Bearer ${process.env.FLUTTERWAVE_SECRET_KEY}`,
@@ -15,7 +17,8 @@ export class FlutterwavePayment {
         method: "POST",
         data: {
           user_id: data.user_id,
-          tx_ref: data.tx_ref,
+          // tx_ref: data.tx_ref,
+          tx_ref: payload2,
           amount: data.amount,
           currency: data.currency,
           redirect_url: `${process.env.NEXT_PUBLIC_BASEURL}/order-outcome`,

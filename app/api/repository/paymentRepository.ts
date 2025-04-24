@@ -1,6 +1,7 @@
 import { PaymentDataType } from "@/app/types/flutterwaverRequestDataType";
 import { Model } from "mongoose";
 import { OrderType } from "@/models/OrderModel";
+import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
 export class paymentRepository {
   constructor(private readonly OrderModel: Model<OrderType>) {}
@@ -9,7 +10,7 @@ export class paymentRepository {
     try {
       const order = new this.OrderModel({
         user_id: data.user_id,
-        tx_ref: data.tx_ref,
+        // tx_ref: data.tx_ref,
         items: data.item,
         payment: {
           method: data.customer_billing.paymentMethod,
@@ -38,6 +39,20 @@ export class paymentRepository {
       return order;
     } catch (error) {
       console.log(error);
+    }
+  }
+  async deleteById(id: string) {
+    try {
+      const order = await this.OrderModel.findByIdAndDelete(id);
+      return order;
+    } catch (error) {
+      console.log(error);
+      throw new GlobalErrorHandler(
+        "Order deleted fail",
+        "OrderError",
+        "500",
+        true
+      );
     }
   }
 
