@@ -26,18 +26,41 @@ export default function CheckoutTable() {
   const navigate = useRouter();
   const getCarts = useAppSelector((state) => state.cartState.carts);
   console.log(getCarts);
-  const discount = getCarts.reduce((acc, currentValue) => {
-    return (acc = +currentValue.productDiscount);
-  }, 0);
+  // const discount = getCarts.reduce((acc, currentValue) => {
+  //   return (acc = +currentValue.productDiscount);
+  // }, 0);
 
-  const subtotal = getCarts.reduce((acc, currentValue) => {
-    const qty = currentValue ? currentValue?.qty : 1;
-    const result = (acc = +currentValue.productPrice);
-    return result * Number(qty);
-  }, 0);
+  // const subtotal = getCarts.reduce((acc, currentValue) => {
+  //   const qty = currentValue ? currentValue?.qty : 1;
+  //   const result = (acc = +currentValue.productPrice);
+  //   return result * Number(qty);
+  // }, 0);
 
-  const discountCalc = (subtotal * discount) / 100;
-  const total = subtotal - discountCalc;
+  // const discountCalc = (subtotal * discount) / 100;
+  // const total = subtotal - discountCalc;
+
+  const { totalPrice, totalDiscount } = getCarts.reduce(
+    (acc, item) => {
+      const qty = item?.qty ?? 0;
+      const price = +item.productPrice || 0;
+      const discountPercent = +item.productDiscount || 0;
+
+      const itemTotal = price * Number(qty);
+      const itemDiscount = itemTotal * (discountPercent / 100);
+
+      acc.totalPrice += itemTotal;
+      acc.totalDiscount += itemDiscount;
+
+      return acc;
+    },
+    { totalPrice: 0, totalDiscount: 0 }
+  );
+
+  const subtotal = totalPrice - totalDiscount;
+
+  console.log("Total price before discount:", totalPrice);
+  console.log("Total discount amount:", totalDiscount);
+  console.log("Subtotal after discount:", subtotal);
   const {
     register,
     handleSubmit,
@@ -46,7 +69,6 @@ export default function CheckoutTable() {
     resolver: zodResolver(checkoutSchema),
   });
 
-  console.log(errors);
   const handleCheckout: SubmitHandler<CheckoutFormDataType> = async (data) => {
     try {
       if (errors.paymentMethod) {
@@ -69,7 +91,7 @@ export default function CheckoutTable() {
         data: {
           user_id: user?.user.id,
           tx_ref: generateUniquePaymentID("user123"),
-          amount: total,
+          amount: subtotal,
           currency: "NGN",
           redirect_url: "http://localhost:3000/success",
           customer_billing: {
@@ -289,10 +311,15 @@ export default function CheckoutTable() {
             {getCarts.map((cart, i) => (
               <tr key={i}>
                 <td>
-                  {cart.productName} * {cart.qty}
+                  {cart.productName} <small className="text-sm">❌</small>{" "}
+                  {cart.qty}
                 </td>
                 <td>
-                  <td>{Number(cart.productPrice) * Number(cart.qty)}</td>
+                  <td>
+                    {Number(cart.productPrice)}
+                    <small className="text-sm">❌</small>
+                    {Number(cart.qty)}
+                  </td>
                 </td>
               </tr>
             ))}
@@ -304,7 +331,7 @@ export default function CheckoutTable() {
 
             <tr>
               <td className="font-medium">Total</td>
-              <td className="text-[#B88E2F] text-lg font-bold">{total}</td>
+              <td className="text-[#B88E2F] text-lg font-bold">{totalPrice}</td>
             </tr>
           </tbody>
         </table>

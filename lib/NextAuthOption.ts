@@ -12,12 +12,6 @@ interface Credential {
   password: string;
 }
 
-// interface User {
-//   _id: string;
-//   email: string;
-//   name: string;
-// }
-
 declare module "next-auth" {
   interface Session {
     user: {
@@ -25,6 +19,9 @@ declare module "next-auth" {
       email: string;
       name: string;
       role: string;
+      profile?: string;
+      accessToken: string;
+      refreshToken: string;
     };
   }
 
@@ -72,17 +69,37 @@ export const authOptions: NextAuthOptions = {
   ],
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
+    async jwt({ token, user, account, profile }) {
+      if (account?.provider === "google") {
+        token.id = account.userId;
+        // token.name = profile?.name;
+        // token.email = profile?.email;
+        token.profile = profile?.image;
+        token.accessToken = account?.access_token;
+        account.refresh_token = account?.refresh_token;
+
+        // Remove assignment since 'profile' does not exist on 'User' or 'AdapterUser'
       }
+      if (account?.provider === "credentials") {
+        token.id = user?.id;
+        token.role = user?.role;
+        token.accessToken = account?.access_token;
+        account.refresh_token = account?.refresh_token;
+      }
+
+      // if (user) {
+      //   token.id = user.id;
+      //   token.role = user.role;
+      // }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       if (token) {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
+        session.user.profile = token.picture as string;
+        session.user.accessToken = token.accessToken as string;
+        session.user.refreshToken = token.refresh_token as string;
       }
       return session;
     },

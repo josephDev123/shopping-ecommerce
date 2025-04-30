@@ -4,6 +4,8 @@ import Image from "next/image";
 import { CategoryType } from "@/app/types/categoryType";
 import Button from "../generic/Button";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { Session } from "inspector";
 
 type IBrowserProductRange = {
   data: CategoryType[];

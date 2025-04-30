@@ -5,8 +5,10 @@ import Image from "next/image";
 import { IoIosClose } from "react-icons/io";
 import Button from "../generic/Button";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/lib/slices/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/slices/hooks";
 import { AnimatePresence, motion } from "motion/react";
+import { useDispatch } from "react-redux";
+import { deleteCart } from "@/lib/slices/addToCartSlice";
 
 interface ISideBarCart {
   closeSideBar: () => void;
@@ -22,6 +24,7 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
   };
 
   const navigate = useRouter();
+  const dispatch = useAppDispatch();
   const total = getCarts.reduce(
     (acc, cart) => acc + Number(cart.productPrice) * Number(cart.qty),
     0
@@ -33,6 +36,12 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
   );
   const discountAmount = (total * disCountPercentage) / 100;
   const subtotal = total - discountAmount;
+
+  const handleRemoveCart = (id: string) => () => {
+    dispatch(deleteCart(id));
+  };
+
+  // console.log(getCarts);
   return (
     <AnimatePresence>
       <motion.section
@@ -56,18 +65,19 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
               <p className="text-center">Your cart is empty</p>
             </div>
           ) : (
-            <div className="gap-2 h-64 overflow-y-auto">
+            <div className="flex flex-col  gap-2 h-64 overflow-y-auto">
               {getCarts.map((cart, i) => (
                 <div
                   key={i}
                   className="flex sm:flex-row flex-col sm:items-center justify-between relative"
                 >
-                  <div className="h-[100px] w-[108px] rounded-md relative block ">
+                  <div className="h-[100px] w-[108px]  relative block ">
                     <Image
                       src={cart.productImgUrl[0].url}
                       fill
                       objectFit="cover"
                       alt=""
+                      className="rounded-md"
                     />
                   </div>
                   <div className="flex flex-col">
@@ -81,7 +91,10 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
                       </span>
                     </p>
                   </div>
-                  <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:block hidden" />
+                  <IoIosClose
+                    onClick={handleRemoveCart(cart._id)}
+                    className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:block hidden"
+                  />
                   <IoIosClose className="text-2xl hover:bg-[#B88E2F] rounded-full cursor-pointer sm:hidden absolute bottom-4 right-2" />
                 </div>
               ))}
@@ -89,7 +102,7 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
           )}
 
           {getCarts.length >= 1 && (
-            <div className="flex flex-col">
+            <div className="flex flex-col mt-2">
               <div className="flex items-center gap-4">
                 <h3 className="font-medium">Subtotal</h3>
                 <p className="text-[#B88E2F] font-medium">

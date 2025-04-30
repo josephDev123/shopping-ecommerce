@@ -26,6 +26,7 @@ global.mongooseCache = cached;
 
 export async function startDb(): Promise<Mongoose> {
   if (cached.conn) {
+    console.log("cached hit");
     return cached.conn;
   }
 
@@ -36,5 +37,6 @@ export async function startDb(): Promise<Mongoose> {
   }
 
   cached.conn = await cached.promise;
+  console.log("db hit afresh");
   return cached.conn;
 }

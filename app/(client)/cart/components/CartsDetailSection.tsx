@@ -15,34 +15,43 @@ export default function CartsDetailSection() {
   const handleDiscount = (cartDiscount: string, cartPrice: string) => {
     const originalPrice = Number(cartPrice);
     // Calculate the discount amount (5%)
-    const discount = Number(cartPrice) * 0.05;
+    const discount = originalPrice * (Number(cartDiscount) / 100);
     // Calculate the final price after applying the discount
     const finalPrice = originalPrice - discount;
     return finalPrice.toFixed(2);
   };
+  const { totalPrice, totalDiscount } = getCarts.reduce(
+    (acc, item) => {
+      const qty = item?.qty ?? 0;
+      const price = +item.productPrice || 0;
+      const discountPercent = +item.productDiscount || 0;
 
-  const discount = getCarts.reduce((acc, currentValue) => {
-    return (acc = +currentValue.productDiscount);
-  }, 0);
+      const itemTotal = price * Number(qty);
+      const itemDiscount = itemTotal * (discountPercent / 100);
 
-  const totalPrice = getCarts.reduce((acc, currentValue) => {
-    const qty = currentValue ? currentValue?.qty : 1;
-    const result = (acc = +currentValue.productPrice);
-    return result * Number(qty);
-  }, 0);
+      acc.totalPrice += itemTotal;
+      acc.totalDiscount += itemDiscount;
 
-  const discountCalc = (totalPrice * discount) / 100;
-  const subtotal = totalPrice - discountCalc;
+      return acc;
+    },
+    { totalPrice: 0, totalDiscount: 0 }
+  );
+
+  const subtotal = totalPrice - totalDiscount;
+
+  console.log("Total price before discount:", totalPrice);
+  console.log("Total discount amount:", totalDiscount);
+  console.log("Subtotal after discount:", subtotal);
 
   return (
     <div className="grid grid-cols-4 gap-4  3xl:w-[80%] w-[90%] mx-auto mt-10">
       {/* {JSON.stringify(getCarts)} */}
       <div className="w-full h-full lg:col-span-3 col-span-full overflow-x-auto">
-        <table className="w-full ">
+        <table className="w-full border-separate border-spacing-y-3">
           <thead className="bg-[#F9F1E7] w-full">
             <tr className="w-full">
-              <th className="min-w-[100px] py-4 text-left pl-2">img</th>
-              <th className="min-w-[100px] py-4 text-left pl-2">Product</th>
+              <th className="min-w-[100px] py-4 text-left pl-2">image</th>
+              <th className="min-w-[200px] py-4 text-left pl-2">Product</th>
               <th className="min-w-[100px] py-4 text-left pl-2">Price</th>
               <th className="min-w-[100px] py-4 text-left pl-2">Quantity</th>
               <th className="min-w-[100px] py-4 text-left pl-2">subtotal</th>
@@ -58,13 +67,16 @@ export default function CartsDetailSection() {
             ) : (
               getCarts.map((cart, i) => (
                 <tr key={i} className="w-full">
-                  <td className="pl-2">
+                  <td className=" h-[105px] w-[105px]  relative block rounded-md overflow-hidden">
                     <Image
                       src={cart.productImgUrl[0].url}
-                      alt=""
-                      width={100}
-                      height={100}
-                      className="h-[105px] w-[105px] object-contain"
+                      alt={cart.productName}
+                      fill
+                      sizes="100vw"
+                      // width={100}
+                      // height={100}
+                      className="object-cover rounded-md "
+                      //h-[105px] w-[105px]
                     />
                   </td>
                   <td className="py-4 pl-2">{cart.productName}</td>
@@ -89,12 +101,12 @@ export default function CartsDetailSection() {
         <h2 className="font-bold text-xl mb-8">Cart Totals</h2>
         <div className="flex gap-4 items-start ">
           <p>Subtotal</p>
-          <p>{totalPrice}</p>
+          <p>{subtotal}</p>
         </div>
 
         <div className="flex gap-4 items-start ">
           <p>Total</p>
-          <p className="text-lg text-[#B88E2F] font-medium">{subtotal}</p>
+          <p className="text-lg text-[#B88E2F] font-medium">{totalPrice}</p>
         </div>
         <Button
           onClick={() => navigate.push("checkout")}

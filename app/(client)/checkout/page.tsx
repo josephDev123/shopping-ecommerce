@@ -3,7 +3,7 @@ import Banner from "../generic/Banner";
 import ThingsToEnjoy from "../generic/ThingsToEnjoy";
 import CheckoutTable from "./components/CheckoutTable";
 
-export default function page() {
+export default async function page() {
   const links = [
     { name: "Home", url: "/" },
     { name: "Checkout", url: "/checkout" },
