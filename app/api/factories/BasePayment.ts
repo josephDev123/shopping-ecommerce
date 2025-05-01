@@ -8,10 +8,10 @@ export class BasePaymentFactory {
     this.paymentType = paymentType;
   }
 
-  async process<T extends PaymentDataType>(payload: T, id: string) {
+  async process<T extends PaymentDataType>(payload: T) {
     switch (this.paymentType) {
       case "flutterwave":
-        return await FlutterwavePayment.process(payload, id);
+        return await FlutterwavePayment.process(payload);
       // break;
 
       default:

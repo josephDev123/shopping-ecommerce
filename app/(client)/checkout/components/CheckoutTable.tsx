@@ -317,7 +317,7 @@ export default function CheckoutTable() {
                 <td>
                   <td>
                     {Number(cart.productPrice)}
-                    <small className="text-sm">❌</small>
+                    <small className="text-sm"> * </small>
                     {Number(cart.qty)}
                   </td>
                 </td>

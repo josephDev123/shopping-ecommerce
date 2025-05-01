@@ -25,16 +25,23 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
 
   const navigate = useRouter();
   const dispatch = useAppDispatch();
-  const total = getCarts.reduce(
-    (acc, cart) => acc + Number(cart.productPrice) * Number(cart.qty),
-    0
+  const { total, discountAmount } = getCarts.reduce(
+    (acc, cart) => {
+      const price = Number(cart.productPrice);
+      const qty = Number(cart.qty);
+      const discount = Number(cart.productDiscount);
+
+      const itemTotal = price * qty;
+      const itemDiscount = (itemTotal * discount) / 100;
+
+      acc.total += itemTotal;
+      acc.discountAmount += itemDiscount;
+
+      return acc;
+    },
+    { total: 0, discountAmount: 0 }
   );
 
-  const disCountPercentage = getCarts.reduce(
-    (acc, Cart) => acc + Number(Cart.productDiscount),
-    0
-  );
-  const discountAmount = (total * disCountPercentage) / 100;
   const subtotal = total - discountAmount;
 
   const handleRemoveCart = (id: string) => () => {

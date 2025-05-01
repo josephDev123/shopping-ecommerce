@@ -10,7 +10,7 @@ export class paymentRepository {
     try {
       const order = new this.OrderModel({
         user_id: data.user_id,
-        // tx_ref: data.tx_ref,
+        tx_ref: data.tx_ref,
         items: data.item,
         payment: {
           method: data.customer_billing.paymentMethod,
