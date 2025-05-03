@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { Suspense, useCallback, useEffect, useState } from "react";
 import FailedOrder from "./components/FailedOrder";
@@ -6,44 +6,44 @@ import SuccessOrder from "./components/SuccessOrder";
 import { useSearchParams } from "next/navigation";
 import { transactionOutcomeType } from "@/app/types/transactionOutcomeType";
 import ComponentLoading from "../generic/ComponentLoading";
+import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export default async function page({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const [data, setData] = useState<transactionOutcomeType>(null!);
-  const [status, setStatus] = useState<"idle" | "loading" | "data" | "error">(
-    "idle"
-  );
+  // const [data, setData] = useState<transactionOutcomeType>(null!);
+  // const [status, setStatus] = useState<"idle" | "loading" | "data" | "error">(
+  //   "idle"
+  // );
 
-  const memoOrderData = useCallback(
-    async function OrderData() {
-      setStatus("loading");
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id=${searchParams.transaction_id}`
-        );
+  // const memoOrderData = useCallback(
+  //   async function OrderData() {
+  //     setStatus("loading");
+  //     try {
+  //       const response = await fetch(
+  //         `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id=${searchParams.transaction_id}`
+  //       );
 
-        if (!response.ok) throw new Error("API request failed");
+  //       if (!response.ok) throw new Error("API request failed");
 
-        const result = await response.json();
-        setData(result.data);
+  //       const result = await response.json();
+  //       setData(result.data);
 
-        setStatus("data");
-      } catch (error) {
-        console.error("Error fetching order data:", error);
-        setStatus("error");
-      }
-    },
-    [searchParams.status, searchParams.tx_ref, searchParams.transaction_id]
-  );
+  //       setStatus("data");
+  //     } catch (error) {
+  //       console.error("Error fetching order data:", error);
+  //       setStatus("error");
+  //     }
+  //   },
+  //   [searchParams.status, searchParams.tx_ref, searchParams.transaction_id]
+  // );
 
-  useEffect(() => {
-    memoOrderData();
-  }, [memoOrderData]);
+  // useEffect(() => {
+  //   memoOrderData();
+  // }, [memoOrderData]);
 
-  // [searchParams.status, searchParams.tx_ref, searchParams.transaction_id]
   // const response = await fetch(
   //   `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`
   // );
@@ -55,9 +55,16 @@ export default async function page({
   //   );
   // }
   // const result = await response.json();
+
+  const response = await CustomFetch({
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`,
+  });
+  const result = response.data;
   return (
     <section className="flex flex-col h-full w-full">
-      {status == "loading" ? (
+      <pre className="font-mono">{JSON.stringify(searchParams, null, 2)}</pre>
+      <pre className="font-mono">{JSON.stringify(result, null, 2)}</pre>
+      {/* {status == "loading" ? (
         <ComponentLoading />
       ) : status === "error" ? (
         <p className="text-red-400 text-center">Something went wrong</p>
@@ -68,7 +75,7 @@ export default async function page({
             <SuccessOrder successTransaction={data} />
           )}
         </>
-      )}
+      )} */}
     </section>
   );
 }

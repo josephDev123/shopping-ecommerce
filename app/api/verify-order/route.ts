@@ -1,6 +1,6 @@
 import Flutterwave from "flutterwave-node-v3";
 import { type NextRequest } from "next/server";
-import { TransactionModel } from "@/models/TransactionModel";
+import { PaymentDetails, TransactionModel } from "@/models/TransactionModel";
 import OrderModel, { OrderType } from "@/models/OrderModel";
 import { startDb } from "@/lib/startDb";
 
@@ -13,47 +13,45 @@ export async function GET(req: NextRequest) {
     const queryTx_ref = searchParams.get("tx_ref");
     const queryTransaction_id = searchParams.get("transaction_id");
 
-    // const flw = new Flutterwave(
-    //   process.env.FLUTTERWAVE_PUBLIC_KEY!,
-    //   process.env.FLUTTERWAVE_SECRET_KEY!
-    // );
-    // console.log(
-    //   process.env.FLUTTERWAVE_PUBLIC_KEY!,
-    //   process.env.FLUTTERWAVE_SECRET_KEY!
-    // );
+    const flw = new Flutterwave(
+      process.env.FLUTTERWAVE_PUBLIC_KEY!,
+      process.env.FLUTTERWAVE_SECRET_KEY!
+    );
 
-    // const OrderDetails = await OrderModel.findOne({
-    //   tx_ref: queryTx_ref,
-    // });
+    const verifyResponse = await flw.Transaction.verify({
+      id: queryTransaction_id,
+    });
 
-    // return Response.json(
-    //   {
-    //     data: OrderDetails,
-    //   },
-    //   { status: 200 }
-    // );
+    const OrderDetails = await OrderModel.findOne({
+      tx_ref: queryTx_ref,
+    });
 
-    // if (queryStatus === "successful") {
-    //   const OrderDetails = await OrderModel.findOne({
-    //     tx_ref: queryTx_ref,
-    //   });
+    if (
+      verifyResponse.data.status === "successful" &&
+      verifyResponse.data.amount === OrderDetails.payment.amount &&
+      verifyResponse.data.currency === "NGN"
+    ) {
+      // if (queryStatus === "successful") {
 
-    // const response = await flw.Transaction.verify({
-    //   id: queryTransaction_id,
-    // });
-
-    // if (
-    //   response.data.status === "successful" &&
-    //   response.data.amount === OrderDetails.payment.amount &&
-    //   response.data.currency === "NGN"
-    // ) {
-    if (queryStatus === "successful") {
-      const OrderDetails = await OrderModel.findOne({
-        tx_ref: queryTx_ref,
+      const transaction = new TransactionModel({
+        orderId: OrderDetails._id,
+        paymentDetails: {
+          amount: verifyResponse?.data.amount,
+          currency: verifyResponse?.data.currency,
+          charged_amount: verifyResponse?.data.charged_amount,
+          app_fee: verifyResponse?.data.app_fee,
+          merchant_fee: verifyResponse?.data.merchant_fee,
+          narration: verifyResponse?.data.narration,
+          status: verifyResponse?.data.status,
+          payment_type: verifyResponse?.data.payment_type,
+        },
       });
+
+      await transaction.save();
+
       return Response.json(
         {
-          data: OrderDetails,
+          data: { OrderDetails },
         },
         { status: 200 }
       );
@@ -64,6 +62,7 @@ export async function GET(req: NextRequest) {
       );
     }
   } catch (error) {
+    console.log("error from transaction", error);
     return Response.json({ error: error }, { status: 500 });
   }
 }
