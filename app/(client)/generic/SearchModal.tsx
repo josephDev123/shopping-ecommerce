@@ -49,9 +49,9 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
       const result: SearchResultType[] = data.data;
       setSearchResult(result);
       setStatus("data");
-      console.log(data);
+      // console.log(data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setStatus("error");
     }
   }, [deferredSearch]);

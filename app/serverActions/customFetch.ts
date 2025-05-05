@@ -22,7 +22,7 @@ CustomFetchOptions) {
     const parseResult = await response.json();
     if (!response.ok) {
       // Handle errors
-      console.error(`Error: ${response.status} - ${response.statusText}`);
+      // console.error(`Error: ${response.status} - ${response.statusText}`);
 
       throw new Error(`Error: ${response.status} - ${response.statusText}`);
     }

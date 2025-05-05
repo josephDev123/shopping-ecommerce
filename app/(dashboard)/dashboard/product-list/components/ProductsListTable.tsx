@@ -1,7 +1,7 @@
 "use client";
 
 import { Images } from "@/app/Images";
-import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
+import { TransactionServerResponseType } from "@/app/types/TransactionType";
 import { TransactionType } from "@/models/FlwTransactionModel";
 import moment from "moment";
 import Image from "next/image";

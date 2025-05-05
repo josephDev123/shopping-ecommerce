@@ -31,27 +31,27 @@ export async function GET(req: NextRequest) {
       verifyResponse.data.amount === OrderDetails.payment.amount &&
       verifyResponse.data.currency === "NGN"
     ) {
-      // if (queryStatus === "successful") {
-
+      const paymentDetails: PaymentDetails = {
+        amount: verifyResponse?.data.amount,
+        currency: verifyResponse?.data.currency,
+        charged_amount: verifyResponse?.data.charged_amount,
+        app_fee: verifyResponse?.data.app_fee,
+        merchant_fee: verifyResponse?.data.merchant_fee,
+        narration: verifyResponse?.data.narration,
+        status: verifyResponse?.data.status,
+        payment_type: verifyResponse?.data.payment_type,
+      };
       const transaction = new TransactionModel({
         orderId: OrderDetails._id,
-        paymentDetails: {
-          amount: verifyResponse?.data.amount,
-          currency: verifyResponse?.data.currency,
-          charged_amount: verifyResponse?.data.charged_amount,
-          app_fee: verifyResponse?.data.app_fee,
-          merchant_fee: verifyResponse?.data.merchant_fee,
-          narration: verifyResponse?.data.narration,
-          status: verifyResponse?.data.status,
-          payment_type: verifyResponse?.data.payment_type,
-        },
+        paymentDetails,
       });
 
       await transaction.save();
 
       return Response.json(
         {
-          data: { OrderDetails },
+          OrderDetails,
+          paymentDetails,
         },
         { status: 200 }
       );

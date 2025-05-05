@@ -1,3 +1,4 @@
+import { PaymentDetails } from "@/models/TransactionModel";
 import { ProductDataType } from "./productsType";
 
 type Payment = {
@@ -26,7 +27,7 @@ type Billing = {
   _id: string;
 };
 
-export type transactionOutcomeType = {
+export type ITransactionOrder = {
   payment: Payment;
   _id: string;
   tx_ref: string;
@@ -36,4 +37,9 @@ export type transactionOutcomeType = {
   createdAt: string;
   updatedAt: string;
   __v: number;
+};
+
+export type transactionOutcome = {
+  OrderDetails: ITransactionOrder;
+  paymentDetails: PaymentDetails;
 };

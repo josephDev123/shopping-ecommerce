@@ -1,11 +1,5 @@
-// "use client";
-
-import { Suspense, useCallback, useEffect, useState } from "react";
 import FailedOrder from "./components/FailedOrder";
 import SuccessOrder from "./components/SuccessOrder";
-import { useSearchParams } from "next/navigation";
-import { transactionOutcomeType } from "@/app/types/transactionOutcomeType";
-import ComponentLoading from "../generic/ComponentLoading";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export default async function page({
@@ -59,23 +53,16 @@ export default async function page({
   const response = await CustomFetch({
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${searchParams.status}&tx_ref=${searchParams.tx_ref}&transaction_id= ${searchParams.transaction_id}`,
   });
-  const result = response.data;
+  const result = response;
   return (
     <section className="flex flex-col h-full w-full">
-      <pre className="font-mono">{JSON.stringify(searchParams, null, 2)}</pre>
-      <pre className="font-mono">{JSON.stringify(result, null, 2)}</pre>
-      {/* {status == "loading" ? (
-        <ComponentLoading />
-      ) : status === "error" ? (
-        <p className="text-red-400 text-center">Something went wrong</p>
-      ) : (
-        <>
-          {searchParams.status === "cancelled" && <FailedOrder />}
-          {searchParams.status === "successful" && (
-            <SuccessOrder successTransaction={data} />
-          )}
-        </>
-      )} */}
+      {/* <pre className="font-mono">{JSON.stringify(searchParams, null, 2)}</pre>
+      <pre className="font-mono">{JSON.stringify(result, null, 2)}</pre> */}
+
+      {searchParams.status === "cancelled" && <FailedOrder />}
+      {searchParams.status === "successful" && (
+        <SuccessOrder successTransaction={result} />
+      )}
     </section>
   );
 }

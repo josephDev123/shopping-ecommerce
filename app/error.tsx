@@ -18,7 +18,10 @@ export default function Error({
   return (
     <div className="h-full flex flex-col items-center justify-center">
       {/* <Image src={Images.pawPawErrorImg} alt="error" className="size-80" /> */}
-      <h2>Something went wrong! </h2>
+      <h2 className="text-center mb-2">
+        Something went wrong! <br />{" "}
+        <span className="text-sm">Check Network or Click Try again</span>
+      </h2>
       <button
         className="p-1 rounded-md bg-red-300 text-white"
         onClick={() => reset()}

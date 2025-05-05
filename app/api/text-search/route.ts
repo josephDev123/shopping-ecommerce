@@ -10,13 +10,15 @@ export async function POST(req: NextRequest) {
     const TextSearchRepoImpl = new TextSearchRepo(ProductModel);
     const TextSearchServiceImpl = new TextSearchService(TextSearchRepoImpl);
     const body = await req.json();
-    console.log("from body", body);
+    // console.log("from body", body);
     const text = body.search;
     const page = 1;
     const limit = 5;
     const response = await TextSearchServiceImpl.searchImpl(text, page, limit);
     return NextResponse.json({ data: response }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    NextResponse.json({ error: error }, { status: 500 });
+    return;
   }
 }

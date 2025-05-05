@@ -1,6 +1,5 @@
 import { startDb } from "@/lib/startDb";
 import { NextRequest } from "next/server";
-import { URL } from "url";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,
@@ -9,14 +8,14 @@ import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { TransactionService } from "../service/transactionService";
 import { transactionRepository } from "../repository/TransactionRepository";
 import { TransactionModel } from "@/models/TransactionModel";
-import Flw_Transaction from "@/models/FlwTransactionModel";
 
+// export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     await startDb();
-    const TransactionReposInit = new transactionRepository(Flw_Transaction);
+    const TransactionReposInit = new transactionRepository(TransactionModel);
     const TransactionServiceInit = new TransactionService(TransactionReposInit);
-    const params = new URL(req.url).searchParams;
+    const params = req.nextUrl.searchParams;
     const user_id = params.get("user_id") || "";
 
     const page = Number(params.get("page")) || 1;
@@ -28,7 +27,7 @@ export async function GET(req: NextRequest) {
       page,
       limit
     );
-    // console.log(transaction);
+    console.log(transaction);
     return SuccessApiResponseHelper(
       "Transaction successful",
       "TransactionSuccess",
@@ -40,6 +39,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     const errorObj = error as GlobalErrorHandler;
     if (errorObj.operational) {
+      console.log(errorObj?.msg);
       return ApiResponseHelper(
         "something went wrong",
         "transactionError",
@@ -48,6 +48,7 @@ export async function GET(req: NextRequest) {
         400
       );
     } else {
+      console.log(errorObj?.msg);
       return ApiResponseHelper(
         errorObj.msg,
         "transactionError",

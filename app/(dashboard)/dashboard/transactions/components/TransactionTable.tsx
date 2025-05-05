@@ -2,7 +2,7 @@
 
 import Button from "@/app/(client)/generic/Button";
 import Input, { SelectInput } from "@/app/(client)/generic/Input";
-import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
+import { TransactionServerResponseType } from "@/app/types/TransactionType";
 import { TransactionType } from "@/models/FlwTransactionModel";
 import moment from "moment";
 import { useState } from "react";

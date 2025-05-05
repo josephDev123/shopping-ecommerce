@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 import FilterSection from "./components/FilterSection";
 import ExportSection from "./components/ExportSection";
-import { TransactionServerResponseType } from "@/app/types/TransactionSeverResponseType";
+import { TransactionServerResponseType } from "@/app/types/TransactionType";
 import { TransactionType } from "@/models/FlwTransactionModel";
 
 interface pageProps {
