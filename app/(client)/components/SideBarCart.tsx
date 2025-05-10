@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/slices/hooks";
 import { AnimatePresence, motion } from "motion/react";
 import { useDispatch } from "react-redux";
 import { deleteCart } from "@/lib/slices/addToCartSlice";
+import Link from "next/link";
 
 interface ISideBarCart {
   closeSideBar: () => void;
@@ -126,14 +127,16 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
                   textContent="Cart"
                   className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
                 />
-                <Button
-                  onClick={() => {
-                    navigate.push("/checkout");
-                    closeSideBar();
-                  }}
-                  textContent="Checkout"
-                  className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
-                />
+                {/* <Link href={"/checkout"}> */}
+                  <Button
+                    onClick={() => {
+                      navigate.push("/checkout");
+                      closeSideBar();
+                    }}
+                    textContent="Checkout"
+                    className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
+                  />
+                {/* </Link> */}
               </div>
             </div>
           )}

@@ -9,6 +9,7 @@ import {
 } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     await startDb();

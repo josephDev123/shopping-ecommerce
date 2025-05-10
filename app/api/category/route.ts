@@ -10,6 +10,7 @@ import {
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import ProductModel from "@/models/ProductsModel";
 
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     await startDb();

@@ -9,7 +9,7 @@ import { TransactionService } from "../service/transactionService";
 import { transactionRepository } from "../repository/TransactionRepository";
 import { TransactionModel } from "@/models/TransactionModel";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   try {
     await startDb();

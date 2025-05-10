@@ -4,6 +4,7 @@ import { DashboardService } from "../service/DashboardOverviewService";
 import { DashboardOverviewRepo } from "../repository/DashboardOverviewRepo";
 import OrderModel from "@/models/OrderModel";
 
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   await startDb();
   try {

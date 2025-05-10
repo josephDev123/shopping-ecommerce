@@ -6,6 +6,7 @@ import MainCategory from "./component/MainCategory";
 import CategoryBodyWrapper from "./component/CategoryBodyWrapper";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 
+export const dynamic = "force-dynamic";
 export default async function page({
   searchParams,
 }: {

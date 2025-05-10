@@ -9,7 +9,7 @@ import {
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
 import { NextRequest } from "next/server";
 
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
   const page = req.nextUrl.searchParams.get("page") || 1;
   const limit = req.nextUrl.searchParams.get("limit") || 10;
