@@ -6,16 +6,18 @@ import { CustomFetch } from "../serverActions/customFetch";
 import { getCategory } from "../serverActions/fetchCategories";
 import { getPaginateProducts } from "../serverActions/fetchPaginateProducts";
 
+export const dynamic = "force-dynamic";
+
 export default async function page() {
   const [category, products] = await Promise.all([
-    getCategory(),
-    // CustomFetch({
-    //   url: `${process.env.NEXT_PUBLIC_BASEURL}/api/category?page=1&limit=6`,
-    // }),
-    // CustomFetch({
-    //   url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=1&limit=6`,
-    // }),
-    getPaginateProducts(),
+    // getCategory(),
+    CustomFetch({
+      url: `${process.env.SERVER_BASEURL}/api/category?page=1&limit=6`,
+    }),
+    CustomFetch({
+      url: `${process.env.SERVER_BASEURL}/api/product/products-paginate?page=1&limit=6`,
+    }),
+    // getPaginateProducts(),
   ]);
 
   return (
