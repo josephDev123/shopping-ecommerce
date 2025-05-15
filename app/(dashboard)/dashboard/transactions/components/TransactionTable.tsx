@@ -1,117 +1,81 @@
 "use client";
 
-import Button from "@/app/(client)/generic/Button";
-import Input, { SelectInput } from "@/app/(client)/generic/Input";
-import { TransactionServerResponseType } from "@/app/types/TransactionType";
-import { TransactionType } from "@/models/FlwTransactionModel";
-import moment from "moment";
-import { useState } from "react";
-import { CiSearch } from "react-icons/ci";
+import { ITransactionDTO } from "@/app/api/DTO/transactionDTO";
+import DataTable from "@/components/ui/data-table";
+import { ChangeEvent, useMemo, useState } from "react";
+import { transactionColumns } from "../column.tsx/transaction-column";
+import { ColumnFiltersState } from "@tanstack/react-table";
 
 interface ITransactionTableProps {
-  // data: TransactionServerResponseType[];
-  data: TransactionType[];
+  data: ITransactionDTO[];
 }
 export default function TransactionTable({ data }: ITransactionTableProps) {
-  const [search, setSearch] = useState<string | undefined>(undefined);
-  const [status, setStatus] = useState<string | undefined>(undefined);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  // const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const value = event.target.value.trim();
+  //   if (value == "") {
+  //     setColumnFilters([]);
+  //     return;
+  //   }
+  //   setColumnFilters([
+  //     { id: "_id", value: value },
+  //     { id: "product_name", value: value },
+  //     { id: "paymentDetails.amount", value: value },
+  //     { id: "paymentDetails.status", value: value },
+  //     { id: "order.customer.email", value: value },
+  //     { id: "order.customer.name", value: value },
+  //     { id: "order.order_status", value: value },
+  //   ]);
+  // };
 
-  const filteredData = data.filter((transaction) => {
-    // const matchesName =
-    //   !search ||
-    //   String(transaction.orderDetails.customer.name)
-    //     .toLowerCase()
-    //     .includes(search.toLowerCase());
-    const statusMatch =
-      !status || transaction.data.status.toLowerCase() === status.toLowerCase();
-    console.log(statusMatch);
-    return statusMatch;
-  });
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredData = useMemo(() => {
+    if (!searchTerm) return data;
+
+    const lowercased = searchTerm.toLowerCase();
+
+    return data.filter((item) => {
+      const searchable = [
+        item._id,
+        item.order?.items?.[0]?.productName,
+        item.order?.customer?.email,
+        item.order?.customer?.name,
+        item.paymentDetails?.status,
+        item.paymentDetails?.payment_type,
+        item.order?.order_status,
+        item.paymentDetails?.amount?.toString(),
+        item.paymentDetails?.charged_amount?.toString(),
+        item.paymentDetails?.merchant_fee?.toString(),
+      ];
+
+      return searchable.some((field) =>
+        field?.toString().toLowerCase().includes(lowercased)
+      );
+    });
+  }, [searchTerm, data]);
+
   return (
-    <>
-      <div className="flex sm:flex-row flex-col justify-between  sm:items-center w-full">
-        <div className="flex gap-2">
-          <div className="flex flex-col  w-full">
-            <input
-              type="text"
-              name=""
-              id=""
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search"
-              className="outline-none border rounded-md p-2 "
-            />
-            {/* <CiSearch className="text-xl absolute right-2 top-3" /> */}
-          </div>
-
-          <select
-            name=""
-            id=""
-            onChange={(e) => setStatus(e.target.value)}
-            className="border rounded-md p-2 outline-none w-full"
-          >
-            <option value=""> Status</option>
-            {["pending", "success", "failed"].map((status, i) => (
-              <option key={i} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <SelectInput
-            name=""
-            data={[]}
-            placeholder="Filter by Range"
-            labelName=""
-            className="border rounded-md p-2 outline-none w-[200px]"
+    <div className="flex flex-col">
+      <div className="flex w-full justify-between items-center my-2">
+        <input
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          type="search"
+          placeholder="search columns"
+          className="rounded-md p-2 border outline-none"
+        />
+      </div>
+      <div className="w-full overflow-x-auto">
+        <div className="md:w-[1100px] w-full">
+          <DataTable
+            columns={transactionColumns}
+            data={filteredData}
+            columnFilters={columnFilters}
+            setColumnFilters={setColumnFilters}
           />
         </div>
       </div>
-
-      <div className="flex flex-col overflow-x-auto w-full h-full my-10">
-        <table className="table-auto">
-          <thead className="bg-gray-200">
-            <tr className="text-black/70">
-              <th className="text-left p-2">ID</th>
-              <th className="text-left p-2 min-w-52 max-w-72">CUSTOMER</th>
-              <th className="text-left p-2 min-w-40 max-w-52">DATE</th>
-              <th className="text-left p-2 min-w-40 max-w-52">TOTAL</th>
-              <th className="text-left p-2">METHOD</th>
-              <th className="text-left p-2 min-w-40 max-w-52">STATUS</th>
-              <th className="text-left p-2">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((transaction, i) => (
-              <tr className="border-b" key={i}>
-                <td className="p-2">{transaction.data.id}</td>
-                <td className="p-2 text-ellipsis w-40">
-                  {transaction.data.customer.name}
-                </td>
-                <td className="p-2 text-nowrap">
-                  {moment(transaction.data.created_at).format("DD MMM, yyyy")}
-                </td>
-                <td className="p-2 text-nowrap">
-                  {transaction.data.currency}
-                  {transaction.data.amount}
-                </td>
-                <td className="p-2">{transaction.data.payment_type}</td>
-                <td className="text-yellow-400 font-semibold">
-                  {transaction.data.status}
-                </td>
-                <td>
-                  <Button
-                    disabled
-                    textContent="View Details"
-                    className="text-blue-600 font-semibold text-nowrap cursor-not-allowed"
-                  />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </>
+    </div>
   );
 }

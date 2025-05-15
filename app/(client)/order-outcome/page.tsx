@@ -95,7 +95,7 @@ export default async function page({
   }
 
   const response = await CustomFetch({
-    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/verify-order?status=${status}&tx_ref=${tx_ref}&transaction_id=${transaction_id}`,
+    url: `${process.env.SERVER_BASEURL}/api/verify-order?status=${status}&tx_ref=${tx_ref}&transaction_id=${transaction_id}`,
   });
 
   return (
