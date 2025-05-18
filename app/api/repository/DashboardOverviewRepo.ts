@@ -1,13 +1,109 @@
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { OrderType } from "@/models/OrderModel";
+import { TransactionType } from "@/models/TransactionModel";
 import { Model, Types } from "mongoose";
 
 export class DashboardOverviewRepo {
-  constructor(private readonly OrderModel: Model<OrderType>) {}
+  constructor(
+    private readonly OrderModel: Model<OrderType>,
+    private readonly transactionModel: Model<TransactionType>
+  ) {}
 
   async getDashboardStats(payload: string) {
     try {
       const userId = new Types.ObjectId(payload);
+
+      // const transactionCount = await this.transactionModel.aggregate([
+      //   {
+      //     $match: {
+      //       "paymentDetails.status": "successful",
+      //     },
+      //   },
+      //   {
+      //     $lookup: {
+      //       from: "orders", // collection name for orderId
+      //       localField: "orderId",
+      //       foreignField: "_id",
+      //       as: "order",
+      //     },
+      //   },
+      //   {
+      //     $unwind: "$order",
+      //   },
+      //   {
+      //     $match: {
+      //       "order.user_id": userId,
+      //     },
+      //   },
+      //   {
+      //     $count: "total",
+      //   },
+      // ]);
+
+      const transactionCount = await this.transactionModel.aggregate([
+        {
+          $facet: {
+            totalTransactionSuccess: [
+              {
+                $match: {
+                  "paymentDetails.status": "successful",
+                },
+              },
+              {
+                $lookup: {
+                  from: "orders", // collection name for orderId
+                  localField: "orderId",
+                  foreignField: "_id",
+                  as: "order",
+                },
+              },
+              {
+                $unwind: "$order",
+              },
+              {
+                $match: {
+                  "order.user_id": userId,
+                },
+              },
+              {
+                $count: "total",
+              },
+            ],
+
+            totalTransactionPending: [
+              {
+                $match: {
+                  "paymentDetails.status": "pending",
+                },
+              },
+              {
+                $lookup: {
+                  from: "orders", // collection name for orderId
+                  localField: "orderId",
+                  foreignField: "_id",
+                  as: "order",
+                },
+              },
+              {
+                $unwind: "$order",
+              },
+              {
+                $match: {
+                  "order.user_id": userId,
+                },
+              },
+              {
+                $count: "total",
+              },
+            ],
+          },
+        },
+      ]);
+
+      const transactionCountResult = {
+        success: transactionCount[0]?.totalTransactionSuccess[0]?.total || 0,
+        pending: transactionCount[0]?.totalTransactionPending[0]?.total || 0,
+      };
 
       const result = await this.OrderModel.aggregate([
         { $match: { user_id: userId } },
@@ -35,6 +131,7 @@ export class DashboardOverviewRepo {
         latestCustomers: result[0].latestCustomers,
         mostBoughtCategories: result[0].mostBoughtCategories,
         latestOrders: result[0].latestOrders,
+        transactionCountResult,
       };
     } catch (error) {
       if (error instanceof GlobalErrorHandler) {

@@ -8,7 +8,6 @@ import Image from "next/image";
 export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   {
     accessorKey: "_id",
-    enableColumnFilter: true,
     header: "Transaction ID",
     filterFn: (row, columnId, filterValue) => {
       const value = row.getValue(columnId) as string;
@@ -20,15 +19,20 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   },
   {
     accessorKey: "productImgUrl",
-    header: "Product pic",
+
+    header: ({ column }) => (
+      <button className="text-nowrap w-full inline-flex items-center">
+        Product pic
+      </button>
+    ),
     cell: ({ row }) => (
       <div>
         <Image
           src={row.original.order.items[0].productImgUrl[0].url}
           alt=""
           loading="lazy"
-          width={150}
-          height={150}
+          width={80}
+          height={80}
           className="rounded-md "
         />
       </div>
@@ -36,21 +40,13 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   },
 
   {
-    accessorKey: "product_name",
-    header: ({ column }) => (
-      <button
-        // variant="ghost"
-        className="text-nowrap w-full inline-flex items-center"
-        // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Product name
-      </button>
-    ),
+    accessorKey: "order.items.productName",
+    header: "Product name",
     enableColumnFilter: true,
-    filterFn: (row, columnId, filterValue) => {
-      const value = row.original.order.items[0].productName;
-      return value.toLowerCase().includes(filterValue.toLowerCase());
-    },
+    // filterFn: (row, columnId, filterValue) => {
+    //   const value = row.original.order.items[0].productName;
+    //   return value.toLowerCase().includes(filterValue.toLowerCase());
+    // },
     cell: ({ row }) => (
       <div className="">{row.original.order.items[0].productName}</div>
     ),
@@ -158,6 +154,7 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   },
   {
     accessorKey: "paymentDetails.status",
+    // enableColumnFilter: true,
     header: "Status",
     cell: ({ row }) => {
       const status = row.original.paymentDetails.status;
@@ -174,6 +171,7 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   {
     accessorKey: "order.customer.email",
     header: "Customer Email",
+    enableColumnFilter: true,
     cell: ({ row }) => {
       const customerEmail = row.original.order.customer.email;
       return (
@@ -192,6 +190,7 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   {
     accessorKey: "order.customer.name",
     header: "Customer Name",
+    enableColumnFilter: true,
     cell: ({ row }) => {
       const customerName = row.original.order.customer.name;
       return (
@@ -211,6 +210,7 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   {
     accessorKey: "order.order_status",
     header: "Order Status",
+    enableColumnFilter: true,
     cell: ({ row }) => {
       const order_status = row.original.order.order_status;
       return (

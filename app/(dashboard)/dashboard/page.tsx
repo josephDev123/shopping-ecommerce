@@ -1,8 +1,4 @@
 import React from "react";
-import TransactionStat from "./indexComponent/TransactionStat";
-import LineChart, { LineChartsMultiple } from "../commons/LineChart";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { ResponsiveContainer } from "recharts";
 import SummaryCard from "./indexComponent/SummaryCard";
 import DoughnutChart from "./indexComponent/Doughnut";
 import BarChart from "./indexComponent/BarChart";
@@ -14,22 +10,31 @@ import { authOptions } from "@/lib/NextAuthOption";
 import { abbreviateNumber } from "@/app/utils/abbreviateNumber";
 import Image from "next/image";
 import moment from "moment";
+import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
   const progress = 50;
 
-  const overview = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/overview?user_id=${session?.user.id}`
-  );
-  if (!overview.ok) {
-    return <div>Error occur</div>;
-  }
+  const overview = await CustomFetch({
+    url: `${process.env.SERVER_BASEURL}/api/overview?user_id=${session?.user.id}`,
+  });
 
-  const parseResult = await overview.json();
+  const parseResult = overview;
   const result: OverviewResponse = parseResult;
   const totalOrderParse = abbreviateNumber(result.totalOrders) || 0;
   const totalOrderPercent = Math.min(result.totalOrders, 100);
+  const totalSuccessTransaction = result.transactionCountResult.success;
+  const totalPendingTransaction = result.transactionCountResult.pending;
+  const transactionSuccessPercent = Math.min(
+    (totalSuccessTransaction / 100) * 100,
+    100
+  );
+
+  const transactionPendingPercent = Math.min(
+    (totalPendingTransaction / 100) * 100,
+    100
+  );
 
   const latestCustomer = result.latestCustomers.map(
     (item) => item.customer.name
@@ -43,7 +48,7 @@ export default async function Page() {
   return (
     <section className="flex flex-col h-full p-3  w-full">
       <h1 className="text-xl font-bold">Dashboard</h1>
-      {/* <pre>{JSON.stringify(result.mostBoughtCategories, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(transactionPercent, null, 2)}</pre> */}
 
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 mt-3">
         <SummaryCard
@@ -62,13 +67,13 @@ export default async function Page() {
         </SummaryCard>
 
         <SummaryCard
-          figure={"786k"}
+          figure={totalPendingTransaction}
           title="Pending"
           description="Pending Transaction"
         >
           <div className="w-full h-32">
             <DoughnutChart
-              value={progress}
+              value={transactionPendingPercent}
               maxValue={100}
               labelsData={["Pending"]}
               backgroundColors={["#0000FF", "#E0E0E0"]}
@@ -77,13 +82,13 @@ export default async function Page() {
         </SummaryCard>
 
         <SummaryCard
-          figure={"106k"}
+          figure={totalSuccessTransaction}
           title="Success"
           description="Successful Transaction"
         >
           <div className="w-full h-32">
             <DoughnutChart
-              value={progress}
+              value={transactionSuccessPercent}
               maxValue={100}
               labelsData={["Successful"]}
               backgroundColors={["#FFA500", "#E0E0E0"]}

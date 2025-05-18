@@ -24,7 +24,7 @@ export default function DashboardLayout({
   return (
     <section className="w-full h-full flex">
       {/* left panel */}
-      <div className="bg-darkBlack w-[20%] h-full overflow-y-auto px-2 text-white md:flex hidden flex-col justify-center items-center">
+      <div className="bg-darkBlack min-w-[20%] h-full overflow-y-auto px-2 text-white md:flex hidden flex-col justify-center items-center">
         <LeftPanel />
       </div>
       {/* <div>
@@ -32,10 +32,11 @@ export default function DashboardLayout({
       </div> */}
 
       {/* right panel */}
-      <div className="w-full h-full bg-white flex flex-col">
+      <div className="md:min-w-[80%] w-full h-full bg-white flex flex-col">
         <TopNavbar />
-        <div className="h-full overflow-y-auto">
-          <div className=" h-full flex-1">{children}</div>
+
+        <div className="h-full w-full overflow-y-auto">
+          <div className=" h-full w-full ">{children}</div>
         </div>
       </div>
     </section>

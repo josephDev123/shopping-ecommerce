@@ -68,4 +68,8 @@ export interface OverviewResponse {
   latestCustomers: { customer: Customer }[];
   mostBoughtCategories: { _id: string; count: number }[];
   latestOrders: Order[];
+  transactionCountResult: {
+    success: number;
+    pending: number;
+  };
 }

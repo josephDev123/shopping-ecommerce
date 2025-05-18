@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { DashboardService } from "../service/DashboardOverviewService";
 import { DashboardOverviewRepo } from "../repository/DashboardOverviewRepo";
 import OrderModel from "@/models/OrderModel";
+import { TransactionModel } from "@/models/TransactionModel";
 
 export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
@@ -11,7 +12,10 @@ export async function GET(req: NextRequest) {
     const payload = req.nextUrl.searchParams;
     const user_id = payload.get("user_id")!;
 
-    const DashboardOverviewRepoImpl = new DashboardOverviewRepo(OrderModel);
+    const DashboardOverviewRepoImpl = new DashboardOverviewRepo(
+      OrderModel,
+      TransactionModel
+    );
     const DashboardOverviewServiceImpl = new DashboardService(
       DashboardOverviewRepoImpl
     );
