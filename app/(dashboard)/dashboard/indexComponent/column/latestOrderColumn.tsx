@@ -4,7 +4,7 @@ import { ILatestOrderDTO } from "../ILatestOrder";
 export const latestOrdersColumn: ColumnDef<ILatestOrderDTO>[] = [
   {
     id: "expander",
-    header: "Product Name",
+    header: "Product items",
     cell: ({ row }) => {
       const firstProductName = row.original.items?.[0]?.productName ?? "";
 
