@@ -4,13 +4,17 @@ import DoughnutChart from "./indexComponent/Doughnut";
 import BarChart from "./indexComponent/BarChart";
 import customerNames from "./data/customer";
 import BarLabel from "./indexComponent/BarLabel";
-import { OverviewResponse } from "@/app/types/overvieResponse";
+import { IOrder, OverviewResponse } from "@/app/types/overvieResponse";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 import { abbreviateNumber } from "@/app/utils/abbreviateNumber";
 import Image from "next/image";
 import moment from "moment";
 import { CustomFetch } from "@/app/serverActions/customFetch";
+import DataTable from "@/components/ui/data-table";
+import { latestOrdersColumn } from "./indexComponent/column/latestOrderColumn";
+import { ILatestOrderDTO } from "./indexComponent/ILatestOrder";
+import LatestOrderContainer from "./indexComponent/LatestOrderContainer";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -24,8 +28,8 @@ export default async function Page() {
   const result: OverviewResponse = parseResult;
   const totalOrderParse = abbreviateNumber(result.totalOrders) || 0;
   const totalOrderPercent = Math.min(result.totalOrders, 100);
-  const totalSuccessTransaction = result.transactionCountResult.success;
-  const totalPendingTransaction = result.transactionCountResult.pending;
+  const totalSuccessTransaction = result?.transactionCountResult?.success;
+  const totalPendingTransaction = result?.transactionCountResult?.pending;
   const transactionSuccessPercent = Math.min(
     (totalSuccessTransaction / 100) * 100,
     100
@@ -43,7 +47,23 @@ export default async function Page() {
 
   const MostOrderedCategories = result.mostBoughtCategories || [];
 
-  const latestOrders = result.latestOrders || [];
+  const latestOrders: ILatestOrderDTO[] =
+    result.latestOrders ||
+    [].map((item: IOrder) => ({
+      // items: item.items,
+      payment: {
+        amount: item.payment.amount,
+        currency: item.payment.currency,
+      },
+      billing: {
+        amount: item.billing.amount,
+        currency: item.billing.currency,
+      },
+      customer: {
+        name: item.customer.name,
+        email: item.customer.email,
+      },
+    }));
 
   return (
     <section className="flex flex-col h-full p-3  w-full">
@@ -131,7 +151,7 @@ export default async function Page() {
       <div className="grid grid-cols-1 gap-4 mt-3 p-2">
         <h1 className="font-bold text-lg">latest order</h1>
 
-        {latestOrders.length <= 0 ? (
+        {/* {latestOrders.length <= 0 ? (
           <div className="w-full h-28 text-center">User has no order</div>
         ) : (
           <div className="w-full overflow-x-auto">
@@ -194,7 +214,8 @@ export default async function Page() {
               </tbody>
             </table>
           </div>
-        )}
+        )} */}
+        <LatestOrderContainer ColumnData={latestOrders} />
       </div>
     </section>
   );

@@ -50,11 +50,11 @@ interface Billing {
   _id: string;
 }
 
-interface Order {
+export interface IOrder {
   _id: string;
   user_id: string;
   tx_ref: string;
-  items: Product[];
+  items?: Product[];
   payment: Payment;
   billing: Billing;
   customer: Customer;
@@ -67,7 +67,7 @@ export interface OverviewResponse {
   totalOrders: number;
   latestCustomers: { customer: Customer }[];
   mostBoughtCategories: { _id: string; count: number }[];
-  latestOrders: Order[];
+  latestOrders: IOrder[];
   transactionCountResult: {
     success: number;
     pending: number;

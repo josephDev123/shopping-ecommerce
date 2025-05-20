@@ -6,6 +6,7 @@ import {
   ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getExpandedRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -21,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useState, useEffect, SetStateAction, Dispatch } from "react";
+import { useState, useEffect, SetStateAction, Dispatch, Fragment } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]; // Ensure this matches the ColumnDef type
@@ -39,12 +40,15 @@ const DataTable = function <TData, TValue>({
   onTableReady,
 }: DataTableProps<TData, TValue>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [expanded, setExpanded] = useState({});
+
   const table = useReactTable({
     data,
     columns,
     state: {
       columnVisibility,
       columnFilters,
+      expanded,
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -52,6 +56,9 @@ const DataTable = function <TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: () => setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
+    onExpandedChange: setExpanded, // <- 👈 Handle row expansion
+    getExpandedRowModel: getExpandedRowModel(),
+    getSubRows: (row) => (row as any).items ?? [],
   });
 
   useEffect(() => {
@@ -84,16 +91,21 @@ const DataTable = function <TData, TValue>({
         <TableBody className="text-eduvoColor">
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
+              <Fragment key={row.id}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </Fragment>
             ))
           ) : (
             <TableRow>
