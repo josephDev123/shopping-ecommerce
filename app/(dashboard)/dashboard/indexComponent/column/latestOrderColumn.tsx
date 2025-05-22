@@ -5,8 +5,10 @@ export const latestOrdersColumn: ColumnDef<ILatestOrderDTO>[] = [
   {
     id: "expander",
     header: "Product items",
+    // accessorKey: "items.productName",
     cell: ({ row }) => {
       const firstProductName = row.original.items?.[0]?.productName ?? "";
+      console.log("First Product Name:", firstProductName);
 
       return row.getCanExpand() ? (
         <button

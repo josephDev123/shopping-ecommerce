@@ -23,22 +23,26 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState, useEffect, SetStateAction, Dispatch, Fragment } from "react";
-
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]; // Ensure this matches the ColumnDef type
+import { IProduct } from "@/app/(dashboard)/dashboard/indexComponent/ILatestOrder";
+interface DataTableProps<TData, TValue, TSubData> {
+  columns: ColumnDef<TData, TValue>[];
   data: TData[];
   onTableReady?: (table: any) => void;
   columnFilters?: ColumnFiltersState;
   setColumnFilters?: Dispatch<SetStateAction<ColumnFiltersState>>;
+  // getSubRows?: (row: TData) => TSubData[];
+  // renderSubRow?: (row: TData) => React.ReactNode; // 👈 Dynamic rendering
 }
 
-const DataTable = function <TData, TValue>({
+const DataTable = function <TData, TValue, TSubData = unknown>({
   columns,
   data,
   columnFilters,
   setColumnFilters,
   onTableReady,
-}: DataTableProps<TData, TValue>) {
+}: // getSubRows,
+// renderSubRow,
+DataTableProps<TData, TValue, TSubData>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [expanded, setExpanded] = useState({});
 
@@ -58,7 +62,7 @@ const DataTable = function <TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     onExpandedChange: setExpanded, // <- 👈 Handle row expansion
     getExpandedRowModel: getExpandedRowModel(),
-    getSubRows: (row) => (row as any).items ?? [],
+    getSubRows: (row) => (row as any).items, // 👈 Use the original data for sub-rows
   });
 
   useEffect(() => {
@@ -105,6 +109,15 @@ const DataTable = function <TData, TValue>({
                     </TableCell>
                   ))}
                 </TableRow>
+
+                {row.getIsExpanded() && (
+                  <tr>
+                    <td colSpan={row.getAllCells().length}>
+                      Your custom UI goes here
+                      {/* {row.getex.items?.map((item: IProduct) => ()} */}
+                    </td>
+                  </tr>
+                )}
               </Fragment>
             ))
           ) : (

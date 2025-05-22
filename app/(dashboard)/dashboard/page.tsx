@@ -13,8 +13,9 @@ import moment from "moment";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 import DataTable from "@/components/ui/data-table";
 import { latestOrdersColumn } from "./indexComponent/column/latestOrderColumn";
-import { ILatestOrderDTO } from "./indexComponent/ILatestOrder";
+import { ILatestOrderDTO, IProduct } from "./indexComponent/ILatestOrder";
 import LatestOrderContainer from "./indexComponent/LatestOrderContainer";
+import path from "path";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -47,28 +48,41 @@ export default async function Page() {
 
   const MostOrderedCategories = result.mostBoughtCategories || [];
 
-  const latestOrders: ILatestOrderDTO[] =
-    result.latestOrders ||
-    [].map((item: IOrder) => ({
-      // items: item.items,
-      payment: {
-        amount: item.payment.amount,
-        currency: item.payment.currency,
-      },
-      billing: {
-        amount: item.billing.amount,
-        currency: item.billing.currency,
-      },
-      customer: {
-        name: item.customer.name,
-        email: item.customer.email,
-      },
-    }));
+  const latestOrders: ILatestOrderDTO[] = result.latestOrders
+    ? result.latestOrders.map((item: IOrder) => ({
+        items: item.items?.map((product: IProduct) => ({
+          _id: product._id,
+          productName: product.productName,
+          Description: product.Description,
+          productCategory: product.productCategory,
+          productPrice: product.productPrice,
+          productDiscount: product.productDiscount,
+          productQuantity: product.productQuantity,
+          productSKU: product.productSKU,
+          productImgUrl: product.productImgUrl.map((img) => ({
+            url: img.url,
+            path: img.path,
+          })),
+        })),
+        payment: {
+          amount: item.payment.amount,
+          currency: item.payment.currency,
+        },
+        billing: {
+          amount: item.billing.amount,
+          currency: item.billing.currency,
+        },
+        customer: {
+          name: item.customer.name,
+          email: item.customer.email,
+        },
+      }))
+    : [];
 
   return (
     <section className="flex flex-col h-full p-3  w-full">
       <h1 className="text-xl font-bold">Dashboard</h1>
-      {/* <pre>{JSON.stringify(transactionPercent, null, 2)}</pre> */}
+      {/* <pre>{JSON.stringify(latestOrders, null, 2)}</pre> */}
 
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 mt-3">
         <SummaryCard
@@ -151,70 +165,6 @@ export default async function Page() {
       <div className="grid grid-cols-1 gap-4 mt-3 p-2">
         <h1 className="font-bold text-lg">latest order</h1>
 
-        {/* {latestOrders.length <= 0 ? (
-          <div className="w-full h-28 text-center">User has no order</div>
-        ) : (
-          <div className="w-full overflow-x-auto">
-            <table className="table-auto min-w-max border-collapse">
-              <thead>
-                <tr className="bg-gray-200">
-                  <th className="w-32 px-4 py-2">Txn Ref</th>
-                  <th className="w-40 px-4 py-2">Product Name</th>
-                  <th className="w-60 px-4 py-2">Product Description</th>
-                  <th className="w-40 px-4 py-2">Category</th>
-                  <th className="w-24 px-4 py-2">Price</th>
-                  <th className="w-24 px-4 py-2">Discount</th>
-                  <th className="w-32 px-4 py-2">Product Image</th>
-                  <th className="w-32 px-4 py-2">Amount</th>
-                  <th className="w-40 px-4 py-2">Created At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {latestOrders.map((order, i) => (
-                  <tr key={i} className="border-b">
-                    <td className="px-4 py-2">{order.tx_ref || "nil"}</td>
-                    <td className="px-4 py-2">
-                      {order.items[0].productName || "nil"}
-                    </td>
-                    <td className="px-4 py-2">
-                      {order.items[0].Description || "nil"}
-                    </td>
-                    <td className="px-4 py-2">
-                      {order.items[0].productCategory || "nil"}
-                    </td>
-                    <td className="px-4 py-2">
-                      {order.items[0].productPrice || "nil"}
-                    </td>
-                    <td className="px-4 py-2">
-                      {order.items[0].productDiscount || "nil"}
-                    </td>
-                    <td className="px-4 py-2">
-                      {!order.items[0].productImgUrl[0]?.url ? (
-                        "no image"
-                      ) : (
-                        <Image
-                          className="rounded-md"
-                          alt="Product Image"
-                          src={order.items[0].productImgUrl[0].url}
-                          height={50}
-                          width={50}
-                        />
-                      )}
-                    </td>
-                    <td className="px-4 py-2">
-                      {`${order.billing.currency || ""} ${
-                        order.billing.amount || "nil"
-                      }`}
-                    </td>
-                    <td className="px-4 py-2">
-                      {moment(order.createdAt).fromNow() || "nil"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )} */}
         <LatestOrderContainer ColumnData={latestOrders} />
       </div>
     </section>

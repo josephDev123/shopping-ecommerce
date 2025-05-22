@@ -1,10 +1,10 @@
 interface ProductImgUrl {
   url: string;
   path: string;
-  _id: string;
+  // _id: string;
 }
 
-interface IProduct {
+export interface IProduct {
   _id: string;
   productName: string;
   Description: string;
