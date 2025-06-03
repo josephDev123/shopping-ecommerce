@@ -4,8 +4,8 @@ import { OrderType } from "@/models/OrderModel";
 import mongoose, { Model } from "mongoose";
 
 export class OrderRepository {
-  constructor(private readonly Db: Model<OrderType>) {
-    this.Db = Db;
+  constructor(private readonly Order: Model<OrderType>) {
+    this.Order = Order;
   }
 
   async findByPaginate(
@@ -74,7 +74,7 @@ export class OrderRepository {
         },
       ];
 
-      const result = await this.Db.aggregate(aggregationPipeline);
+      const result = await this.Order.aggregate(aggregationPipeline);
 
       // Extract the data
       const response = result[0]?.paginatedResults || [];

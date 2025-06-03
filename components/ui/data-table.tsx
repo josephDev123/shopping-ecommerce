@@ -4,6 +4,7 @@ import {
   ColumnDef,
   ColumnFilter,
   ColumnFiltersState,
+  ExpandedState,
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
@@ -44,7 +45,8 @@ const DataTable = function <TData, TValue, TSubData = unknown>({
 // renderSubRow,
 DataTableProps<TData, TValue, TSubData>) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [expanded, setExpanded] = useState({});
+  // const [expanded, setExpanded] = useState({});
+  const [expanded, setExpanded] = useState<ExpandedState>({});
 
   const table = useReactTable({
     data,
@@ -62,6 +64,7 @@ DataTableProps<TData, TValue, TSubData>) {
     onColumnFiltersChange: setColumnFilters,
     onExpandedChange: setExpanded, // <- 👈 Handle row expansion
     getExpandedRowModel: getExpandedRowModel(),
+    getRowCanExpand: (row) => true,
     getSubRows: (row) => (row as any).items, // 👈 Use the original data for sub-rows
   });
 
@@ -113,7 +116,7 @@ DataTableProps<TData, TValue, TSubData>) {
                 {row.getIsExpanded() && (
                   <tr>
                     <td colSpan={row.getAllCells().length}>
-                      Your custom UI goes here
+                      Expand UI Rows coming soon ...
                       {/* {row.getex.items?.map((item: IProduct) => ()} */}
                     </td>
                   </tr>

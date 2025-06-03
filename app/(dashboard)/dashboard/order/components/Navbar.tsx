@@ -5,9 +5,9 @@ interface OrderPageNavProps {
 }
 export default function Navbar({ searchParams }: OrderPageNavProps) {
   return (
-    <div className="flex sm:gap-8 gap-4  sm:text-lg text-sm border-b overflow-x-auto">
+    <div className="flex sm:gap-8 gap-4  sm:text-lg text-sm border-b  overflow-x-auto mb-2">
       <Link
-        href={"/order?status=pending"}
+        href={"/dashboard/order?status=pending"}
         className={`${
           searchParams.status === "pending" && "border-b-4 border-blue-600"
         }`}
@@ -15,7 +15,7 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Pending
       </Link>
       <Link
-        href={"/order?status=confirmed"} //confirmed
+        href={"/dashboard/order?status=confirmed"} //confirmed
         className={`${
           searchParams.status === "confirmed" && "border-b-4 border-blue-600"
         }`}
@@ -23,7 +23,7 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Confirmed
       </Link>
       <Link
-        href={"/order?status=processing"}
+        href={"/dashboard/order?status=processing"}
         className={`${
           searchParams.status === "processing" && "border-b-4 border-blue-600"
         }`}
@@ -31,7 +31,7 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Processing
       </Link>
       <Link
-        href={"/order?status=picked"}
+        href={"/dashboard/order?status=picked"}
         className={`${
           searchParams.status === "picked" && "border-b-4 border-blue-600"
         }`}
@@ -39,7 +39,7 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Picked
       </Link>
       <Link
-        href={"/order?status=shipped"}
+        href={"/dashboard/order?status=shipped"}
         className={`${
           searchParams.status === "shipped" && "border-b-4 border-blue-600"
         }`}
@@ -47,7 +47,7 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Shipped
       </Link>
       <Link
-        href={"/order?status=delivered"}
+        href={"/dashboard/order?status=delivered"}
         className={`${
           searchParams.status === "delivered" && "border-b-4 border-blue-600"
         }`}
@@ -55,7 +55,7 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Delivered
       </Link>
       <Link
-        href={"/order?status=cancelled"}
+        href={"/dashboard/order?status=cancelled"}
         className={`${
           searchParams.status === "cancelled" && "border-b-4 border-blue-600"
         }`}

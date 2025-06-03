@@ -13,6 +13,10 @@ import {
   OrderMoreDetailColumns,
   orderMoreDetailType,
 } from "@/app/columns/OrderMoreDetailColumns";
+import { ColumnFiltersState } from "@tanstack/react-table";
+import DataTable from "@/components/ui/data-table";
+import { MainTableColumn } from "../column/MainTableColumn";
+import { IMainTableColumn } from "../column/IMainTableColumn";
 const ModalOverlay = React.lazy(() => import("../../../commons/ModalOverLay"));
 
 interface OrderPageMainWrapperProps {
@@ -22,83 +26,86 @@ export default function OrderPageMainWrapper({
   data,
 }: OrderPageMainWrapperProps) {
   // console.log(data);
-  // const [orderData, setOrderData] = useState<ClientOrderType[]>(data);
-  const [search_Id, setSearchId] = useState<string | null>(null);
-  const [moreDetailModal, setMoreDetailModal] = useState<boolean>(false);
-  const [tableRowIndex, setTableRowIndex] = useState<number | null>(null);
-  const [selectedOrder, setSelectedOrder] = useState<ClientOrderType | null>(
-    null
-  );
 
-  const [formattedSelectedOrder, setFormattedSelectedOrder] =
-    useState<orderMoreDetailType | null>(null);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const searchParams = useSearchParams();
+  const status = searchParams.get("status");
+  console.log("column", columnFilters);
 
-  useEffect(() => {
-    if (selectedOrder === null) return;
-    setFormattedSelectedOrder({
-      // amount: selectedOrder?.payment.amount,
-      currency: selectedOrder?.payment.currency || "Nil",
-      // customer_name: selectedOrder?.customer.name,
-      customer_country: selectedOrder?.customer.country || "Nil",
-      customer_email: selectedOrder?.customer.email || "Nil",
-      Description: selectedOrder?.items[0]?.Description || "Nil",
-      // productBreath: selectedOrder?.items[0].productBreath,
-      productCategory: selectedOrder?.items[0]?.productCategory || "Nil",
-      productDiscount: selectedOrder?.items[0]?.productDiscount || "Nil",
-      // productImgUrl: [
-      //   {
-      //     url: selectedOrder?.items[0].productImgUrl[0].url,
-      //     path: "",
-      //     _id: "",
-      //   },
-      // ],
-      productItemWeight: selectedOrder?.items[0]?.productItemWeight || 0,
-      // productLength: selectedOrder?.items[0].productLength,
-      productName: selectedOrder?.items[0]?.productName || "Nil",
-      productPrice: selectedOrder?.items[0]?.productPrice || "Nil",
-      // productQuantity: selectedOrder?.items[0].productQuantity,
-      productSKU: selectedOrder?.items[0]?.productSKU || "Nil",
-      productSize: selectedOrder?.items[0]?.productSize || "Nil",
-      productTag: selectedOrder?.items[0]?.productTag || "Nil",
-      productUnit: selectedOrder?.items[0]?.productUnit || "Nil",
-      // productWidth: selectedOrder?.items[0].productWidth,
-      qty: selectedOrder?.items[0]?.qty || "Nil",
-      tx_ref: selectedOrder?.tx_ref || "Nil",
-    });
-  }, [selectedOrder]);
+  const tableData: IMainTableColumn[] = data.map((order) => ({
+    _id: order._id,
+    user_id: order.user_id,
+    tx_ref: order.tx_ref,
+    products: order.items.map((item) => ({
+      qty: item?.qty || "N/A",
+      productName: item?.productName || "N/A",
+      Description: item?.Description || "N/A",
+      productCategory: item?.productCategory || "N/A",
+      productTag: item?.productTag || "N/A",
+      productPrice: item?.productPrice || "N/A",
+      productDiscount: item?.productDiscount || "N/A",
+      productSKU: item?.productSKU || "N/A",
+      productSize: item?.productSize || "N/A",
+      productImgUrl: item?.productImgUrl.map((imgObj) => imgObj) || [],
+    })),
+    payment: {
+      paymentMethod: order.payment.paymentMethod,
+      amount: order.payment.amount,
+      currency: order.payment.currency,
+    },
+    billing: {
+      amount: order.billing.amount,
+      currency: order.billing.currency,
+    },
+    customer: {
+      email: order.customer.email,
+      name: order.customer.name,
+      phonenumber: order.customer.phonenumber,
+      country: order.customer.country,
+      address: order.customer.address,
+      town: order.customer.town,
+      additionalInfo: order.customer.additionalInfo || "",
+    },
+    createdAt: moment(order.createdAt).format("YYYY-MM-DD HH:mm:ss"),
+    updatedAt: moment(order.updatedAt).format("YYYY-MM-DD HH:mm:ss"),
+    order_status: order.order_status,
+  }));
 
-  const searchParam = useSearchParams().get("status") ?? null;
-  console.log(selectedOrder);
-  const filteredData = data.filter((order) => {
-    const matchesId =
-      !search_Id ||
-      String(order.user_id).toLowerCase().includes(search_Id.toLowerCase());
+  const handleSearchByProductName = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = e.target.value;
+    console.log(value);
 
-    const matchesStatus =
-      !searchParam ||
-      order.order_status.toLowerCase() === searchParam.toLowerCase();
-
-    return matchesId && matchesStatus;
-  });
-
-  const handleSearchId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchId(e.target.value);
+    setColumnFilters((prev) => [
+      ...prev.filter((f) => f.id !== "productName"),
+      { id: "productName", value: value },
+    ]);
   };
 
-  console.log(filteredData, search_Id);
+  useEffect(() => {
+    if (status) {
+      setColumnFilters((prev) => [
+        ...prev.filter((f) => f.id !== "order_status"),
+        {
+          id: "order_status",
+          value: status,
+        },
+      ]);
+    }
+  }, [status]);
   return (
     <section className="">
       {/* {JSON.stringify(searchParam, null, 2)} */}
 
-      <div className="flex sm:flex-row flex-col justify-between items-start gap-4 my-4">
-        {/* <div className="bg-red-200 w-full"> */}
+      <div className="flex sm:flex-row flex-col justify-between items-start gap-4 my-2">
         <Input
           name="order_id"
           type="search"
-          placeholder="Search by order id"
-          onChange={handleSearchId}
+          placeholder="Search by product name"
+          onChange={handleSearchByProductName}
           labelName=""
-          className="bg-white border p-3  outline-none rounded-md shadow-md sm:max-w-[320px] w-full"
+          className="bg-white border p-2  outline-none rounded-md shadow-md sm:max-w-[320px] w-full"
         />
         {/* </div> */}
 
@@ -108,65 +115,20 @@ export default function OrderPageMainWrapper({
             data={[]}
             placeholder="Filter by date range"
             labelName=""
-            className="bg-white border p-3 outline-none rounded-md shadow-md  "
+            className="bg-white border p-2 outline-none rounded-md shadow-md  "
           />
         </div>
       </div>
       <div className="overflow-x-auto flex flex-col w-full">
-        <table className="table-auto border-spacing-y-6">
-          <thead className="bg-gray-200">
-            <tr className="">
-              <th className="text-left px-4 py-2">ORDER ID</th>
-              <th className="text-left px-4 py-2">CREATED</th>
-              <th className="text-left px-4 py-2">CUSTOMER</th>
-              <th className="text-left px-4 py-2">TOTAL </th>
-              {/* <th className="text-left px-4">PROFIT</th> */}
-              {/* <th className="text-left px-4">STATUS</th> */}
-              <th className="text-left px-4"></th>
-            </tr>
-          </thead>
-          <tbody className="">
-            {filteredData.length < 1 ? (
-              <tr>
-                <td
-                  colSpan={5}
-                  className="text-center p-4 font-semibold w-full"
-                >
-                  No result
-                </td>
-              </tr>
-            ) : (
-              filteredData.map((item, i) => (
-                <tr key={i} className="border-b-2">
-                  <td className="p-2 text-nowrap">{item._id}</td>
-                  <td className="p-2 text-nowrap">
-                    {moment(item.createdAt).fromNow()}
-                  </td>
-                  <td className="p-2 text-nowrap">{item.customer.name}</td>
-                  <td className="p-2 text-nowrap">
-                    {item.payment.currency ?? ""} {item.payment.amount}
-                  </td>
-                  <td>
-                    <MdOutlineArrowDropDownCircle
-                      className={`text-xl cursor-pointer ${
-                        tableRowIndex === i && "rotate-180"
-                      }`}
-                      onClick={() => {
-                        setSelectedOrder(item);
-                        setTableRowIndex(i);
-                        setMoreDetailModal(true);
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+        <DataTable
+          data={tableData}
+          columns={MainTableColumn}
+          columnFilters={columnFilters}
+        />
       </div>
 
       {/* modal */}
-      <ModalOverlay
+      {/* <ModalOverlay
         isCollapse={moreDetailModal}
         closeOverLay={() => {
           setMoreDetailModal(false);
@@ -177,7 +139,7 @@ export default function OrderPageMainWrapper({
           columns={OrderMoreDetailColumns}
           data={[formattedSelectedOrder]}
         />
-      </ModalOverlay>
+      </ModalOverlay> */}
     </section>
   );
 }

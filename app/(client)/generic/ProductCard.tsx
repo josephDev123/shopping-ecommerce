@@ -8,6 +8,8 @@ import { useAppDispatch } from "@/lib/slices/hooks";
 import { setCart } from "@/lib/slices/addToCartSlice";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import Link from "next/link";
 
 type IProductCard = {
   credential: ProductDataType;
@@ -37,7 +39,7 @@ export default function ProductCard({ credential }: IProductCard) {
     <section className="flex flex-col bg-[#F4F5F7] relative cursor-pointer group rounded-lg">
       <div
         // onClick={() => navigate.push(`/shop/${credential._id}`)}
-        className=" flex-col justify-center items-center absolute top-0 w-full h-[80%] bg-gray-50/50 group-hover:flex hidden"
+        className="flex-col justify-center items-center absolute top-0 w-full h-[80%] bg-gray-50/50 sm:group-hover:flex hidden"
       >
         <Button
           onClick={(e) => {
@@ -61,9 +63,22 @@ export default function ProductCard({ credential }: IProductCard) {
       />
       <div
         className="mt-auto p-2"
-        onClick={() => navigate.push(`/shop/${credential._id}`)}
+        // onClick={() => navigate.push(`/shop/${credential._id}`)}
       >
-        <p className="font-bold">{credential.productName}</p>
+        <div className="flex justify-between items-center gap-3">
+          <Link
+            title={credential.productName}
+            href={`/shop/${credential._id}`}
+            className="font-bold hover:underline w-52 truncate"
+          >
+            {credential.productName}
+          </Link>
+          <MdOutlineShoppingCart
+            onClick={() => handleAddToCart(credential)}
+            className="sm:hidden  block  text-3xl hover:bg-slate-200 p-1   rounded-full"
+          />
+        </div>
+
         <p className="truncate">{credential.Description}</p>
         <span className="flex justify-between items-center">
           <p className="font-bold">{credential.productPrice}</p>

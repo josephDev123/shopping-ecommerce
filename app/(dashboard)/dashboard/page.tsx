@@ -41,9 +41,15 @@ export default async function Page() {
     100
   );
 
-  const latestCustomer = result.latestCustomers.map(
-    (item) => item.customer.name
-  );
+  const latestCustomer =
+    result.latestCustomers.map((item) => {
+      const customerFirstName = item?.customer?.name.split(" ")[0];
+      const returnCustomerName =
+        customerFirstName.length > 10
+          ? customerFirstName.slice(0, 10) + "..."
+          : customerFirstName;
+      return returnCustomerName;
+    }) || [];
   const barData = result.latestCustomers.map((item, i) => 30);
 
   const MostOrderedCategories = result.mostBoughtCategories || [];
@@ -139,6 +145,7 @@ export default async function Page() {
             labels={latestCustomer}
             data={barData}
             ShowLegends={false}
+            tooltip={false}
           />
         </div>
         <div className="flex flex-col col-span-1 w-full p-2  bg-black text-white rounded-md overflow-x-auto">

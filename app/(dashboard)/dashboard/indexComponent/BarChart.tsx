@@ -26,8 +26,14 @@ interface BarChartProps {
   data: number[];
   labels: string[] | number[];
   ShowLegends: boolean;
+  tooltip?: boolean;
 }
-export default function BarChart({ data, labels, ShowLegends }: BarChartProps) {
+export default function BarChart({
+  data,
+  labels,
+  ShowLegends,
+  tooltip,
+}: BarChartProps) {
   const dataConfig: ChartData<"bar"> = {
     labels: labels.map((label) => label.toString()),
     datasets: [
@@ -44,6 +50,9 @@ export default function BarChart({ data, labels, ShowLegends }: BarChartProps) {
   const chartOption: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
+      tooltip: {
+        enabled: tooltip,
+      },
       legend: {
         display: ShowLegends,
       },

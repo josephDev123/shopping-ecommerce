@@ -25,18 +25,32 @@ let cached = global.mongooseCache ?? { conn: null, promise: null };
 global.mongooseCache = cached;
 
 export async function startDb(): Promise<Mongoose> {
-  if (cached.conn) {
-    console.log("cached hit");
+  let retry = 3;
+  let retryDelay = 1000;
+  let retryCount = 0;
+  try {
+    if (cached.conn) {
+      console.log("cached hit");
+      return cached.conn;
+    }
+
+    if (!cached.promise) {
+      cached.promise = mongoose.connect(MONGODB_URI, {
+        bufferCommands: false,
+      });
+    }
+
+    cached.conn = await cached.promise;
+    console.log("db hit afresh");
     return cached.conn;
+  } catch (error) {
+    if (retryCount < retry) {
+      retryCount++;
+      console.log(`Retrying connection... Attempt ${retryCount}`);
+      await new Promise((resolve) => setTimeout(resolve, retryDelay));
+      return startDb();
+    }
+    console.error("Database connection error:", error);
+    throw new Error("Failed to connect to the database.");
   }
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      bufferCommands: false,
-    });
-  }
-
-  cached.conn = await cached.promise;
-  console.log("db hit afresh");
-  return cached.conn;
 }
