@@ -15,6 +15,8 @@ export default function LatestOrderContainer({
       <DataTable
         data={ColumnData}
         columns={latestOrdersColumn}
+        rowCount={ColumnData.length}
+        hiddenPaginationBtn={true} // Assuming you want to show the total number of rows
         // getSubRows={(row) => row.items!}
         // renderSubRow={(row) => (
         //   <div className="p-4 bg-gray-100 rounded-md">

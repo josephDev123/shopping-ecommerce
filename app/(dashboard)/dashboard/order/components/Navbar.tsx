@@ -5,7 +5,7 @@ interface OrderPageNavProps {
 }
 export default function Navbar({ searchParams }: OrderPageNavProps) {
   return (
-    <div className="flex sm:gap-8 gap-4  sm:text-lg text-sm border-b  overflow-x-auto mb-2">
+    <div className="flex sm:gap-8 gap-4 border-b  overflow-x-auto mb-2 ">
       <Link
         href={"/dashboard/order?status=pending"}
         className={`${

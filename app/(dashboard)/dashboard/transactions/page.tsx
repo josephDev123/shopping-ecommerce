@@ -16,7 +16,7 @@ export default async function page({ searchParams }: TransactionPageProps) {
     url: `${process.env.SERVER_BASEURL}/api/transaction?user_id=${
       session?.user.id
     }&page=${Number(searchParams.page) || 1}&limit=${
-      Number(searchParams.limit) || 2
+      Number(searchParams.limit) || 10
     }`,
   });
 
@@ -27,7 +27,7 @@ export default async function page({ searchParams }: TransactionPageProps) {
     <section className="flex flex-col w-full h-full p-3">
       <h2 className="text-2xl font-bold">Transaction</h2>
 
-      <TransactionTable data={result} />
+      <TransactionTable data={result} rowCount={totalTransactionCount} />
 
       {/* <Suspense fallback={<p>Loading...</p>}>
         <FooterPagination

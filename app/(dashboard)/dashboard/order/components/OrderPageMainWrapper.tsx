@@ -5,7 +5,14 @@ import { OrderType } from "@/models/OrderModel";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import React, { Suspense, use, useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  Suspense,
+  use,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
 import Table from "../../../commons/Table";
 import { columns, TableData } from "@/app/data/columns";
@@ -17,17 +24,21 @@ import { ColumnFiltersState } from "@tanstack/react-table";
 import DataTable from "@/components/ui/data-table";
 import { MainTableColumn } from "../column/MainTableColumn";
 import { IMainTableColumn } from "../column/IMainTableColumn";
+import { filterSelectColumn } from "../column/filterSelectColumnData";
 const ModalOverlay = React.lazy(() => import("../../../commons/ModalOverLay"));
 
 interface OrderPageMainWrapperProps {
   data: ClientOrderType[];
+  totalRows: number;
 }
 export default function OrderPageMainWrapper({
   data,
+  totalRows,
 }: OrderPageMainWrapperProps) {
   // console.log(data);
 
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [column, setColumn] = useState("");
   const searchParams = useSearchParams();
   const status = searchParams.get("status");
   console.log("column", columnFilters);
@@ -71,29 +82,46 @@ export default function OrderPageMainWrapper({
     order_status: order.order_status,
   }));
 
-  const handleSearchByProductName = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = e.target.value;
-    console.log(value);
+  // const handleSearchByProductName = (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const value = e.target.value;
+  //   console.log(value);
 
-    setColumnFilters((prev) => [
-      ...prev.filter((f) => f.id !== "productName"),
-      { id: "productName", value: value },
-    ]);
+  //   setColumnFilters((prev) => [
+  //     ...prev.filter((f) => f.id !== "productName"),
+  //     { id: "productName", value: value },
+  //   ]);
+  // };
+
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.trim();
+    if (value == "") {
+      setColumnFilters([]);
+      return;
+    }
+    if (column === "") {
+      setColumnFilters([{ id: "productName", value: value }]);
+      return;
+    }
+    setColumnFilters([{ id: column, value: value }]);
   };
-
+  const handleSetColumnTofilter = (event: ChangeEvent<HTMLSelectElement>) => {
+    const column = event.target.value;
+    setColumn(column);
+  };
   useEffect(() => {
     if (status) {
       setColumnFilters((prev) => [
-        ...prev.filter((f) => f.id !== "order_status"),
+        ...prev.filter((f) => f.id !== "OrderStatus"),
         {
-          id: "order_status",
+          id: "OrderStatus",
           value: status,
         },
       ]);
     }
   }, [status]);
+
   return (
     <section className="">
       {/* {JSON.stringify(searchParam, null, 2)} */}
@@ -102,28 +130,42 @@ export default function OrderPageMainWrapper({
         <Input
           name="order_id"
           type="search"
-          placeholder="Search by product name"
-          onChange={handleSearchByProductName}
+          placeholder={`search ${column}`}
+          onChange={handleSearch}
           labelName=""
           className="bg-white border p-2  outline-none rounded-md shadow-md sm:max-w-[320px] w-full"
         />
         {/* </div> */}
 
         <div className=" sm:max-w-[320px] w-full">
-          <SelectInput
+          {/* <SelectInput
             name="date-range"
-            data={[]}
+            data={filterSelectColumn}
             placeholder="Filter by date range"
             labelName=""
             className="bg-white border p-2 outline-none rounded-md shadow-md  "
-          />
+          /> */}
+
+          <select
+            onChange={handleSetColumnTofilter}
+            className="border rounded-md p-2 w-fit"
+          >
+            <option value="">Filter by</option>
+            {filterSelectColumn.map((column, i) => (
+              <option value={column.column} key={i}>
+                {column.value}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
-      <div className="overflow-x-auto flex flex-col w-full">
+      <div className="overflow-x-auto flex flex-col w-full h-full">
         <DataTable
           data={tableData}
           columns={MainTableColumn}
           columnFilters={columnFilters}
+          rowCount={totalRows}
+          manualPagination={true}
         />
       </div>
 

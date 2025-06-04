@@ -20,7 +20,7 @@ export default async function page({ searchParams }: OrderPageProps) {
     `${process.env.NEXT_PUBLIC_BASEURL}/api/orders/orders?user_id=${
       session?.user.id
     }&page=${Number(searchParams.page) || 1}&limit=${
-      Number(searchParams.limit) || 4
+      Number(searchParams.limit) || 10
     }`
   );
   const data = await response.json();
@@ -35,19 +35,25 @@ export default async function page({ searchParams }: OrderPageProps) {
   return (
     <section className="flex flex-col p-2 h-full">
       {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
-      <h1 className="font-bold text-xl my-2">Order Management</h1>
-      <Navbar searchParams={searchParams} />
+      <h1 className="font-bold text-xl my-2">Orders</h1>
+      <div>
+        <Navbar searchParams={searchParams} />
+      </div>
+
       {/* <Suspense key={Number(searchParams)} fallback={<p>Loading...</p>}> */}
-      <OrderPageMainWrapper data={result} />
+      <div>
+        <OrderPageMainWrapper data={result} totalRows={totalDocs} />
+      </div>
+
       {/* </Suspense> */}
 
-      <Suspense key={Number(searchParams)} fallback={<p>Loading...</p>}>
+      {/* <Suspense key={Number(searchParams)} fallback={<p>Loading...</p>}>
         <FooterPagination
           searchParam={Number(searchParams.page) || 1}
           itemToShow={Number(searchParams.limit) || 4}
           totalDocs={totalDocs}
         />
-      </Suspense>
+      </Suspense> */}
     </section>
   );
 }

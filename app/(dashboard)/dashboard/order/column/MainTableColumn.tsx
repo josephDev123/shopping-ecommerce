@@ -61,6 +61,7 @@ export const MainTableColumn: ColumnDef<IMainTableColumn>[] = [
   },
   {
     accessorKey: "customer.name",
+    id: "customerName",
     header: "Customer Name",
     cell: ({ row }) => (
       <div className="w-32 truncate">{row.original.customer.name}</div>
@@ -68,6 +69,7 @@ export const MainTableColumn: ColumnDef<IMainTableColumn>[] = [
   },
   {
     accessorKey: "customer.email",
+    id: "customerEmail",
     header: "Customer Email",
   },
   {
@@ -79,6 +81,7 @@ export const MainTableColumn: ColumnDef<IMainTableColumn>[] = [
   },
   {
     accessorKey: "order_status",
+    id: "OrderStatus",
     header: "Order Status",
     cell: ({ row }) => (
       <div className="w-28 truncate">{row.original.order_status}</div>

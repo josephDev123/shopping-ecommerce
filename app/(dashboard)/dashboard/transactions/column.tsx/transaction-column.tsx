@@ -14,7 +14,12 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
       return value.toLowerCase().includes(filterValue.toLowerCase());
     },
     cell: ({ row }) => (
-      <div className="inline-flex flex-wrap">{row.original._id}</div>
+      <div
+        title={row.original._id}
+        className="inline-flex w-32 truncate flex-wrap"
+      >
+        {row.original._id}
+      </div>
     ),
   },
   {
@@ -26,13 +31,15 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
       </button>
     ),
     cell: ({ row }) => (
-      <div>
+      <div className=" block relative size-8">
         <Image
           src={row.original.order.items[0].productImgUrl[0].url}
-          alt=""
+          alt={row.original.order.items[0].productImgUrl[0].url}
           loading="lazy"
-          width={80}
-          height={80}
+          // width={50}
+          // height={50}
+          fill
+          style={{ objectFit: "cover" }}
           className="rounded-md "
         />
       </div>
@@ -42,13 +49,16 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   {
     accessorKey: "order.items.productName",
     header: "Product name",
+    id: "productName",
     enableColumnFilter: true,
-    // filterFn: (row, columnId, filterValue) => {
-    //   const value = row.original.order.items[0].productName;
-    //   return value.toLowerCase().includes(filterValue.toLowerCase());
-    // },
+    filterFn: (row, columnId, filterValue) => {
+      const value = row.original.order.items[0].productName;
+      return value.toLowerCase().includes(filterValue.toLowerCase());
+    },
     cell: ({ row }) => (
-      <div className="">{row.original.order.items[0].productName}</div>
+      <div className="w-32 truncate">
+        {row.original.order.items[0].productName}
+      </div>
     ),
   },
   {
@@ -170,6 +180,7 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   },
   {
     accessorKey: "order.customer.email",
+    id: "customerEmail",
     header: "Customer Email",
     enableColumnFilter: true,
     cell: ({ row }) => {
@@ -189,6 +200,7 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
   },
   {
     accessorKey: "order.customer.name",
+    id: "customerName",
     header: "Customer Name",
     enableColumnFilter: true,
     cell: ({ row }) => {
@@ -209,6 +221,7 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
 
   {
     accessorKey: "order.order_status",
+    id: "OrderStatus",
     header: "Order Status",
     enableColumnFilter: true,
     cell: ({ row }) => {
@@ -216,7 +229,7 @@ export const transactionColumns: ColumnDef<ITransactionDTO>[] = [
       return (
         <Badge
           variant={order_status === "successful" ? "default" : "destructive"}
-          className="text-nowrap w-full inline-flex items-center"
+          className="w-24 inline-flex items-center"
         >
           {order_status}
         </Badge>

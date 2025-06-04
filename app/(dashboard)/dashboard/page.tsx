@@ -8,14 +8,11 @@ import { IOrder, OverviewResponse } from "@/app/types/overvieResponse";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 import { abbreviateNumber } from "@/app/utils/abbreviateNumber";
-import Image from "next/image";
-import moment from "moment";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 import DataTable from "@/components/ui/data-table";
 import { latestOrdersColumn } from "./indexComponent/column/latestOrderColumn";
 import { ILatestOrderDTO, IProduct } from "./indexComponent/ILatestOrder";
 import LatestOrderContainer from "./indexComponent/LatestOrderContainer";
-import path from "path";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);

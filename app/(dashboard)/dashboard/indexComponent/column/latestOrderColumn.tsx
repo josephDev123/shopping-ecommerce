@@ -26,14 +26,17 @@ export const latestOrdersColumn: ColumnDef<ILatestOrderDTO>[] = [
     header: "Payment amount",
     accessorKey: "payment.amount",
     cell: (props) => (
-      <span className="w-28 truncate">
+      <div className="w-36 truncate">
         {String(props.getValue()).toUpperCase()}
-      </span>
+      </div>
     ),
   },
   {
     header: "Billing amount",
     accessorKey: "billing.amount",
+    cell: ({ row }) => (
+      <div className="w-36 truncate">{row.original?.billing?.amount}</div>
+    ),
   },
   {
     header: "Customer Name",

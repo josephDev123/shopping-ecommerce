@@ -9,19 +9,24 @@ import { filterColumn } from "../data/filterColumn";
 
 interface ITransactionTableProps {
   data: ITransactionDTO[];
+  rowCount: number; // Optional, if you want to handle pagination
 }
-export default function TransactionTable({ data }: ITransactionTableProps) {
+export default function TransactionTable({
+  data,
+  rowCount,
+}: ITransactionTableProps) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  console.log(columnFilters);
   const [column, setColumn] = useState("");
-
-  const filterableKeys = transactionColumns.filter(
-    (col) => col.enableColumnFilter
-  );
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
     if (value == "") {
       setColumnFilters([]);
+      return;
+    }
+    if (column === "") {
+      setColumnFilters([{ id: "productName", value: value }]);
       return;
     }
     setColumnFilters([{ id: column, value: value }]);
@@ -62,6 +67,8 @@ export default function TransactionTable({ data }: ITransactionTableProps) {
             data={data}
             columnFilters={columnFilters}
             setColumnFilters={setColumnFilters}
+            rowCount={rowCount}
+            manualPagination={true}
           />
         </div>
       </div>
