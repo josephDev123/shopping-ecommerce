@@ -17,6 +17,8 @@ export default function LatestOrderContainer({
         columns={latestOrdersColumn}
         rowCount={ColumnData.length}
         hiddenPaginationBtn={true} // Assuming you want to show the total number of rows
+        manualPagination={true} // Assuming you want to handle pagination manually
+
         // getSubRows={(row) => row.items!}
         // renderSubRow={(row) => (
         //   <div className="p-4 bg-gray-100 rounded-md">
