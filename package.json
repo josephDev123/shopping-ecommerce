@@ -16,6 +16,7 @@
     "@tanstack/react-table": "^8.21.3",
     "axios": "^1.6.7",
     "bcrypt": "^5.1.1",
+    "bullmq": "^5.53.2",
     "chart.js": "^4.4.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

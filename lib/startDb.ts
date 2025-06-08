@@ -1,14 +1,6 @@
-// export async function startDb() {
-//   try {
-//     await mongoose.connect(process.env.MONGODB_URL as string);
-//     console.log("db successful");
-//   } catch (error) {
-//     console.log("dbs: " + error);
-//   }
-// }
-import mongoose, { Schema, Mongoose } from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URL!;
+const MONGODB_URI = process.env.MONGODB_URL;
 
 if (!MONGODB_URI) {
   throw new Error("Please define the MONGODB_URL environment variable.");
@@ -23,34 +15,35 @@ declare global {
 
 let cached = global.mongooseCache ?? { conn: null, promise: null };
 global.mongooseCache = cached;
+const MaxRetry = 3;
+const retryDelay = 1000;
 
-export async function startDb(): Promise<Mongoose> {
-  let retry = 3;
-  let retryDelay = 1000;
-  let retryCount = 0;
+export async function startDb(retryCount = 0): Promise<Mongoose> {
   try {
     if (cached.conn) {
-      console.log("cached hit");
+      console.log("✅ Using cached DB connection");
       return cached.conn;
     }
 
     if (!cached.promise) {
-      cached.promise = mongoose.connect(MONGODB_URI, {
+      cached.promise = mongoose.connect(MONGODB_URI as string, {
         bufferCommands: false,
       });
     }
 
     cached.conn = await cached.promise;
-    console.log("db hit afresh");
+    console.log("✅ New DB connection established");
     return cached.conn;
   } catch (error) {
-    if (retryCount < retry) {
+    // Clear the failed promise so the next retry doesn't reuse a broken one
+    cached.promise = null;
+    if (retryCount < MaxRetry) {
       retryCount++;
-      console.log(`Retrying connection... Attempt ${retryCount}`);
+      console.warn(`🔁 Retrying DB connection... attempt ${retryCount + 1}`);
       await new Promise((resolve) => setTimeout(resolve, retryDelay));
       return startDb();
     }
-    console.error("Database connection error:", error);
-    throw new Error("Failed to connect to the database.");
+    console.error("❌ Database connection failed after retries:", error);
+    throw new Error("Failed to connect to the database after retries.");
   }
 }
