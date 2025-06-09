@@ -1,25 +1,8 @@
 "use client";
-import Input, { SelectInput } from "@/app/(client)/generic/Input";
 import { ClientOrderType } from "@/app/types/ClientOrderType";
-import { OrderType } from "@/models/OrderModel";
 import moment from "moment";
-import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import React, {
-  ChangeEvent,
-  Suspense,
-  use,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { MdArrowDropDown, MdOutlineArrowDropDownCircle } from "react-icons/md";
-import Table from "../../../commons/Table";
-import { columns, TableData } from "@/app/data/columns";
-import {
-  OrderMoreDetailColumns,
-  orderMoreDetailType,
-} from "@/app/columns/OrderMoreDetailColumns";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import DataTable from "@/components/ui/data-table";
 import { MainTableColumn } from "../column/MainTableColumn";
@@ -82,18 +65,6 @@ export default function OrderPageMainWrapper({
     order_status: order.order_status,
   }));
 
-  // const handleSearchByProductName = (
-  //   e: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   const value = e.target.value;
-  //   console.log(value);
-
-  //   setColumnFilters((prev) => [
-  //     ...prev.filter((f) => f.id !== "productName"),
-  //     { id: "productName", value: value },
-  //   ]);
-  // };
-
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value.trim();
     if (value == "") {
@@ -126,38 +97,27 @@ export default function OrderPageMainWrapper({
     <section className="">
       {/* {JSON.stringify(searchParam, null, 2)} */}
 
-      <div className="flex sm:flex-row flex-col justify-between items-start gap-4 my-2">
-        <Input
-          name="order_id"
+      <div className="flex justify-between items-center gap-4 my-2">
+        <input
           type="search"
+          name=""
           placeholder={`search ${column}`}
           onChange={handleSearch}
-          labelName=""
-          className="bg-white border p-2  outline-none rounded-md shadow-md sm:max-w-[320px] w-full"
+          id=""
+          className="border rounded-md p-1.5 sm:w-52 w-full"
         />
-        {/* </div> */}
 
-        <div className=" sm:max-w-[320px] w-full">
-          {/* <SelectInput
-            name="date-range"
-            data={filterSelectColumn}
-            placeholder="Filter by date range"
-            labelName=""
-            className="bg-white border p-2 outline-none rounded-md shadow-md  "
-          /> */}
-
-          <select
-            onChange={handleSetColumnTofilter}
-            className="border rounded-md p-2 w-fit"
-          >
-            <option value="">Filter by</option>
-            {filterSelectColumn.map((column, i) => (
-              <option value={column.column} key={i}>
-                {column.value}
-              </option>
-            ))}
-          </select>
-        </div>
+        <select
+          onChange={handleSetColumnTofilter}
+          className="border rounded-md p-2 w-fit"
+        >
+          <option value="">Filter by</option>
+          {filterSelectColumn.map((column, i) => (
+            <option value={column.column} key={i}>
+              {column.value}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="overflow-x-auto flex flex-col w-full h-full">
         <DataTable

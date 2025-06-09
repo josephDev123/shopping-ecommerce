@@ -1,5 +1,5 @@
 import { startDb } from "@/lib/startDb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { NotificationRepo } from "../repository/NotificationRepo";
 import { NotificationModel } from "@/models/Notification";
 import { Notification } from "../service/Notification";
@@ -10,7 +10,7 @@ import {
 } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     await startDb();
     const NotificationRepoImpl = new NotificationRepo(NotificationModel);
@@ -33,6 +33,40 @@ export async function GET(req: NextRequest, res: NextResponse) {
       200,
       result
     );
+  } catch (error) {
+    if (error instanceof GlobalErrorHandler) {
+      if (error.operational) {
+        return ApiResponseHelper(
+          "something went wrong",
+          "NotificationError",
+          true,
+          "error",
+          400
+        );
+      } else {
+        return ApiResponseHelper(
+          error.msg,
+          "NotificationError",
+          false,
+          "error",
+          400
+        );
+      }
+    }
+
+    return ApiResponseHelper(
+      "something went wrong",
+      "NotificationError",
+      false,
+      "error",
+      400
+    );
+  }
+}
+
+export async function PATCH() {
+  try {
+    await startDb();
   } catch (error) {
     if (error instanceof GlobalErrorHandler) {
       if (error.operational) {

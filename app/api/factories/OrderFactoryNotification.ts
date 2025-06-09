@@ -1,14 +1,12 @@
-import { INotification } from "@/models/Notification";
 import { IProcessNotification } from "../service/Notification";
 import { Queue } from "bullmq";
-import { Model } from "mongoose";
 
 export async function OrderFactoryNotification(
   data: IProcessNotification,
   OrderQueue: Queue
 ) {
   const payload: IProcessNotification = {
-    type: "Order",
+    type: data.type,
     label: `${data.from} made Order:`,
     from: data.from,
     to: data.to,

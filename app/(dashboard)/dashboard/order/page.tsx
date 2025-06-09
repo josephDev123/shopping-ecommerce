@@ -8,6 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 import { ClientOrderType } from "@/app/types/ClientOrderType";
 import { useSearchParams } from "next/navigation";
+import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export interface OrderPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -16,20 +17,16 @@ export interface OrderPageProps {
 export default async function page({ searchParams }: OrderPageProps) {
   const session = await getServerSession(authOptions);
 
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/orders/orders?user_id=${
+  const response = await CustomFetch({
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/orders/orders?user_id=${
       session?.user.id
     }&page=${Number(searchParams.page) || 1}&limit=${
       Number(searchParams.limit) || 10
-    }`
-  );
-  const data = await response.json();
-  if (!response.ok) {
-    return "Failed to fetch order data";
-  }
+    }`,
+  });
 
-  const result: ClientOrderType[] = data.data.orders;
-  const totalDocs = data.data.totalOrders;
+  const result: ClientOrderType[] = response.data.orders;
+  const totalDocs = response.data.totalOrders;
 
   // console.log(result);
   return (
@@ -40,12 +37,9 @@ export default async function page({ searchParams }: OrderPageProps) {
         <Navbar searchParams={searchParams} />
       </div>
 
-      {/* <Suspense key={Number(searchParams)} fallback={<p>Loading...</p>}> */}
       <div>
         <OrderPageMainWrapper data={result} totalRows={totalDocs} />
       </div>
-
-      {/* </Suspense> */}
 
       {/* <Suspense key={Number(searchParams)} fallback={<p>Loading...</p>}>
         <FooterPagination

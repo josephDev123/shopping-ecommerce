@@ -5,9 +5,14 @@ import { BasePaymentFactory } from "../factories/BasePayment";
 import { OrderType } from "@/models/OrderModel";
 import mongoose, { Types } from "mongoose";
 import { generateSecureToken } from "@/app/utils/uniqueCryptoCharacter";
+import { OrderFactoryNotification } from "../factories/OrderFactoryNotification";
+import { Queue } from "bullmq";
 
 export class PaymentService {
-  constructor(private readonly paymentRepository: paymentRepository) {}
+  constructor(
+    private readonly paymentRepository: paymentRepository,
+    readonly Queue: Queue
+  ) {}
 
   async create(data: PaymentDataType) {
     let orderId: any;
@@ -25,6 +30,19 @@ export class PaymentService {
       // ]);
 
       let order = await this.paymentRepository.create(formattedPayload);
+      await OrderFactoryNotification(
+        {
+          from: data.user_id,
+          type: "Order",
+          to: data.user_id,
+          data: {
+            id: String(order?._id),
+            name: order?.items[0].productName ?? "",
+            price: order?.items[0].productPrice ?? "",
+          },
+        },
+        this.Queue
+      );
       if (!order?._id) {
         return new GlobalErrorHandler(
           "Order creation failed",

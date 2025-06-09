@@ -39,17 +39,17 @@ export default function TransactionTable({
 
   return (
     <div className="flex flex-col">
-      <div className="flex w-full justify-between items-center my-2">
+      <div className="flex w-full justify-between items-center gap-4 my-2">
         {/* {JSON.stringify(filterableKeys)} */}
         <input
           onChange={handleSearch}
           type="search"
           placeholder={`search ${column}`}
-          className="rounded-md p-2 border outline-none"
+          className="rounded-md p-2 border outline-none sm:w-52 w-full"
         />
         <select
           onChange={handleSetColumnTofilter}
-          className="border rounded-md p-2 w-fit"
+          className="border rounded-md p-2 sm:w-52 w-full"
         >
           <option value="">Filter by</option>
           {filterColumn.map((column, i) => (

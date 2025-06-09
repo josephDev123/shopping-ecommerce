@@ -5,12 +5,12 @@ import { NotificationRepo } from "../repository/NotificationRepo";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
 export type IProcessNotification = {
-  label: string;
+  label?: string;
   type: string;
   from: string;
   to: string;
   read?: false;
-  link: string;
+  link?: string;
   data?: {
     name: string;
     price: string;
@@ -20,7 +20,7 @@ export type IProcessNotification = {
 
 export class Notification {
   type = "";
-  content = "";
+  // content = "";
   from = null;
   to = null;
   read = false;

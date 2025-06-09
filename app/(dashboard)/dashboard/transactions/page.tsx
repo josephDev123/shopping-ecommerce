@@ -2,9 +2,6 @@ import { getServerSession } from "next-auth";
 import FooterPagination from "../../commons/FooterPagination";
 import TransactionTable from "./components/TransactionTable";
 import { authOptions } from "@/lib/NextAuthOption";
-import { TransactionServerResponseType } from "@/app/types/TransactionType";
-import { Suspense } from "react";
-import { TransactionType } from "@/models/FlwTransactionModel";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 import { ITransactionDTO } from "@/app/api/DTO/transactionDTO";
 export interface TransactionPageProps {
@@ -28,14 +25,6 @@ export default async function page({ searchParams }: TransactionPageProps) {
       <h2 className="text-2xl font-bold">Transaction</h2>
 
       <TransactionTable data={result} rowCount={totalTransactionCount} />
-
-      {/* <Suspense fallback={<p>Loading...</p>}>
-        <FooterPagination
-          itemToShow={Number(searchParams.limit) || 2}
-          totalDocs={totalTransactionCount}
-          searchParam={Number(searchParams.page) || 1}
-        />
-      </Suspense>  */}
     </section>
   );
 }
