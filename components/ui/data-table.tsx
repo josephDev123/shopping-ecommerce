@@ -91,7 +91,7 @@ const DataTable = function <TData, TValue, TSubData = unknown>({
   // console.log("Row Model", table.getRowModel().rows.length);
 
   return (
-    <div>
+    <div className="">
       <div className="rounded-md border w-full">
         <Table>
           <TableHeader>
