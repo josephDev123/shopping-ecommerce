@@ -41,7 +41,7 @@ export async function startDb(retryCount = 0): Promise<Mongoose> {
       retryCount++;
       console.warn(`🔁 Retrying DB connection... attempt ${retryCount + 1}`);
       await new Promise((resolve) => setTimeout(resolve, retryDelay));
-      return startDb();
+      return startDb(retryCount);
     }
     console.error("❌ Database connection failed after retries:", error);
     throw new Error("Failed to connect to the database after retries.");

@@ -5,11 +5,11 @@ import Link from "next/link";
 import { BiLogOut } from "react-icons/bi";
 import { Images } from "@/app/Images";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { TbBrandProducthunt } from "react-icons/tb";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 import Logout from "./Logout";
 import Image from "next/image";
+import EmptyAvatar from "./EmptyAvatar";
 
 export default async function LeftPanel() {
   const session = await getServerSession(authOptions);
@@ -57,13 +57,14 @@ export default async function LeftPanel() {
         <Logout />
 
         <div className="flex gap-3 items-center justify-center">
-          <img
+          <EmptyAvatar name={session?.user.name!} />
+          {/* <img
             src={Images.avatar}
             width={25}
             height={25}
             loading="lazy"
             className="bg-white/25 rounded-full"
-          />
+          /> */}
           <div className="flex flex-col mb-2">
             <h2 className="text-sm truncate">{session?.user.name}</h2>
             <Link aria-disabled={true} href={""} className="text-xs">

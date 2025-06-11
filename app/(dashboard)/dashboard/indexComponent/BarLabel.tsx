@@ -17,7 +17,7 @@ export default function BarLabel({
       <label className="sm:text-base text-sm font-semibold">{label}</label>
       <div
         style={{ width: `${barWidth}%` }}
-        className={`relative bg-gray-600 rounded-full h-4 overflow-hidden ${className}`}
+        className={` bg-gray-600 rounded-full h-4 overflow-hidden relative ${className}`}
       >
         <span
           title={`${progressBar}%`}

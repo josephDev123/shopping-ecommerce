@@ -24,7 +24,7 @@ export default function TopNavbar() {
   const state = useAppSelector((state) => state.leftPanelState);
 
   return (
-    <section className="w-full h-[10%] sm:p-4 p-2 flex justify-between border-b-2 border-slate-300 items-center sticky top-0">
+    <section className="w-full h-[10%] sm:p-4 p-2 flex justify-between border-b-2 border-slate-300 items-center sticky z-50 top-0">
       <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-2">
         <p className="sm:text-xl sm:w-40 w-28 text-base font-bold self-center text-ellipsis truncate text-nowrap">
           {status === "loading" ? (
@@ -48,16 +48,7 @@ export default function TopNavbar() {
           Home
         </Link>
         <IoIosNotifications className="text-xl cursor-pointer" />
-        {/* <span className="relative sm:w-auto border rounded-md">
-          <input
-            type="text"
-            name="search"
-            id=""
-            placeholder="Search here ..."
-            className="sm:p-2 p-1 outline-none sm:w-72 w-32 sm:placeholder:text-inherit placeholder:text-sm "
-          />
-          <CiSearch className="absolute top-3 right-2 sm:text-xl text-sm" />
-        </span> */}
+
         <HamburgerToggle />
       </div>
       <AnimatePresence>

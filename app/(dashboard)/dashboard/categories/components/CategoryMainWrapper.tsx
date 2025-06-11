@@ -30,7 +30,7 @@ export default function CategoryMainWrapper({
 
   return (
     <section className="flex flex-col w-full">
-      <div className="flex sm:flex-row flex-col justify-between  items-start gap-4 my-4">
+      <div className="flex sm:flex-row flex-col justify-between  items-start gap-4 mb-2">
         <Input
           name="categorySearch"
           type="search"

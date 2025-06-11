@@ -11,7 +11,7 @@ export default function LatestOrderContainer({
   ColumnData,
 }: ILatestOrderContainer) {
   return (
-    <section className="w-full overflow-x-auto">
+    <section className="w-full overflow-x-auto z-10">
       <DataTable
         data={ColumnData}
         columns={latestOrdersColumn}

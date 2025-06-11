@@ -26,7 +26,7 @@ export default async function page({ searchParams }: OrderPageProps) {
   return (
     <section className="flex flex-col p-2 h-full">
       {/* {JSON.stringify(session)} */}
-      <h1 className="font-bold text-xl my-2">Category </h1>
+      <h1 className="font-bold text-xl ">Category </h1>
 
       <Suspense fallback={<p>Loading...</p>}>
         <CategoryMainSection data={result} totalRows={totalCategories} />
