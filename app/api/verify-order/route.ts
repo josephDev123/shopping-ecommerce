@@ -41,12 +41,12 @@ export async function GET(req: NextRequest) {
         status: verifyResponse?.data.status,
         payment_type: verifyResponse?.data.payment_type,
       };
-      const transaction = new TransactionModel({
-        orderId: OrderDetails._id,
-        paymentDetails,
-      });
+      // const transaction = new TransactionModel({
+      //   orderId: OrderDetails._id,
+      //   paymentDetails,
+      // });
 
-      await transaction.save();
+      // await transaction.save();
 
       return Response.json(
         {

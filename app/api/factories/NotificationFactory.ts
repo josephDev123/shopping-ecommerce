@@ -1,6 +1,22 @@
 import { IProcessNotification } from "../service/Notification";
 import { Queue } from "bullmq";
 
+export class NotificationFactoryParent {
+  constructor(private readonly Queue: Queue) {}
+
+  async process(data: IProcessNotification) {
+    switch (data.type) {
+      case "Order":
+        OrderFactoryNotification(data, this.Queue);
+        break;
+
+      default:
+        console.log("No notification for this");
+        break;
+    }
+  }
+}
+
 export async function OrderFactoryNotification(
   data: IProcessNotification,
   OrderQueue: Queue

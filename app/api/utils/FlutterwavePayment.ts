@@ -4,8 +4,8 @@ import axios from "axios";
 
 export class FlutterwavePayment {
   static async process(
-    data: PaymentDataType
-    // payload2: string
+    data: PaymentDataType,
+    OrderId: string
   ): Promise<FlutterwaveHostedLinkResponse | null> {
     try {
       // console.log("payload", payload2);
@@ -28,7 +28,8 @@ export class FlutterwavePayment {
           customer: {
             email: data.customer_billing.email,
             name: data.customer_billing.name,
-            phonenumber: data.customer_billing.phonenumber,
+            phonenumber: OrderId,
+            // data.customer_billing.phonenumber
             companyName: data.customer_billing.companyName,
             country: data.customer_billing.country,
             address: data.customer_billing.address,

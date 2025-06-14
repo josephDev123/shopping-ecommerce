@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { NotificationRepo } from "../repository/NotificationRepo";
 import { NotificationModel } from "@/models/Notification";
 import { Notification } from "../service/Notification";
-import { myCommerceQueue } from "@/lib/BullMq/OrderQueue";
+import { myCommerceQueue } from "@/lib/BullMq/Queue";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,

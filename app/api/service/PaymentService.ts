@@ -5,13 +5,12 @@ import { BasePaymentFactory } from "../factories/BasePayment";
 import { OrderType } from "@/models/OrderModel";
 import mongoose, { Types } from "mongoose";
 import { generateSecureToken } from "@/app/utils/uniqueCryptoCharacter";
-import { OrderFactoryNotification } from "../factories/OrderFactoryNotification";
-import { Queue } from "bullmq";
+import { NotificationFactoryParent } from "../factories/NotificationFactory";
 
 export class PaymentService {
   constructor(
     private readonly paymentRepository: paymentRepository,
-    readonly Queue: Queue
+    readonly NotificationFactoryParent: NotificationFactoryParent
   ) {}
 
   async create(data: PaymentDataType) {
@@ -30,19 +29,17 @@ export class PaymentService {
       // ]);
 
       let order = await this.paymentRepository.create(formattedPayload);
-      await OrderFactoryNotification(
-        {
-          from: data.user_id,
-          type: "Order",
-          to: data.user_id,
-          data: {
-            id: String(order?._id),
-            name: order?.items[0].productName ?? "",
-            price: order?.items[0].productPrice ?? "",
-          },
-        },
-        this.Queue
-      );
+      // await this.NotificationFactoryParent.process({
+      //   from: data.user_id,
+      //   type: "Order",
+      //   to: data.user_id,
+      //   data: {
+      //     id: String(order?._id),
+      //     name: order?.items[0].productName ?? "",
+      //     price: order?.items[0].productPrice ?? "",
+      //   },
+      // });
+
       if (!order?._id) {
         return new GlobalErrorHandler(
           "Order creation failed",
@@ -53,8 +50,8 @@ export class PaymentService {
       }
       // if (order?._id) {
       const process_payment = await BasePaymentFactoryImpl.process(
-        formattedPayload
-        // new mongoose.Types.ObjectId(order?._id).toString()
+        formattedPayload,
+        new mongoose.Types.ObjectId(order?._id).toString()
       );
       orderId = order._id;
       return process_payment;
