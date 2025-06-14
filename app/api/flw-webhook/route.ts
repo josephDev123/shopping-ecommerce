@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SuccessApiResponseHelper } from "../utils/ApiResponseHelper";
+// import { SuccessApiResponseHelper } from "../utils/ApiResponseHelper";
 import Flutterwave from "flutterwave-node-v3";
 // import Flw_Transaction from "@/models/FlwTransactionModel";
 import { startDb } from "@/lib/startDb";
@@ -50,8 +50,7 @@ export async function POST(req: NextRequest) {
     console.log(signature);
     if (!signature || signature !== secretHash) {
       // This request isn't from Flutterwave; discard
-      NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-      return;
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     // verify the transaction  after the webhook
