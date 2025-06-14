@@ -1,6 +1,6 @@
-import { Queue } from "bullmq";
-import { connection } from "../redisConn";
+// import { Queue } from "bullmq";
+// // import { connection } from "../redisConn";
 
-export const myCommerceQueue = new Queue("commerce", {
-  connection: connection,
-});
+// export const myCommerceQueue = new Queue("commerce", {
+//   connection: connection,
+// });

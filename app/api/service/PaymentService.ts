@@ -9,9 +9,9 @@ import { NotificationFactoryParent } from "../factories/NotificationFactory";
 
 export class PaymentService {
   constructor(
-    private readonly paymentRepository: paymentRepository,
-    readonly NotificationFactoryParent: NotificationFactoryParent
-  ) {}
+    private readonly paymentRepository: paymentRepository
+  ) // readonly NotificationFactoryParent: NotificationFactoryParent
+  {}
 
   async create(data: PaymentDataType) {
     let orderId: any;
