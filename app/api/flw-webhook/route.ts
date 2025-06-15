@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
     const payload: PaymentEvent = await req.json();
     console.log(payload);
-    const secretHash = process.env.FLU_VERIFY_HASH;
+    const secretHash = process.env.FLU_WEBHOOK_HASH!;
     const signature = req.headers.get("verif-hash");
     console.log("flw sgnature", signature);
     console.log("secret flw hash", secretHash);
