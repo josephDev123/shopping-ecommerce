@@ -47,8 +47,6 @@ export async function POST(req: NextRequest) {
     console.log(payload);
     const secretHash = process.env.FLU_WEBHOOK_HASH!;
     const signature = req.headers.get("verif-hash");
-    console.log("flw sgnature", signature);
-    console.log("secret flw hash", secretHash);
 
     if (!signature || signature !== secretHash) {
       // This request isn't from Flutterwave; discard
@@ -110,6 +108,8 @@ export async function POST(req: NextRequest) {
       //   },
       // };
 
+      console.log("verify api", response);
+      console.log("webhook payload", payload);
       const paymentDetails: PaymentDetails = {
         amount: payload?.data.amount,
         currency: payload?.data.currency,

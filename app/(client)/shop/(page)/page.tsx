@@ -6,6 +6,8 @@ import ProductListSection from "./components/ProductListSection";
 import ItemLimit from "./components/ItemLimit";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 import ShopFilter from "./components/ShopFilter";
+import Container from "./components/container";
+import { ProductDataType } from "@/app/types/productsType";
 
 export default async function page({
   searchParams,
@@ -24,31 +26,15 @@ export default async function page({
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`,
   });
 
-  const data = result.data.products;
-  const totalDoc = result?.data?.totalDoc;
-  // console.log("real data:", data);
+  const data: ProductDataType[] = result.data.products;
+  const totalDoc = result?.data?.totalDoc as number;
+  console.log("real data:", data);
 
   return (
     <section className="flex flex-col h-full">
       <Banner title="Shop" links={links} />
-      <div className="flex sm:flex-row gap-2 flex-col sm:items-center justify-around bg-[#F9F1E7] h-fit py-1 px-3">
-        <div className="flex md:flex-row sm:flex-col flex-row gap-2 items-start justify-start sm:order-1 order-2 min-[375px]:text-base text-sm">
-          <ShopFilter />
-
-          <p className="">
-            Showing {page}–{page * limit} of {result?.data?.totalDoc || 0}{" "}
-            results
-          </p>
-        </div>
-
-        <ItemLimit />
-      </div>
-
-      {/* <Suspense fallback={<Loading />}> */}
-      <ProductListSection data={data} itemsNumber={totalDoc} limit={limit} />
-      {/* </Suspense> */}
-
-      <ThingsToEnjoy />
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      <Container data={data} limit={limit} page={page} totalDoc={totalDoc} />
     </section>
   );
 }

@@ -2,10 +2,10 @@
 import ProductCard from "@/app/(client)/generic/ProductCard";
 import { ProductDataType, ProductResponseType } from "@/app/types/productsType";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 interface ProductListSectionProps {
-  data: any[];
+  data: ProductDataType[];
   itemsNumber: number;
   limit: number;
 }
@@ -14,9 +14,10 @@ export default function ProductListSection({
   itemsNumber,
   limit,
 }: ProductListSectionProps) {
-  console.log("from product list", data);
+  // console.log("from product list", data);
+
+  const [result, setResult] = useState([]);
   // console.log("page and limit", );
-  const totalPages = itemsNumber / 4;
 
   return (
     <>

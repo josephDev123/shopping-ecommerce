@@ -10,26 +10,26 @@ export const productCategory = [
   {
     id: "dhdgdddhwhwwwu",
     imgurl: Images.productCat1,
-    category_name: "electronic",
+    category_name: "Health & Beauty",
   },
   {
     id: "kjsdfhlsdflskdf",
     imgurl: Images.productCat2,
-    category_name: "fashion",
+    category_name: "Crafts & Handmade",
   },
   {
     id: "sldkfjsldkfjsldk",
     imgurl: Images.productCat3,
-    category_name: "home",
+    category_name: "Travel & Events",
   },
   {
     id: "lsdkfjlskdjflskdj",
     imgurl: Images.productCat1,
-    category_name: "beauty",
+    category_name: "Fashion",
   },
   {
     id: "alskdjflskdjflsdk",
     imgurl: Images.productCat2,
-    category_name: "sports",
+    category_name: "Food & Beverage",
   },
 ];
