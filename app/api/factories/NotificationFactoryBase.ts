@@ -1,7 +1,7 @@
 import { IProcessNotification } from "../service/Notification";
 import { Queue } from "bullmq";
 
-export class NotificationFactoryParent {
+export class NotificationFactoryBase {
   constructor(private readonly Queue: Queue) {}
 
   async process(data: IProcessNotification) {
@@ -26,7 +26,7 @@ export async function OrderFactoryNotification(
     label: `${data.from} made Order:`,
     from: data.from,
     to: data.to,
-    link: `${process.env.NEXT_PUBLIC_BASEURL}/shop/${data.data?.id}`,
+    link: `${process.env.SERVER_BASEURL}/shop/${data.data?.id}`,
     data: {
       name: data.data?.name!,
       price: data.data?.price!,

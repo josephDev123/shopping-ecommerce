@@ -9,11 +9,13 @@ export class TextSearchRepo {
       const pipeline = [
         {
           $search: {
-            index: "default",
+            index: "commerce-product",
             text: {
               query: text,
-              path: {
-                wildcard: "*",
+              path: ["productName", "Description", "productCategory"],
+              fuzzy: {
+                maxEdits: 2, // Allow up to 2 edits (insertions, deletions, substitutions)
+                // prefixLength: 2, // Require the first 2 characters to match exactly
               },
             },
           },
@@ -30,10 +32,10 @@ export class TextSearchRepo {
             productName: 1,
             Description: 1,
             productCategory: 1,
-            productTag: 1,
-            productPrice: 1,
-            productDiscount: 1,
-            productSKU: 1,
+            // productTag: 1,
+            // productPrice: 1,
+            // productDiscount: 1,
+            // productSKU: 1,
           },
         },
       ];

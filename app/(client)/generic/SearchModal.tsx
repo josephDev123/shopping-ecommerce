@@ -4,6 +4,7 @@ import { SearchResultType } from "@/app/types/searchResultType";
 import React, { useCallback, useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import { motion, AnimatePresence } from "motion/react";
+import { useRouter } from "next/navigation";
 
 interface SearchModalProps {
   closeModal: () => void;
@@ -20,6 +21,8 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "error" | "data">(
     "idle"
   );
+  console.log(SearchResult);
+  const router = useRouter();
 
   useEffect(() => {
     const timeId = setTimeout(() => {
@@ -46,6 +49,7 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
         }
       );
       const data = await response.json();
+      console.log(data.data);
       const result: SearchResultType[] = data.data;
       setSearchResult(result);
       setStatus("data");
@@ -91,7 +95,7 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
           transition={{ duration: 0.4 }}
           className="fixed inset-0 h-full w-full flex flex-col items-center justify-center bg-black/50"
         >
-          <div className="bg-white flex flex-col  rounded-md sm:w-[400px] w-[90%] drop-shadow-md p-3">
+          <div className="bg-white flex flex-col  rounded-md sm:w-[400px] w-[90%] h-96 overflow-y-auto drop-shadow-md p-3">
             <div className="flex justify-between items-center ">
               <input
                 type="search"
@@ -126,7 +130,11 @@ export default function SearchModal({ closeModal, isOpen }: SearchModalProps) {
                     ? SearchResult?.map((item) => (
                         <div
                           key={item._id}
-                          className="flex flex-col gap-2 p-2 hover:bg-gray-100"
+                          onClick={() => {
+                            closeModal();
+                            router.push(`/shop/${item._id}`);
+                          }}
+                          className="flex flex-col gap-2 p-2 hover:bg-gray-100 cursor-pointer"
                         >
                           <p className="font-medium">{item.productName}</p>
                           <p className="text-sm text-gray-500">

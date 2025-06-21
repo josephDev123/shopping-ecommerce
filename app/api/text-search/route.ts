@@ -10,8 +10,13 @@ export async function POST(req: NextRequest) {
     const TextSearchRepoImpl = new TextSearchRepo(ProductModel);
     const TextSearchServiceImpl = new TextSearchService(TextSearchRepoImpl);
     const body = await req.json();
-    // console.log("from body", body);
     const text = body.search;
+    if (!text || text.trim() === "") {
+      return NextResponse.json(
+        { error: "Search text cannot be empty" },
+        { status: 400 }
+      );
+    }
     const page = 1;
     const limit = 5;
     const response = await TextSearchServiceImpl.searchImpl(text, page, limit);

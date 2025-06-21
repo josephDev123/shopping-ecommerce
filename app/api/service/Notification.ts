@@ -1,5 +1,5 @@
 import { Queue } from "bullmq";
-import { OrderFactoryNotification } from "../factories/NotificationFactory";
+import { OrderFactoryNotification } from "../factories/NotificationFactoryBase";
 import mongoose from "mongoose";
 import { NotificationRepo } from "../repository/NotificationRepo";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";

@@ -1,6 +1,6 @@
-// // import { Worker } from "bullmq";
-// // import { NotificationModel } from "@/models/Notification";
-// // import { connection } from "../redisConn";
+// // // import { Worker } from "bullmq";
+// // // import { NotificationModel } from "@/models/Notification";
+// // // import { connection } from "../redisConn";
 
 // type IProcessNotification = {
 //   label?: string;
@@ -60,12 +60,12 @@
 //   console.error("worker error:", err);
 // });
 
-// // worker.on("progress", (job: Job, progress: number | object) => {
-// //   // Do something with the return value.
-// //   console.error("worker progress job:", progress);
-// // });
+// worker.on("progress", (job: Job, progress: number | object) => {
+//   // Do something with the return value.
+//   console.error("worker progress job:", progress);
+// });
 
-// // worker.on("completed", (job: Job, returnvalue: any) => {
-// //   // Do something with the return value.
-// //   console.error("worker complete job:", job);
-// // });
+// worker.on("completed", (job: Job, returnvalue: any) => {
+//   // Do something with the return value.
+//   console.error("worker complete job:", job);
+// });

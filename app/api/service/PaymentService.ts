@@ -5,13 +5,13 @@ import { BasePaymentFactory } from "../factories/BasePayment";
 import { OrderType } from "@/models/OrderModel";
 import mongoose, { Types } from "mongoose";
 import { generateSecureToken } from "@/app/utils/uniqueCryptoCharacter";
-import { NotificationFactoryParent } from "../factories/NotificationFactory";
+import { NotificationFactoryBase } from "../factories/NotificationFactoryBase";
 
 export class PaymentService {
   constructor(
-    private readonly paymentRepository: paymentRepository
-  ) // readonly NotificationFactoryParent: NotificationFactoryParent
-  {}
+    private readonly paymentRepository: paymentRepository,
+    readonly NotificationFactoryBase: NotificationFactoryBase
+  ) {}
 
   async create(data: PaymentDataType) {
     let orderId: any;
@@ -29,16 +29,16 @@ export class PaymentService {
       // ]);
 
       let order = await this.paymentRepository.create(formattedPayload);
-      // await this.NotificationFactoryParent.process({
-      //   from: data.user_id,
-      //   type: "Order",
-      //   to: data.user_id,
-      //   data: {
-      //     id: String(order?._id),
-      //     name: order?.items[0].productName ?? "",
-      //     price: order?.items[0].productPrice ?? "",
-      //   },
-      // });
+      await this.NotificationFactoryBase.process({
+        from: data.user_id,
+        type: "Order",
+        to: data.user_id,
+        data: {
+          id: String(order?._id),
+          name: order?.items[0].productName ?? "",
+          price: order?.items[0].productPrice ?? "",
+        },
+      });
 
       if (!order?._id) {
         return new GlobalErrorHandler(
@@ -56,8 +56,6 @@ export class PaymentService {
       orderId = order._id;
       return process_payment;
       // }
-
-      console.log(order?._id);
     } catch (error) {
       console.log(error);
       if (orderId?._id) {
