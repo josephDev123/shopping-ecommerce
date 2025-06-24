@@ -1,12 +1,13 @@
 import { startDb } from "@/lib/startDb";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { DashboardService } from "../service/DashboardOverviewService";
 import { DashboardOverviewRepo } from "../repository/DashboardOverviewRepo";
 import OrderModel from "@/models/OrderModel";
 import { TransactionModel } from "@/models/TransactionModel";
+import { AuthMiddleware } from "@/app/utils/AuthMiddleware";
 
 export const dynamic = "force-dynamic";
-export async function GET(req: NextRequest) {
+async function Overview(req: NextRequest) {
   await startDb();
   try {
     const payload = req.nextUrl.searchParams;
@@ -27,3 +28,5 @@ export async function GET(req: NextRequest) {
     return Response.json(`${error}`, { status: 500 });
   }
 }
+
+export const GET = Overview;

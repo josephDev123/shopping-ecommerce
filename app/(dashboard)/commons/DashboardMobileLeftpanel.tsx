@@ -86,7 +86,7 @@ export default function DashboardMobileLeftpanel() {
                 icon={<BiLogOut className="" />}
                 text="Logout"
                 path="login"
-                className="bg-gray-600/30 w-fit"
+                className="bg-gray-600/30 w-fit border-2 border-green-400"
               />
 
               <div className="flex gap-3 relative">
@@ -105,9 +105,15 @@ export default function DashboardMobileLeftpanel() {
                   ) : (
                     <h2 className="text-sm truncate">{session?.user.name}</h2>
                   )}
-                  <Link href={""} className="text-xs">
+                  <button
+                    onClick={() => {
+                      navigate.push("/dashboard/profile");
+                      dispatch(toggleLeftPanel());
+                    }}
+                    className="text-xs text-green-500"
+                  >
                     View profile
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>

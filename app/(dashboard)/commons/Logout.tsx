@@ -9,7 +9,7 @@ export default function Logout() {
     <button
       type="button"
       onClick={() => signOut({ redirect: true })}
-      className={`flex items-center gap-2  p-2 rounded-md hover:bg-gray-950`}
+      className={`flex items-center gap-2  p-2 rounded-md hover:bg-gray-950 border-2 border-green-400 `}
     >
       <BiLogOut className="" />
       Logout

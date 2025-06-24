@@ -67,7 +67,11 @@ export default async function LeftPanel() {
           /> */}
           <div className="flex flex-col mb-2">
             <h2 className="text-sm truncate">{session?.user.name}</h2>
-            <Link aria-disabled={true} href={"/dashboard"} className="text-xs">
+            <Link
+              aria-disabled={true}
+              href={"/dashboard/profile"}
+              className="text-xs text-green-500"
+            >
               View profile
             </Link>
           </div>
