@@ -136,7 +136,7 @@ export default function Login() {
             >
               <p className="w-full">Login</p>
               {isSubmitting && (
-                <FaSpinner className="animate-spin h-8 w-8 ms-auto" />
+                <FaSpinner className="animate-spin h-6 w-6 ms-auto" />
               )}
             </button>
             <div className="flex justify-center text-gray-500 ">

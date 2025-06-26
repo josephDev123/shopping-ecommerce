@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
           const User_Repo = new UserRepo(UserModel);
           const User_service = new UserService(User_Repo);
           const User = await User_service.FindByEmailService(email);
-          console.log("from create", User);
+          // console.log("from create", User);
           if (User) {
             return {
               id: User._id.toString(),

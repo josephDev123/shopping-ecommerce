@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 type revalidate = number | undefined;
 type Cache = RequestCache | undefined;
 
@@ -13,17 +15,20 @@ export async function CustomFetch({
   revalidate,
 }: //   cache = "force-cache",
 CustomFetchOptions) {
+  const cookieStore = cookies(); // ✅ get user's cookies from the request
+  const cookieHeader = cookieStore.toString();
+
   try {
     const response = await fetch(url, {
+      headers: {
+        Cookie: cookieHeader,
+      },
       next: { revalidate },
       //   cache: cache,
     });
 
     const parseResult = await response.json();
     if (!response.ok) {
-      // Handle errors
-      // console.error(`Error: ${response.status} - ${response.statusText}`);
-
       throw new Error(`Error: ${response.status} - ${response.statusText}`);
     }
 

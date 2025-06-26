@@ -5,9 +5,13 @@ import { DashboardOverviewRepo } from "../repository/DashboardOverviewRepo";
 import OrderModel from "@/models/OrderModel";
 import { TransactionModel } from "@/models/TransactionModel";
 import { AuthMiddleware } from "@/app/utils/AuthMiddleware";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/NextAuthOption";
 
 export const dynamic = "force-dynamic";
 async function Overview(req: NextRequest) {
+  // const sessions = await getServerSession(authOptions);
+  // console.log("Sessssion:", sessions);
   await startDb();
   try {
     const payload = req.nextUrl.searchParams;
@@ -29,4 +33,4 @@ async function Overview(req: NextRequest) {
   }
 }
 
-export const GET = Overview;
+export const GET = AuthMiddleware(Overview);

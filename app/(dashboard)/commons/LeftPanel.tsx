@@ -2,8 +2,6 @@ import React from "react";
 import LeftPanelItemCard from "./LeftPanelItemCard";
 import { leftPanelItem } from "../dashboard/data/leftPanelData";
 import Link from "next/link";
-import { BiLogOut } from "react-icons/bi";
-import { Images } from "@/app/Images";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
@@ -53,6 +51,7 @@ export default async function LeftPanel() {
           path="/product-list"
         /> */}
       </div>
+
       <div className="mt-auto flex flex-col space-y-8 w-full">
         <Logout />
 
