@@ -86,7 +86,7 @@ export default function DashboardMobileLeftpanel() {
                 icon={<BiLogOut className="" />}
                 text="Logout"
                 path="login"
-                className="bg-gray-600/30 w-fit border-2 border-green-400"
+                className="bg-gray-600/30 w-fit border border-green-400"
               />
 
               <div className="flex gap-3 relative">
