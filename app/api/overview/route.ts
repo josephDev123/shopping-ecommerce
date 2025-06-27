@@ -4,7 +4,7 @@ import { DashboardService } from "../service/DashboardOverviewService";
 import { DashboardOverviewRepo } from "../repository/DashboardOverviewRepo";
 import OrderModel from "@/models/OrderModel";
 import { TransactionModel } from "@/models/TransactionModel";
-import { AuthMiddleware } from "@/app/utils/AuthMiddleware";
+import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 
@@ -33,4 +33,4 @@ async function Overview(req: NextRequest) {
   }
 }
 
-export const GET = AuthMiddleware(Overview);
+export const GET = RouteHandlerMiddleware(Overview);

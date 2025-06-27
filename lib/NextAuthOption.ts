@@ -67,7 +67,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", maxAge: 60 * 60 * 24 },
   callbacks: {
     async jwt({ token, user, account, profile }) {
       if (account?.provider === "google") {
