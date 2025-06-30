@@ -14,7 +14,9 @@ export default function Banner({ title, links, bgImg }: IBanner) {
     <section
       className={`h-[320px] w-full  flex flex-col justify-center items-center ${bannerImage.bg}`}
     >
-      <h1 className="text-3xl font-bold mb-1">{title}</h1>
+      <h1 className="text-3xl font-bold mb-1 bg-[#3A3C32] py-1 px-3 rounded-md text-[#BA8601]">
+        {title}
+      </h1>
       <ActiveInLineLink items={links} />
     </section>
   );

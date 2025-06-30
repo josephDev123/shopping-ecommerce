@@ -21,7 +21,6 @@ export default async function page() {
   ]);
 
   return (
-    // <Suspense fallback={<Loading />}>
     <section className="">
       <Hero />
       {/* {JSON.stringify(process.env.NEXT_PUBLIC_BASEURL, null, 2)} */}
@@ -29,6 +28,5 @@ export default async function page() {
 
       <OurProducts data={products.data?.products} />
     </section>
-    // </Suspense>
   );
 }
