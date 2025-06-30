@@ -16,7 +16,7 @@ export default function ActiveInLineLink({ items }: IActiveInLineLink) {
   const pathname = usePathname();
   console.log(pathname);
   return (
-    <ul className="flex items-center justify-center gap-1">
+    <ul className="flex items-center justify-center gap-1 text-white">
       {items.map((item, i) => (
         <span key={i}>
           <li className={`${pathname === item.url ? "" : "font-bold"}`}>

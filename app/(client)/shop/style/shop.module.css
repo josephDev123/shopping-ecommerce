@@ -1,5 +1,6 @@
 .bg {
-  background-image: url("/png/shopPageBanner.png");
+  /* background-image: url("/png/shopPageBanner.png"); */
+  background-image: url("/jpeg/hero2.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
