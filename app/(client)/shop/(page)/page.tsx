@@ -2,7 +2,7 @@ import Banner from "../../generic/Banner";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 import Container from "./components/container";
 import { ProductDataType } from "@/app/types/productsType";
-import { getSearchCategory } from "@/app/serverActions/getSearchCategory";
+import { getCategoryToFilter } from "@/app/serverActions/getSearchCategory";
 import { ICategoriesResponse } from "@/app/types/ICategory";
 
 export default async function page({
@@ -26,7 +26,7 @@ export default async function page({
   const totalDoc = result?.data?.totalDoc as number;
   console.log("real data:", data);
 
-  const filterByCategory = await getSearchCategory();
+  const filterByCategory = await getCategoryToFilter();
   const CategoriesResponse: ICategoriesResponse = filterByCategory.data;
   const extractCategoryName =
     CategoriesResponse?.categoriesGroup?.map((cat) => cat._id) || [];

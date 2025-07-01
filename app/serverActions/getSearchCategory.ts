@@ -1,6 +1,6 @@
 // "use  server";
 
-export async function getSearchCategory() {
+export async function getCategoryToFilter() {
   const response = await fetch(
     `${process.env.SERVER_BASEURL}/api/category?page=1&limit=8`
   );
