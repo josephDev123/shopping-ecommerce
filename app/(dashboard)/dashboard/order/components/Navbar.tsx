@@ -15,14 +15,6 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
         Pending
       </Link>
       <Link
-        href={"/dashboard/order?status=confirmed"} //confirmed
-        className={`${
-          searchParams.status === "confirmed" && "border-b-4 border-blue-600"
-        }`}
-      >
-        Confirmed
-      </Link>
-      <Link
         href={"/dashboard/order?status=processing"}
         className={`${
           searchParams.status === "processing" && "border-b-4 border-blue-600"
@@ -54,6 +46,15 @@ export default function Navbar({ searchParams }: OrderPageNavProps) {
       >
         Delivered
       </Link>
+      <Link
+        href={"/dashboard/order?status=confirmed"} //confirmed
+        className={`${
+          searchParams.status === "confirmed" && "border-b-4 border-blue-600"
+        }`}
+      >
+        Confirmed
+      </Link>
+
       <Link
         href={"/dashboard/order?status=cancelled"}
         className={`${

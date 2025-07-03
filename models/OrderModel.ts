@@ -24,11 +24,11 @@ export type Payment = {
 
 export const Order_progress = [
   "Pending",
-  "Confirmed",
-  "Processed",
+  "Processing",
   "Picked",
   "Shipped",
   "Delivered",
+  "Confirmed",
   "Cancelled",
 ];
 

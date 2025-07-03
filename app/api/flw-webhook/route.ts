@@ -4,6 +4,7 @@ import Flutterwave from "flutterwave-node-v3";
 // import Flw_Transaction from "@/models/FlwTransactionModel";
 import { startDb } from "@/lib/startDb";
 import { PaymentDetails, TransactionModel } from "@/models/TransactionModel";
+import OrderModel from "@/models/OrderModel";
 
 export async function POST(req: NextRequest) {
   try {
@@ -123,10 +124,14 @@ export async function POST(req: NextRequest) {
 
       console.log("flw webhook ", payload);
 
-      // const transaction = new Flw_Transaction(payload);
-      // await transaction.save();
+      //update the order order  status
+      await OrderModel.updateOne(
+        { tx_ref: payload.data.flw_ref },
+        { $set: { order_status: "Processing" } }
+      );
+
       const transaction = new TransactionModel({
-        orderId: payload.data.customer.phone_number,
+        orderId: payload.data.customer.phone_number, //i passed the order id into the phone number field when  creating checkout with flw
         paymentDetails,
       });
 
