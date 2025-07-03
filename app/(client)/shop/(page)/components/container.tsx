@@ -13,9 +13,16 @@ interface IContainer {
   limit: number;
   totalDoc: number;
   data: ProductDataType[];
+  categories: string[];
 }
 
-export default function Container({ data, limit, page, totalDoc }: IContainer) {
+export default function Container({
+  data,
+  limit,
+  page,
+  totalDoc,
+  categories,
+}: IContainer) {
   const searchParams = useSearchParams();
   const size = searchParams.get("size") ?? "";
   const price = searchParams.get("price") ?? 0;
@@ -37,7 +44,7 @@ export default function Container({ data, limit, page, totalDoc }: IContainer) {
     <section className="flex flex-col">
       <div className="flex sm:flex-row gap-2 flex-col sm:items-center justify-around bg-[#F9F1E7] h-fit py-1 px-3">
         <div className="flex md:flex-row sm:flex-col flex-row gap-2 items-start justify-start sm:order-1 order-2 min-[375px]:text-base text-sm">
-          <ShopFilter />
+          <ShopFilter categories={categories} />
 
           <p className="">
             Showing {page}–{page * limit} of {totalDoc || 0} results

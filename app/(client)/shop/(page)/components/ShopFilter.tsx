@@ -1,7 +1,6 @@
 "use client";
 
 import AnimateInPanel from "@/app/(client)/generic/AnimateInPanel";
-import { productCategory } from "@/app/data/productCategory";
 import { sizes } from "@/app/data/size";
 import FilterIcons from "@/app/svgComponent/FilterIcons";
 import Link from "next/link";
@@ -10,7 +9,7 @@ import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GoHorizontalRule } from "react-icons/go";
 
-export default function ShopFilter() {
+export default function ShopFilter({ categories }: { categories: string[] }) {
   const [visible, setVisible] = useState<"hidden" | "visible">("hidden");
   const searchParams = useSearchParams();
 
@@ -39,6 +38,9 @@ export default function ShopFilter() {
     params.set(key, value);
     router.push(`?${params.toString()}`, { scroll: false });
   };
+
+  const handleFetchMoreCategory = () => {};
+
   return (
     <>
       <span
@@ -47,8 +49,7 @@ export default function ShopFilter() {
       >
         <FilterIcons />
         <span className="font-bold">Filter</span>
-        {/* <PiDotsSixBold className="text-xl font-bold" /> */}
-        {/* <BiviewList /> */}
+
         <GoHorizontalRule className="rotate-90" />
       </span>
 
@@ -74,18 +75,24 @@ export default function ShopFilter() {
           <div className="flex flex-col gap-4 mt-4">
             <p className="">Category</p>
             <div className="inline-flex gap-2 items-center flex-wrap">
-              {productCategory.map((category, index) => (
+              {categories.map((category, index) => (
                 <button
-                  onClick={() =>
-                    updateSearchParam("category", category.category_name)
-                  }
+                  onClick={() => updateSearchParam("category", category)}
                   key={index}
                   type="button"
                   className="border rounded-md p-1 hover:bg-gray-200 text-black/55"
                 >
-                  {category.category_name}
+                  {category}
                 </button>
               ))}
+              <button
+                disabled
+                onClick={handleFetchMoreCategory}
+                type="button"
+                className="rounded-md py-1 px-2 bg-yellow-500 cursor-not-allowed"
+              >
+                more
+              </button>
             </div>
           </div>
 

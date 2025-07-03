@@ -19,10 +19,8 @@ export default async function Page({ params }: { params: param }) {
 
   return (
     <section className="flex flex-col w-full h-full">
-      {/* <pre>{JSON.stringify(process.env.NEXT_PUBLIC_BASEURL, null, 2)}</pre>
-      <pre>{JSON.stringify(params, null, 2)}</pre>
-      <pre>{JSON.stringify(result, null, 2)}</pre> */}
-      {/* {params.slug} */}
+      {/* <pre>{JSON.stringify(params, null, 2)}</pre> */}
+
       <ShopHeading data={result} />
       <ShopItemPreview data={result} />
       <ShopDetailSection data={result} />
