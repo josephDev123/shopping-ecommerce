@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
 
       //update the order order  status
       await OrderModel.updateOne(
-        { tx_ref: payload.data.flw_ref },
+        { _id: payload.data.customer.phone_number },
         { $set: { order_status: "Processing" } }
       );
 
