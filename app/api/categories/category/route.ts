@@ -9,8 +9,9 @@ import {
 } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import ProductModel from "@/models/ProductsModel";
+import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
-export async function GET(req: NextRequest) {
+async function Category(req: NextRequest) {
   try {
     await startDb();
     const CategoryRepoImpl = new categoryRepository(OrderModel, ProductModel);
@@ -45,3 +46,5 @@ export async function GET(req: NextRequest) {
     );
   }
 }
+
+export const GET = RouteHandlerMiddleware(Category);

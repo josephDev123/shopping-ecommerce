@@ -12,7 +12,7 @@ export default async function page() {
   const [category, products] = await Promise.all([
     // getCategory(),
     CustomFetch({
-      url: `${process.env.SERVER_BASEURL}/api/category?page=1&limit=3`,
+      url: `${process.env.SERVER_BASEURL}/api/categories?page=1&limit=3`,
     }),
     CustomFetch({
       url: `${process.env.SERVER_BASEURL}/api/product/products-paginate?page=1&limit=6`,

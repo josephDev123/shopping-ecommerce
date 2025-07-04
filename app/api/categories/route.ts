@@ -9,6 +9,7 @@ import {
 } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import ProductModel from "@/models/ProductsModel";
+import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
 export const dynamic = "force-dynamic";
 export async function GET(req: NextRequest) {
@@ -22,7 +23,7 @@ export async function GET(req: NextRequest) {
     const response = await CategoryServiceImpl.getCategories(page, limit);
 
     return NextResponse.json(
-      { msg: "category successful", data: response },
+      { msg: "categories successful", data: response },
       { status: 200 }
     );
 

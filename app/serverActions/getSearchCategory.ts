@@ -2,7 +2,7 @@
 
 export async function getCategoryToFilter() {
   const response = await fetch(
-    `${process.env.SERVER_BASEURL}/api/category?page=1&limit=8`
+    `${process.env.SERVER_BASEURL}/api/categories?page=1&limit=8`
   );
 
   if (!response.ok) {

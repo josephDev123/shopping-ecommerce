@@ -9,9 +9,10 @@ import {
   SuccessApiResponseHelper,
 } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
+import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
 export const dynamic = "force-dynamic";
-export async function GET(req: NextRequest) {
+async function Orders(req: NextRequest) {
   try {
     await startDb();
     const OrderReposInit = new OrderRepository(OrderModel);
@@ -51,3 +52,4 @@ export async function GET(req: NextRequest) {
     }
   }
 }
+export const GET = RouteHandlerMiddleware(Orders);

@@ -3,9 +3,10 @@ import { type NextRequest } from "next/server";
 import { PaymentDetails, TransactionModel } from "@/models/TransactionModel";
 import OrderModel, { OrderType } from "@/models/OrderModel";
 import { startDb } from "@/lib/startDb";
+import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
 export const dynamic = "force-dynamic";
-export async function GET(req: NextRequest) {
+async function VerifyOrder(req: NextRequest) {
   try {
     await startDb();
     const searchParams = req.nextUrl.searchParams;
@@ -66,3 +67,5 @@ export async function GET(req: NextRequest) {
     return Response.json({ error: error }, { status: 500 });
   }
 }
+
+export const GET = RouteHandlerMiddleware(VerifyOrder);

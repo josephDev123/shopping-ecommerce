@@ -8,9 +8,10 @@ import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { TransactionService } from "../service/transactionService";
 import { transactionRepository } from "../repository/TransactionRepository";
 import { TransactionModel } from "@/models/TransactionModel";
+import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
 export const dynamic = "force-dynamic";
-export async function GET(req: NextRequest) {
+async function Transaction(req: NextRequest) {
   try {
     await startDb();
     const TransactionReposInit = new transactionRepository(TransactionModel);
@@ -59,3 +60,4 @@ export async function GET(req: NextRequest) {
     }
   }
 }
+export const GET = RouteHandlerMiddleware(Transaction);
