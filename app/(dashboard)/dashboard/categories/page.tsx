@@ -13,7 +13,7 @@ export default async function page({ searchParams }: OrderPageProps) {
   const session = await getServerSession(authOptions);
 
   const response = await CustomFetch({
-    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/category/categories?user_id=${
+    url: `${process.env.NEXT_PUBLIC_BASEURL}/api/categories/category?user_id=${
       session?.user.id
     }&page=${Number(searchParams.page) || 1}&limit=${
       Number(searchParams.limit) || 4

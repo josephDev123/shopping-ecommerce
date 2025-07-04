@@ -80,10 +80,10 @@ export default function CheckoutTable() {
         return;
       }
 
-      if (!user?.user.email) {
-        toast.error("login to checkout");
-        return navigate.push("/login");
-      }
+      // if (!user?.user.email) {
+      //   toast.error("login to checkout");
+      //   return navigate.push("/login");
+      // }
       // if (data.paymentMethod === "Direct Bank Transfer") {
       const response = await axiosInstance({
         url: "api/checkout",

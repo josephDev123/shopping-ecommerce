@@ -5,8 +5,9 @@ import OrderModel from "@/models/OrderModel";
 import { startDb } from "@/lib/startDb";
 import { myCommerceQueue } from "@/lib/BullMq/Queue";
 import { NotificationFactoryBase } from "../factories/NotificationFactoryBase";
+import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
-export async function POST(req: NextRequest) {
+async function Checkout(req: NextRequest) {
   try {
     await startDb();
     const payload = await req.json();
@@ -25,3 +26,5 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
+
+export const POST = RouteHandlerMiddleware(Checkout);
