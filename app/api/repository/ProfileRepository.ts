@@ -1,8 +1,15 @@
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { IProfileSchema } from "@/models/Profile";
 import { UserInterface } from "@/models/User";
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 
+type IResult = {
+  img: string;
+  dob: Date;
+  phone: string;
+  gender: string;
+  name?: string;
+};
 export class ProfileRepo {
   constructor(
     private readonly User: Model<UserInterface>,
@@ -52,19 +59,13 @@ export class ProfileRepo {
     } catch (error) {}
   }
 
+  //create or update profile/user handler
   async handleUpdateProfile(
     userId: string,
-    userPayload: { name: string },
-    profile: IProfileSchema
+    profile: IProfileSchema,
+    userPayload?: { name: string }
   ) {
     try {
-      type IResult = {
-        img: string;
-        dob: Date;
-        phone: string;
-        gender: string;
-        name?: string;
-      };
       let result: IResult;
       const isProfile = await this.findProfileByUserId(userId);
       const profileUpdate: Partial<IProfileSchema> = {
@@ -74,7 +75,7 @@ export class ProfileRepo {
         phone: profile.phone || isProfile?.phone!,
         gender: profile.gender || isProfile?.gender!,
       };
-      if (!userPayload.name) {
+      if (!userPayload?.name) {
         const profileResult = await this.updateProfile(userId, profileUpdate);
         result = {
           img: profileResult?.img!,
@@ -83,8 +84,16 @@ export class ProfileRepo {
           gender: profileResult?.gender!,
         };
       } else {
+        if (!userPayload?.name) {
+          throw new GlobalErrorHandler(
+            "Name is required to update user",
+            "ValidationError",
+            "400",
+            false
+          );
+        }
         const [data, profile] = await Promise.all([
-          this.updateUserColumnNameById(userId, userPayload),
+          this.updateUserColumnNameById(userId, { name: userPayload.name }),
           this.updateProfile(userId, profileUpdate),
         ]);
         result = {
@@ -94,16 +103,50 @@ export class ProfileRepo {
           gender: profile?.gender!,
           name: data?.name,
         };
-        return;
+        return result;
       }
 
       return result;
     } catch (error) {
       if (error instanceof Error) {
-        new GlobalErrorHandler(error.message, error.name, "500", false);
+        throw new GlobalErrorHandler(error.message, error.name, "500", false);
       }
 
-      new GlobalErrorHandler("something went wrong", "Unknown", "500", false);
+      throw new GlobalErrorHandler(
+        "something went wrong",
+        "Unknown",
+        "500",
+        false
+      );
+    }
+  }
+
+  //fetch profile handler
+  async find(userId: string) {
+    try {
+      // const profile = await this.Profile.find({ user_id: userId });
+      const userWithProfile = await this.User.findById({
+        _id: new mongoose.Types.ObjectId(userId),
+      })
+        .populate({
+          path: "profile",
+          strictPopulate: false,
+        })
+        .exec();
+      console.log(userWithProfile);
+
+      return userWithProfile?.toObject({ virtuals: true });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new GlobalErrorHandler(error.message, error.name, "500", false);
+      }
+
+      throw new GlobalErrorHandler(
+        "something went wrong",
+        "Unknown",
+        "500",
+        false
+      );
     }
   }
 }

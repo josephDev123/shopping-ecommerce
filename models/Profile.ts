@@ -1,7 +1,7 @@
-import { models, Schema, model } from "mongoose";
+import { models, Schema, model, Document } from "mongoose";
 
 export interface IProfileSchema extends Document {
-  user_id: Schema.Types.ObjectId;
+  user_id: Schema.Types.ObjectId | string;
   img: string;
   dob: Date;
   phone: string;
@@ -9,16 +9,18 @@ export interface IProfileSchema extends Document {
 }
 
 const profileSchema = new Schema<IProfileSchema>({
-  user_id: { type: Schema.Types.ObjectId, ref: "User" },
+  user_id: { type: Schema.Types.ObjectId, ref: "User", required: true },
   img: {
     type: String,
-    require: true,
+    require: false,
   },
   dob: {
     type: Date,
+    require: false,
   },
-  phone: String,
-  gender: String,
+  phone: { type: String, require: false },
+  gender: { type: String, require: false },
 });
 
-export const Profile = models.Profile || model("Profile", profileSchema);
+const Profile = models.Profile || model("Profile", profileSchema);
+export default Profile;

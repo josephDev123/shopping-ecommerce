@@ -1,26 +1,31 @@
 import { NextRequest } from "next/server";
-import { profileService } from "../service/ProfileService";
-import { ProfileRepo } from "../repository/ProfileRepository";
+import { profileService } from "../../service/ProfileService";
+import { ProfileRepo } from "../../repository/ProfileRepository";
 import UserModel from "@/models/User";
 import ProfileModel from "@/models/Profile";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,
-} from "../utils/ApiResponseHelper";
+} from "../../utils/ApiResponseHelper";
 
-async function Profile(req: NextRequest) {
+async function CreateUpdateProfile(req: NextRequest) {
   try {
+    const body = await req.json();
+    const userId = body.userId;
+    const userDataPayload = body.userPayload;
+    const profileData = body.profile;
+
     const profileRepoImpl = new ProfileRepo(UserModel, ProfileModel);
     const profileServiceImpl = new profileService(profileRepoImpl);
-    const query = req.nextUrl.searchParams;
-    const userId = query.get("userId") || "";
-    // console.log(userId);
-
-    const result = await profileServiceImpl.find(userId);
+    const result = await profileServiceImpl.update(
+      userId,
+      profileData,
+      userDataPayload
+    );
 
     return SuccessApiResponseHelper(
-      "profile successful",
+      "profile updated",
       "ProfileSuccess",
       true,
       "success",
@@ -49,4 +54,4 @@ async function Profile(req: NextRequest) {
   }
 }
 
-export const GET = Profile;
+export const PATCH = CreateUpdateProfile;
