@@ -8,11 +8,7 @@ export interface INotification extends Document {
   to: mongoose.ObjectId;
   read: boolean;
   link?: string;
-  data?: {
-    name: String;
-    price: String;
-    id: String;
-  };
+  metadata?: Record<string, any>;
 }
 
 export const NotificationSchema = new Schema<INotification>({
@@ -30,10 +26,9 @@ export const NotificationSchema = new Schema<INotification>({
   },
   link: String,
   read: { type: Boolean, default: false },
-  data: {
-    name: String,
-    price: String,
-    id: String,
+  metadata: {
+    type: Schema.Types.Mixed,
+    default: {},
   },
 });
 

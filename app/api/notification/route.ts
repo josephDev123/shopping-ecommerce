@@ -1,38 +1,38 @@
 import { startDb } from "@/lib/startDb";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { NotificationRepo } from "../repository/NotificationRepo";
 import { NotificationModel } from "@/models/Notification";
 import { Notification } from "../service/Notification";
-// import { myCommerceQueue } from "@/lib/BullMq/Queue";
+import { myCommerceQueue } from "@/lib/BullMq/Queue";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,
 } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
+import { INotification } from "@/app/types/NotificationType";
 
 export async function GET(req: NextRequest) {
   try {
     await startDb();
     const NotificationRepoImpl = new NotificationRepo(NotificationModel);
     const payloadQuery = req.nextUrl.searchParams;
-    const id = payloadQuery.get("user_id");
+    const userId = payloadQuery.get("user_id");
     const limit = Number(payloadQuery.get("limit")) ?? 0;
     const page = Number(payloadQuery.get("page")) ?? 0;
-    // const NotificationServiceImpl = new Notification(
-    //   myCommerceQueue,
-    //   NotificationRepoImpl,
-    //   id!
-    // );
+    const NotificationServiceImpl = new Notification(
+      NotificationRepoImpl,
+      userId!
+    );
 
-    // const result = NotificationServiceImpl.get(limit, page);
+    const result = await NotificationServiceImpl.find(limit, page);
     return SuccessApiResponseHelper(
       "Notification successful",
       "Notification",
       true,
       "success",
       200,
-      []
-      // result
+      [],
+      result
     );
   } catch (error) {
     if (error instanceof GlobalErrorHandler) {
@@ -65,9 +65,25 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function PATCH() {
+export async function PATCH(req: NextRequest, res: NextResponse) {
   try {
     await startDb();
+    const body = await req.json();
+    const notificationId: string = body.id;
+    const userId = body.userId;
+    const NotificationRepoImpl = new NotificationRepo(NotificationModel);
+    const NotificationService = new Notification(NotificationRepoImpl, userId);
+
+    const result = await NotificationService.update(notificationId);
+    return SuccessApiResponseHelper(
+      "Notification read successful",
+      "Notification",
+      true,
+      "success",
+      200,
+      [],
+      result
+    );
   } catch (error) {
     if (error instanceof GlobalErrorHandler) {
       if (error.operational) {
