@@ -6,6 +6,8 @@ import { startDb } from "@/lib/startDb";
 import { myCommerceQueue } from "@/lib/BullMq/Queue";
 import { NotificationFactoryBase } from "../factories/NotificationFactoryBase";
 import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
+import { NotificationRepo } from "../repository/NotificationRepo";
+import { NotificationModel } from "@/models/Notification";
 
 async function Checkout(req: NextRequest) {
   try {
@@ -15,9 +17,11 @@ async function Checkout(req: NextRequest) {
       myCommerceQueue
     );
     const paymentRepo = new paymentRepository(OrderModel);
+    const NotificationRepoImpl = new NotificationRepo(NotificationModel);
     const paymentService = new PaymentService(
       paymentRepo,
-      NotificationFactoryBaseImpl
+      NotificationFactoryBaseImpl,
+      NotificationRepoImpl
     );
 
     const result = await paymentService.create(payload);

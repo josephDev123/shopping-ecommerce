@@ -5,6 +5,9 @@ import Flutterwave from "flutterwave-node-v3";
 import { startDb } from "@/lib/startDb";
 import { PaymentDetails, TransactionModel } from "@/models/TransactionModel";
 import OrderModel from "@/models/OrderModel";
+import { NotificationRepo } from "../repository/NotificationRepo";
+import { NotificationModel } from "@/models/Notification";
+import { Notification } from "../service/Notification";
 
 export async function POST(req: NextRequest) {
   try {
@@ -136,6 +139,19 @@ export async function POST(req: NextRequest) {
       });
 
       await transaction.save();
+
+      //handle payment successful notification
+      const notificationRepoImpl = new NotificationRepo(NotificationModel);
+      const notificationService = new Notification(notificationRepoImpl);
+      await notificationService.create({
+        from: payload.data.account_id, //i passed the order id into the phone number field when  creating checkout with flw
+        label: "payment successful",
+        to: payload.data.customer.id,
+        type: "transaction",
+        link: `${process.env.SERVER_BASEURL}/${payload.data.customer.phone_number}`, //look into this later
+        read: false,
+        metadata: {},
+      });
 
       return NextResponse.json({ message: "success" }, { status: 200 });
     }

@@ -1,10 +1,20 @@
-import GlobalError from "@/app/global-error";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { INotification } from "@/models/Notification";
 import mongoose, { Model } from "mongoose";
+import { INotification as INotificationType } from "@/app/types/NotificationType";
 
 export class NotificationRepo {
   constructor(private readonly NotificationModel: Model<INotification>) {}
+
+  async create(data: Omit<INotificationType, "_id">) {
+    try {
+      const createQuery = await this.NotificationModel.create(data);
+      return createQuery;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new GlobalErrorHandler(error.message, "Unknown", "500", true);
+    }
+  }
   async find(limit: number, page: number, user_id: mongoose.Types.ObjectId) {
     try {
       const skip = page - 1 * limit;
@@ -17,7 +27,24 @@ export class NotificationRepo {
       return result;
     } catch (error) {
       if (error instanceof Error)
-        new GlobalErrorHandler(error.message, "Unknown", "500", true);
+        throw new GlobalErrorHandler(error.message, "Unknown", "500", true);
+    }
+  }
+  async update(notification_id: string) {
+    try {
+      const editQuery = await this.NotificationModel.updateOne(
+        { _id: notification_id },
+        {
+          $set: {
+            read: true,
+          },
+        }
+      );
+
+      return editQuery;
+    } catch (error) {
+      if (error instanceof Error)
+        throw new GlobalErrorHandler(error.message, "Unknown", "500", true);
     }
   }
 }

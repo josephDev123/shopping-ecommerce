@@ -1,10 +1,10 @@
-import { IProcessNotification } from "../service/Notification";
+import { INotification } from "@/app/types/NotificationType";
 import { Queue } from "bullmq";
 
 export class NotificationFactoryBase {
-  constructor(private readonly Queue: Queue) {}
+  constructor(private readonly Queue: Queue | undefined) {}
 
-  async process(data: IProcessNotification) {
+  async process(data: Omit<INotification, "_id">) {
     switch (data.type) {
       case "Order":
         OrderFactoryNotification(data, this.Queue);
@@ -18,21 +18,17 @@ export class NotificationFactoryBase {
 }
 
 export async function OrderFactoryNotification(
-  data: IProcessNotification,
-  OrderQueue: Queue
+  data: Omit<INotification, "_id">,
+  OrderQueue: Queue | undefined
 ) {
-  const payload: IProcessNotification = {
+  const payload: Omit<INotification, "_id"> = {
     type: data.type,
     label: `${data.from} made Order:`,
     from: data.from,
     to: data.to,
-    link: `${process.env.SERVER_BASEURL}/shop/${data.data?.id}`,
-    data: {
-      name: data.data?.name!,
-      price: data.data?.price!,
-      id: data.data?.id!,
-    },
+    link: `${process.env.SERVER_BASEURL}/shop/${data.metadata?.id}`,
+    metadata: data.metadata,
   };
 
-  const Job = await OrderQueue.add("order", payload);
+  const Job = await OrderQueue?.add("order", payload);
 }

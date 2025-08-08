@@ -6,15 +6,17 @@ import { OrderType } from "@/models/OrderModel";
 import mongoose, { Types } from "mongoose";
 import { generateSecureToken } from "@/app/utils/uniqueCryptoCharacter";
 import { NotificationFactoryBase } from "../factories/NotificationFactoryBase";
+import { NotificationRepo } from "../repository/NotificationRepo";
 
 export class PaymentService {
   constructor(
     private readonly paymentRepository: paymentRepository,
-    readonly NotificationFactoryBase: NotificationFactoryBase
+    readonly NotificationFactoryBase: NotificationFactoryBase,
+    private readonly NotificationRepo: NotificationRepo
   ) {}
 
   async create(data: PaymentDataType) {
-    let orderId: any;
+    let orderId: string | null = null;
     try {
       const BasePaymentFactoryImpl = new BasePaymentFactory("flutterwave");
       const tx_ref = generateSecureToken();
@@ -29,37 +31,63 @@ export class PaymentService {
       // ]);
 
       let order = await this.paymentRepository.create(formattedPayload);
-      await this.NotificationFactoryBase.process({
-        from: data.user_id,
-        type: "Order",
-        to: data.user_id,
-        data: {
-          id: String(order?._id),
-          name: order?.items[0].productName ?? "",
-          price: order?.items[0].productPrice ?? "",
-        },
-      });
 
       if (!order?._id) {
-        return new GlobalErrorHandler(
+        throw new GlobalErrorHandler(
           "Order creation failed",
           "OrderError",
           "500",
           true
         );
       }
-      // if (order?._id) {
+
+      // notification by BullMQ
+      // await this.NotificationFactoryBase.process({
+      //   label: "Created Order",
+      //   from: data.user_id,
+      //   type: "Order",
+      //   to: data.user_id,
+      //   metadata: {
+      //     id: String(order?._id),
+      //     name: order?.items[0].productName ?? "",
+      //     price: order?.items[0].productPrice ?? "",
+      //   },
+      // });
+
+      // notification by polling
+      await this.NotificationRepo.create({
+        label: "Created Order",
+        from: data.user_id,
+        type: "Order",
+        to: data.user_id,
+        metadata: {
+          id: String(order?._id),
+          name: order?.items[0].productName ?? "",
+          price: order?.items[0].productPrice ?? "",
+        },
+      });
+
       const process_payment = await BasePaymentFactoryImpl.process(
         formattedPayload,
         new mongoose.Types.ObjectId(order?._id).toString()
       );
-      orderId = order._id;
+      //if  the payment fail, set the already store order id to be delete
+      if (!process_payment) {
+        orderId = String(order._id);
+        throw new GlobalErrorHandler(
+          "payment failed",
+          "PaymentError",
+          "500",
+          true
+        );
+      }
+
       return process_payment;
       // }
     } catch (error) {
       console.log(error);
-      if (orderId?._id) {
-        await this.paymentRepository.deleteById(orderId?._id);
+      if (orderId) {
+        await this.paymentRepository.deleteById(orderId);
       }
       throw new GlobalErrorHandler(
         "Payment/Order fail",
