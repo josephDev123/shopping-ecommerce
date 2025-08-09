@@ -16,7 +16,7 @@ export class FlutterwavePayment {
         url: "https://api.flutterwave.com/v3/payments",
         method: "POST",
         data: {
-          user_id: data.user_id,
+          // user_id: data.user_id,
           // tx_ref: data.tx_ref,
           tx_ref: data.tx_ref,
           amount: data.amount,
@@ -28,18 +28,21 @@ export class FlutterwavePayment {
           customer: {
             email: data.customer_billing.email,
             name: data.customer_billing.name,
-            phonenumber: OrderId,
-            // data.customer_billing.phonenumber
-            companyName: data.customer_billing.companyName,
-            country: data.customer_billing.country,
-            address: data.customer_billing.address,
-            town: data.customer_billing.town,
-            province: data.customer_billing.province,
-            zipCode: data.customer_billing.zipCode,
-            additionalInfo: data.customer_billing.additionalInfo,
+            phonenumber: data.customer_billing.phonenumber,
           },
           customizations: {
             title: data.customizations.title,
+          },
+          meta: {
+            orderId: OrderId,
+            user_id: data.user_id,
+            companyName: data.customer_billing.companyName,
+            // country: data.customer_billing.country,
+            // address: data.customer_billing.address,
+            // town: data.customer_billing.town,
+            // province: data.customer_billing.province,
+            // zipCode: data.customer_billing.zipCode,
+            // additionalInfo: data.customer_billing.additionalInfo,
           },
         },
       });

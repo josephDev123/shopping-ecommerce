@@ -8,8 +8,18 @@ export class NotificationRepo {
 
   async create(data: Omit<INotificationType, "_id">) {
     try {
-      const createQuery = await this.NotificationModel.create(data);
-      return createQuery;
+      // const createQuery = await this.NotificationModel.create(data);
+      const NotificationInit = new this.NotificationModel({
+        label: data.label,
+        type: data.type,
+        from: new mongoose.Types.ObjectId(data.from),
+        to: new mongoose.Types.ObjectId(data.to),
+        link: data.link,
+        metadata: data.metadata,
+      });
+
+      const Notification = await NotificationInit.save();
+      return Notification;
     } catch (error) {
       if (error instanceof Error)
         throw new GlobalErrorHandler(error.message, "Unknown", "500", true);
