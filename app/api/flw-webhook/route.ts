@@ -45,6 +45,12 @@ export async function POST(req: NextRequest) {
           created_at: string; // ISO date string
         };
       };
+      meta_data: {
+        __CheckoutInitAddress: string;
+        orderId: string;
+        user_id: string;
+      };
+      "event.type": string;
     };
 
     const payload: PaymentEvent = await req.json();
@@ -129,12 +135,12 @@ export async function POST(req: NextRequest) {
 
       //update the order order  status
       await OrderModel.updateOne(
-        { _id: payload.data.customer.phone_number },
+        { _id: payload.meta_data.orderId },
         { $set: { order_status: "Processing" } }
       );
 
       const transaction = new TransactionModel({
-        orderId: payload.data.customer.phone_number, //i passed the order id into the phone number field when  creating checkout with flw
+        orderId: payload.meta_data.orderId,
         paymentDetails,
       });
 
@@ -144,13 +150,12 @@ export async function POST(req: NextRequest) {
       const notificationRepoImpl = new NotificationRepo(NotificationModel);
       const notificationService = new Notification(notificationRepoImpl);
       await notificationService.create({
-        from: payload.data.account_id, //i passed the order id into the phone number field when  creating checkout with flw
+        from: payload.meta_data.user_id,
         label: "payment successful",
-        to: payload.data.customer.id,
-        type: "transaction",
-        link: `${process.env.SERVER_BASEURL}/${payload.data.customer.phone_number}`, //look into this later
+        to: payload.meta_data.user_id,
+        type: "Transaction",
+        link: `${process.env.SERVER_BASEURL}/dashboard/transactions`,
         read: false,
-        metadata: {},
       });
 
       return NextResponse.json({ message: "success" }, { status: 200 });
