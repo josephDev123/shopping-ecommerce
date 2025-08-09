@@ -36,7 +36,7 @@ export class FlutterwavePayment {
           meta: {
             orderId: OrderId,
             user_id: data.user_id,
-            // companyName: data.customer_billing.companyName,
+            companyName: data.customer_billing.companyName,
             // country: data.customer_billing.country,
             // address: data.customer_billing.address,
             // town: data.customer_billing.town,
