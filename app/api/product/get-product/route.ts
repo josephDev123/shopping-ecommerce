@@ -1,5 +1,8 @@
 import { startDb } from "@/lib/startDb";
-import { ProductRepository } from "../../repository/productRepository/ProductRepository";
+import {
+  IRelatedOpts,
+  ProductRepository,
+} from "../../repository/productRepository/ProductRepository";
 import ProductModel from "@/models/ProductsModel";
 import { ProductService } from "../../service/productServices/ProductService";
 import {
@@ -20,9 +23,18 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
     const product_id = req.nextUrl.searchParams.get("product_id");
-    console.log("from product", product_id);
-    const result = await ProductServiceImpl.findById(product_id || "");
-    console.log(product_id);
+    const page = Number(req.nextUrl.searchParams.get("page")) || undefined;
+    const limit = Number(req.nextUrl.searchParams.get("limit")) || undefined;
+    const RelatedOpts: IRelatedOpts = {
+      page,
+      limit,
+    };
+
+    const result = await ProductServiceImpl.findByIdWithRelated(
+      product_id || "",
+      RelatedOpts
+    );
+
     return SuccessApiResponseHelper(
       result?.msg || "",
       result?.name || "",

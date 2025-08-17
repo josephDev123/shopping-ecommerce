@@ -149,14 +149,15 @@ export async function POST(req: NextRequest) {
       //handle payment successful notification
       const notificationRepoImpl = new NotificationRepo(NotificationModel);
       const notificationService = new Notification(notificationRepoImpl);
+
       await notificationService.create({
         from: payload.meta_data.user_id,
         label: "payment successful",
         to: payload.meta_data.user_id,
         type: "Transaction",
-        link: `${process.env.SERVER_BASEURL}/dashboard/transactions`,
-        read: false,
+        link: `/dashboard/transactions`,
       });
+      //${process.env.SERVER_BASEURL}
 
       return NextResponse.json({ message: "success" }, { status: 200 });
     }

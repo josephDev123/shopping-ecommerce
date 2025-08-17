@@ -24,7 +24,7 @@ export default async function page({
 
   const data: ProductDataType[] = result.data.products;
   const totalDoc = result?.data?.totalDoc as number;
-  console.log("real data:", data);
+  // console.log("real data:", data);
 
   const filterByCategory = await getCategoryToFilter();
   const CategoriesResponse: ICategoriesResponse = filterByCategory.data;

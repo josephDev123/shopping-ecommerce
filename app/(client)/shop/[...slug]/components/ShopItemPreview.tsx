@@ -11,13 +11,15 @@ import { useAppDispatch } from "@/lib/slices/hooks";
 import { useSession } from "next-auth/react";
 import { setCart } from "@/lib/slices/addToCartSlice";
 import { toast } from "react-toastify";
+import { FullProduct } from "@/app/types/productWithRelatedItem";
 
 interface ShopItemPreviewProps {
-  data: ProductResponseType;
+  // data: ProductResponseType;
+  data: FullProduct;
 }
 export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
-  const productDataArray = Array.isArray(data.data) ? data.data : [data.data];
-  const product = productDataArray[0];
+  const productDataArray = Array.isArray(data) ? data : [data];
+  const product = productDataArray[0] as FullProduct;
   console.log(product);
   // const [cartNo, setCartNo] = useState(0);
   const [qty, setQty] = useState(1);

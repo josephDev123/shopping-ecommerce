@@ -5,14 +5,17 @@ import ProductDescription from "./ProductDescription";
 import AdditionalInformation from "./AdditionalInformation";
 import Reviews from "./Reviews";
 import { ProductResponseType } from "@/app/types/productsType";
+import { FullProduct } from "@/app/types/productWithRelatedItem";
 
 interface ShopDetailSectionProps {
-  data: ProductResponseType;
+  // data: ProductResponseType;
+
+  data: FullProduct;
 }
 export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
   const [expand, setExpand] = useState("");
-  const productDataArray = Array.isArray(data.data) ? data.data : [data.data];
-  const product = productDataArray[0];
+  const productDataArray = Array.isArray(data) ? data : [data];
+  const product = productDataArray[0] as FullProduct;
   return (
     <div className="flex flex-col w-full h-full  ">
       <div className="flex justify-center  w-full items-center  gap-8 py-5 px-4">

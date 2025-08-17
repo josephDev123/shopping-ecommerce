@@ -1,5 +1,8 @@
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
-import { ProductRepository } from "../../repository/productRepository/ProductRepository";
+import {
+  IRelatedOpts,
+  ProductRepository,
+} from "../../repository/productRepository/ProductRepository";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
 import mongoose from "mongoose";
 
@@ -37,10 +40,13 @@ export class ProductService {
     }
   }
 
-  async findById(product_id: string) {
+  async findByIdWithRelated(product_id: string, RelatedOpts: IRelatedOpts) {
     try {
-      const result = await this.ProductRepository.findById(product_id);
-      console.log("product service", result);
+      const result = await this.ProductRepository.findByIdWithRelated(
+        product_id,
+        RelatedOpts
+      );
+      // console.log("product service", result);
       return result;
     } catch (error) {
       console.log(error);

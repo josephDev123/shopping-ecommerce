@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, models, mongo } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
 type uploadImgPattern = {
   url: string;
@@ -7,6 +7,7 @@ type uploadImgPattern = {
 export type ProductSchemaTypes = {
   id?: string;
   user_id?: Schema.Types.ObjectId;
+  reviewId: Schema.Types.ObjectId;
   productName?: string;
   Description?: string;
   productCategory?: string;
@@ -30,6 +31,7 @@ const ProductSchema = new Schema<ProductSchemaTypes>({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  reviewId: [{ type: Schema.Types.ObjectId, ref: "Review" }],
   productName: { type: String },
   Description: { type: String },
   productCategory: { type: String },
