@@ -96,3 +96,6 @@ export default async function Page({ params }: { params: param }) {
     </section>
   );
 }
+
+// replica name = testRepl
+// mongod --replSet testRepl --port 27018 --dbpath "C:\Program Files\MongoDB\Server\8.0\data\rs0" --bind_ip 0.0.0.0

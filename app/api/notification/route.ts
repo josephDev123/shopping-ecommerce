@@ -10,6 +10,7 @@ import {
 } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { INotification } from "@/app/types/NotificationType";
+import Page from "@/app/(dashboard)/dashboard/page";
 
 export async function GET(req: NextRequest) {
   try {
@@ -17,8 +18,8 @@ export async function GET(req: NextRequest) {
     const NotificationRepoImpl = new NotificationRepo(NotificationModel);
     const payloadQuery = req.nextUrl.searchParams;
     const userId = payloadQuery.get("user_id");
-    const limit = Number(payloadQuery.get("limit")) ?? 0;
-    const page = Number(payloadQuery.get("page")) ?? 0;
+    const limit = Number(payloadQuery.get("limit")) ?? 5;
+    const page = Number(payloadQuery.get("page")) ?? 1;
     const NotificationServiceImpl = new Notification(
       NotificationRepoImpl,
       userId!
@@ -31,22 +32,22 @@ export async function GET(req: NextRequest) {
       true,
       "success",
       200,
-      [],
-      result
+      result,
+      []
     );
   } catch (error) {
     if (error instanceof GlobalErrorHandler) {
       if (error.operational) {
         return ApiResponseHelper(
-          "something went wrong",
-          "NotificationError",
+          error.msg,
+          error.name || "NotificationError",
           true,
           "error",
           400
         );
       } else {
         return ApiResponseHelper(
-          error.msg,
+          "something went wrong",
           "NotificationError",
           false,
           "error",

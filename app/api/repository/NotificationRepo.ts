@@ -27,17 +27,25 @@ export class NotificationRepo {
   }
   async find(limit: number, page: number, user_id: mongoose.Types.ObjectId) {
     try {
-      const skip = page - 1 * limit;
+      const skip = Number(page - 1) * limit;
+      console.log("skip", skip);
       const result = await this.NotificationModel.find({
-        user_id: user_id,
+        to: user_id,
       })
         .limit(limit)
         .skip(skip);
 
       return result;
     } catch (error) {
-      if (error instanceof Error)
-        throw new GlobalErrorHandler(error.message, "Unknown", "500", true);
+      if (error instanceof Error) {
+        throw new GlobalErrorHandler(error.message, error.name, "500", true);
+      }
+      throw new GlobalErrorHandler(
+        new Error(String(error)).message,
+        "Unknown",
+        "500",
+        true
+      );
     }
   }
   async update(notification_id: string) {
