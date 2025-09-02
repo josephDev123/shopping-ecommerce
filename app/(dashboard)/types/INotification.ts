@@ -1,8 +1,8 @@
-type Metadata = {
-  id: string;
-  name: string;
-  price: string;
-};
+// type Metadata = {
+//   id: string;
+//   name: string;
+//   price: string;
+// };
 
 export type INotification = {
   _id: string;
@@ -12,6 +12,6 @@ export type INotification = {
   to: string;
   read: boolean;
   __v: number;
-  metadata?: Metadata;
+  metadata?: any;
   link?: string;
 };

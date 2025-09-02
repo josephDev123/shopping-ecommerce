@@ -77,7 +77,7 @@ export default function TopNavbar() {
       <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-2">
         <p className="sm:text-xl sm:w-40 w-28 text-base font-bold self-center text-ellipsis truncate text-nowrap">
           {status === "loading" ? (
-            <Loader className="h-5 w-5" />
+            <Loader className="h-5 w-5 animate-spin" />
           ) : (
             <>{session?.user?.name}</>
           )}
