@@ -1,6 +1,7 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { NextResponse } from "next/server";
 
 type revalidate = number | undefined;
 type Cache = RequestCache | undefined;
@@ -15,9 +16,14 @@ export async function CustomFetch({
   revalidate,
 }: //   cache = "force-cache",
 CustomFetchOptions) {
+  const isOrigin = isSameOrigin();
+  if (!isOrigin) {
+    return NextResponse.json({ error: "Invalid origin" }, { status: 403 });
+  }
   const cookieStore = cookies(); // ✅ get user's cookies from the request
-  console.log(cookieStore);
+
   const cookieHeader = cookieStore.toString();
+  // console.log("coookie string", cookieStore);
 
   try {
     const response = await fetch(url, {
@@ -25,6 +31,7 @@ CustomFetchOptions) {
         Cookie: cookieHeader,
       },
       next: { revalidate },
+      credentials: "include",
       //   cache: cache,
     });
 
@@ -42,10 +49,17 @@ CustomFetchOptions) {
   }
 }
 
-function isSameOrigin(url: string) {
+function isSameOrigin() {
   try {
-    const target = new URL(url);
+    const header = headers();
+    const host = header.get("host");
+
+    const protocol = header.get("x-forwarded-proto");
+    // console.log(host, protocol);
+    const target = new URL(`${protocol}://${host}`);
+
     const base = new URL(process.env.ORIGIN ?? "http://localhost:3000");
+
     return target.origin === base.origin;
   } catch {
     return false;

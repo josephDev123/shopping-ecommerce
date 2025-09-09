@@ -7,7 +7,11 @@ interface ModalTriggerProps {
 export default function ModalTrigger({ children }: ModalTriggerProps) {
   const ctx = useContext(ModalContext);
   return (
-    <button onClick={() => ctx?.onChangeOpen(ctx.open ? false : true)}>
+    <button
+      onClick={() => {
+        ctx?.onChangeOpen(ctx.open ? false : true);
+      }}
+    >
       {children}
     </button>
   );

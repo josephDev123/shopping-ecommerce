@@ -1,7 +1,4 @@
-import { authOptions } from "@/lib/NextAuthOption";
-import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
-import { getToken } from "next-auth/jwt";
+import { NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 type NextApiHandler = (req: NextRequest, res?: any) => Promise<Response>;
@@ -13,22 +10,16 @@ export const RouteHandlerMiddleware = (
     req: NextRequest,
     res?: NextResponse | NextApiResponse | Response
   ) => {
-    const session = await getServerSession(authOptions);
-    // ✅this is also correct
-    // const session = await getToken({
-    //   req,
-    //   secret: process.env.NEXTAUTH_SECRET,
-    // });
+    const Cookie = req.cookies.get("next-auth.session-token");
 
-    // console.log("session", session);
-    if (!session?.user) {
+    // console.log("cookie from server", Cookie);
+    if (!Cookie?.value) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), {
         status: 401,
         headers: { "Content-Type": "application/json" },
       });
     }
 
-    // console.log(`[${req.method}] ${req.url}`);
     return handler(req);
   };
 };

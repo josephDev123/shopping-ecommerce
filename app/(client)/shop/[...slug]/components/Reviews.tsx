@@ -28,13 +28,19 @@ export default function Reviews({ setValue, value }: ReviewsProps) {
       {Array.from({ length: 5 }).map((_, idx) => {
         const rating = idx + 1;
         return (
-          <div key={rating} className="flex flex-col gap-2 items-center">
+          <div
+            key={rating}
+            className="flex flex-col gap-2 items-center justify-center"
+          >
             <FaStar
               color={value === String(rating) ? "yellow" : ""}
-              onClick={() => setValue(String(rating))}
-              className={`text-3xl cursor-pointer `}
+              onClick={(e) => {
+                e.stopPropagation();
+                setValue(String(rating));
+              }}
+              className={`sm:text-3xl  text-xl cursor-pointer `}
             />
-            <span>{Label(rating)}</span>
+            <span className="sm:text-base text-xs">{Label(rating)}</span>
           </div>
         );
       })}
