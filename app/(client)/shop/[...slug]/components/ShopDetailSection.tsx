@@ -26,29 +26,29 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
   const productDataArray = Array.isArray(data) ? data : [data];
   const product = productDataArray[0] as FullProduct;
 
-  async function AddReview() {
-    setStatus("isLoading");
-    try {
-      const req = await axiosInstance({
-        method: "POST",
-        url: `${process.env.NEXT_PUBLIC_BASEURL}/api/review/create`,
-      });
-      const status = req.statusText;
-      if (status !== "OK") {
-        throw new Error(req.data.msg || "Could not create Review");
-      }
-      const result = req.data;
-      setReviews(result);
-      setStatus("data");
-    } catch (error) {
-      setStatus("isError");
-      if (error instanceof Error) {
-        toast.error(error.message);
-      }
+  // async function AddReview() {
+  //   setStatus("isLoading");
+  //   try {
+  //     const req = await axiosInstance({
+  //       method: "POST",
+  //       url: `${process.env.NEXT_PUBLIC_BASEURL}/api/review/create`,
+  //     });
+  //     const status = req.statusText;
+  //     if (status !== "OK") {
+  //       throw new Error(req.data.msg || "Could not create Review");
+  //     }
+  //     const result = req.data;
+  //     setReviews(result);
+  //     setStatus("data");
+  //   } catch (error) {
+  //     setStatus("isError");
+  //     if (error instanceof Error) {
+  //       toast.error(error.message);
+  //     }
 
-      toast.error("Something went wrong");
-    }
-  }
+  //     toast.error("Something went wrong");
+  //   }
+  // }
 
   return (
     <div className="flex flex-col w-full h-full  ">
