@@ -28,9 +28,10 @@ export default function Modal({
           className={`${OverLayClass} fixed flex flex-col justify-center items-center w-full h-full z-30 bg-yellow-50/35 p-3 top-0 left-0`}
         >
           <div
+            onClick={(e) => e.stopPropagation()}
             className={`${twMerge(
               ClassName,
-              "sm:min-w-96 h-60  bg-white flex flex-col drop-shadow-md p-2 rounded-md"
+              "sm:min-w-96 h-60  bg-white flex flex-col drop-shadow-md p-2 rounded-md justify-center  items-center"
             )} `}
           >
             {children}

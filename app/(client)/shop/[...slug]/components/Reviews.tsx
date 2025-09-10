@@ -24,7 +24,7 @@ export default function Reviews({ setValue, value }: ReviewsProps) {
   }
 
   return (
-    <section className="flex items-center justify-center gap-4">
+    <section className="flex items-center justify-center gap-4 ">
       {Array.from({ length: 5 }).map((_, idx) => {
         const rating = idx + 1;
         return (

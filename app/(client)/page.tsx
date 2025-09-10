@@ -20,6 +20,9 @@ export default async function page() {
     // getPaginateProducts(),
   ]);
 
+  console.log("products", products);
+  console.log("category", category);
+
   return (
     <section className="">
       <Hero />
