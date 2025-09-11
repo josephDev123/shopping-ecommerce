@@ -25,6 +25,7 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
   console.log(rate);
   const productDataArray = Array.isArray(data) ? data : [data];
   const product = productDataArray[0] as FullProduct;
+  console.log(product);
 
   async function AddReview() {
     // setStatus("isLoading");
