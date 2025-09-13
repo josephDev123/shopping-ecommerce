@@ -4,6 +4,7 @@ import { ReviewRepo } from "../../repository/ReviewRepo";
 import { ReviewModel } from "@/models/Review";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
+import { startDb } from "@/lib/startDb";
 
 export type IReviewArg = {
   productId: string;
@@ -14,6 +15,7 @@ export type IReviewArg = {
 
 async function Create(req: NextRequest) {
   try {
+    await startDb();
     const reviewRepoDep = new ReviewRepo(ReviewModel);
     const reviewServiceImpl = new ReviewService(reviewRepoDep);
     const payload = await req.json();

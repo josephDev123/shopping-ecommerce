@@ -7,7 +7,7 @@ type uploadImgPattern = {
 export type ProductSchemaTypes = {
   id?: string;
   user_id?: Schema.Types.ObjectId;
-  reviewId: Schema.Types.ObjectId;
+  // reviewId: Schema.Types.ObjectId;
   productName?: string;
   Description?: string;
   productCategory?: string;
@@ -31,7 +31,7 @@ const ProductSchema = new Schema<ProductSchemaTypes>({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  reviewId: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+  // reviewId: [{ type: Schema.Types.ObjectId, ref: "Review" }], this can be check later
   productName: { type: String },
   Description: { type: String },
   productCategory: { type: String },
