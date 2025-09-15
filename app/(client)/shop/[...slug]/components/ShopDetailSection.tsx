@@ -9,10 +9,11 @@ import { FullProduct } from "@/app/types/productWithRelatedItem";
 import Dialog from "@/app/(client)/generic/Modal/Dialogs";
 import { axiosInstance } from "@/app/axiosInstance";
 import { toast } from "react-toastify";
+import { ReviewsResponse } from "../type/IReviews";
+import { CgSpinner } from "react-icons/cg";
+import { formatDistanceToNow } from "date-fns";
 
 interface ShopDetailSectionProps {
-  // data: ProductResponseType;
-
   data: FullProduct;
 }
 
@@ -21,13 +22,43 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
   const [status, setStatus] = useState<IloadStatus>("idle");
   const [expand, setExpand] = useState("description");
   const [rate, setRate] = useState("");
-  const [reviews, setReviews] = useState("");
-  console.log(rate);
+  const [AddReview, setAddReview] = useState("");
+  const [reviews, setReviews] = useState<ReviewsResponse | null>(null);
+
   const productDataArray = Array.isArray(data) ? data : [data];
   const product = productDataArray[0] as FullProduct;
-  console.log(product);
+  console.log(reviews);
 
-  async function AddReview() {
+  useEffect(() => {
+    const getReviews = async () => {
+      setStatus("isLoading");
+      try {
+        const req = await axiosInstance({
+          method: "GET",
+          url: `${process.env.NEXT_PUBLIC_BASEURL}/api/reviews/find?productId=${data._id}`,
+        });
+        if (req.statusText !== "OK") {
+          console.log(req.data);
+          setStatus("isError");
+          toast.error(
+            req.data?.operational ? req.data?.msg : "Something went wrong"
+          );
+          return;
+        }
+
+        const responseData = req.data;
+
+        console.log(responseData);
+        setReviews(responseData.data);
+        setStatus("data");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getReviews();
+  }, []);
+
+  async function submitReview() {
     // setStatus("isLoading");
     // try {
     //   const req = await axiosInstance({
@@ -105,7 +136,7 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
               placeholder="Rate your experience (1–5) and add a short comment (pros/cons)."
             />
             <button
-              onClick={AddReview}
+              onClick={submitReview}
               type="button"
               className="px-2 rounded-md py-1 border-2"
             >
@@ -114,7 +145,38 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
 
             <div className="mt-4">
               <h1 className="text-lg font-semibold">Reviews</h1>
-              <p className="text-sm">No Reviews</p>
+              {status === "isLoading" ? (
+                <div className="w-full flex flex-col items-center justify-center h-28">
+                  <CgSpinner className="animate-spin text-yellow-300 text-xl" />
+                </div>
+              ) : status === "isError" ? (
+                <div className="w-full flex flex-col items-center justify-center h-28 text-red-300 text-sm">
+                  Something went wrong
+                </div>
+              ) : reviews?.reviews.length === 0 ? (
+                <div className="w-full flex flex-col items-center justify-center h-28 text-sm">
+                  No Review
+                </div>
+              ) : (
+                <div className="w-full flex flex-col h-28 space-y-2">
+                  {reviews?.reviews.map((review, idx) => (
+                    <div key={idx} className="flex flex-col">
+                      <h1 className="text-purple-600 font-bold">
+                        {review.userId.name}
+                      </h1>
+                      <p className="text-sm">
+                        {formatDistanceToNow(
+                          new Date(review?.createdAt || new Date()),
+                          {
+                            addSuffix: true,
+                          }
+                        )}
+                      </p>
+                      <p className="text-sm">{review.content}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         )}

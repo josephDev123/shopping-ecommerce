@@ -105,7 +105,8 @@ export class ReviewRepo {
       const reviewed = await this.db
         .find({ productId: new Types.ObjectId(productId) })
         .limit(limit)
-        .skip(skip);
+        .skip(skip)
+        .populate("userId");
 
       if (reviewed.length === 0) {
         return {

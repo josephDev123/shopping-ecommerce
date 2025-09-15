@@ -40,7 +40,7 @@ export class ReviewService {
 
   async handleFindReviews(page: number, limit: number, productId: string) {
     try {
-      if (!productId.trim()) {
+      if (!productId?.trim()) {
         throw new GlobalErrorHandler(
           "ProductId is required",
           "EmptyProductId",
