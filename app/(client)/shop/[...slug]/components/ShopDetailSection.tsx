@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import ProductDescription from "./ProductDescription";
 import AdditionalInformation from "./AdditionalInformation";
 import Reviews from "./Reviews";
@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import { ReviewsResponse } from "../type/IReviews";
 import { CgSpinner } from "react-icons/cg";
 import { formatDistanceToNow } from "date-fns";
+import { AxiosError } from "axios";
+import { AxiosErrorHandler } from "@/app/utils/AxiosErrorHandler";
 
 interface ShopDetailSectionProps {
   data: FullProduct;
@@ -28,6 +30,8 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
   const productDataArray = Array.isArray(data) ? data : [data];
   const product = productDataArray[0] as FullProduct;
   console.log(reviews);
+  const total = reviews?.totalReview;
+  const pageSize = 5;
 
   useEffect(() => {
     const getReviews = async () => {
@@ -37,14 +41,6 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
           method: "GET",
           url: `${process.env.NEXT_PUBLIC_BASEURL}/api/reviews/find?productId=${data._id}`,
         });
-        if (req.statusText !== "OK") {
-          console.log(req.data);
-          setStatus("isError");
-          toast.error(
-            req.data?.operational ? req.data?.msg : "Something went wrong"
-          );
-          return;
-        }
 
         const responseData = req.data;
 
@@ -52,7 +48,8 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
         setReviews(responseData.data);
         setStatus("data");
       } catch (error) {
-        console.log(error);
+        const errorObj = AxiosErrorHandler(error);
+        toast.error(errorObj.msg);
       }
     };
     getReviews();
@@ -82,6 +79,30 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
     // }
     alert("coming ...");
   }
+
+  // keep track of the current page
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // calculate total number of pages
+  const totalPages = Math.ceil(total! / pageSize);
+
+  // check if there is a next page
+  const hasNext = currentPage < totalPages;
+  const hasPrev = currentPage > 1;
+
+  const handleNext = () => {
+    if (hasNext) {
+      setCurrentPage((prev) => prev + 1);
+      // fetch or filter next page data here
+    }
+  };
+
+  const handlePrev = () => {
+    if (hasPrev) {
+      setCurrentPage((prev) => prev - 1);
+      // fetch or filter previous page data here
+    }
+  };
 
   return (
     <div className="flex flex-col w-full h-full  ">
@@ -147,7 +168,7 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
               <h1 className="text-lg font-semibold">Reviews</h1>
               {status === "isLoading" ? (
                 <div className="w-full flex flex-col items-center justify-center h-28">
-                  <CgSpinner className="animate-spin text-yellow-300 text-xl" />
+                  <CgSpinner className="animate-spin text-yellow-500 text-2xl" />
                 </div>
               ) : status === "isError" ? (
                 <div className="w-full flex flex-col items-center justify-center h-28 text-red-300 text-sm">
@@ -155,27 +176,55 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
                 </div>
               ) : reviews?.reviews.length === 0 ? (
                 <div className="w-full flex flex-col items-center justify-center h-28 text-sm">
-                  No Review
+                  No Reviews
                 </div>
               ) : (
-                <div className="w-full flex flex-col h-28 space-y-2">
-                  {reviews?.reviews.map((review, idx) => (
-                    <div key={idx} className="flex flex-col">
-                      <h1 className="text-purple-600 font-bold">
-                        {review.userId.name}
-                      </h1>
-                      <p className="text-sm">
-                        {formatDistanceToNow(
-                          new Date(review?.createdAt || new Date()),
-                          {
+                <Suspense
+                  fallback={
+                    <CgSpinner className="animate-spin text-yellow-500 text-2xl" />
+                  }
+                >
+                  <div className="w-full flex flex-col h-28 space-y-2">
+                    {reviews?.reviews.map((review, idx) => (
+                      <div key={idx} className="flex flex-col">
+                        <h1 className="text-purple-600 font-bold">
+                          {review.userId.name}
+                        </h1>
+                        <p className="text-sm">
+                          {formatDistanceToNow(new Date(review?.createdAt), {
                             addSuffix: true,
-                          }
-                        )}
-                      </p>
-                      <p className="text-sm">{review.content}</p>
-                    </div>
-                  ))}
-                </div>
+                          })}
+                        </p>
+                        <p className="text-sm">{review.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 items-center mt-4">
+                    {/* Previous Button */}
+                    <button
+                      disabled={!hasPrev}
+                      onClick={handlePrev}
+                      type="button"
+                      className="bg-gray-300 text-sm py-1 px-3 rounded-md disabled:opacity-50"
+                    >
+                      Prev
+                    </button>
+
+                    <span className="text-sm">
+                      Page {currentPage} of {totalPages || 1}
+                    </span>
+
+                    {/* Next Button */}
+                    <button
+                      disabled={!hasNext}
+                      onClick={handleNext}
+                      type="button"
+                      className="bg-yellow-300 text-sm py-1 px-3 rounded-md disabled:opacity-50"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </Suspense>
               )}
             </div>
           </div>
