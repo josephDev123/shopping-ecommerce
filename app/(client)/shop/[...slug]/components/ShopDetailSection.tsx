@@ -1,6 +1,12 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  Suspense,
+  useEffect,
+  useState,
+} from "react";
 import ProductDescription from "./ProductDescription";
 import AdditionalInformation from "./AdditionalInformation";
 import Reviews from "./Reviews";
@@ -9,76 +15,71 @@ import { FullProduct } from "@/app/types/productWithRelatedItem";
 import Dialog from "@/app/(client)/generic/Modal/Dialogs";
 import { axiosInstance } from "@/app/axiosInstance";
 import { toast } from "react-toastify";
-import { ReviewsResponse } from "../type/IReviews";
+import { ReviewDistribution, ReviewsResponse } from "../type/IReviews";
 import { CgSpinner } from "react-icons/cg";
 import { formatDistanceToNow } from "date-fns";
-import { AxiosError } from "axios";
 import { AxiosErrorHandler } from "@/app/utils/AxiosErrorHandler";
+import { useSession } from "next-auth/react";
 
 interface ShopDetailSectionProps {
   data: FullProduct;
+  CountData: (info: ICountData) => void;
 }
 
+export type ICountData = {
+  totalReview: number;
+  distribution: ReviewDistribution;
+};
+
 type IloadStatus = "isError" | "isLoading" | "data" | "idle";
-export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
+export default function ShopDetailSection({
+  data,
+  CountData,
+}: ShopDetailSectionProps) {
   const [status, setStatus] = useState<IloadStatus>("idle");
+  const [submitStatus, setSubmitStatus] = useState<IloadStatus>("idle");
   const [expand, setExpand] = useState("description");
-  const [rate, setRate] = useState("");
+  const [rate, setRate] = useState<string | null>(null);
   const [AddReview, setAddReview] = useState("");
   const [reviews, setReviews] = useState<ReviewsResponse | null>(null);
+  console.log(reviews);
+
+  useEffect(() => {
+    CountData({
+      distribution: reviews?.distribution!,
+      totalReview: reviews?.totalReview!,
+    });
+  }, [reviews?.totalReview]);
+
+  const { data: session } = useSession();
 
   const productDataArray = Array.isArray(data) ? data : [data];
   const product = productDataArray[0] as FullProduct;
-  console.log(reviews);
+  console.log(AddReview, rate);
   const total = reviews?.totalReview;
   const pageSize = 5;
 
+  const getReviews = async () => {
+    setStatus("isLoading");
+    try {
+      const req = await axiosInstance({
+        method: "GET",
+        url: `${process.env.NEXT_PUBLIC_BASEURL}/api/reviews/find?productId=${data._id}`,
+      });
+
+      const responseData = req.data;
+
+      console.log(responseData);
+      setReviews(responseData.data);
+      setStatus("data");
+    } catch (error) {
+      const errorObj = AxiosErrorHandler(error);
+      toast.error(errorObj.msg);
+    }
+  };
   useEffect(() => {
-    const getReviews = async () => {
-      setStatus("isLoading");
-      try {
-        const req = await axiosInstance({
-          method: "GET",
-          url: `${process.env.NEXT_PUBLIC_BASEURL}/api/reviews/find?productId=${data._id}`,
-        });
-
-        const responseData = req.data;
-
-        console.log(responseData);
-        setReviews(responseData.data);
-        setStatus("data");
-      } catch (error) {
-        const errorObj = AxiosErrorHandler(error);
-        toast.error(errorObj.msg);
-      }
-    };
     getReviews();
   }, []);
-
-  async function submitReview() {
-    // setStatus("isLoading");
-    // try {
-    //   const req = await axiosInstance({
-    //     method: "POST",
-    //     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/review/create`,
-    //   });
-    //   const status = req.statusText;
-    //   if (status !== "OK") {
-    //     throw new Error(req.data.msg || "Could not create Review");
-    //   }
-    //   const result = req.data;
-    //   setReviews(result);
-    //   setStatus("data");
-    // } catch (error) {
-    //   setStatus("isError");
-    //   if (error instanceof Error) {
-    //     toast.error(error.message);
-    //   }
-
-    //   toast.error("Something went wrong");
-    // }
-    alert("coming ...");
-  }
 
   // keep track of the current page
   const [currentPage, setCurrentPage] = useState(1);
@@ -103,6 +104,46 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
       // fetch or filter previous page data here
     }
   };
+
+  async function submitReview() {
+    if (!session?.user.id) {
+      toast.error("Login to review the item/product.");
+      return;
+    }
+    if (!data._id || !AddReview?.trim() || !rate) {
+      toast.error(
+        "Please fill in all required fields before submitting your review."
+      );
+      return;
+    }
+    setSubmitStatus("isLoading");
+    try {
+      const req = await axiosInstance({
+        method: "POST",
+        url: `${process.env.NEXT_PUBLIC_BASEURL}/api/reviews/create`,
+        data: JSON.stringify({
+          productId: data._id,
+          userId: session?.user.id,
+          content: AddReview,
+          rating: Number(rate),
+        }),
+      });
+
+      const result = req.data;
+      console.log(result);
+
+      // setReviews([...reviews, result]);
+      setSubmitStatus("data");
+      toast.success("Review added successfully");
+      setRate("");
+      setAddReview("");
+      await getReviews();
+    } catch (error) {
+      setSubmitStatus("isError");
+      const errorObj = AxiosErrorHandler(error);
+      toast.error(errorObj.msg);
+    }
+  }
 
   return (
     <div className="flex flex-col w-full h-full  ">
@@ -148,20 +189,24 @@ export default function ShopDetailSection({ data }: ShopDetailSectionProps) {
                 </button>
               </Dialog.ModalTrigger>
               <Dialog.Modal OverLayClass="">
-                <Reviews setValue={setRate} value={rate} />
+                <Reviews setValue={setRate} value={rate!} />
               </Dialog.Modal>
             </Dialog>
             <textarea
               rows={6}
+              onChange={(e) => setAddReview(e.target.value)}
               className="w-full p-2 rounded-md border"
               placeholder="Rate your experience (1–5) and add a short comment (pros/cons)."
             />
             <button
               onClick={submitReview}
               type="button"
-              className="px-2 rounded-md py-1 border-2"
+              className="px-2 rounded-md py-1 inline-flex gap-1 items-center text-white bg-blue-400"
             >
-              Create
+              Create{" "}
+              {submitStatus === "isLoading" && (
+                <CgSpinner className="animate-spin text-yellow-500 text-2xl" />
+              )}
             </button>
 
             <div className="mt-4">

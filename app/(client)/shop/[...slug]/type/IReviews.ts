@@ -17,7 +17,7 @@ type Review = {
   __v: number;
 };
 
-type ReviewDistribution = {
+export type ReviewDistribution = {
   1: number;
   2: number;
   3: number;

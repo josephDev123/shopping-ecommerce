@@ -10,6 +10,7 @@ import { IProductItemWithRelatedResponse } from "@/app/types/productWithRelatedI
 import ProductCard from "../../generic/ProductCard";
 import Image from "next/image";
 import Link from "next/link";
+import ItemDetailContainer from "./components/ItemDetailContainer";
 
 type param = {
   slug: string[];
@@ -34,8 +35,9 @@ export default async function Page({ params }: { params: param }) {
       {/* <pre>{JSON.stringify(related, null, 2)}</pre> */}
 
       <ShopHeading data={product} />
-      <ShopItemPreview data={product} />
-      <ShopDetailSection data={product} />
+      {/* <ShopItemPreview data={product} />
+      <ShopDetailSection data={product} /> */}
+      <ItemDetailContainer product={product} />
       <hr />
       <hr className="py-6" />
       <div className="flex flex-col justify-center items-center">

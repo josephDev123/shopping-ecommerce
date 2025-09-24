@@ -12,15 +12,20 @@ import { useSession } from "next-auth/react";
 import { setCart } from "@/lib/slices/addToCartSlice";
 import { toast } from "react-toastify";
 import { FullProduct } from "@/app/types/productWithRelatedItem";
+import { ICountData } from "./ShopDetailSection";
+import { CiStar } from "react-icons/ci";
 
 interface ShopItemPreviewProps {
-  // data: ProductResponseType;
   data: FullProduct;
+  ReviewCountInfo: ICountData;
 }
-export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
+export default function ShopItemPreview({
+  data,
+  ReviewCountInfo,
+}: ShopItemPreviewProps) {
   const productDataArray = Array.isArray(data) ? data : [data];
   const product = productDataArray[0] as FullProduct;
-  console.log(product);
+  console.log(ReviewCountInfo);
   // const [cartNo, setCartNo] = useState(0);
   const [qty, setQty] = useState(1);
 
@@ -86,8 +91,22 @@ export default function ShopItemPreview({ data }: ShopItemPreviewProps) {
         <h2 className="text-2xl font-medium">{product.productName || ""}</h2>
         <p>USD {product.productPrice || 0}</p>
         <div className="flex gap-3 items-center ">
-          <Rating rating={3} /> <div className="h-6 w-0.5 bg-black/80"></div>
-          <p className="text-black/70">5 Customer Review</p>
+          {/* <Rating rating={3} /> <div className="h-6 w-0.5 bg-black/80"></div> */}
+          {Object.entries(ReviewCountInfo?.distribution ?? {}).map(
+            ([key, value]) => (
+              <p key={key} className="inline-flex items-center gap-1">
+                {value}
+                <CiStar
+                  className={
+                    typeof value === "number" && value > 0
+                      ? "text-yellow-300 font-bold  "
+                      : ""
+                  }
+                />
+              </p>
+            )
+          )}
+          <p className="text-black/70">{ReviewCountInfo.totalReview} Review</p>
         </div>
 
         <p className="font-medium mt-3">{product.Description || ""}</p>
