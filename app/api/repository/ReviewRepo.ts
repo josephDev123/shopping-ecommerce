@@ -7,6 +7,7 @@ export class ReviewRepo {
   constructor(private readonly db: Model<IReview>) {}
 
   async Create({ content, productId, rating, userId }: IReviewArg) {
+    // console.log("repo", content, productId, rating, userId);
     try {
       const reviewed = await this.db.findOne({ userId, productId });
       if (reviewed) {
@@ -26,6 +27,7 @@ export class ReviewRepo {
 
       return CreateQuery;
     } catch (error) {
+      console.log(error);
       if (error instanceof GlobalErrorHandler) {
         throw new GlobalErrorHandler(
           error.msg,

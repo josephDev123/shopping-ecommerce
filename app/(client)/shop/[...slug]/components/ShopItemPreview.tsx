@@ -54,6 +54,11 @@ export default function ShopItemPreview({
     toast.success("product added to cart", { position: "top-center" });
   };
 
+  const price = parseFloat(product.productPrice.replace(/[^0-9.]/g, ""));
+  const discount = parseFloat(product.productDiscount.replace(/[^0-9.]/g, ""));
+
+  const discountedPrice = price * (1 - discount / 100);
+
   return (
     <div className="grid sm:grid-cols-2 grid-cols-1 gap-8 w-[80%] mx-auto my-10">
       {/* first grid */}
@@ -89,7 +94,12 @@ export default function ShopItemPreview({
       {/* second grid */}
       <div className="flex flex-col w-full">
         <h2 className="text-2xl font-medium">{product.productName || ""}</h2>
-        <p>USD {product.productPrice || 0}</p>
+        <p>
+          <b>Regular Price:</b> ₦{product.productPrice || 0}
+        </p>
+        <p>
+          <b>Discount Price:</b> ₦{discountedPrice || 0}
+        </p>
         <div className="flex gap-3 items-center ">
           {/* <Rating rating={3} /> <div className="h-6 w-0.5 bg-black/80"></div> */}
           {Object.entries(ReviewCountInfo?.distribution ?? {}).map(

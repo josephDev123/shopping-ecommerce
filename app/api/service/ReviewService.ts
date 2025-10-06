@@ -6,6 +6,7 @@ export class ReviewService {
   constructor(private readonly ReviewRepo: ReviewRepo) {}
 
   async handleCreate({ content, productId, rating, userId }: IReviewArg) {
+    // console.log("service", content, productId, rating, userId);
     try {
       const response = await this.ReviewRepo.Create({
         content,

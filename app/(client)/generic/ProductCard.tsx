@@ -17,11 +17,18 @@ type IProductCard = {
 
 export default function ProductCard({ credential }: IProductCard) {
   const { data } = useSession();
-
+  console.log(credential);
   const dispatch = useAppDispatch();
-  const discountedPrice =
-    Number(credential.productPrice.slice(1)) *
-    (1 - Number(credential.productDiscount) / 100);
+  // const discountedPrice =
+  //   Number(credential.productPrice.slice(1)) *
+  //   (1 - Number(credential.productDiscount) / 100);
+
+  const price = parseFloat(credential.productPrice.replace(/[^0-9.]/g, ""));
+  const discount = parseFloat(
+    credential.productDiscount.replace(/[^0-9.]/g, "")
+  );
+
+  const discountedPrice = price * (1 - discount / 100);
 
   const navigate = useRouter();
 
@@ -81,8 +88,8 @@ export default function ProductCard({ credential }: IProductCard) {
 
         <p className="truncate">{credential.Description}</p>
         <span className="flex justify-between items-center">
-          <p className="font-bold">{credential.productPrice}</p>
-          <p className="">{discountedPrice.toFixed(2)}</p>
+          <p className="font-bold">₦{credential.productPrice}</p>
+          <p className="">₦{discountedPrice.toFixed(2)}</p>
         </span>
       </div>
     </section>

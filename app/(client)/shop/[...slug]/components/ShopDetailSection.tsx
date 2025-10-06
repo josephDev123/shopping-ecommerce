@@ -5,6 +5,7 @@ import React, {
   SetStateAction,
   Suspense,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import ProductDescription from "./ProductDescription";
@@ -42,7 +43,8 @@ export default function ShopDetailSection({
   const [rate, setRate] = useState<string | null>(null);
   const [AddReview, setAddReview] = useState("");
   const [reviews, setReviews] = useState<ReviewsResponse | null>(null);
-  console.log(reviews);
+
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     CountData({
@@ -137,6 +139,7 @@ export default function ShopDetailSection({
       toast.success("Review added successfully");
       setRate("");
       setAddReview("");
+
       await getReviews();
     } catch (error) {
       setSubmitStatus("isError");
@@ -193,6 +196,8 @@ export default function ShopDetailSection({
               </Dialog.Modal>
             </Dialog>
             <textarea
+              // ref={textAreaRef}
+              value={AddReview}
               rows={6}
               onChange={(e) => setAddReview(e.target.value)}
               className="w-full p-2 rounded-md border"

@@ -15,7 +15,7 @@ export type IReviewArg = {
 
 async function Create(req: NextRequest) {
   try {
-    await startDb();
+    // await startDb();
     const reviewRepoDep = new ReviewRepo(ReviewModel);
     const reviewServiceImpl = new ReviewService(reviewRepoDep);
     const payload = await req.json();
@@ -25,7 +25,7 @@ async function Create(req: NextRequest) {
       content: payload.content,
       rating: payload.rating,
     };
-
+    // console.log(reviewPayload);
     const result = await reviewServiceImpl.handleCreate(reviewPayload);
     return NextResponse.json(
       { data: result, msg: "review created successful" },
