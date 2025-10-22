@@ -7,7 +7,7 @@ A modern full-stack **e-commerce web application** built with **Next.js**, **Typ
 ## 🚀 Features
 
 - 🧑‍💻 **User Authentication** – Register, login, logout, and password reset
-- 🛒 **Product Management** – Browse, search, and filter products
+- 🛒 **Product Management** – List, Browse, search, and filter products
 - 🛍️ **Shopping Cart** – Add/remove items and proceed to checkout
 - 💳 **Payment Integration** – Secure checkout via **Flutterwave**
 - ⚙️ **Admin Panel** – Manage products, orders, and users
@@ -57,14 +57,14 @@ npm install
 
 ### 3️⃣ Configure environment variables
 
-Create a .env file in the project root and add:
-MONGODB_URI=your_mongodb_uri
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your_secret_key
-OAUTH_CLIENT_ID=your_client_id
-OAUTH_CLIENT_SECRET=your_client_secret
-FLUTTERWAVE_PUBLIC_KEY=your_flutterwave_public_key
-FLUTTERWAVE_SECRET_KEY=your_flutterwave_secret_key
+- Create a .env file in the project root and add:
+- MONGODB_URI=your_mongodb_uri
+- NEXTAUTH_URL=http://localhost:3000
+- NEXTAUTH_SECRET=your_secret_key
+- OAUTH_CLIENT_ID=your_client_id
+- OAUTH_CLIENT_SECRET=your_client_secret
+- FLUTTERWAVE_PUBLIC_KEY=your_flutterwave_public_key
+- FLUTTERWAVE_SECRET_KEY=your_flutterwave_secret_key
 
 ### 4️⃣ Run the development server
 
