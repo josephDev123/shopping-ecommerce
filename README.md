@@ -100,4 +100,4 @@ npm start
 Joseph Uzuegbu
 🔗 GitHub Profile(https://github.com/josephDev123)
 
-💼 Software Engineer | React & Node.js Developer
+💼 Software Engineer
