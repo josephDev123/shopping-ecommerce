@@ -12,12 +12,14 @@ export const RouteHandlerMiddleware = (
   ) => {
     const Cookie = req.cookies.get("next-auth.session-token");
 
-    // console.log("cookie from server", Cookie);
     if (!Cookie?.value) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new Response(
+        JSON.stringify({ error: "Unauthorized user. Pls Login" }),
+        {
+          status: 401,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
     return handler(req);

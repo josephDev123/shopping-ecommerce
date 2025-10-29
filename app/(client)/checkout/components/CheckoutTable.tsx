@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { checkoutSchema } from "@/app/zod-schema/checkoutSchema";
 import { z } from "zod";
 import { useAppSelector } from "@/lib/slices/hooks";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { generateUniquePaymentID } from "@/app/utils/randomCharacters";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -121,8 +121,18 @@ export default function CheckoutTable() {
         return (window.location.href = result.data.link);
       }
     } catch (err) {
-      console.error(err);
-      toast.error("An error occurred, please try again");
+      if (err instanceof AxiosError) {
+        if (err.response) {
+          toast.error(err.response.data?.error);
+          return;
+        } else if (err.request) {
+          toast.error(err.request.statusText);
+          return;
+        }
+        console.log(err.message);
+        toast.error(err.message);
+        return;
+      }
     }
   };
   return (

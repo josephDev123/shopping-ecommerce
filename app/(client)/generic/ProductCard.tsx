@@ -17,11 +17,8 @@ type IProductCard = {
 
 export default function ProductCard({ credential }: IProductCard) {
   const { data } = useSession();
-  console.log(credential);
+  // console.log(credential);
   const dispatch = useAppDispatch();
-  // const discountedPrice =
-  //   Number(credential.productPrice.slice(1)) *
-  //   (1 - Number(credential.productDiscount) / 100);
 
   const price = parseFloat(credential.productPrice.replace(/[^0-9.]/g, ""));
   const discount = parseFloat(
