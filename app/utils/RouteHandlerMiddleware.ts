@@ -10,9 +10,12 @@ export const RouteHandlerMiddleware = (
     req: NextRequest,
     res?: NextResponse | NextApiResponse | Response
   ) => {
-    const Cookie = req.cookies.get("next-auth.session-token");
+    //  this part is confusing. pls remember that cookie key are different base on environment
+    const token =
+      req.cookies.get("next-auth.session-token") ||
+      req.cookies.get("__Secure-next-auth.session-token");
 
-    if (!Cookie?.value) {
+    if (!token?.value) {
       return new Response(
         JSON.stringify({ error: "Unauthorized user. Pls Login" }),
         {

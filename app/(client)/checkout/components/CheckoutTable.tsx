@@ -26,18 +26,6 @@ export default function CheckoutTable() {
   const navigate = useRouter();
   const getCarts = useAppSelector((state) => state.cartState.carts);
   console.log(getCarts);
-  // const discount = getCarts.reduce((acc, currentValue) => {
-  //   return (acc = +currentValue.productDiscount);
-  // }, 0);
-
-  // const subtotal = getCarts.reduce((acc, currentValue) => {
-  //   const qty = currentValue ? currentValue?.qty : 1;
-  //   const result = (acc = +currentValue.productPrice);
-  //   return result * Number(qty);
-  // }, 0);
-
-  // const discountCalc = (subtotal * discount) / 100;
-  // const total = subtotal - discountCalc;
 
   const { totalPrice, totalDiscount } = getCarts.reduce(
     (acc, item) => {
