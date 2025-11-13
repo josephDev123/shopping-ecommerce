@@ -27,7 +27,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/(dashboard)/dashboard/view-product",
-    "app/typing/index.d.ts"
+    "app/typing/index.d.ts",
+    "app/api/shipping"
   ],
   "exclude": ["node_modules"],
   "ts-node": {
