@@ -15,7 +15,7 @@ export type IReviewArg = {
 
 async function Create(req: NextRequest) {
   try {
-    // await startDb();
+    await startDb();
     const reviewRepoDep = new ReviewRepo(ReviewModel);
     const reviewServiceImpl = new ReviewService(reviewRepoDep);
     const payload = await req.json();
@@ -34,7 +34,7 @@ async function Create(req: NextRequest) {
   } catch (error) {
     if (error instanceof GlobalErrorHandler) {
       return ApiResponseHelper(
-        error.operational ? error.msg : "Something went wrong",
+        error.operational ? error.message : "Something went wrong",
         error.name,
         error.operational,
         "error",

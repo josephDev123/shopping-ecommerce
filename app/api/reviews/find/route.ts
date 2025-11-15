@@ -35,7 +35,7 @@ async function Find(req: NextRequest) {
   } catch (error) {
     if (error instanceof GlobalErrorHandler) {
       return ApiResponseHelper(
-        error.msg,
+        error.message,
         error.name,
         error.operational,
         "error",

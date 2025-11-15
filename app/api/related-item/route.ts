@@ -29,7 +29,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
         400
       );
     } else {
-      return ApiResponseHelper(errorObj.msg, "OrderError", false, "error", 400);
+      return ApiResponseHelper(
+        errorObj.message,
+        "OrderError",
+        false,
+        "error",
+        400
+      );
     }
   }
 }

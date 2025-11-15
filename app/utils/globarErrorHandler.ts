@@ -7,13 +7,13 @@ export interface GlobalErrorHandlerType {
 
 export class GlobalErrorHandler extends Error {
   code;
-  msg;
+  // msg;
   operational;
   constructor(msg: string, name: string, code: string, operational: boolean) {
-    super(name);
-    // this.name = name;
+    super(msg);
+    this.name = name;
     this.code = code;
-    this.msg = msg;
+    // this.msg = msg;
     this.operational = operational;
   }
 }

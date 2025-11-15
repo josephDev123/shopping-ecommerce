@@ -44,7 +44,7 @@ async function CreateUpdateProfile(req: NextRequest) {
       );
     } else {
       return ApiResponseHelper(
-        errorObj.msg,
+        errorObj.message,
         "ProfileError",
         false,
         "error",

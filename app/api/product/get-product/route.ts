@@ -50,7 +50,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     if (error instanceof GlobalErrorHandler) {
       return ApiResponseHelper(
-        error.msg,
+        error.message,
         error.name,
         error.operational,
         "error",

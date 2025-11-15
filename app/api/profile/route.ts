@@ -39,7 +39,7 @@ async function Profile(req: NextRequest) {
       );
     } else {
       return ApiResponseHelper(
-        errorObj.msg,
+        errorObj.message,
         "ProfileError",
         false,
         "error",

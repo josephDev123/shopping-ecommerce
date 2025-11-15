@@ -48,7 +48,7 @@ async function Customer(req: NextRequest) {
       );
     } else {
       return ApiResponseHelper(
-        errorObj.msg,
+        errorObj.message,
         "CustomerError",
         false,
         "error",

@@ -32,7 +32,7 @@ export class ProductService {
     } catch (error) {
       const customError = error as GlobalErrorHandler;
       throw new GlobalErrorHandler(
-        customError.msg,
+        customError.message,
         customError.name,
         "500",
         false

@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
     if (error instanceof GlobalErrorHandler) {
       if (error.operational) {
         return ApiResponseHelper(
-          error.msg,
+          error.message,
           error.name || "NotificationError",
           true,
           "error",
@@ -97,7 +97,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
         );
       } else {
         return ApiResponseHelper(
-          error.msg,
+          error.message,
           "NotificationError",
           false,
           "error",

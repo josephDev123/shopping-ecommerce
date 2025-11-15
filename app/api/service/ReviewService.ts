@@ -18,7 +18,7 @@ export class ReviewService {
     } catch (error) {
       if (error instanceof GlobalErrorHandler) {
         throw new GlobalErrorHandler(
-          error.msg,
+          error.message,
           error.name,
           error.code,
           error.operational
@@ -54,7 +54,7 @@ export class ReviewService {
     } catch (error) {
       if (error instanceof GlobalErrorHandler) {
         throw new GlobalErrorHandler(
-          error.msg,
+          error.message,
           error.name,
           error.code,
           error.operational

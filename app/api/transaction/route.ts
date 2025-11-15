@@ -40,7 +40,7 @@ async function Transaction(req: NextRequest) {
   } catch (error) {
     const errorObj = error as GlobalErrorHandler;
     if (errorObj.operational) {
-      console.log(errorObj?.msg);
+      console.log(errorObj?.message);
       return ApiResponseHelper(
         "something went wrong",
         "transactionError",
@@ -49,9 +49,9 @@ async function Transaction(req: NextRequest) {
         400
       );
     } else {
-      console.log(errorObj?.msg);
+      console.log(errorObj?.message);
       return ApiResponseHelper(
-        errorObj.msg,
+        errorObj.message,
         "transactionError",
         false,
         "error",
