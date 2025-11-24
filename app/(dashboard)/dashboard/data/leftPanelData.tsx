@@ -20,6 +20,12 @@ export const leftPanelItem = [
     text: "Categories",
     path: "/dashboard/categories",
   },
+
+  {
+    icons: <AiOutlineTransaction />,
+    text: "Tracking/Shipping",
+    path: "/dashboard/shipping",
+  },
   {
     icons: <AiOutlineTransaction />,
     text: "Transaction",

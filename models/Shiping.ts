@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import { Document, model, models, Schema, Types } from "mongoose";
 
 // export interface ITrackingHistory {
@@ -32,14 +33,19 @@ const ShippingSchema = new Schema<IShippingSchema>(
   {
     transactionId: { type: Schema.Types.ObjectId, ref: "Transaction" },
     orderId: { type: Schema.Types.ObjectId, ref: "Order", required: true },
-    trackingNumber: { type: String, required: true, unique: true },
+    trackingNumber: {
+      type: String,
+      required: true,
+      unique: true,
+      default: randomUUID,
+    },
     carrier: { type: String, trim: true },
     shippingMethod: {
       type: String,
       enum: ["Standard", "Express", "Same-Day"],
       default: "Standard",
     },
-    estimatedDeliveryDate: { type: Date, required: true },
+    estimatedDeliveryDate: { type: Date },
     actualDeliveryDate: { type: Date },
     status: {
       type: String,

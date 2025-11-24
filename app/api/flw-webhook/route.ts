@@ -8,6 +8,8 @@ import OrderModel from "@/models/OrderModel";
 import { NotificationRepo } from "../repository/NotificationRepo";
 import { NotificationModel } from "@/models/Notification";
 import { Notification } from "../service/Notification";
+import { IShippingSchema, ShippingModel } from "@/models/Shiping";
+import mongoose, { Types } from "mongoose";
 
 export async function POST(req: NextRequest) {
   try {
@@ -133,7 +135,7 @@ export async function POST(req: NextRequest) {
 
       console.log("flw webhook ", payload);
 
-      //update the order order  status
+      //update the Order order  status
       await OrderModel.updateOne(
         { _id: payload.meta_data.orderId },
         { $set: { order_status: "Processing" } }
@@ -157,7 +159,15 @@ export async function POST(req: NextRequest) {
         type: "Transaction",
         link: `/dashboard/transactions`,
       });
-      //${process.env.SERVER_BASEURL}
+
+      // CREATE THE TRACKING/ SHIPPING HERE
+      const Shipping: Partial<IShippingSchema> = {
+        transactionId: transaction._id,
+        orderId: new mongoose.Types.ObjectId(payload.meta_data.orderId),
+      };
+
+      const Tracking = new ShippingModel(Shipping);
+      await Tracking.save();
 
       return NextResponse.json({ message: "success" }, { status: 200 });
     }

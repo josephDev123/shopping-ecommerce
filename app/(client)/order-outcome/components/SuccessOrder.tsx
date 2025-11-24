@@ -2,7 +2,7 @@
 
 import { transactionOutcome } from "@/app/types/transactionOutcomeType";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { useRouter } from "next/navigation";
 
@@ -61,11 +61,11 @@ export default function SuccessOrderDetails({
           </div>
 
           <button
-            onClick={() => navigate.push("dashboard/transactions")}
+            onClick={() => navigate.push("dashboard/shipping")}
             type="button"
             className="p-3 rounded-full  bg-red-400 hover:bg-red-500 font-medium text-white w-60"
           >
-            Track Your OrderDetails
+            Track Your Order Details
           </button>
         </div>
         <div className="flex flex-col">
