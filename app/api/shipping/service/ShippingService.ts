@@ -35,4 +35,32 @@ export class ShippingService {
       }
     }
   }
+
+  async getAll(page: number, limit: number) {
+    try {
+      const shippings = await this.ShippingRepo.getAll(page, limit);
+      return shippings;
+    } catch (error) {
+      if (error instanceof GlobalErrorHandler) {
+        throw new GlobalErrorHandler(
+          error.message,
+          error.name,
+          error.code,
+          error.operational
+        );
+      }
+      if (error instanceof Error) {
+        throw new GlobalErrorHandler(error.message, error.name, "400", false);
+      }
+
+      if (error instanceof Error) {
+        throw new GlobalErrorHandler(
+          "Something went wrong",
+          error.name,
+          "500",
+          false
+        );
+      }
+    }
+  }
 }
