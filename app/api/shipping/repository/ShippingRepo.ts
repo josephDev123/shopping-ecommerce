@@ -51,7 +51,7 @@ export class ShippingRepo {
         },
       ]);
 
-      const shippings = result[0].data || [];
+      const shippings: IShippingSchema[] = result[0].data || [];
       const total = result[0].totalCount[0]?.count || 0;
 
       return {

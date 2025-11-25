@@ -18,14 +18,13 @@ import { axiosInstance } from "@/app/axiosInstance";
 import { toast } from "react-toastify";
 import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
 import { useSession } from "next-auth/react";
-import { returnUploadedImagePattern } from "@/app/hooks/useUploadFileToFirebaseStorage";
+import { useMutation } from "@tanstack/react-query";
+// import { returnUploadedImagePattern } from "@/app/hooks/useUploadFileToFirebaseStorage";
 
 export default function page() {
-  const [productImg, setProductImg] = useState<returnUploadedImagePattern[]>(
-    []
-  );
+  const [productImg, setProductImg] = useState<FileList | null>(null);
+  const { data: session } = useSession();
 
-  console.log(productImg);
   type inferProductFormDataType = z.infer<typeof ProductFormDataSchema>;
   const {
     register,
@@ -36,40 +35,58 @@ export default function page() {
     resolver: zodResolver(ProductFormDataSchema),
   });
 
-  const { data: session } = useSession();
+  const { mutate, isPending, data, isError, error } = useMutation({
+    mutationFn: async (data: inferProductFormDataType) => {
+      try {
+        if (!productImg || productImg.length === 0) {
+          toast.error("No product image was deploy. Deploy one or more");
+          console.log("oops");
+          return;
+        }
+
+        const formData = new FormData();
+        const fileList = productImg;
+        if (fileList && fileList.length) {
+          Array.from(fileList).forEach((file) => {
+            formData.append("productImgUrl", file);
+          });
+        }
+        formData.append("user_id", session?.user.id || "");
+        formData.append("productName", data.productName);
+        formData.append("Description", data.Description);
+        formData.append("productCategory", data.productCategory);
+        formData.append("productTag", data.productTag);
+        formData.append("productPrice", data.productPrice);
+        formData.append("productDiscount", data.productDiscount);
+        formData.append("productQuantity", data.productQuantity);
+        formData.append("productSKU", data.productSKU);
+        formData.append("productSize", data.productSize);
+        formData.append("productItemWeight", data.productItemWeight);
+        formData.append("productUnit", data.productUnit);
+        formData.append("productBreath", data.productBreath);
+        formData.append("productLength", data.productLength);
+        formData.append("productWidth", data.productWidth);
+
+        const res = await axiosInstance({
+          url: "api/product/add-products",
+          method: "POST",
+          data: formData,
+        });
+
+        toast.success(res.data.msg);
+
+        setProductImg(null);
+        reset();
+        return res.data;
+      } catch (error) {}
+    },
+  });
+
   console.log(errors);
   const handleSubmitAddProduct: SubmitHandler<
     inferProductFormDataType
-  > = async (data, e) => {
-    try {
-      if (productImg.length === 0) {
-        toast.error("No product image was deploy. Deploy one or more");
-        console.log("oops");
-        return;
-      }
-      const payload = {
-        ...data,
-        user_id: session?.user.id,
-        productImgUrl: productImg,
-      };
-      console.log(payload, data);
-      const res = await axiosInstance({
-        url: "api/product/add-products",
-        method: "POST",
-        data: payload,
-      });
-
-      toast.success(res.data.msg);
-      setProductImg([]);
-      reset();
-    } catch (error) {
-      const errorObj = error as GlobalErrorHandlerType;
-      if (errorObj.operational) {
-        toast.error(errorObj.msg);
-      } else {
-        toast.error("Something went wrong");
-      }
-    }
+  > = async (data) => {
+    mutate(data);
   };
 
   return (
@@ -217,7 +234,13 @@ export default function page() {
 
             {/* second grid */}
             <div className="flex flex-col space-y-6">
-              <ImageGrid setProductImg={(values) => setProductImg(values)} />
+              <ImageGrid
+                setProductImg={setProductImg}
+                isPending={isPending}
+                isError={isError}
+                error={error}
+                data={data}
+              />
               <div className="flex flex-col rounded-md space-y-4 p-3 border">
                 <h1 className="text-xl font-bold">Shipping and Delivery</h1>
 

@@ -1,9 +1,11 @@
-import React from "react";
+import { getShip } from "./actions/getShip";
 
-export default function page() {
+export default async function page() {
+  const shipping = await getShip();
+
   return (
     <div className="w-full h-56 flex flex-col justify-center items-center">
-      Shipping page
+      Shipping page coming soon...
     </div>
   );
 }

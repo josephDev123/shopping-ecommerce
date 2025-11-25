@@ -20,6 +20,7 @@
     "bullmq": "^5.53.2",
     "chart.js": "^4.4.7",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.8.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.5.0",
