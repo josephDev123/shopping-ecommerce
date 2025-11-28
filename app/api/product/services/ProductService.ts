@@ -2,18 +2,62 @@ import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import {
   IRelatedOpts,
   ProductRepository,
-} from "../../repository/productRepository/ProductRepository";
+} from "../repository/ProductRepository";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
-import mongoose from "mongoose";
 
 export class ProductService {
   constructor(private readonly ProductRepository: ProductRepository) {}
-  async create(addProductInputs: ProductSchemaTypes) {
+  async create(
+    addProductInputs: ProductSchemaTypes,
+    files: FormDataEntryValue[]
+  ) {
     try {
-      const result = await this.ProductRepository.create(addProductInputs);
+      // console.log("file", files);
+      // console.log("form data received", addProductInputs);
+      const arrayBuffers = await Promise.all(
+        files.map((file) =>
+          file instanceof File
+            ? file.arrayBuffer()
+            : Promise.reject(
+                new GlobalErrorHandler(
+                  "Invalid file type",
+                  "FileError",
+                  "400",
+                  true
+                )
+              )
+        )
+      );
+      const buffer = arrayBuffers.map((b) => (b ? Buffer.from(b) : null));
+
+      const result = await this.ProductRepository.create(
+        addProductInputs,
+        buffer
+      );
+
       return result;
     } catch (error) {
       console.log(error);
+
+      if (error instanceof GlobalErrorHandler) {
+        throw new GlobalErrorHandler(
+          error.message,
+          error.name,
+          error.code,
+          error.operational
+        );
+      }
+
+      if (error instanceof Error) {
+        throw new GlobalErrorHandler(error.message, error.name, "500", false);
+      }
+
+      throw new GlobalErrorHandler(
+        "Something went wrong",
+        "UnknownError",
+        "500",
+        false
+      );
     }
   }
 

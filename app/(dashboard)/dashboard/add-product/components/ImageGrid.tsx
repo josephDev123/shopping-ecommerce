@@ -71,7 +71,7 @@ export default function ImageGrid({
           </button>
         ) : data !== null ? (
           <div className="relative">
-            <img
+            {/* <img
               src={data?.url}
               alt="product image"
               width={200}
@@ -81,7 +81,7 @@ export default function ImageGrid({
             <IoIosClose
               onClick={() => handleFileDelete(data.secureUrl)}
               className="absolute top-0.5 right-0.5 cursor-pointer text-2xl  text-red-500 hover:text-red-300 rounded-full p-0.5 "
-            />
+            /> */}
           </div>
         ) : (
           <p className="text-sm">Products image preview</p>

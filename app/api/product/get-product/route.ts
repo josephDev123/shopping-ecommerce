@@ -2,9 +2,9 @@ import { startDb } from "@/lib/startDb";
 import {
   IRelatedOpts,
   ProductRepository,
-} from "../../repository/productRepository/ProductRepository";
+} from "../repository/ProductRepository";
 import ProductModel from "@/models/ProductsModel";
-import { ProductService } from "../../service/productServices/ProductService";
+import { ProductService } from "../services/ProductService";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,

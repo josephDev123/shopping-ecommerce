@@ -1,16 +1,62 @@
 import mongoose, { Model, PipelineStage } from "mongoose";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
-import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
-import { ProductDataType } from "@/app/types/productsType";
+import cloudinary from "@/app/utils/Cloudinary";
 
 export type IRelatedOpts = { page?: number; limit?: number };
 
+interface CloudinaryUploadResult {
+  url: string;
+  public_id: string;
+}
+
 export class ProductRepository {
   constructor(private readonly dbContext: Model<ProductSchemaTypes>) {}
-  async create(addProductInputs: ProductSchemaTypes) {
+  async create(
+    addProductInputs: ProductSchemaTypes,
+    filesBuffer: (Buffer | null)[]
+  ) {
+    const uploadedImages: string[] = [];
+    const uploadedPublicIds: string[] = [];
+
     try {
-      const newDocument = new this.dbContext(addProductInputs);
+      for (const buffer of filesBuffer) {
+        console.log("buffer", buffer);
+        const uploadResult = await new Promise<{
+          url: string;
+          public_id: string;
+        }>((resolve, reject) => {
+          cloudinary.uploader
+            .upload_stream({ folder: "products" }, (err, result) => {
+              if (err || !result)
+                return reject(
+                  new GlobalErrorHandler(
+                    "Image upload failed",
+                    "UploadError",
+                    "500",
+                    true
+                  )
+                );
+              resolve({
+                url: result.secure_url as string,
+                public_id: result.public_id as string,
+              } as CloudinaryUploadResult);
+            })
+            .end(buffer);
+        });
+
+        uploadedImages.push(uploadResult.url);
+        uploadedPublicIds.push(uploadResult.public_id);
+      }
+
+      const product = {
+        ...addProductInputs,
+        productImgUrl: uploadedImages.map((url, index) => ({
+          url,
+          path: uploadedPublicIds[index],
+        })),
+      };
+      const newDocument = new this.dbContext(product);
       await newDocument.save();
       return {
         msg: "Create product successful",
@@ -21,7 +67,51 @@ export class ProductRepository {
         data: "",
       };
     } catch (error) {
-      new GlobalErrorHandler("Add product fails", "UnknownError", "500", true);
+      // 4️⃣ Rollback: Delete Cloudinary uploads if DB failed
+      if (Array.isArray(uploadedPublicIds)) {
+        for (const pid of uploadedPublicIds) {
+          try {
+            await cloudinary.uploader.destroy(pid);
+          } catch (e) {
+            console.error(`Failed to delete Cloudinary image ${pid}:`, e);
+            // throw new GlobalErrorHandler(
+            //   "remove uploaded file fails during cleanup",
+            //   "UnknownError",
+            //   "500",
+            //   true
+            // );
+          }
+        }
+      }
+
+      if (error instanceof GlobalErrorHandler) {
+        throw new GlobalErrorHandler(
+          // "Add product fails",
+          error.message,
+          // "UnknownError",
+          error.name,
+          "500",
+          true
+        );
+      }
+
+      if (error instanceof Error) {
+        throw new GlobalErrorHandler(
+          // "Add product fails",
+          error.message,
+          // "UnknownError",
+          error.name,
+          "500",
+          true
+        );
+      }
+
+      throw new GlobalErrorHandler(
+        "Add product fails",
+        "UnknownError",
+        "500",
+        true
+      );
     }
   }
 

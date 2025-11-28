@@ -1,13 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import { ProductService } from "../../service/productServices/ProductService";
-import { ProductRepository } from "../../repository/productRepository/ProductRepository";
+import { NextResponse } from "next/server";
+import { ProductService } from "../services/ProductService";
+import { ProductRepository } from "../repository/ProductRepository";
 import { startDb } from "@/lib/startDb";
 import ProductModel from "@/models/ProductsModel";
 import { ProductSchemaTypes } from "@/models/ProductsModel";
-import {
-  ApiResponseHelper,
-  SuccessApiResponseHelper,
-} from "../../utils/ApiResponseHelper";
+import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
 import {
   GlobalErrorHandler,
   GlobalErrorHandlerType,
@@ -19,27 +16,44 @@ export async function POST(req: Request) {
     const ProductRepositoryImp = new ProductRepository(ProductModel);
     const ProductServiceImpl = new ProductService(ProductRepositoryImp);
 
-    const addProductInputs: ProductSchemaTypes = await req.json();
-    const result = await ProductServiceImpl.create(addProductInputs);
-    // console.log(result);
-    return SuccessApiResponseHelper(
-      result?.msg || "",
-      result?.name || "",
-      result?.operational || false,
-      result?.type || "",
-      result?.status || 0,
-      result?.data || ""
+    const formData = await req.formData();
+    const files = formData.getAll("productImgUrl");
+
+    if (files.length === 0) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
+
+    const payload = Object.fromEntries(
+      formData.entries()
+    ) as unknown as ProductSchemaTypes;
+
+    const result = await ProductServiceImpl.create(payload, files);
+
+    return NextResponse.json(
+      { message: "Product added Successful" },
+      { status: 200 }
     );
-    // return Response.json(result, { status: 200 });
   } catch (error) {
-    const errorObj = error as GlobalErrorHandlerType;
-    console.log(errorObj);
+    if (error instanceof GlobalErrorHandler) {
+      return ApiResponseHelper(
+        error.message,
+        error.name,
+        error.operational,
+        "error",
+        Number(error.code)
+      );
+    }
+
+    if (error instanceof Error) {
+      return ApiResponseHelper(error.message, error.name, false, "error", 500);
+    }
+
     return ApiResponseHelper(
-      errorObj.msg,
-      errorObj.name,
-      errorObj.operational,
+      "Something went wrong",
+      "UnknownError",
+      false,
       "error",
-      errorObj.code
+      500
     );
   }
 }

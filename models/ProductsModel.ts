@@ -1,11 +1,11 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 type uploadImgPattern = {
   url: string;
   path: string;
 };
 export type ProductSchemaTypes = {
-  id?: string;
+  // id?: string;
   user_id?: Schema.Types.ObjectId;
   // reviewId: Schema.Types.ObjectId;
   productName?: string;

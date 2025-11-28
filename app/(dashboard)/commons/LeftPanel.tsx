@@ -8,6 +8,7 @@ import { authOptions } from "@/lib/NextAuthOption";
 import Logout from "./Logout";
 import Image from "next/image";
 import EmptyAvatar from "./EmptyAvatar";
+import { TbBrandProducthunt } from "react-icons/tb";
 
 export default async function LeftPanel() {
   const session = await getServerSession(authOptions);
@@ -34,22 +35,28 @@ export default async function LeftPanel() {
         ))}
       </div>
       <div className="flex flex-col w-full mt-4">
-        {session?.user.role === "admin" && (
-          <>
-            <h2 className="text-sm">PRODUCTS</h2>
-            <LeftPanelItemCard
-              icon={<IoIosAddCircleOutline className="text-lg" />}
-              text="Add Products"
-              path="/dashboard/add-product"
-            />
-          </>
-        )}
+        {/* {session?.user.role === "admin" && ( */}
+        <>
+          <h2 className="text-sm">PRODUCTS</h2>
+          <LeftPanelItemCard
+            icon={<IoIosAddCircleOutline className="text-lg" />}
+            text="Add Products"
+            path="/dashboard/add-product"
+          />
+        </>
+        {/* )} */}
 
-        {/* <LeftPanelItemCard
+        <LeftPanelItemCard
           icon={<TbBrandProducthunt className="text-lg" />}
           text="Product List"
-          path="/product-list"
-        /> */}
+          path="/dashboard/product-list"
+        />
+
+        <LeftPanelItemCard
+          icon={<TbBrandProducthunt className="text-lg" />}
+          text="Admin Product List"
+          path="/dashboard/admin-view-products"
+        />
       </div>
 
       <div className="mt-auto flex flex-col space-y-8 w-full">

@@ -29,7 +29,7 @@ export default async function page({ searchParams }: pageProps) {
     }`
   );
   if (!response.ok) {
-    return "Failed to fetch order data";
+    throw new Error("Failed to fetch order data");
   }
 
   const data = await response.json();
