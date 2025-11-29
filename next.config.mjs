@@ -4,9 +4,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "firebasestorage.googleapis.com",
+        // hostname: "firebasestorage.googleapis.com",
+        hostname: "res.cloudinary.com",
         port: "",
-        pathname: "/v0/b/e-commerce-c0b3d.appspot.com/**",
+        // pathname: "/v0/b/e-commerce-c0b3d.appspot.com/**",
+        pathname: "/drm0sixwc/image/upload/v1764346737/products/*",
       },
     ],
   },

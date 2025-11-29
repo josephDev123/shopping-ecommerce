@@ -8,7 +8,7 @@ import OrderModel from "@/models/OrderModel";
 import { NotificationRepo } from "../repository/NotificationRepo";
 import { NotificationModel } from "@/models/Notification";
 import { Notification } from "../service/Notification";
-import { IShippingSchema, ShippingModel } from "@/models/Shiping";
+import { ShippingModel, IShippingSchema } from "../shipping/model/Shiping";
 import mongoose, { Types } from "mongoose";
 
 export async function POST(req: NextRequest) {

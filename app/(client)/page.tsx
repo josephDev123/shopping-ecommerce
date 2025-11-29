@@ -1,23 +1,15 @@
-import { Suspense } from "react";
 import BrowserProductRange from "./homeComponents/BrowserProductRange";
 import Hero from "./homeComponents/Hero";
 import OurProducts from "./homeComponents/OurProducts";
-import { CustomFetch } from "../serverActions/customFetch";
-import { getCategory } from "../serverActions/fetchCategories";
-import { getPaginateProducts } from "../serverActions/fetchPaginateProducts";
+import { getCategory } from "./actions/category";
+import { getPaginateProducts } from "./actions/product";
 
 export const dynamic = "force-dynamic";
 
 export default async function page() {
   const [category, products] = await Promise.all([
-    // getCategory(),
-    CustomFetch({
-      url: `${process.env.SERVER_BASEURL}/api/categories?page=1&limit=3`,
-    }),
-    CustomFetch({
-      url: `${process.env.SERVER_BASEURL}/api/product/products-paginate?page=1&limit=6`,
-    }),
-    // getPaginateProducts(),
+    getCategory(),
+    getPaginateProducts(),
   ]);
 
   console.log("products", products);
@@ -26,7 +18,7 @@ export default async function page() {
   return (
     <section className="">
       <Hero />
-      {/* {JSON.stringify(process.env.NEXT_PUBLIC_BASEURL, null, 2)} */}
+      {/* {JSON.stringify(products, null, 2)} */}
       <BrowserProductRange data={category.data?.categoriesGroup} />
 
       <OurProducts data={products.data?.products} />

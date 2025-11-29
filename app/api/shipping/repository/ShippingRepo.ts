@@ -1,6 +1,6 @@
 import { Model } from "mongoose";
 import { IShipping } from "../zod/ShippingSchema";
-import { IShippingSchema } from "@/models/Shiping";
+import { IShippingSchema } from "../model/Shiping";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
 export class ShippingRepo {
@@ -34,6 +34,54 @@ export class ShippingRepo {
     }
   }
 
+  // async getAll(page: number, limit: number) {
+  //   try {
+  //     const offset = (page - 1) * limit;
+
+  //     const result = await this.db.aggregate([
+  //       {
+  //         $facet: {
+  //           data: [
+  //             { $sort: { createdAt: -1 } },
+  //             { $skip: offset },
+  //             { $limit: limit },
+  //             populate("orderId")
+  //           ],
+  //           totalCount: [{ $count: "count" }],
+  //         },
+  //       },
+  //     ]);
+
+  //     const shippings: IShippingSchema[] = result[0].data || [];
+  //     const total = result[0].totalCount[0]?.count || 0;
+
+  //     return {
+  //       data: shippings,
+  //       totalCount: total,
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+  //     if (error instanceof GlobalErrorHandler) {
+  //       throw new GlobalErrorHandler(
+  //         error.message,
+  //         error.name,
+  //         error.code,
+  //         error.operational
+  //       );
+  //     }
+  //     if (error instanceof Error) {
+  //       throw new GlobalErrorHandler(error.message, error.name, "400", false);
+  //     }
+
+  //     throw new GlobalErrorHandler(
+  //       "Something went wrong",
+  //       "UnknownError",
+  //       "500",
+  //       false
+  //     );
+  //   }
+  // }
+
   async getAll(page: number, limit: number) {
     try {
       const offset = (page - 1) * limit;
@@ -45,13 +93,46 @@ export class ShippingRepo {
               { $sort: { createdAt: -1 } },
               { $skip: offset },
               { $limit: limit },
+
+              // Manually populate orderId using $lookup
+              {
+                $lookup: {
+                  from: "transaction", // Collection name in DB (lowercase, pluralized by Mongoose)
+                  localField: "transactionId",
+                  foreignField: "_id",
+                  as: "Transaction", // Populated field name
+                },
+              },
+              {
+                $unwind: {
+                  path: "$transaction",
+                  preserveNullAndEmptyArrays: true, // Keep shipping even if order is missing
+                },
+              },
+
+              // Optional: Project to shape the output (remove orderId if you want only 'order')
+              {
+                $project: {
+                  transaction: 1,
+                  // order: 1, // populated order object
+                  trackingNumber: 1,
+                  carrier: 1,
+                  shippingMethod: 1,
+                  estimatedDeliveryDate: 1,
+                  actualDeliveryDate: 1,
+                  status: 1,
+                  deliveryNotes: 1,
+                  createdAt: 1,
+                  updatedAt: 1,
+                },
+              },
             ],
             totalCount: [{ $count: "count" }],
           },
         },
       ]);
 
-      const shippings: IShippingSchema[] = result[0].data || [];
+      const shippings = result[0].data || [];
       const total = result[0].totalCount[0]?.count || 0;
 
       return {
@@ -61,20 +142,11 @@ export class ShippingRepo {
     } catch (error) {
       console.log(error);
       if (error instanceof GlobalErrorHandler) {
-        throw new GlobalErrorHandler(
-          error.message,
-          error.name,
-          error.code,
-          error.operational
-        );
+        throw error;
       }
-      if (error instanceof Error) {
-        throw new GlobalErrorHandler(error.message, error.name, "400", false);
-      }
-
       throw new GlobalErrorHandler(
-        "Something went wrong",
-        "UnknownError",
+        error instanceof Error ? error.message : "Something went wrong",
+        "DatabaseError",
         "500",
         false
       );

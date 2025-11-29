@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ShippingService } from "../service/ShippingService";
 import { ShippingRepo } from "../repository/ShippingRepo";
-import { ShippingModel } from "@/models/Shiping";
+import { ShippingModel } from "../model/Shiping";
 import { IShipping } from "../zod/ShippingSchema";
 import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
