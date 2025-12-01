@@ -28,7 +28,7 @@ export default function ProductsListTable({ data }: ProductsListTableProps) {
         </thead>
         <tbody className="odd:border-b border-gray-200  p-16">
           {data?.length < 1 ? (
-            <tr>
+            <tr className="mt-4">
               <td colSpan={7} className="text-center">
                 No data found
               </td>

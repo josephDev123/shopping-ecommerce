@@ -8,7 +8,7 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         port: "",
         // pathname: "/v0/b/e-commerce-c0b3d.appspot.com/**",
-        pathname: "/drm0sixwc/image/upload/v1764346737/products/*",
+        pathname: "/drm0sixwc/**",
       },
     ],
   },

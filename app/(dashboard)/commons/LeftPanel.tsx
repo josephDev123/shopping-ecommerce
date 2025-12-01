@@ -35,28 +35,29 @@ export default async function LeftPanel() {
         ))}
       </div>
       <div className="flex flex-col w-full mt-4">
-        {/* {session?.user.role === "admin" && ( */}
-        <>
-          <h2 className="text-sm">PRODUCTS</h2>
-          <LeftPanelItemCard
-            icon={<IoIosAddCircleOutline className="text-lg" />}
-            text="Add Products"
-            path="/dashboard/add-product"
-          />
-        </>
-        {/* )} */}
+        {session?.user.role === "admin" && (
+          <>
+            <h2 className="text-sm">PRODUCTS</h2>
+            <LeftPanelItemCard
+              icon={<IoIosAddCircleOutline className="text-lg" />}
+              text="Add Products"
+              path="/dashboard/add-product"
+            />
+          </>
+        )}
 
         <LeftPanelItemCard
           icon={<TbBrandProducthunt className="text-lg" />}
-          text="Product List"
+          text="Purchased Product"
           path="/dashboard/product-list"
         />
-
-        <LeftPanelItemCard
-          icon={<TbBrandProducthunt className="text-lg" />}
-          text="Admin Product List"
-          path="/dashboard/admin-view-products"
-        />
+        {session?.user.role === "admin" && (
+          <LeftPanelItemCard
+            icon={<TbBrandProducthunt className="text-lg" />}
+            text=" View Products"
+            path="/dashboard/admin-view-products"
+          />
+        )}
       </div>
 
       <div className="mt-auto flex flex-col space-y-8 w-full">

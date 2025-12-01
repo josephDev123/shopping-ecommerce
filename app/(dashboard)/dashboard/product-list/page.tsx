@@ -1,6 +1,5 @@
 import ProductsListTable from "./components/ProductsListTable";
 import FooterPagination from "../../commons/FooterPagination";
-import { z } from "zod";
 import { ProductFormDataSchema } from "../add-product/types/addProductDataTypes";
 import { Suspense } from "react";
 import { getServerSession } from "next-auth";
@@ -9,6 +8,7 @@ import FilterSection from "./components/FilterSection";
 import ExportSection from "./components/ExportSection";
 import { TransactionServerResponseType } from "@/app/types/TransactionType";
 import { TransactionType } from "@/models/FlwTransactionModel";
+import { cookies } from "next/headers";
 
 interface pageProps {
   searchParams: {
@@ -19,22 +19,27 @@ interface pageProps {
 export default async function page({ searchParams }: pageProps) {
   // type productType = z.infer<typeof ProductFormDataSchema>;
   const session = await getServerSession(authOptions);
-
+  const cookieStore = cookies();
   console.log(searchParams);
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_BASEURL}/api/transaction?user_id=${
+    `${process.env.SERVER_BASEURL}/api/transaction?user_id=${
       session?.user.id
     }&page=${Number(searchParams.page) || 1}&limit=${
       Number(searchParams.limit) || 2
-    }`
+    }`,
+    {
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+    }
   );
   if (!response.ok) {
-    throw new Error("Failed to fetch order data");
+    throw new Error(await response.text());
   }
 
   const data = await response.json();
   // const result: TransactionServerResponseType[] = data.data;
-  const result: TransactionType[] = data.data;
+  const result: TransactionType[] = data.data.transactionData;
   console.log(result);
   const totalDocs = data.data.totalCount;
 

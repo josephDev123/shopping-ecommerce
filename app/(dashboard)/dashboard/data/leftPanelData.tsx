@@ -5,6 +5,7 @@ import { RiCoupon2Line } from "react-icons/ri";
 import { MdOutlineCategory } from "react-icons/md";
 import { AiOutlineTransaction } from "react-icons/ai";
 import { TbBrandSketch } from "react-icons/tb";
+import { LiaShippingFastSolid } from "react-icons/lia";
 
 export const leftPanelItem = [
   { icons: <RxDashboard />, text: "Dashboard", path: "/dashboard" },
@@ -22,7 +23,7 @@ export const leftPanelItem = [
   },
 
   {
-    icons: <AiOutlineTransaction />,
+    icons: <LiaShippingFastSolid />,
     text: "Tracking/Shipping",
     path: "/dashboard/shipping",
   },

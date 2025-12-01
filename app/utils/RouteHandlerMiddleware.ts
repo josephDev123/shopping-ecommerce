@@ -12,7 +12,8 @@ export const RouteHandlerMiddleware = (
   ) => {
     //  this part is confusing. pls remember that cookie key are different base on environment
     const token =
-      req.cookies.get("next-auth.session-token") ||
+      req.cookies.get("__Host-next-auth.session-token") ??
+      req.cookies.get("next-auth.session-token") ??
       req.cookies.get("__Secure-next-auth.session-token");
 
     if (!token?.value) {

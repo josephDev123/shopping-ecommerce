@@ -12,17 +12,15 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { ProductFormDataSchema } from "./types/addProductDataTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-// import axios from "axios";
 import { useState } from "react";
 import { axiosInstance } from "@/app/axiosInstance";
 import { toast } from "react-toastify";
-import { GlobalErrorHandlerType } from "@/app/utils/globarErrorHandler";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
-// import { returnUploadedImagePattern } from "@/app/hooks/useUploadFileToFirebaseStorage";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function page() {
-  const [productImg, setProductImg] = useState<FileList | null>(null);
+  const [productFile, setProductFile] = useState<FileList | null>(null);
   const { data: session } = useSession();
 
   type inferProductFormDataType = z.infer<typeof ProductFormDataSchema>;
@@ -38,14 +36,14 @@ export default function page() {
   const { mutate, isPending, data, isError, error } = useMutation({
     mutationFn: async (data: inferProductFormDataType) => {
       try {
-        if (!productImg || productImg.length === 0) {
+        if (!productFile || productFile.length === 0) {
           toast.error("No product image was deploy. Deploy one or more");
           console.log("oops");
           return;
         }
 
         const formData = new FormData();
-        const fileList = productImg;
+        const fileList = productFile;
         if (fileList && fileList.length) {
           Array.from(fileList).forEach((file) => {
             formData.append("productImgUrl", file);
@@ -75,18 +73,21 @@ export default function page() {
 
         toast.success(res.data.msg);
 
-        setProductImg(null);
+        setProductFile(null);
         reset();
         return res.data;
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
   console.log(errors);
-  const handleSubmitAddProduct: SubmitHandler<
-    inferProductFormDataType
-  > = async (data) => {
+  const handleSubmitAddProduct: SubmitHandler<inferProductFormDataType> = (
+    data
+  ) => {
     mutate(data);
+    // console.log(data);
   };
 
   return (
@@ -235,7 +236,8 @@ export default function page() {
             {/* second grid */}
             <div className="flex flex-col space-y-6">
               <ImageGrid
-                setProductImg={setProductImg}
+                setProductImg={setProductFile}
+                productFile={productFile}
                 isPending={isPending}
                 isError={isError}
                 error={error}
@@ -244,11 +246,11 @@ export default function page() {
               <div className="flex flex-col rounded-md space-y-4 p-3 border">
                 <h1 className="text-xl font-bold">Shipping and Delivery</h1>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="flex w-full flex-wrap gap-2">
                   <Input
                     type="number"
                     labelName="Item Weight"
-                    className="border p-2 rounded-md col-span-2"
+                    className="border p-2 rounded-md w-full"
                     placeholder="10"
                     register={register}
                     name="productItemWeight"
@@ -261,7 +263,7 @@ export default function page() {
                   <SelectInput
                     data={weightUnits}
                     labelName="Unit"
-                    className="border p-2 rounded-md col-span-2"
+                    className="border p-2 rounded-md w-full"
                     register={register}
                     name="productUnit"
                     errorLabel={
@@ -273,7 +275,7 @@ export default function page() {
                   <Input
                     type="number"
                     labelName="Breath"
-                    className="border p-2 rounded-md"
+                    className="border p-2 rounded-md w-full"
                     placeholder="20"
                     register={register}
                     name="productBreath"
@@ -284,11 +286,11 @@ export default function page() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="w-full flex  flex-wrap gap-4">
                   <Input
                     type="number"
                     labelName="Length"
-                    className="border p-2 rounded-md"
+                    className="border p-2 rounded-md w-full"
                     placeholder="10"
                     register={register}
                     name="productLength"
@@ -301,7 +303,7 @@ export default function page() {
                   <Input
                     type="number"
                     labelName="Width"
-                    className="border p-2 rounded-md"
+                    className="border p-2 rounded-md w-full"
                     placeholder="10"
                     register={register}
                     name="productWidth"
@@ -322,18 +324,16 @@ export default function page() {
             />
 
             <div className="flex items-center gap-3">
-              {/* <Button
-              type="submit"
-              textContent="Save as Default"
-              className="border rounded-md w-36 font-semibold p-2 bg-gray-100 hover:bg-gray-200 hover:text-black"
-            /> */}
-
               <Button
-                disabled={isSubmitting}
+                disabled={isPending}
                 type="submit"
                 textContent="Publish"
-                className="border rounded-md w-20 p-2 bg-blue-300 hover:bg-blue-400 hover:text-black/80"
-              />
+                className="border inline-flex gap-2 items-center justify-center rounded-md  p-2 bg-blue-300 hover:bg-blue-400 hover:text-black/80"
+              >
+                {isPending && (
+                  <AiOutlineLoading3Quarters className="animate-spin text-3xl text-yellow-400" />
+                )}
+              </Button>
             </div>
           </div>
         </form>

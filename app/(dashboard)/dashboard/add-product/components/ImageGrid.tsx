@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { Images } from "@/app/Images";
 import Image from "next/image";
@@ -19,6 +19,7 @@ type ImageGridType = {
   isError: boolean;
   error: Error | null;
   data: any;
+  productFile: FileList | null;
 };
 export default function ImageGrid({
   setProductImg,
@@ -26,6 +27,7 @@ export default function ImageGrid({
   isError,
   isPending,
   data,
+  productFile,
 }: ImageGridType) {
   const fileRef = useRef<HTMLInputElement>(null);
   // const {
@@ -41,9 +43,7 @@ export default function ImageGrid({
     const fileInput = e.target as HTMLInputElement;
     const selectedFile = fileInput.files;
 
-    // setDefaultSelectedImg(selectedFile);
     if (selectedFile) {
-      // uploadFile("/product", selectedFile);
       setProductImg(selectedFile);
     }
   };
@@ -65,7 +65,7 @@ export default function ImageGrid({
         {isError ? (
           <p className="text-xs text-red-400">{error?.message}</p>
         ) : isPending ? (
-          <button className="inline-flex gap-1 w-fit bg-green-400 h-fit rounded-md ">
+          <button className="inline-flex gap-1 w-fit text-green-400 h-fit rounded-md ">
             <AiOutlineLoading3Quarters className="animate-spin" />
             {/* {uploadStageStatus} ... */}
           </button>
@@ -109,6 +109,12 @@ export default function ImageGrid({
       >
         <IoCloudUploadOutline className="text-xl" />
         <p>Drag or upload your files</p>
+        {productFile &&
+          Array.from(productFile).map((file) => (
+            <p key={file.name} className="text-sm mt-2">
+              {file.name}
+            </p>
+          ))}
       </div>
     </section>
   );
