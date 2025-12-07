@@ -1,7 +1,8 @@
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { IShipping } from "../zod/ShippingSchema";
 import { IShippingSchema } from "../model/Shiping";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
+import { Session } from "next-auth";
 
 export class ShippingRepo {
   constructor(private readonly db: Model<IShippingSchema>) {}
@@ -82,7 +83,7 @@ export class ShippingRepo {
   //   }
   // }
 
-  async getAll(page: number, limit: number) {
+  async getAll(page: number, limit: number, userSession: Session) {
     try {
       const offset = (page - 1) * limit;
 
@@ -90,6 +91,11 @@ export class ShippingRepo {
         {
           $facet: {
             data: [
+              {
+                $match: {
+                  userId: new mongoose.Types.ObjectId(userSession.user.id),
+                },
+              },
               { $sort: { createdAt: -1 } },
               { $skip: offset },
               { $limit: limit },

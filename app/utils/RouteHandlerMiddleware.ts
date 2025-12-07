@@ -1,5 +1,7 @@
 import { NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
+import { DefaultSession, getServerSession, Session } from "next-auth";
+import { authOptions } from "@/lib/NextAuthOption";
 
 type NextApiHandler = (req: NextRequest, res?: any) => Promise<Response>;
 
@@ -10,6 +12,7 @@ export const RouteHandlerMiddleware = (
     req: NextRequest,
     res?: NextResponse | NextApiResponse | Response
   ) => {
+    const session = await getServerSession(authOptions);
     //  this part is confusing. pls remember that cookie key are different base on environment
     const token =
       req.cookies.get("__Host-next-auth.session-token") ??
@@ -25,6 +28,10 @@ export const RouteHandlerMiddleware = (
         }
       );
     }
+
+    // console.log("session", session);
+
+    req.session = session;
 
     return handler(req);
   };

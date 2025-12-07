@@ -6,12 +6,14 @@ import { IShipping } from "../zod/ShippingSchema";
 import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { startDb } from "@/lib/startDb";
+import { Session } from "next-auth";
 
 async function createShippingHandler(req: NextRequest) {
   try {
     await startDb();
+    const user = req.session as unknown as Session;
     const ShippingRepoInit = new ShippingRepo(ShippingModel);
-    const ShippingServiceInit = new ShippingService(ShippingRepoInit);
+    const ShippingServiceInit = new ShippingService(ShippingRepoInit, user!);
     const body = await req.json();
 
     const payload: IShipping = body;

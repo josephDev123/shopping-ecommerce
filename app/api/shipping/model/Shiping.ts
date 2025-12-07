@@ -9,6 +9,7 @@ import { Document, model, models, Schema, Types } from "mongoose";
 
 // Define the main Shipping interface
 export interface IShippingSchema extends Document {
+  userId: Types.ObjectId;
   transactionId: Types.ObjectId;
   orderId: Types.ObjectId;
   trackingNumber: string;
@@ -31,13 +32,18 @@ export interface IShippingSchema extends Document {
 
 const ShippingSchema = new Schema<IShippingSchema>(
   {
-    transactionId: { type: Schema.Types.ObjectId, ref: "Transaction" },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    transactionId: {
+      type: Schema.Types.ObjectId,
+      ref: "Transaction",
+      required: true,
+    },
     orderId: { type: Schema.Types.ObjectId, ref: "Order", required: true },
     trackingNumber: {
       type: String,
       required: true,
       unique: true,
-      default: randomUUID,
+      default: randomUUID(),
     },
     carrier: { type: String, trim: true },
     shippingMethod: {

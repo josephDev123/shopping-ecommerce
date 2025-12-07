@@ -162,6 +162,7 @@ export async function POST(req: NextRequest) {
 
       // CREATE THE TRACKING/ SHIPPING HERE
       const Shipping: Partial<IShippingSchema> = {
+        userId: new mongoose.Types.ObjectId(payload.meta_data.user_id),
         transactionId: transaction._id,
         orderId: new mongoose.Types.ObjectId(payload.meta_data.orderId),
       };

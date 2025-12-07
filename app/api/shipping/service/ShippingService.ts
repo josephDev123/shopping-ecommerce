@@ -2,9 +2,17 @@ import { ShippingRepo } from "../repository/ShippingRepo";
 import { zodValidate } from "@/app/utils/zodValidation";
 import { IShipping, shippingSchema } from "../zod/ShippingSchema";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
+import { Session } from "next-auth";
 
 export class ShippingService {
-  constructor(private readonly ShippingRepo: ShippingRepo) {}
+  user: Session;
+
+  constructor(
+    private readonly ShippingRepo: ShippingRepo,
+    userSession: Session
+  ) {
+    this.user = userSession;
+  }
 
   async create(payload: IShipping) {
     try {
@@ -38,7 +46,7 @@ export class ShippingService {
 
   async getAll(page: number, limit: number) {
     try {
-      const shippings = await this.ShippingRepo.getAll(page, limit);
+      const shippings = await this.ShippingRepo.getAll(page, limit, this.user);
       return shippings;
     } catch (error) {
       if (error instanceof GlobalErrorHandler) {

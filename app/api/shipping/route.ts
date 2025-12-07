@@ -5,14 +5,19 @@ import { ShippingModel } from "./model/Shiping";
 import { startDb } from "@/lib/startDb";
 import { ApiResponseHelper } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
+import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
+import { Session } from "next-auth";
 
 async function GetShippingRoute(req: NextRequest) {
   try {
     await startDb();
+    const user = req.session as unknown as Session;
     const ShippingRepoInit = new ShippingRepo(ShippingModel);
-    const ShippingServiceInit = new ShippingService(ShippingRepoInit);
+    const ShippingServiceInit = new ShippingService(ShippingRepoInit, user!);
     const page = Number(req.nextUrl.searchParams.get("page")) || 1;
     const limit = Number(req.nextUrl.searchParams.get("limit")) || 10;
+
+    console.log("shipping route", user);
 
     const result = await ShippingServiceInit.getAll(page, limit);
 
@@ -49,4 +54,4 @@ async function GetShippingRoute(req: NextRequest) {
     );
   }
 }
-export const GET = GetShippingRoute;
+export const GET = RouteHandlerMiddleware(GetShippingRoute);

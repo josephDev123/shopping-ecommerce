@@ -19,6 +19,7 @@ const shippingStatuses = [
 
 // Main Shipping schema
 export const shippingSchema = z.object({
+  userId: objectId,
   transactionId: objectId,
   orderId: objectId,
   trackingNumber: z.string().min(1),

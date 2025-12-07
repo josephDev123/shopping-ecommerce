@@ -95,7 +95,7 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
                     <p>
                       {cart.qty} x{" "}
                       <span className="text-[#B88E2F]">
-                        usd. {cart.productPrice}
+                        NGN. {cart.productPrice}
                       </span>
                     </p>
                   </div>
@@ -114,7 +114,7 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
               <div className="flex items-center gap-4">
                 <h3 className="font-medium">Subtotal</h3>
                 <p className="text-[#B88E2F] font-medium">
-                  usd. {subtotal.toFixed(2)}
+                  NGN. {subtotal.toFixed(2)}
                 </p>
               </div>
               <hr className="my-4" />
@@ -128,14 +128,14 @@ export default function SideBarCart({ closeSideBar }: ISideBarCart) {
                   className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
                 />
                 {/* <Link href={"/checkout"}> */}
-                  <Button
-                    onClick={() => {
-                      navigate.push("/checkout");
-                      closeSideBar();
-                    }}
-                    textContent="Checkout"
-                    className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
-                  />
+                <Button
+                  onClick={() => {
+                    navigate.push("/checkout");
+                    closeSideBar();
+                  }}
+                  textContent="Checkout"
+                  className="border border-black rounded-full py-0.5 px-3 hover:bg-[#bdac82]"
+                />
                 {/* </Link> */}
               </div>
             </div>
