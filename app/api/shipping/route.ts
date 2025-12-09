@@ -17,7 +17,7 @@ async function GetShippingRoute(req: NextRequest) {
     const page = Number(req.nextUrl.searchParams.get("page")) || 1;
     const limit = Number(req.nextUrl.searchParams.get("limit")) || 10;
 
-    console.log("shipping route", user);
+    // console.log("shipping route", user);
 
     const result = await ShippingServiceInit.getAll(page, limit);
 

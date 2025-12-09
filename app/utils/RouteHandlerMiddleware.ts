@@ -29,7 +29,7 @@ export const RouteHandlerMiddleware = (
       );
     }
 
-    // console.log("session", session);
+    // console.log("token", token);
 
     req.session = session;
 

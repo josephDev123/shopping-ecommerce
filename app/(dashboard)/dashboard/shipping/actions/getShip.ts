@@ -1,21 +1,28 @@
 "use server";
 
-import { IShipping } from "@/app/api/shipping/zod/ShippingSchema";
+import { ShippingsApiResponse } from "../type/ApiShipping";
+import { cookies } from "next/headers";
 
 export async function getShip() {
+  const cookie = cookies();
   try {
     const response = await fetch(`${process.env.SERVER_BASEURL}/api/shipping`, {
+      headers: {
+        cookie: cookie.toString(),
+      },
       next: { revalidate: 60 * 5, tags: ["shipping"] },
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch shipping data");
+      throw new Error(await response.text());
     }
 
-    return (await response.json()) as IShipping[];
+    return (await response.json()) as ShippingsApiResponse;
   } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
-    throw new Error(`Error in Shipping: ${errorMessage}`);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+
+    throw new Error("Unknown error");
   }
 }

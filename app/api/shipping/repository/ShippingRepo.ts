@@ -99,14 +99,26 @@ export class ShippingRepo {
               { $sort: { createdAt: -1 } },
               { $skip: offset },
               { $limit: limit },
-
-              // Manually populate orderId using $lookup
               {
                 $lookup: {
-                  from: "transaction", // Collection name in DB (lowercase, pluralized by Mongoose)
+                  from: "orders",
+                  localField: "orderId",
+                  foreignField: "_id",
+                  as: "order",
+                },
+              },
+              {
+                $unwind: {
+                  path: "$order",
+                  preserveNullAndEmptyArrays: true,
+                },
+              },
+              {
+                $lookup: {
+                  from: "transactions", // Collection name in DB (lowercase, pluralized by Mongoose)
                   localField: "transactionId",
                   foreignField: "_id",
-                  as: "Transaction", // Populated field name
+                  as: "transaction", // Populated field name
                 },
               },
               {
@@ -116,11 +128,25 @@ export class ShippingRepo {
                 },
               },
 
-              // Optional: Project to shape the output (remove orderId if you want only 'order')
               {
                 $project: {
                   transaction: 1,
-                  // order: 1, // populated order object
+                  // items: "$order.items",
+                  customer: "$order.customer",
+                  items: {
+                    $map: {
+                      input: "$order.items",
+                      as: "item",
+                      in: {
+                        productName: "$$item.productName",
+                        productSKU: "$$item.productSKU",
+                        productCategory: "$$item.productCategory",
+                        qty: "$$item.qty",
+                        Description: "$$item.Description",
+                        productImgUrl: "$$item.productImgUrl",
+                      },
+                    },
+                  },
                   trackingNumber: 1,
                   carrier: 1,
                   shippingMethod: 1,
@@ -142,7 +168,7 @@ export class ShippingRepo {
       const total = result[0].totalCount[0]?.count || 0;
 
       return {
-        data: shippings,
+        shippings,
         totalCount: total,
       };
     } catch (error) {
