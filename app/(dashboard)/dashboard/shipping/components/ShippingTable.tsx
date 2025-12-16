@@ -4,29 +4,33 @@ import {
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { Shipping, ShippingItem } from "../type/ApiShipping";
 import { ShippingColumnDef } from "../columnDef.tsx/ShippingColumnDef";
+import { useState } from "react";
 
 interface IShippingTableProps {
   data: Shipping[];
 }
 
-type ShippingRow = Shipping | ShippingItem;
-
 const fallback: any[] = [];
 export default function ShippingTable({ data }: IShippingTableProps) {
+  const [globalFilter, setGlobalFilter] = useState<any[]>([]);
   console.log(data);
-
   const table = useReactTable({
-    columns: ShippingColumnDef,
+    columns: ShippingColumnDef(),
     data: data ?? fallback,
-    getSubRows: (row) => row.items as any,
-    // getSubRows: (row) => ("items" in row ? row.items : undefined),
-    // getSubRows: (row) => (row.items as unknown as Shipping[]) ?? undefined,
+    getSubRows: (row) =>
+      "items" in row ? (row?.items as unknown as Shipping[]) : undefined,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     getExpandedRowModel: getExpandedRowModel(),
+    onGlobalFilterChange: setGlobalFilter,
+    state: {
+      globalFilter,
+    },
   });
   return (
     <main className="flex flex-col w-full h-full ">
@@ -47,7 +51,7 @@ export default function ShippingTable({ data }: IShippingTableProps) {
                 appear here.
               </div>
             ) : (
-              <table className="min-w-full border-collapse  border-gray-300 rounded-lg shadow-sm">
+              <table className="min-w-full border-collapse text-sm border-gray-300 rounded-lg shadow-sm">
                 <thead className="bg-gray-100">
                   {table.getHeaderGroups().map((headerGroup) => (
                     <tr key={headerGroup.id}>
@@ -89,36 +93,27 @@ export default function ShippingTable({ data }: IShippingTableProps) {
                       </tr>
 
                       {/* Expanded sub-rows */}
+
                       {row.getIsExpanded() && (
                         <tr>
-                          <td
-                            colSpan={row.getVisibleCells().length}
-                            className="p-0"
-                          >
-                            <div className="bg-gray-50 border-l-4 border-blue-500">
-                              <table className="w-full">
-                                <tbody>
-                                  {row.subRows.map((subRow) => (
-                                    <tr
-                                      key={subRow.id}
-                                      className="bg-white hover:bg-gray-100 border-b"
-                                    >
-                                      {subRow.getVisibleCells().map((cell) => (
-                                        <td
-                                          key={cell.id}
-                                          className="px-6 py-3 text-sm"
-                                          style={{ paddingLeft: "3rem" }} // indent subrow
-                                        >
-                                          {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext()
-                                          )}
-                                        </td>
-                                      ))}
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
+                          <td colSpan={row.getAllCells().length}>
+                            <div className="bg-gray-50 p-4">
+                              {row.original?.items?.map((item, index) => (
+                                <div key={index} className="mb-2 border-b pb-2">
+                                  <p>
+                                    <b>Product:</b> {item.productName}
+                                  </p>
+                                  <p>
+                                    <b>SKU:</b> {item.productSKU}
+                                  </p>
+                                  <p>
+                                    <b>Category:</b> {item.productCategory}
+                                  </p>
+                                  <p>
+                                    <b>Qty:</b> {item.qty}
+                                  </p>
+                                </div>
+                              ))}
                             </div>
                           </td>
                         </tr>

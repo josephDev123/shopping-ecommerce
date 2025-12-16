@@ -144,13 +144,13 @@ export default function Login() {
             </div>
 
             <button
-              // disabled
+              disabled
               // onClick={() => signIn("google")}
               onClick={(e) => {
                 e.preventDefault();
                 toast.error("Disabled for security reason");
               }}
-              className="flex justify-center items-center gap-4 rounded-md p-2 w-full bg-gray-300 text-black/70"
+              className="flex cursor-not-allowed justify-center items-center gap-4 rounded-md p-2 w-full bg-gray-300 text-black/70"
             >
               <FcGoogle /> Continue with Google
             </button>

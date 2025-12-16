@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getShip } from "./actions/getShip";
 import ShippingTable from "./components/ShippingTable";
 import { Shipping } from "./type/ApiShipping";
@@ -19,8 +20,9 @@ export default async function page() {
           each order is processed and dispatched accurately.
         </p>
       </section>
-
-      <ShippingTable data={shipping} />
+      <Suspense fallback="Loading ...">
+        <ShippingTable data={shipping} />
+      </Suspense>
     </div>
   );
 }

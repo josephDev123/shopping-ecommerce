@@ -83,7 +83,7 @@ export interface Shipping {
 
   transaction: Transaction;
   customer: Customer;
-  items: ShippingItem[];
+  items?: ShippingItem[];
 }
 
 // =========================
