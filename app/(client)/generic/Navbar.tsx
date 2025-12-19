@@ -32,7 +32,7 @@ export default function Navbar() {
 
   const getCarts = useAppSelector((state) => state.cartState.carts);
   return (
-    <section className="flex justify-between items-center py-6 w-full sm:px-6 px-1 border-b ">
+    <section className="flex justify-between items-center py-6 w-full sm:px-6 px-2 border-b ">
       <Link href={"/"} className="">
         <Image
           src={"/png/logo.png"}

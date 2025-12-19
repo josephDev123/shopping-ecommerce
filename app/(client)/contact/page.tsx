@@ -20,7 +20,7 @@ export default function page() {
           Hesitate!
         </p>
       </div>
-      <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 w-[80%] mx-auto my-10">
+      <div className="grid sm:grid-cols-2 grid-cols-1 gap-10 sm:w-[80%] w-[90%] mx-auto my-10">
         {/* first div */}
         <div className="flex flex-col space-y-4">
           <div className="flex gap-3">

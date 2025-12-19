@@ -18,16 +18,16 @@ export default function TransactionNotificationCard({
   return (
     <div
       className={`${
-        data.read ? "bg-white" : "bg-gray-200"
+        data.read ? "bg-white" : "bg-gray-100"
       } flex justify-between items-center border-b-2 pb-2 p-4`}
     >
       <div
-        className={`flex flex-col ${data.read ? "bg-white" : "bg-gray-200"}`}
+        className={`flex flex-col ${data.read ? "bg-white" : "bg-gray-100"}`}
       >
         <h1 className="font-semibold text-sm  truncate text-nowrap">
           {data.label}
         </h1>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm text-gray-800">
           Transaction {data.metadata?.name} at the price of{" "}
           {data.metadata?.price}
         </p>

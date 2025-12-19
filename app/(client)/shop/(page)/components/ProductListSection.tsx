@@ -21,7 +21,7 @@ export default function ProductListSection({
 
   return (
     <>
-      <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 my-14 w-[80%] mx-auto">
+      <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 my-14 sm:w-[80%] w-[90%] mx-auto">
         <>
           {Array.isArray(data) && data?.length <= 0 && (
             <div className="h-32 pl-10 items-center">No data</div>

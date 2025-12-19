@@ -42,7 +42,7 @@ export default async function Page({ params }: { params: param }) {
       <hr className="py-6" />
       <div className="flex flex-col justify-center items-center">
         <h2 className="font-bold text-2xl mb-10">Related Products</h2>
-        <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2  grid-cols-1 gap-4 w-[80%] mx-auto ">
+        <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2  grid-cols-1 gap-4 sm:w-[80%] w-[90%] mx-auto ">
           {related.length === 0 && (
             <div className="col-span-full h-52 flex flex-col justify-center items-center">
               <p className="sm:text-xl text-lg">No related products yet</p>

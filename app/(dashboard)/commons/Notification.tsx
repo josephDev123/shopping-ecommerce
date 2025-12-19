@@ -18,7 +18,7 @@ export default function Notification({
   status,
 }: NotificationProps) {
   return (
-    <section className="absolute top-6 sm:right-1 -right-6 flex flex-col space-y-1 rounded-md sm:w-[400px] w-[300px] bg-white drop-shadow-md">
+    <section className="absolute top-6 sm:right-1 -right-6 flex flex-col h-96 overflow-y-auto space-y-1 rounded-md sm:w-[400px] w-[300px] bg-white drop-shadow-md">
       {status === "IsLoading" ? (
         <div className="h-10 flex flex-col justify-center items-center">
           <TbLoader2 className="animate-spin text-lg" />
@@ -34,7 +34,7 @@ export default function Notification({
       ) : (
         <>
           {notification.map((notify) => (
-            <div key={notify._id} className="flex flex-col">
+            <div key={notify._id} className="flex flex-col ">
               {notify.type === "Order" && (
                 <OrderNotificationCard data={notify} />
               )}

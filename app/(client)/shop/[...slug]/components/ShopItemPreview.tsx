@@ -60,7 +60,7 @@ export default function ShopItemPreview({
   const discountedPrice = price * (1 - discount / 100);
 
   return (
-    <div className="grid sm:grid-cols-2 grid-cols-1 gap-8 w-[80%] mx-auto my-10">
+    <div className="grid sm:grid-cols-2 grid-cols-1 gap-8 sm:w-[80%] w-[90%] mx-auto my-10">
       {/* first grid */}
       <div className="flex lg:flex-row flex-col justify-start gap-6">
         {/* FIRST */}
