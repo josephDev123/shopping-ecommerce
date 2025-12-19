@@ -10,6 +10,7 @@ import {
 import { Shipping, ShippingItem } from "../type/ApiShipping";
 import { ShippingColumnDef } from "../columnDef.tsx/ShippingColumnDef";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 interface IShippingTableProps {
   data: Shipping[];
@@ -18,9 +19,13 @@ interface IShippingTableProps {
 const fallback: any[] = [];
 export default function ShippingTable({ data }: IShippingTableProps) {
   const [globalFilter, setGlobalFilter] = useState<any[]>([]);
+
+  const { data: session, status } = useSession();
   console.log(data);
   const table = useReactTable({
-    columns: ShippingColumnDef(),
+    columns: ShippingColumnDef(
+      status === "authenticated" && session.user.role === "admin"
+    ),
     data: data ?? fallback,
     getSubRows: (row) =>
       "items" in row ? (row?.items as unknown as Shipping[]) : undefined,

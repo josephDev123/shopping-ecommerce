@@ -1,4 +1,4 @@
-import mongoose, { Model } from "mongoose";
+import mongoose, { Model, Types } from "mongoose";
 import { IShipping } from "../zod/ShippingSchema";
 import { IShippingSchema } from "../model/Shiping";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
@@ -171,6 +171,28 @@ export class ShippingRepo {
         shippings,
         totalCount: total,
       };
+    } catch (error) {
+      console.log(error);
+      if (error instanceof GlobalErrorHandler) {
+        throw error;
+      }
+      throw new GlobalErrorHandler(
+        error instanceof Error ? error.message : "Something went wrong",
+        "DatabaseError",
+        "500",
+        false
+      );
+    }
+  }
+
+  async updateProgress(id: Types.ObjectId, status: string) {
+    try {
+      const result = await this.db.findByIdAndUpdate(
+        id,
+        { $set: { status } },
+        { new: true }
+      );
+      return result;
     } catch (error) {
       console.log(error);
       if (error instanceof GlobalErrorHandler) {

@@ -3,6 +3,7 @@ import { zodValidate } from "@/app/utils/zodValidation";
 import { IShipping, shippingSchema } from "../zod/ShippingSchema";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { Session } from "next-auth";
+import { Types } from "mongoose";
 
 export class ShippingService {
   user: Session;
@@ -41,6 +42,54 @@ export class ShippingService {
           false
         );
       }
+    }
+  }
+
+  async UpdateProgress(id: Types.ObjectId, status: string) {
+    try {
+      console.log("UpdateProgress called with id:", id, "and status:", status);
+
+      if (!id) {
+        throw new GlobalErrorHandler(
+          "ID is required",
+          "ID_REQUIRED",
+          "400",
+          true
+        );
+      }
+
+      if (!Types.ObjectId.isValid(id)) {
+        throw new GlobalErrorHandler(
+          "Invalid ID format",
+          "INVALID_ID",
+          "400",
+          true
+        );
+      }
+
+      if (!status) {
+        throw new GlobalErrorHandler(
+          "Status is required",
+          "STATUS_REQUIRED",
+          "400",
+          true
+        );
+      }
+
+      return await this.ShippingRepo.updateProgress(id, status);
+    } catch (error) {
+      if (error instanceof GlobalErrorHandler) {
+        throw error;
+      }
+      if (error instanceof Error) {
+        throw new GlobalErrorHandler(error.message, error.name, "400", false);
+      }
+      throw new GlobalErrorHandler(
+        "Something went wrong",
+        "INTERNAL_ERROR",
+        "500",
+        false
+      );
     }
   }
 

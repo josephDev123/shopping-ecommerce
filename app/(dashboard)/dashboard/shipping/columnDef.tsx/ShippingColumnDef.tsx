@@ -1,11 +1,8 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, CellContext } from "@tanstack/react-table";
 import { Shipping } from "../type/ApiShipping";
 import UpdateShippingBtn from "../components/UpdateShippingBtn";
-import { useSession } from "next-auth/react";
 
-export const ShippingColumnDef = (): ColumnDef<Shipping>[] => {
-  const session = useSession();
-  console.log(session);
+export const ShippingColumnDef = (isAdmin: boolean): ColumnDef<Shipping>[] => {
   return [
     {
       header: "S/N",
@@ -93,16 +90,15 @@ export const ShippingColumnDef = (): ColumnDef<Shipping>[] => {
         new Date(row?.original?.createdAt).toLocaleDateString("en"),
     },
 
-    {
-      header: "Action",
-      cell: ({ row }) => {
-        session.status !== "authenticated" ||
-        session.data.user.role !== "admin" ? (
-          ""
-        ) : (
-          <UpdateShippingBtn row={row} />
-        );
-      },
-    },
+    ...(isAdmin
+      ? [
+          {
+            header: "Action",
+            cell: ({ row }: CellContext<Shipping, unknown>) => (
+              <UpdateShippingBtn row={row} />
+            ),
+          },
+        ]
+      : []),
   ];
 };
