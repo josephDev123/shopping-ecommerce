@@ -1,7 +1,10 @@
 import Flutterwave from "flutterwave-node-v3";
 import { type NextRequest } from "next/server";
-import { PaymentDetails, TransactionModel } from "@/models/TransactionModel";
-import OrderModel, { OrderType } from "@/models/OrderModel";
+import {
+  PaymentDetails,
+  TransactionModel,
+} from "@/app/api/transaction/model/TransactionModel";
+import OrderModel, { OrderType } from "@/app/api/orders/model/OrderModel";
 import { startDb } from "@/lib/startDb";
 import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 

@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
-import { profileService } from "../service/ProfileService";
-import { ProfileRepo } from "../repository/ProfileRepository";
-import UserModel from "@/models/User";
-import ProfileModel from "@/models/Profile";
+import { profileService } from "./service/ProfileService";
+import { ProfileRepo } from "./repository/ProfileRepository";
+import UserModel from "@/app/api/register/model/User";
+import ProfileModel from "@/app/api/profile/model/Profile";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import {
   ApiResponseHelper,

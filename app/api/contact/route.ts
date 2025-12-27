@@ -1,7 +1,7 @@
 import { startDb } from "@/lib/startDb";
-import { ContactService } from "../service/ContactService";
-import ContactModel, { IContact } from "@/models/ContactModel";
-import { ContactRepo } from "../repository/ContactRepo";
+import { ContactService } from "./service/ContactService";
+import ContactModel, { IContact } from "@/app/api/contact/model/ContactModel";
+import { ContactRepo } from "./repository/ContactRepo";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,

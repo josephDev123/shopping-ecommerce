@@ -2,10 +2,10 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
-import UserModel from "@/models/User";
+import UserModel from "@/app/api/register/model/User";
 import { startDb } from "@/lib/startDb";
-import { UserService } from "@/app/api/service/UserService";
-import { UserRepo } from "@/app/api/repository/UserRepo";
+import { UserService } from "@/app/api/register/service/UserService";
+import { UserRepo } from "@/app/api/register/repository/UserRepo";
 
 interface Credential {
   email: string;

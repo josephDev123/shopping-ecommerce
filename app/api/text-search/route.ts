@@ -1,7 +1,7 @@
 import { startDb } from "@/lib/startDb";
-import { TextSearchService } from "../service/textSearchService";
-import { TextSearchRepo } from "../repository/TextSearchRepo";
-import ProductModel from "@/models/ProductsModel";
+import { TextSearchService } from "./service/textSearchService";
+import { TextSearchRepo } from "./repository/TextSearchRepo";
+import ProductModel from "@/app/api/product/model/ProductsModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

@@ -1,4 +1,4 @@
-import { PaymentDetails } from "@/models/TransactionModel";
+import { PaymentDetails } from "@/app/api/transaction/model/TransactionModel";
 import { ProductDataType } from "./productsType";
 
 type Payment = {

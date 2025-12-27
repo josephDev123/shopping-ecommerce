@@ -1,4 +1,4 @@
-import { OrderType } from "@/models/OrderModel";
+import { OrderType } from "@/app/api/orders/model/OrderModel";
 import { CategoryType } from "./categoryType";
 
 export interface IdbOrderType {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ReviewService } from "../../service/ReviewService";
-import { ReviewRepo } from "../../repository/ReviewRepo";
-import { ReviewModel } from "@/models/Review";
+import { ReviewService } from "../service/ReviewService";
+import { ReviewRepo } from "../repository/ReviewRepo";
+import { ReviewModel } from "@/app/api/reviews/model/Review";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
 import { startDb } from "@/lib/startDb";

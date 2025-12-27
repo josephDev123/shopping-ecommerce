@@ -1,9 +1,9 @@
 import { startDb } from "@/lib/startDb";
 import { NextRequest } from "next/server";
-import { DashboardService } from "../service/DashboardOverviewService";
-import { DashboardOverviewRepo } from "../repository/DashboardOverviewRepo";
-import OrderModel from "@/models/OrderModel";
-import { TransactionModel } from "@/models/TransactionModel";
+import { DashboardService } from "./service/DashboardOverviewService";
+import { DashboardOverviewRepo } from "./repository/DashboardOverviewRepo";
+import OrderModel from "@/app/api/orders/model/OrderModel";
+import { TransactionModel } from "@/app/api/transaction/model/TransactionModel";
 import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
 export const dynamic = "force-dynamic";

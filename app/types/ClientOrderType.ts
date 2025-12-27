@@ -1,4 +1,4 @@
-import { CustomerType, Payment } from "@/models/OrderModel";
+import { CustomerType, Payment } from "@/app/api/orders/model/OrderModel";
 import { BillingDataType } from "./billingType";
 import { ProductDataType } from "./productsType";
 

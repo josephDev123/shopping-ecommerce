@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { paymentRepository } from "../repository/paymentRepository";
-import { PaymentService } from "../service/PaymentService";
-import OrderModel from "@/models/OrderModel";
+import { paymentRepository } from "./repository/paymentRepository";
+import { PaymentService } from "./service/PaymentService";
+import OrderModel from "@/app/api/orders/model/OrderModel";
 import { startDb } from "@/lib/startDb";
 import { myCommerceQueue } from "@/lib/BullMq/Queue";
 import { NotificationFactoryBase } from "../factories/NotificationFactoryBase";
 import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
-import { NotificationRepo } from "../repository/NotificationRepo";
-import { NotificationModel } from "@/models/Notification";
+import { NotificationRepo } from "../notification/repository/NotificationRepo";
+import { NotificationModel } from "@/app/api/notification/model/Notification";
 
 async function Checkout(req: NextRequest) {
   try {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { RelatedItemService } from "../service/RelatedItemService";
-import { RelatedItemRepo } from "../repository/RelatedItemRepo";
-import ProductModel from "@/models/ProductsModel";
+import { RelatedItemService } from "./service/RelatedItemService";
+import { RelatedItemRepo } from "./repository/RelatedItemRepo";
+import ProductModel from "@/app/api/product/model/ProductsModel";
 import { ApiResponseHelper } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 

@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import UserModel from "@/models/User";
-import { UserInterface } from "@/models/User";
+import UserModel from "@/app/api/register/model/User";
+import { UserInterface } from "@/app/api/register/model/User";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { startDb } from "@/lib/startDb";
 import bcrypt from "bcrypt";
-import { UserRepo } from "../repository/UserRepo";
-import { UserService } from "../service/UserService";
+import { UserRepo } from "./repository/UserRepo";
+import { UserService } from "./service/UserService";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,

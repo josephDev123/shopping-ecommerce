@@ -3,11 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import Flutterwave from "flutterwave-node-v3";
 // import Flw_Transaction from "@/models/FlwTransactionModel";
 import { startDb } from "@/lib/startDb";
-import { PaymentDetails, TransactionModel } from "@/models/TransactionModel";
-import OrderModel from "@/models/OrderModel";
-import { NotificationRepo } from "../repository/NotificationRepo";
-import { NotificationModel } from "@/models/Notification";
-import { Notification } from "../service/Notification";
+import {
+  PaymentDetails,
+  TransactionModel,
+} from "@/app/api/transaction/model/TransactionModel";
+import OrderModel from "@/app/api/orders/model/OrderModel";
+import { NotificationRepo } from "../notification/repository/NotificationRepo";
+import { NotificationModel } from "@/app/api/notification/model/Notification";
+import { Notification } from "../notification/service/Notification";
 import { ShippingModel, IShippingSchema } from "../shipping/model/Shiping";
 import mongoose, { Types } from "mongoose";
 

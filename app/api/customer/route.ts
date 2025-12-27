@@ -1,8 +1,8 @@
 import { startDb } from "@/lib/startDb";
 import { NextRequest } from "next/server";
-import { CustomerRepo } from "../repository/CustomerRepo";
-import OrderModel from "@/models/OrderModel";
-import { CustomerService } from "../service/CustomerServices";
+import { CustomerRepo } from "./repository/CustomerRepo";
+import OrderModel from "@/app/api/orders/model/OrderModel";
+import { CustomerService } from "./service/CustomerServices";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,

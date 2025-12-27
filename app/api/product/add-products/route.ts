@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { ProductService } from "../services/ProductService";
 import { ProductRepository } from "../repository/ProductRepository";
 import { startDb } from "@/lib/startDb";
-import ProductModel from "@/models/ProductsModel";
-import { ProductSchemaTypes } from "@/models/ProductsModel";
+import ProductModel from "@/app/api/product/model/ProductsModel";
+import { ProductSchemaTypes } from "@/app/api/product/model/ProductsModel";
 import { ApiResponseHelper } from "../../utils/ApiResponseHelper";
 import {
   GlobalErrorHandler,

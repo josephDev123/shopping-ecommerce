@@ -5,9 +5,9 @@ import {
   SuccessApiResponseHelper,
 } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
-import { TransactionService } from "../service/transactionService";
-import { transactionRepository } from "../repository/TransactionRepository";
-import { TransactionModel } from "@/models/TransactionModel";
+import { TransactionService } from "./service/transactionService";
+import { transactionRepository } from "./repository/TransactionRepository";
+import { TransactionModel } from "@/app/api/transaction/model/TransactionModel";
 import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
 export const dynamic = "force-dynamic";

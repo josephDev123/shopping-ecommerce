@@ -1,5 +1,5 @@
 import mongoose, { Model, PipelineStage } from "mongoose";
-import { ProductSchemaTypes } from "@/models/ProductsModel";
+import { ProductSchemaTypes } from "@/app/api/product/model/ProductsModel";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import cloudinary from "@/app/utils/Cloudinary";
 

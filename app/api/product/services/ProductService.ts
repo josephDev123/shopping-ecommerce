@@ -3,7 +3,7 @@ import {
   IRelatedOpts,
   ProductRepository,
 } from "../repository/ProductRepository";
-import { ProductSchemaTypes } from "@/models/ProductsModel";
+import { ProductSchemaTypes } from "@/app/api/product/model/ProductsModel";
 
 export class ProductService {
   constructor(private readonly ProductRepository: ProductRepository) {}

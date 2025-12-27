@@ -1,8 +1,8 @@
 import { startDb } from "@/lib/startDb";
 import { NextRequest, NextResponse } from "next/server";
-import { NotificationRepo } from "../repository/NotificationRepo";
-import { NotificationModel } from "@/models/Notification";
-import { Notification } from "../service/Notification";
+import { NotificationRepo } from "./repository/NotificationRepo";
+import { NotificationModel } from "@/app/api/notification/model/Notification";
+import { Notification } from "./service/Notification";
 import { myCommerceQueue } from "@/lib/BullMq/Queue";
 import {
   ApiResponseHelper,

@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { startDb } from "@/lib/startDb";
-import { categoryRepository } from "../repository/CategoryRepo";
-import { categoryService } from "../service/CategoryService";
-import OrderModel from "@/models/OrderModel";
+import { categoryRepository } from "./repository/CategoryRepo";
+import { categoryService } from "./service/CategoryService";
+import OrderModel from "@/app/api/orders/model/OrderModel";
 import {
   ApiResponseHelper,
   SuccessApiResponseHelper,
 } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
-import ProductModel from "@/models/ProductsModel";
+import ProductModel from "@/app/api/product/model/ProductsModel";
 import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
 export const dynamic = "force-dynamic";

@@ -1,7 +1,7 @@
 import { startDb } from "@/lib/startDb";
-import { OrderRepository } from "../../repository/OrderRepository";
-import { OrderService } from "../../service/OrderService";
-import OrderModel from "@/models/OrderModel";
+import { OrderRepository } from "../repository/OrderRepository";
+import { OrderService } from "../service/OrderService";
+import OrderModel from "@/app/api/orders/model/OrderModel";
 import { NextRequest, NextResponse } from "next/server";
 // import { URL } from "url";
 import {

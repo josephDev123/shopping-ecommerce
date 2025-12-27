@@ -1,6 +1,6 @@
 import { startDb } from "@/lib/startDb";
 import { ProductRepository } from "../repository/ProductRepository";
-import ProductModel from "@/models/ProductsModel";
+import ProductModel from "@/app/api/product/model/ProductsModel";
 import { ProductService } from "../services/ProductService";
 import {
   ApiResponseHelper,
