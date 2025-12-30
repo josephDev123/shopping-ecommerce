@@ -1,6 +1,7 @@
 import { ColumnDef, CellContext } from "@tanstack/react-table";
 import { Shipping } from "../type/ApiShipping";
 import UpdateShippingBtn from "../components/UpdateShippingBtn";
+import { statusStyles } from "../data/statusStyle";
 
 export const ShippingColumnDef = (isAdmin: boolean): ColumnDef<Shipping>[] => {
   return [
@@ -21,7 +22,26 @@ export const ShippingColumnDef = (isAdmin: boolean): ColumnDef<Shipping>[] => {
       accessorKey: "shippingMethod",
     },
 
-    { header: "Status", accessorKey: "status" },
+    {
+      header: "Shipping Status",
+      accessorKey: "status",
+      cell: ({ row }) => {
+        const status = row.original.status;
+        const style = statusStyles[status] ?? {
+          bg: "bg-gray-100",
+          text: "text-gray-600",
+        };
+
+        return (
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-semibold inline-flex justify-center items-center ${style.bg} ${style.text}`}
+          >
+            {status}
+          </span>
+        );
+      },
+    },
+
     {
       header: "Amount Paid",
       accessorKey: "transaction.paymentDetails.charged_amount",

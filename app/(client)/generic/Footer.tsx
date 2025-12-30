@@ -34,16 +34,16 @@ export default function Footer() {
             href={"#"}
             className="font-bold text-sm text-black/60 cursor-not-allowed"
           >
-            Payment Options
+            Payment Options{" "}
+            <span className="text-amber-400/80 font-medium">(coming)</span>
           </Link>
-          {/* <Link href={""} className="font-bold text-lg">
-            Returns
-          </Link> */}
+
           <Link
             href={"#"}
-            className="font-bold text-sm text-black/60 cursor-not-allowed"
+            className="font-bold text-sm text-black/60 cursor-not-allowed "
           >
-            Privacy Policies
+            Privacy Policies{" "}
+            <span className="text-amber-400/80 font-medium">(coming)</span>
           </Link>
         </div>
 

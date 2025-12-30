@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react";
 import Loader from "@/app/(client)/components/Loader";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
+import Image from "next/image";
 
 export default function DashboardMobileLeftpanel() {
   const { data: session, status } = useSession();
@@ -44,15 +45,11 @@ export default function DashboardMobileLeftpanel() {
               />
             </div>
 
-            <h2
-              onClick={() => {
-                navigate.push("/");
-                dispatch(toggleLeftPanel());
-              }}
-              className="text-2xl font-semibold my-4"
-            >
-              JoeBank
-            </h2>
+            <Link href={"/"} className="inline-flex items-center gap-2 mb-3">
+              <Image src={"/png/logo.png"} alt="logo" width={60} height={60} />
+
+              <span>Shop</span>
+            </Link>
             <div className="space-y-4">
               {leftPanelItem.map((item, id) => (
                 <LeftMobilePanelItemCard
