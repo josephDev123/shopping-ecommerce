@@ -1,13 +1,13 @@
 import "./globals.css";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import NextAuthSessionProvider from "./nextAuthSessionProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Roboto, Inter, Lato, Raleway } from "next/font/google";
 import StoreProvider from "./StoreProvider";
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
-import { getToken } from "next-auth/jwt";
+// import { cookies } from "next/headers";
+// import { getToken } from "next-auth/jwt";
 
 const raleway = Raleway({
   subsets: ["latin"],

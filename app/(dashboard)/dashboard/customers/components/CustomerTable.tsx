@@ -50,7 +50,7 @@ export default function CustomerTable({ data, totalRow }: CustomerTableProps) {
       country: data.customer.country ?? "",
       zipCode: data.customer.zipCode ?? "",
       additionalInfo: data.customer.additionalInfo ?? "",
-    })
+    }),
   );
   return (
     <section className="flex flex-col w-full">

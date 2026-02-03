@@ -1,27 +1,22 @@
-"use  server";
-
-import React, { Suspense, useEffect } from "react";
 import Navbar from "./components/Navbar";
-import FooterPagination from "../../commons/FooterPagination";
 import OrderPageMainWrapper from "./components/OrderPageMainWrapper";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/NextAuthOption";
 import { ClientOrderType } from "@/app/types/ClientOrderType";
-import { useSearchParams } from "next/navigation";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export interface OrderPageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function page({ searchParams }: OrderPageProps) {
   const session = await getServerSession(authOptions);
-
+  const searchQuery = await searchParams;
   const response = await CustomFetch({
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/orders/orders?user_id=${
       session?.user.id
-    }&page=${Number(searchParams.page) || 1}&limit=${
-      Number(searchParams.limit) || 10
+    }&page=${Number(searchQuery.page) || 1}&limit=${
+      Number(searchQuery.limit) || 10
     }`,
   });
 
@@ -34,7 +29,7 @@ export default async function page({ searchParams }: OrderPageProps) {
       {/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
       <h1 className="font-bold text-xl my-2">Orders</h1>
       <div>
-        <Navbar searchParams={searchParams} />
+        <Navbar searchParams={searchQuery} />
       </div>
 
       <div>

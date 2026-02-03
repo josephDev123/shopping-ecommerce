@@ -1,9 +1,11 @@
+"use server";
+
 import { registerType } from "../(onboard)/Types/registerType";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import z from "zod";
-import { errorAlert } from "@/lib/Alerts";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+// import { errorAlert } from "@/lib/Alerts";
+// import { redirect } from "next/navigation";
+// import { revalidatePath } from "next/cache";
 
 type RegType = z.infer<typeof registerType>;
 export async function registerAction(data: RegType) {

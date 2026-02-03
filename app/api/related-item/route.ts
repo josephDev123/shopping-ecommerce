@@ -5,7 +5,7 @@ import ProductModel from "@/app/api/product/model/ProductsModel";
 import { ApiResponseHelper } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     const query = req.nextUrl.searchParams;
     const skip = Number(query.get("skip")) || 0;
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const result = await RelatedItemServiceImpl.find(skip, limit, category);
     return NextResponse.json(
       { message: "related item successful", data: result },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     const errorObj = error as GlobalErrorHandler;
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         "OrderError",
         true,
         "error",
-        400
+        400,
       );
     } else {
       return ApiResponseHelper(
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         "OrderError",
         false,
         "error",
-        400
+        400,
       );
     }
   }

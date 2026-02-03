@@ -9,7 +9,7 @@ type sessionProviderProps = {
   children: React.ReactNode;
 };
 
-export default async function NextAuthSessionProvider({
+export default function NextAuthSessionProvider({
   children,
 }: sessionProviderProps) {
   const queryClient = new QueryClient();

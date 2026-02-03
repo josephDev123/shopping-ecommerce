@@ -5,16 +5,15 @@ import { authOptions } from "@/lib/NextAuthOption";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 import { ITransactionDTO } from "@/app/api/DTO/transactionDTO";
 export interface TransactionPageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 export default async function page({ searchParams }: TransactionPageProps) {
   const session = await getServerSession(authOptions);
+  const urlQuery = await searchParams;
   const response = await CustomFetch({
     url: `${process.env.SERVER_BASEURL}/api/transaction?user_id=${
       session?.user.id
-    }&page=${Number(searchParams.page) || 1}&limit=${
-      Number(searchParams.limit) || 10
-    }`,
+    }&page=${Number(urlQuery.page) || 1}&limit=${Number(urlQuery.limit) || 10}`,
   });
 
   const result: ITransactionDTO[] = response.data.transactionData || [];

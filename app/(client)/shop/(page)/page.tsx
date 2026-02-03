@@ -8,15 +8,16 @@ import { ICategoriesResponse } from "@/app/types/ICategory";
 export default async function page({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const links = [
     { name: "Home", url: "/" },
     { name: "Shop", url: "/shop" },
   ];
 
-  const page = Number(searchParams.page) || 1;
-  const limit = Number(searchParams.limit) || 10;
+  const filter = await searchParams;
+  const page = Number(filter.page) || 1;
+  const limit = Number(filter.limit) || 10;
 
   const result = await CustomFetch({
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/product/products-paginate?page=${page}&limit=${limit}`,

@@ -4,7 +4,7 @@ import { ShippingsApiResponse } from "../type/ApiShipping";
 import { cookies } from "next/headers";
 
 export async function getShip() {
-  const cookie = cookies();
+  const cookie = await cookies();
   try {
     const response = await fetch(`${process.env.SERVER_BASEURL}/api/shipping`, {
       headers: {

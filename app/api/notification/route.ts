@@ -10,7 +10,6 @@ import {
 } from "../utils/ApiResponseHelper";
 import { GlobalErrorHandler } from "@/app/utils/globarErrorHandler";
 import { INotification } from "@/app/types/NotificationType";
-import Page from "@/app/(dashboard)/dashboard/page";
 
 export async function GET(req: NextRequest) {
   try {
@@ -22,7 +21,7 @@ export async function GET(req: NextRequest) {
     const page = Number(payloadQuery.get("page")) ?? 1;
     const NotificationServiceImpl = new Notification(
       NotificationRepoImpl,
-      userId!
+      userId!,
     );
 
     const result = await NotificationServiceImpl.find(limit, page);
@@ -33,7 +32,7 @@ export async function GET(req: NextRequest) {
       "success",
       200,
       result,
-      []
+      [],
     );
   } catch (error) {
     if (error instanceof GlobalErrorHandler) {
@@ -43,7 +42,7 @@ export async function GET(req: NextRequest) {
           error.name || "NotificationError",
           true,
           "error",
-          400
+          400,
         );
       } else {
         return ApiResponseHelper(
@@ -51,7 +50,7 @@ export async function GET(req: NextRequest) {
           "NotificationError",
           false,
           "error",
-          400
+          400,
         );
       }
     }
@@ -61,12 +60,12 @@ export async function GET(req: NextRequest) {
       "NotificationError",
       false,
       "error",
-      400
+      400,
     );
   }
 }
 
-export async function PATCH(req: NextRequest, res: NextResponse) {
+export async function PATCH(req: NextRequest) {
   try {
     await startDb();
     const body = await req.json();
@@ -83,7 +82,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
       "success",
       200,
       [],
-      result
+      result,
     );
   } catch (error) {
     if (error instanceof GlobalErrorHandler) {
@@ -93,7 +92,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
           "NotificationError",
           true,
           "error",
-          400
+          400,
         );
       } else {
         return ApiResponseHelper(
@@ -101,7 +100,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
           "NotificationError",
           false,
           "error",
-          400
+          400,
         );
       }
     }
@@ -111,7 +110,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
       "NotificationError",
       false,
       "error",
-      400
+      400,
     );
   }
 }

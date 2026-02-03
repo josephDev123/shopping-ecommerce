@@ -17,7 +17,7 @@ import { NextRequest, NextResponse } from "next/server";
 import GlobalError from "@/app/global-error";
 
 export const dynamic = "force-dynamic";
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     await startDb();
     const ProductRepositoryImp = new ProductRepository(ProductModel);
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
 
     const result = await ProductServiceImpl.findByIdWithRelated(
       product_id || "",
-      RelatedOpts
+      RelatedOpts,
     );
 
     return SuccessApiResponseHelper(
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       result?.operational || false,
       result?.type || "",
       result?.status || 200,
-      result?.data || {}
+      result?.data || {},
     );
 
     // return NextResponse.json({ msg: product_id }, { status: 200 });
@@ -54,7 +54,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         error.name,
         error.operational,
         "error",
-        error.code as unknown as number
+        error.code as unknown as number,
       );
     }
   }

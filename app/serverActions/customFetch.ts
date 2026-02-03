@@ -21,7 +21,7 @@ CustomFetchOptions) {
   if (!isOrigin) {
     return NextResponse.json({ error: "Invalid origin" }, { status: 403 });
   }
-  const cookieStore = cookies(); // ✅ get user's cookies from the request
+  const cookieStore = await cookies(); // ✅ get user's cookies from the request
 
   const cookieHeader = cookieStore.toString();
   // console.log("coookie string", cookieStore);
@@ -50,9 +50,9 @@ CustomFetchOptions) {
   }
 }
 
-function isSameOrigin() {
+async function isSameOrigin() {
   try {
-    const header = headers();
+    const header = await headers();
     const host = header.get("host");
 
     const protocol = header.get("x-forwarded-proto");

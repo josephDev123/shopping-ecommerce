@@ -6,18 +6,16 @@ import { CategoryType } from "@/app/types/categoryType";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export interface OrderPageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function page({ searchParams }: OrderPageProps) {
   const session = await getServerSession(authOptions);
-
+  const urlQuery = await searchParams;
   const response = await CustomFetch({
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/categories/category?user_id=${
       session?.user.id
-    }&page=${Number(searchParams.page) || 1}&limit=${
-      Number(searchParams.limit) || 4
-    }`,
+    }&page=${Number(urlQuery.page) || 1}&limit=${Number(urlQuery.limit) || 4}`,
   });
 
   const result: CategoryType[] = response.data.categoryPurchased;

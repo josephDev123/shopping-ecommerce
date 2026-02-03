@@ -7,16 +7,16 @@ import { Suspense } from "react";
 import { CustomFetch } from "@/app/serverActions/customFetch";
 
 export interface CustomerPageProps {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function page({ searchParams }: CustomerPageProps) {
   const session = await getServerSession(authOptions);
-
+  const urlQuery = await searchParams;
   const response = await CustomFetch({
     url: `${process.env.NEXT_PUBLIC_BASEURL}/api/customer?user_id=${
       session?.user.id
-    }&page=${searchParams.page ?? 1}&limit=5`,
+    }&page=${urlQuery.page ?? 1}&limit=5`,
   });
 
   const result: ClientOrderType[] = response.data.customers;

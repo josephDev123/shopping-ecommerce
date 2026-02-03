@@ -1,4 +1,4 @@
-"use  server";
+"use server";
 
 export async function getCategory() {
   const response = await fetch(
@@ -7,7 +7,7 @@ export async function getCategory() {
       next: {
         revalidate: 6 * 10,
       },
-    }
+    },
   );
 
   if (!response.ok) {
