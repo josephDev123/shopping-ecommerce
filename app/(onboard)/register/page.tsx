@@ -1,21 +1,19 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { registerType } from "../Types/registerType";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { errorAlert } from "@/lib/Alerts";
-import { registerAction } from "../../serverActions/RegisterActions";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa6";
 import Link from "next/link";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Register() {
   const [togglePassword, setTogglePassword] = useState(false);
@@ -25,20 +23,38 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<RegType>({ resolver: zodResolver(registerType) });
 
-  const handleRegister: SubmitHandler<RegType> = async (data) => {
-    try {
-      const result = await registerAction(data);
-      if (result.status === "error") {
-        errorAlert(result.msg);
-      } else {
-        return;
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: RegType) => {
+      try {
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_BASEURL}/api/register`,
+          data,
+        );
+        redirect.push("/login");
+      } catch (error) {
+        if (error instanceof Error) {
+          throw new Error(error.message);
+        }
+
+        throw new Error("Something went wrong");
       }
-    } catch (error: any) {
-      console.log(error);
-    }
+    },
+  });
+
+  const handleRegister: SubmitHandler<RegType> = async (data) => {
+    mutate(data, {
+      onSuccess: () => {
+        toast.success("Register went successfully");
+      },
+
+      onError: (error) => {
+        if (error instanceof Error) toast.error(error.message);
+        toast.error("Registration Failed");
+      },
+    });
   };
   return (
     <section className="flex flex-col justify-center items-center my-auto h-screen w-full overflow-y-auto">
@@ -140,11 +156,11 @@ export default function Register() {
             </div>
             <button
               type="submit"
-              disabled={isSubmitting ? true : false}
+              disabled={isPending ? true : false}
               className="flex rounded-md p-2 w-full bg-darkGreen text-white"
             >
               <span className="mx-auto"> Sign up</span>
-              {isSubmitting && (
+              {isPending && (
                 <FaSpinner className="animate-spin h-8 w-8 self-end" />
               )}
             </button>
