@@ -10,25 +10,42 @@ import { RouteHandlerMiddleware } from "@/app/utils/RouteHandlerMiddleware";
 
 async function TrackProgress(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  ctx: RouteContext<"/api/shipping/tracking/[id]">,
 ) {
   try {
     const user = req.session as unknown as Session;
+    // console.log("user:", user);
+
+    const { id } = await ctx.params;
+    const shippingId = new Types.ObjectId(id);
+    // console.log("Tracking query ID:", shippingId);
+
+    // const payload = await req.json(); //for json payload
+    const payload = await req.formData(); //for formData payload
+    if (!payload || !payload?.get("status")) {
+      throw new GlobalErrorHandler(
+        "Invalid payload",
+        "InvalidPayload",
+        "400",
+        true,
+      );
+    }
+    // console.log(" payload:", payload);
+    // const progressStatus = payload.status; for json data payload
+    const progressStatus = payload.get("status"); //for formaData data payload
+    console.log("Tracking progressStatus:", progressStatus);
+
     const ShippingRepoInit = new ShippingRepo(ShippingModel);
     const ShippingServiceInit = new ShippingService(ShippingRepoInit, user!);
-    const query = params.id as unknown as Types.ObjectId;
-    const payload = await req.json();
-    const progressStatus = payload.status;
-    console.log("Tracking progressStatus:", progressStatus);
-    console.log("Tracking query ID:", query);
-    const result = await ShippingServiceInit.UpdateProgress(
-      query,
-      progressStatus
+
+    await ShippingServiceInit.UpdateProgress(
+      shippingId,
+      String(progressStatus),
     );
 
     return NextResponse.json(
       { message: "Tracking updated successfully" },
-      { status: 200 }
+      { status: 200 },
     );
     // data: result
   } catch (error) {
@@ -38,7 +55,7 @@ async function TrackProgress(
         error.name,
         error.operational,
         "error",
-        Number(error.code)
+        Number(error.code),
       );
     }
     if (error instanceof Error) {
@@ -47,7 +64,7 @@ async function TrackProgress(
         error.name,
         false,
         "error",
-        500
+        500,
       );
     }
 
@@ -56,9 +73,10 @@ async function TrackProgress(
       "UnknownError",
       false,
       "error",
-      500
+      500,
     );
   }
 }
 
-export const PATCH = RouteHandlerMiddleware(TrackProgress);
+export const PATCH = TrackProgress;
+// RouteHandlerMiddleware

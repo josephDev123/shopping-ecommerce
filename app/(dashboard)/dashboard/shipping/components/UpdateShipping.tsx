@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -7,16 +9,16 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  // DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dispatch, SetStateAction, useRef } from "react";
+import { Dispatch, SetStateAction, useActionState } from "react";
 // import toast from "react-hot-toast";
 import { LoaderCircle } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
 import { Row } from "@tanstack/react-table";
 import { Shipping } from "../type/ApiShipping";
+import { updateShipStatus } from "../actions/updateShipStatus";
 
 const STATUS = [
   "Pending",
@@ -39,35 +41,10 @@ export default function UpdateShipping({
   open,
   onOpenChange,
 }: ICreateFuelModalProps) {
-  const closeBtnRef = useRef<HTMLButtonElement>(null);
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: any) => {
-      try {
-      } catch (error) {}
-    },
+  const [state, action, pending] = useActionState(updateShipStatus, {
+    error: false,
+    msg: "",
   });
-
-  const handleOnSubmit = (data: any) => {
-    console.log(data);
-    mutate(data, {
-      onError: async (error) => {
-        console.log(error);
-        // toast.error(error.message);
-        return;
-      },
-      onSuccess: async (data) => {
-        // console.log(data.msg);
-        // toast.success(data.msg);
-        // await queryClient.invalidateQueries({
-        //   queryKey: [""],
-
-        // });
-        closeBtnRef.current?.click();
-        return;
-      },
-    });
-  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -79,7 +56,16 @@ export default function UpdateShipping({
           <DialogDescription> Update Shipping for product</DialogDescription>
         </DialogHeader>
         <div className="flex-1 w-full gap-2 overflow-y-auto">
-          <form onSubmit={handleOnSubmit} className="flex flex-col space-y-4">
+          {state.error && (
+            <small className="text-red-400 my-2">{state.msg}</small>
+          )}
+          <form
+            // onSubmit={handleOnSubmit}
+            action={action}
+            // action={updateShipStatus.bind(null, row.original._id)}
+            className="flex flex-col space-y-4"
+          >
+            <input type="hidden" name="id" value={row.original._id} />
             <div className="grid grid-cols-1  gap-2">
               <Label htmlFor="name" className="">
                 Product Names
@@ -125,13 +111,13 @@ export default function UpdateShipping({
                 variant="outline"
                 className="inline-flex gap-2 items-center "
               >
-                {isPending && (
-                  <LoaderCircle className="text-yellow-400 text-3xl" />
+                {pending && (
+                  <LoaderCircle className="text-yellow-400 text-3xl animate-spin" />
                 )}
                 Create
               </Button>
               <DialogClose asChild>
-                <Button ref={closeBtnRef} type="button" variant="destructive">
+                <Button type="button" variant="destructive">
                   Close
                 </Button>
               </DialogClose>
